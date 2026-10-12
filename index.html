@@ -938,7 +938,7 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
     ev.preventDefault();
     if(!cur) return;
     const [ok,msg]=cur.check(read());
-    const fb=$("fb"); fb.hidden=false; fb.className="fb "+(ok?"ok":"no"); fb.textContent=(ok?"✓ ":"✗ ")+msg;
+    const fb=$("fb"); fb.hidden=false; fb.className="fb "+(ok?"ok":"no"); fb.innerHTML=(ok?"✓ ":"✗ ")+msg;
     if(!answered){ const s=score[cur.topic]||(score[cur.topic]={r:0,n:0}); s.n++; if(ok) s.r++; answered=true; save(); renderScore(); }
     else if(ok){ /* retries don't change the score */ }
   });
