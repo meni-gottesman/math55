@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Math 55 Quiz 3</title>
-<meta name="description" content="Fast study page for Math 55 Quiz 3: extended Euclid, inverses, linear congruences, CRT, Fermat's little theorem and RSA, with an endless practice drill.">
+<meta name="description" content="Learn-from-zero study page for Math 55 Quiz 3 (Lectures 7, 8, 10, 11): divisibility, mod arithmetic, bases, primes, gcd, Euclid, Bézout, congruences, CRT, Fermat and RSA, with an endless practice drill.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%89%A1%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,76 +152,187 @@ footer{color:var(--muted);font-size:.85rem;padding-block:40px 30px;border-top:1p
   .row > span:first-child{margin-top:6px}
   .skill,.drill{padding:14px}
 }
+.lecture{margin-top:10px;padding-top:26px;border-top:3px double var(--rule)}
+.lecture > .eyebrow{margin-bottom:2px}
+.skill h3 + .row{margin-top:8px}
 </style>
 </head>
 <body>
 
 <header class="top wrap">
   <p class="eyebrow">Math 55 · Discrete Math · Quiz 3 · Mon Oct 12, in discussion</p>
-  <h1>Math 55 Quiz 3 <span class="hand">speedrun</span></h1>
-  <p class="lede">Everything since Midterm 1 on one page: the six computations you'll be asked to do, a practice machine that writes new problems and shows every step, flashcards for the statements, and the short proofs.</p>
+  <h1>Math 55 Quiz 3 <span class="hand">from zero</span></h1>
+  <p class="lede">Lectures 7, 8, 10 and 11, taught in order, assuming you're seeing it for the first time. Every idea gets a plain explanation, the rule, and an example where each step is explained. Then drill until it's automatic.</p>
   <div class="scope">
-    <b>What's in scope.</b> My best read of the schedule: Quiz 3 covers the material after the midterm.
+    <b>On the quiz</b>
     <ul>
-      <li><b>Lecture 10:</b> extended Euclid, Bézout, solving <span class="m">ax ≡ b (mod m)</span>, inverses, cancellation, and the start of CRT</li>
-      <li><b>Lecture 11:</b> Chinese remainder theorem, Fermat's little theorem, primality testing, RSA</li>
-      <li>Tools from before the midterm that these lean on: the Euclidean algorithm and repeated squaring</li>
-      <li>Thursday's lecture (induction, per the syllabus) might be included too. There's a 1-minute primer at the bottom.</li>
+      <li><b>Lecture 7:</b> divisibility, the division algorithm (div/mod), congruences, base-b numbers, fast modular powers</li>
+      <li><b>Lecture 8:</b> primes, prime factorization, gcd and lcm, the Euclidean algorithm</li>
+      <li><b>Lecture 10:</b> Bézout and extended Euclid, inverses, solving ax ≡ b (mod m), the Chinese remainder theorem</li>
+      <li><b>Lecture 11:</b> the Chinese remainder theorem, Fermat's little theorem, primality tests, RSA</li>
+      <li><b>From earlier:</b> proof methods (direct, contraposition, contradiction, cases), even/odd, and reading “for all / there exists”</li>
     </ul>
   </div>
 </header>
 
 <nav class="jump" aria-label="Jump to">
   <div class="wrap">
-    <a href="#plan">Plan</a><a href="#map">Map</a><a href="#skills">6 skills</a><a class="go" href="#drill">Drill ▶</a><a href="#cards">Flashcards</a><a href="#proofs">Proofs</a><a href="#traps">Traps</a><a href="#induction">Induction</a>
+    <a href="#plan">Plan</a><a href="#l7">Lec 7</a><a href="#l8">Lec 8</a><a href="#l10">Lec 10</a><a href="#l11">Lec 11</a><a href="#tools">Proof tools</a><a class="go" href="#drill">Drill ▶</a><a href="#cards">Flashcards</a><a href="#proofs">Proofs</a><a href="#traps">Traps</a>
   </div>
 </nav>
 
 <main class="wrap">
 
 <section id="plan">
-  <h2><span class="n">00</span>The 15-minute plan</h2>
-  <p class="sub">If you only have a few minutes before section, do this in order.</p>
+  <h2><span class="n">00</span>How to use this</h2>
+  <p class="sub">Each step is short. Drill right after you read, while it's fresh.</p>
   <ol class="plan">
-    <li><span class="t">0:00–1:00</span><div><b>Read the map.</b> Every problem on this quiz is one of two chains.</div></li>
-    <li><span class="t">1:00–5:00</span><div><b>Flip the flashcards.</b> Say each answer out loud before flipping. Re-flip the ones you missed.</div></li>
-    <li><span class="t">5:00–13:00</span><div><b>Drill on “Mixed”.</b> Do at least one of each type. Solve on paper, then check. If you miss one, open <i>Show steps</i>, then press <i>New problem</i> on that same topic until you get one right.</div></li>
-    <li><span class="t">13:00–15:00</span><div><b>Read the traps</b> and skim the proof skeletons. Last thing before you walk in.</div></li>
+    <li><span class="t">~15 min</span><div><b>Lecture 7</b>, then drill <i>a mod d</i>, <i>Mod arithmetic</i>, <i>Base b</i>, <i>Powers</i>.</div></li>
+    <li><span class="t">~10 min</span><div><b>Lecture 8</b>, then drill <i>gcd/lcm</i> and <i>Euclid &amp; Bézout</i> (just the gcd part at first).</div></li>
+    <li><span class="t">~15 min</span><div><b>Lecture 10</b>, then drill <i>Euclid &amp; Bézout</i>, <i>Inverse</i>, <i>ax ≡ b</i>.</div></li>
+    <li><span class="t">~15 min</span><div><b>Lecture 11</b>, then drill <i>CRT</i>, <i>Powers</i>, <i>RSA</i>.</div></li>
+    <li><span class="t">last 5 min</span><div><b>Mixed</b> drill, flashcards, traps. If you only have 10 minutes total, do just this row.</div></li>
   </ol>
 </section>
 
-<section id="map">
-  <h2><span class="n">01</span>The map</h2>
-  <p class="sub">Two chains. Each box uses the one before it.</p>
-  <div class="map">
-    <div class="chain"><span class="lab">Chain A · gcd → solving</span>
-      <span class="node">Euclid: gcd</span><span class="arr">→</span>
-      <span class="node">Extended Euclid: gcd = sa + tb</span><span class="arr">→</span>
-      <span class="node">Inverse mod m</span><span class="arr">→</span>
-      <span class="node">Solve ax ≡ b</span><span class="arr">→</span>
-      <span class="node">CRT</span>
-    </div>
-    <div class="chain"><span class="lab">Chain B · powers → crypto</span>
-      <span class="node o">Repeated squaring</span><span class="arr">→</span>
-      <span class="node o">Fermat: shrink the exponent</span><span class="arr">→</span>
-      <span class="node o">RSA (also needs an inverse from Chain A)</span>
-    </div>
+<!-- ======================= LECTURE 7 ======================= -->
+<section id="l7" class="lecture">
+  <p class="eyebrow">Lecture 7 · Rosen §4.1–4.2</p>
+  <h2><span class="n">07</span>Divisibility, mod, bases, fast powers</h2>
+
+  <div class="skill">
+    <h3>7.1 · Divisibility <span class="k">a | b</span></h3>
+    <div class="row"><span>Idea</span><div>“a divides b” means b is a whole-number multiple of a. 3 | 12 because 12 = 3·4.</div></div>
+    <div class="row"><span>Rule</span><div>For a ≠ 0: <b>a | b ⟺ b = a·c for some integer c</b>. Write <span class="m">a ∤ b</span> for “doesn't divide.”<br>
+      Facts: if a | b and a | c, then a | (b + c), and more generally <b>a | (mb + nc)</b> for any integers m, n. If a | b then a | bc. If a | b and b | c then a | c.</div></div>
+    <div class="row ex"><span>Example</span><div>3 | 12 ✓ &nbsp; 5 ∤ 12 &nbsp; 7 | 0 ✓ (0 = 7·0) &nbsp; −4 | 12 ✓ (12 = (−4)(−3)).<br>
+      <b>Prove:</b> if 3 | x and 3 | y then 3 | 5x − 2y.<br>
+      <i>Step 1, unpack the definition:</i> x = 3s and y = 3t for integers s, t.<br>
+      <i>Step 2, substitute:</i> 5x − 2y = 15s − 6t.<br>
+      <i>Step 3, factor out the 3:</i> = 3(5s − 2t), and 5s − 2t is an integer, so 3 | 5x − 2y. ∎<br>
+      Every divisibility proof is this: turn “divides” into “= a·(integer)”, do algebra, then factor a back out.</div></div>
+    <div class="row trap"><span>Trap</span><div>“a | b” is a <b>sentence</b> (true or false). b/a is a <b>number</b>. Never write “3 | 12 = 4.”</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>7.2 · Division algorithm <span class="k">a = dq + r</span></h3>
+    <div class="row"><span>Idea</span><div>Long division with a remainder. Divide a by d: you get a quotient q and a leftover r that's smaller than d.</div></div>
+    <div class="row"><span>Rule</span><div>For any integer a and positive d there are <b>unique</b> q, r with <b>a = dq + r and 0 ≤ r &lt; d</b>.<br>q = <b>a div d</b>, r = <b>a mod d</b>. To find them: <b>q = a/d rounded down</b>, then r = a − dq.</div></div>
+    <div class="row ex"><span>Example</span><div>47 ÷ 10: 4.7 rounds down to 4, r = 47 − 40 = 7. So 47 = 10·4 + 7: <b>47 div 10 = 4, 47 mod 10 = 7</b>.<br>
+      <b>Negative:</b> −11 ÷ 3 = −3.67. Round <i>down</i> means toward −∞, so q = −4 (not −3). r = −11 − 3(−4) = −11 + 12 = 1. So −11 = 3(−4) + 1 and <b>−11 mod 3 = 1</b>. Check 0 ≤ 1 &lt; 3 ✓.<br>
+      Another: −47 mod 6. −47/6 = −7.83, so q = −8 and r = −47 + 48 = <b>1</b>.</div></div>
+    <div class="row trap"><span>Trap</span><div>The remainder is <b>never negative</b>. −11 = 3(−3) − 2 is wrong because r = −2 &lt; 0.</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>7.3 · Congruence <span class="k">a ≡ b (mod m)</span></h3>
+    <div class="row"><span>Idea</span><div>Picture a clock with m hours, labeled 0 to m − 1. <b>a ≡ b (mod m)</b> means a and b land on the same spot. 17 and 2 land on the same spot of a 5-hour clock.</div></div>
+    <div class="row"><span>Rule</span><div><b>a ≡ b (mod m) ⟺ m | (a − b)</b>. Two equivalent ways to say it: <b>a mod m = b mod m</b> (same remainder), or <b>a = b + km</b> for some integer k.<br>
+      You can <b>add, subtract, multiply, and raise both sides to powers</b>: if a ≡ b and c ≡ d then a + c ≡ b + d and ac ≡ bd. So <b>reduce numbers first, then compute</b>.</div></div>
+    <div class="row ex"><span>Example</span><div>17 ≡ 2 (mod 5) since 5 | 15. Also 17 ≡ −3 (mod 5) since 5 | 20.<br>
+      <b>Compute (347·58 + 1001) mod 9 without big numbers.</b><br>
+      <i>Reduce each piece:</i> 347 = 38·9 + 5, so 347 ≡ 5. 58 = 6·9 + 4, so 58 ≡ 4. 1001 = 111·9 + 2, so 1001 ≡ 2.<br>
+      <i>Combine:</i> 5·4 + 2 = 22 ≡ <b>4</b> (mod 9). (The real number 21127 also leaves remainder 4.)<br>
+      <b>Use negatives to save work:</b> 10⁵ mod 11. 10 ≡ −1, so 10⁵ ≡ (−1)⁵ = −1 ≡ <b>10</b>.</div></div>
+    <div class="row trap"><span>Trap</span><div><b>You can't divide/cancel freely:</b> 2·3 ≡ 4·3 (mod 6), but 2 ≢ 4 (mod 6). (Lecture 10 says when you can.)<br>
+      <b>mod vs ≡:</b> “a mod m” is a number in 0…m−1; “a ≡ b (mod m)” is a true/false statement. 17 ≡ −3 (mod 5) is true; “17 mod 5 = −3” is false.</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>7.4 · Base-b numbers</h3>
+    <div class="row"><span>Idea</span><div>Base 10 uses place values 1, 10, 100, … Base b uses place values 1, b, b², b³, … and digits 0 … b−1. (Base 16 uses A = 10, …, F = 15.) Every positive integer has exactly one base-b expansion.</div></div>
+    <div class="row"><span>Rule</span><div><b>To decimal:</b> multiply each digit by its place value and add.<br><b>From decimal:</b> divide by b over and over. <b>The remainders are the digits, last digit first</b>, so read them bottom-up.</div></div>
+    <div class="row ex"><span>Example</span><div>(1101)₂ = 1·8 + 1·4 + 0·2 + 1·1 = 13. &nbsp; (2A)₁₆ = 2·16 + 10 = 42.<br>
+      <b>100 to base 3:</b>
+<div class="calc">100 = 33·3 + 1   ← last digit
+ 33 = 11·3 + 0
+ 11 =  3·3 + 2
+  3 =  1·3 + 0
+  1 =  0·3 + 1   ← first digit     read up:  100 = (10201)₃</div>
+      Check: 1·81 + 0·27 + 2·9 + 0·3 + 1 = 100 ✓. Why it works: dividing by 3 peels off the last base-3 digit, just like dividing by 10 peels off the last decimal digit.</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>7.5 · Fast modular powers <span class="k">repeated squaring</span></h3>
+    <div class="row"><span>Idea</span><div>To get a<sup>n</sup> mod m, don't multiply n times. <b>Square repeatedly</b> to get a, a², a⁴, a⁸, … (reduce mod m each time), then multiply the ones whose exponents add up to n (that's n in binary).</div></div>
+    <div class="row ex"><span>Example</span><div><b>5¹³ mod 7.</b>
+<div class="calc">5¹ ≡ 5
+5² = 25        ≡ 4   (25 = 3·7 + 4)
+5⁴ ≡ 4² = 16   ≡ 2   (each line squares the line above)
+5⁸ ≡ 2² = 4
+13 = 8 + 4 + 1   (13 in binary is 1101)
+5¹³ = 5⁸·5⁴·5¹ ≡ 4·2·5 = 40 ≡ 5 (mod 7)</div>
+      Only 5 multiplications instead of 12, and no number ever gets bigger than 6·6.</div></div>
+    <div class="row trap"><span>Trap</span><div>Reduce after <b>every</b> multiplication. Square the <i>reduced</i> value, not the original.</div></div>
   </div>
 </section>
 
-<section id="skills">
-  <h2><span class="n">02</span>The six skills</h2>
-  <p class="sub">Each card says when to use it, the method, a worked example, and the classic mistake.</p>
+<!-- ======================= LECTURE 8 ======================= -->
+<section id="l8" class="lecture">
+  <p class="eyebrow">Lecture 8 · Rosen §4.3</p>
+  <h2><span class="n">08</span>Primes, gcd, lcm, Euclid</h2>
+
+  <div class="skill">
+    <h3>8.1 · Primes &amp; factorization</h3>
+    <div class="row"><span>Rule</span><div><b>Prime:</b> an integer p &gt; 1 whose only positive divisors are 1 and p. Otherwise (if &gt; 1) it's <b>composite</b>. <b>1 is neither.</b><br>
+      <b>Fundamental Theorem of Arithmetic:</b> every integer &gt; 1 is a product of primes in exactly one way (up to order).<br>
+      <b>Primality test:</b> if n is composite, it has a prime factor ≤ √n. So only try primes up to √n.</div></div>
+    <div class="row ex"><span>Example</span><div><b>Factor 924:</b> 924 = 2·462 = 2·2·231. 231 = 3·77 = 3·7·11. So <b>924 = 2²·3·7·11</b>. (Peel off the smallest prime that divides, repeat.)<br>
+      <b>Is 97 prime?</b> √97 ≈ 9.8, so test 2, 3, 5, 7. None divide 97, so it's prime. No need to test 11 or higher: if 97 = ab with both factors ≥ 11, then ab ≥ 121.</div></div>
+    <div class="row"><span>Thm</span><div><b>There are infinitely many primes.</b> Assume for a contradiction there are only finitely many, p₁, …, pₙ. Let Q = p₁p₂⋯pₙ + 1. Dividing Q by any pᵢ leaves remainder 1, so no pᵢ divides Q. But Q &gt; 1 has some prime factor, and it isn't on the list. Contradiction! ∎ (Q itself needn't be prime: 2·3·5·7·11·13 + 1 = 59·509.)</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>8.2 · Divisibility, gcd, lcm from factorizations</h3>
+    <div class="row"><span>Idea</span><div>Write both numbers with the same primes (use exponent 0 for a missing prime). Then compare exponents prime by prime.</div></div>
+    <div class="row"><span>Rule</span><div><b>a | b ⟺ every exponent in a ≤ the matching exponent in b.</b><br>
+      <b>gcd(a, b)</b> = the largest number dividing both: take the <b>min</b> exponent of each prime.<br>
+      <b>lcm(a, b)</b> = the smallest positive number both divide: take the <b>max</b> exponent.<br>
+      <b>gcd(a, b) · lcm(a, b) = a·b</b>, because min + max = the two exponents added.<br>
+      a, b are <b>relatively prime</b> if gcd(a, b) = 1. A list is <b>pairwise</b> relatively prime if every pair is.</div></div>
+    <div class="row ex"><span>Example</span><div>a = 600 = 2³·3¹·5²·7⁰ and b = 126 = 2¹·3²·5⁰·7¹.
+      <div class="scroll"><table class="et"><tr><th>prime</th><th>a</th><th>b</th><th>min</th><th>max</th></tr>
+        <tr><td>2</td><td>3</td><td>1</td><td>1</td><td>3</td></tr>
+        <tr><td>3</td><td>1</td><td>2</td><td>1</td><td>2</td></tr>
+        <tr><td>5</td><td>2</td><td>0</td><td>0</td><td>2</td></tr>
+        <tr><td>7</td><td>0</td><td>1</td><td>0</td><td>1</td></tr></table></div>
+      gcd = 2·3 = <b>6</b>. lcm = 2³·3²·5²·7 = <b>12600</b>. Check: 6·12600 = 75600 = 600·126 ✓.<br>
+      Does a | b? No: the exponent of 2 in a is 3 &gt; 1. Does 2²·3 | 2³·3²·5? Yes: 2 ≤ 3 and 1 ≤ 2.</div></div>
+    <div class="row trap"><span>Trap</span><div>gcd(0, n) = n (everything divides 0). gcd(−12, 18) = 6: the gcd is always positive.</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>8.3 · Euclidean algorithm <span class="k">gcd without factoring</span></h3>
+    <div class="row"><span>Idea</span><div>Factoring big numbers is slow. Euclid's trick: <b>gcd(a, b) = gcd(b, a mod b)</b>. The numbers shrink fast, and when the remainder hits 0 you're done.</div></div>
+    <div class="row"><span>Why</span><div>If a = bq + r, then anything dividing a and b also divides r = a − bq, and anything dividing b and r also divides a = bq + r. So the pairs (a, b) and (b, r) have the same common divisors, and therefore the same gcd.</div></div>
+    <div class="row ex"><span>Example</span><div><b>gcd(252, 198):</b>
+<div class="calc">252 = 1·198 + 54     gcd(252,198) = gcd(198,54)
+198 = 3·54  + 36              = gcd(54,36)
+ 54 = 1·36  + 18              = gcd(36,18)
+ 36 = 2·18  + 0               = gcd(18,0) = 18</div>
+      Each line divides the previous <i>divisor</i> by the previous <i>remainder</i>. The answer is <b>the last nonzero remainder: 18</b>. Check: 252 = 2²·3²·7 and 198 = 2·3²·11 give gcd 2·3² = 18 ✓.</div></div>
+    <div class="row"><span>Speed</span><div>Every two steps the remainder at least halves, so it takes at most about 2·log₂(a) steps.</div></div>
+  </div>
+</section>
+
+<!-- ======================= LECTURE 10 ======================= -->
+<section id="l10" class="lecture">
+  <p class="eyebrow">Lecture 10 · Rosen §4.3–4.4</p>
+  <h2><span class="n">10</span>Bézout, inverses, solving congruences</h2>
 
   <div class="skill" id="sk1">
-    <h3>1 · Extended Euclid <span class="k">gcd(a, b) = sa + tb</span></h3>
-    <div class="row"><span>When</span><div>“Find gcd and integers s, t”, or any time you need an inverse.</div></div>
-    <div class="row"><span>Do</span><div><b>Forwards:</b> divide, then replace (a, b) by (b, r) until the remainder is 0. The last nonzero remainder is the gcd.<br><b>Backwards:</b> solve the second-to-last line for the gcd, then substitute the line above it, and keep going up. <b>Collect terms after every substitution.</b><br><b>Speed version (table):</b> keep columns r, s, t where every row means r = s·a + t·b. Start with rows (a, 1, 0) and (b, 0, 1). Each new row = row two above − q × row above. The row before the 0 gives the answer.</div></div>
-    <div class="row ex"><span>Example</span><div>gcd(84, 33):
-<div class="calc">84 = 2·33 + 18          3 = 18 − 1·15
-33 = 1·18 + 15            = 18 − (33 − 18)        = 2·18 − 33
-18 = 1·15 + 3   ← gcd     = 2(84 − 2·33) − 33     = 2·84 − 5·33
-15 = 5·3  + 0             check: 168 − 165 = 3 ✓</div>
+    <h3>10.1 · Bézout &amp; extended Euclid <span class="k">gcd(a, b) = sa + tb</span></h3>
+    <div class="row"><span>Idea</span><div><b>Bézout's theorem:</b> the gcd can always be written as an integer combination of a and b. Getting s and t is the key to everything else in this lecture.</div></div>
+    <div class="row"><span>How</span><div>Run Euclid <b>forwards</b>. Then go <b>backwards</b>: solve the second-to-last line for the gcd, and keep replacing the smallest remainder using the line above it. Collect terms after every substitution.</div></div>
+    <div class="row ex"><span>Example</span><div><b>gcd(84, 33) as s·84 + t·33:</b>
+<div class="calc">FORWARDS                 BACKWARDS
+84 = 2·33 + 18           3 = 18 − 1·15                 (line 3, solved for 3)
+33 = 1·18 + 15             = 18 − (33 − 18)            (15 = 33 − 18, from line 2)
+18 = 1·15 + 3  ← gcd       = 2·18 − 33                 (collect: two 18s)
+15 = 5·3  + 0              = 2(84 − 2·33) − 33         (18 = 84 − 2·33, from line 1)
+                           = 2·84 − 5·33               (collect: −4·33 − 33)</div>
+      So 3 = 2·84 − 5·33 with <b>s = 2, t = −5</b>. Check: 168 − 165 = 3 ✓. Each step only uses the line above, and you stop once only 84 and 33 remain.</div></div>
+    <div class="row"><span>Faster</span><div><b>Table method</b> (same answer, fewer slips): keep columns r, s, t, where each row means r = s·84 + t·33. Start with (84, 1, 0) and (33, 0, 1). Each new row = (row two up) − q·(row above), where q is the quotient from Euclid.
       <div class="scroll"><table class="et"><tr><th>q</th><th>r</th><th>s</th><th>t</th></tr>
         <tr><td></td><td>84</td><td>1</td><td>0</td></tr>
         <tr><td>2</td><td>33</td><td>0</td><td>1</td></tr>
@@ -229,67 +340,114 @@ footer{color:var(--muted);font-size:.85rem;padding-block:40px 30px;border-top:1p
         <tr><td>1</td><td>15</td><td>−1</td><td>3</td></tr>
         <tr class="hit"><td>5</td><td>3</td><td>2</td><td>−5</td></tr>
         <tr><td></td><td>0</td><td></td><td></td></tr></table></div>
-      The q in each row is the quotient when the row above is divided by this row's r.</div></div>
-    <div class="row trap"><span>Trap</span><div>Arithmetic slips in the back-substitution. Always plug s, t back in to check. It takes 10 seconds.</div></div>
+      e.g. the 18 row = (84, 1, 0) − 2·(33, 0, 1) = (18, 1, −2).</div></div>
+  </div>
+
+  <div class="skill">
+    <h3>10.2 · Two facts Bézout gives you</h3>
+    <div class="row"><span>Thm</span><div><b>If gcd(a, b) = 1 and a | bc, then a | c.</b> Proof: 1 = sa + tb. Multiply by c: c = sac + tbc. a divides sac, and a divides tbc (since a | bc), so a | c.</div></div>
+    <div class="row"><span>Thm</span><div><b>If p is prime and p | ab, then p | a or p | b.</b> Proof: if p ∤ a, then gcd(a, p) = 1 (p's only divisors are 1 and p), so p | b by the fact above. Fails for non-primes: 6 | 3·10 but 6 ∤ 3 and 6 ∤ 10.</div></div>
   </div>
 
   <div class="skill" id="sk2">
-    <h3>2 · Inverse mod m <span class="k">find ā with aā ≡ 1</span></h3>
-    <div class="row"><span>When</span><div>“Find an inverse of a modulo m”, or you need to divide in a congruence.</div></div>
-    <div class="row"><span>Do</span><div>An inverse exists <b>iff gcd(a, m) = 1</b>. Extended Euclid gives 1 = sa + tm, so <b>s is the inverse</b>. Reduce s into 0…m−1. Small m: just try multiples.</div></div>
-    <div class="row ex"><span>Example</span><div>Inverse of 33 mod 84? gcd = 3, so <b>none</b>. Inverse of 11 mod 26: 26 = 2·11 + 4, 11 = 2·4 + 3, 4 = 3 + 1, so 1 = 4 − 3 = 4 − (11 − 2·4) = 3·4 − 11 = 3(26 − 2·11) − 11 = 3·26 − 7·11. s = −7 ≡ <b>19</b>. Check: 11·19 = 209 = 8·26 + 1 ✓</div></div>
-    <div class="row trap"><span>Trap</span><div>Leaving the answer negative (−7). Write −7 ≡ 19 (mod 26). Also: you want the coefficient of <b>a</b>, not of m.</div></div>
+    <h3>10.3 · Inverses mod m <span class="k">“dividing” in mod world</span></h3>
+    <div class="row"><span>Idea</span><div>An inverse of a mod m is a number ā with <b>a·ā ≡ 1 (mod m)</b>. It plays the role of 1/a.</div></div>
+    <div class="row"><span>Rule</span><div><b>a has an inverse mod m ⟺ gcd(a, m) = 1</b>, and it's unique mod m. Find it with extended Euclid: 1 = s·a + t·m, so s·a ≡ 1 (mod m) and <b>s is the inverse</b> (reduce it into 0…m−1). For small m, just try multiples.</div></div>
+    <div class="row ex"><span>Example</span><div><b>Inverse of 11 mod 26.</b> Euclid: 26 = 2·11 + 4, 11 = 2·4 + 3, 4 = 1·3 + 1. Backwards: 1 = 4 − 3 = 4 − (11 − 2·4) = 3·4 − 11 = 3(26 − 2·11) − 11 = 3·26 − 7·11.<br>
+      The coefficient of 11 is −7, and −7 + 26 = <b>19</b>. Check: 11·19 = 209 = 8·26 + 1 ✓.<br>
+      <b>Inverse of 33 mod 84?</b> gcd = 3 ≠ 1, so <b>none</b>. (33x is always a multiple of 3, and so is 84k, so 33x − 84k can never equal 1.)</div></div>
+    <div class="row trap"><span>Trap</span><div>Leaving it negative (−7). Taking the coefficient of m instead of a.</div></div>
   </div>
 
   <div class="skill" id="sk3">
-    <h3>3 · Solve ax ≡ b (mod m)</h3>
-    <div class="row"><span>Do</span><div>
-      1. d = gcd(a, m).<br>2. If <b>d ∤ b</b>: no solution.<br>3. Else write d = sa + tm. Then x₀ = (b/d)·s.<br>4. All solutions: <b>x₀ + k·(m/d)</b>. That's exactly <b>d</b> answers in 0…m−1.</div></div>
-    <div class="row ex"><span>Example</span><div>12x ≡ 8 (mod 20). d = gcd(12, 20) = 4 and 4 | 8 ✓. 20 = 12 + 8, 12 = 8 + 4, so 4 = 12 − 8 = 12 − (20 − 12) = 2·12 − 20, so s = 2. x₀ = (8/4)·2 = 4. m/d = 5, so <b>x ≡ 4 (mod 5): x = 4, 9, 14, 19</b>. Check 12·9 = 108 ≡ 8 ✓</div></div>
-    <div class="row trap"><span>Trap</span><div>Giving one answer when d &gt; 1. The quiz will want all d of them in 0…m−1, or the form x ≡ x₀ (mod m/d).</div></div>
+    <h3>10.4 · Solving ax ≡ b (mod m)</h3>
+    <div class="row"><span>Recipe</span><div>
+      1. <b>d = gcd(a, m).</b><br>
+      2. If <b>d ∤ b → no solution</b>. (ax − km is always a multiple of d, so it can't equal b.)<br>
+      3. Else write d = s·a + t·m. Then <b>x₀ = (b/d)·s</b> is a solution.<br>
+      4. All solutions: <b>x ≡ x₀ (mod m/d)</b>. That's exactly <b>d</b> answers in 0…m−1.<br>
+      Shortcut when d = 1: x ≡ ā·b (multiply both sides by the inverse).</div></div>
+    <div class="row ex"><span>Example</span><div><b>7x ≡ 3 (mod 10).</b> gcd = 1. Inverse of 7 mod 10 is 3 (7·3 = 21 ≡ 1). Multiply both sides by 3: x ≡ 9. Check 7·9 = 63 ≡ 3 ✓.<br>
+      <b>12x ≡ 8 (mod 20).</b> d = gcd(12, 20) = 4, and 4 | 8, so it's solvable. Euclid: 20 = 1·12 + 8, 12 = 1·8 + 4, so 4 = 12 − 8 = 12 − (20 − 12) = 2·12 − 20, so s = 2. x₀ = (8/4)·2 = 4. Step size m/d = 5, so <b>x = 4, 9, 14, 19</b> (4 answers, since d = 4). Check 12·9 = 108 = 5·20 + 8 ✓.<br>
+      <b>12x ≡ 7 (mod 20):</b> 4 ∤ 7, so <b>no solution</b>.</div></div>
+    <div class="row"><span>Cancel</span><div><b>Cancellation law:</b> if ac ≡ bc (mod m) and <b>gcd(c, m) = 1</b>, then a ≡ b (mod m). (Multiply by c's inverse.) Without gcd = 1 it fails, like 2·3 ≡ 4·3 (mod 6).</div></div>
   </div>
+</section>
+
+<!-- ======================= LECTURE 11 ======================= -->
+<section id="l11" class="lecture">
+  <p class="eyebrow">Lecture 11 · Rosen §4.4, 4.6</p>
+  <h2><span class="n">11</span>CRT, Fermat, RSA</h2>
 
   <div class="skill" id="sk4">
-    <h3>4 · Chinese remainder theorem</h3>
-    <div class="row"><span>When</span><div>Several congruences x ≡ aᵢ (mod mᵢ) with <b>pairwise coprime</b> mᵢ. There's a unique answer mod M = m₁m₂⋯.</div></div>
-    <div class="row"><span>Do</span><div>M = product. Mᵢ = M/mᵢ (the product of the <i>other</i> moduli). yᵢ = inverse of <b>Mᵢ mod mᵢ</b> (reduce Mᵢ mod mᵢ first, it's tiny). Then x = Σ aᵢMᵢyᵢ, reduced mod M.<br><i>Why:</i> mod mᵢ, every other term has mᵢ hiding inside its Mⱼ, so it's 0, and Mᵢyᵢ ≡ 1.</div></div>
-    <div class="row ex"><span>Example</span><div>x ≡ 1 (mod 3), x ≡ 4 (mod 5), x ≡ 6 (mod 7). M = 105.
-<div class="calc">M₁ = 35 ≡ 2 (mod 3)   inverse of 2 mod 3 → y₁ = 2
-M₂ = 21 ≡ 1 (mod 5)                    → y₂ = 1
-M₃ = 15 ≡ 1 (mod 7)                    → y₃ = 1
+    <h3>11.1 · Chinese remainder theorem</h3>
+    <div class="row"><span>Idea</span><div>Knowing x's remainder mod 3, mod 5 and mod 7 pins x down completely mod 3·5·7 = 105, as long as the moduli share no common factors.</div></div>
+    <div class="row"><span>Rule</span><div>If m₁, …, mₙ are <b>pairwise relatively prime</b>, then x ≡ aᵢ (mod mᵢ) for all i has a solution, and it is <b>unique mod M = m₁⋯mₙ</b>.<br>
+      <b>Build it:</b> Mᵢ = M/mᵢ (the product of the <i>other</i> moduli), yᵢ = inverse of Mᵢ mod mᵢ, then <b>x = Σ aᵢMᵢyᵢ mod M</b>.</div></div>
+    <div class="row ex"><span>Example</span><div><b>x ≡ 1 (mod 3), x ≡ 4 (mod 5), x ≡ 6 (mod 7).</b> M = 105.
+<div class="calc">M₁ = 105/3 = 35.  35 ≡ 2 (mod 3).  Inverse of 2 mod 3 is 2 (2·2=4≡1)  → y₁ = 2
+M₂ = 105/5 = 21.  21 ≡ 1 (mod 5).                                   → y₂ = 1
+M₃ = 105/7 = 15.  15 ≡ 1 (mod 7).                                   → y₃ = 1
 x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
-      Check: 34 = 11·3+1 ✓, 34 = 6·5+4 ✓, 34 = 4·7+6 ✓. <b>Back-substitution</b> also works: x = 6 + 7t, then plug into the others one at a time.</div></div>
-    <div class="row trap"><span>Trap</span><div>Using the inverse of mᵢ instead of the inverse of Mᵢ. Forgetting to reduce mod M at the end.</div></div>
+      <b>Why it works:</b> mod 3, the terms 4·21 and 6·15 vanish (21 and 15 are multiples of 3), and 35·2 ≡ 1, so x ≡ 1·1 = 1 ✓. The same thing happens mod 5 and mod 7. Each term is “1 on its own modulus, 0 on the others.”<br>
+      Check 34: 34 = 11·3 + 1 ✓, 34 = 6·5 + 4 ✓, 34 = 4·7 + 6 ✓.</div></div>
+    <div class="row"><span>Alt</span><div><b>Back-substitution:</b> x ≡ 6 (mod 7) means x = 6 + 7t. Plug into mod 5: 6 + 7t ≡ 4, so 1 + 2t ≡ 4, so 2t ≡ 3, so t ≡ 4 (multiply by 3, the inverse of 2). Now x = 34 + 35u. Mod 3: 34 + 35u ≡ 1 + 2u ≡ 1, so u ≡ 0. So x ≡ 34 (mod 105). Same answer.</div></div>
+    <div class="row trap"><span>Trap</span><div>yᵢ inverts <b>Mᵢ</b>, not mᵢ. Moduli must be pairwise coprime (x ≡ 0 mod 2 and x ≡ 1 mod 4 has no solution). Reduce mod M at the end.</div></div>
   </div>
 
   <div class="skill" id="sk5">
-    <h3>5 · Big powers: repeated squaring + Fermat</h3>
-    <div class="row"><span>Do</span><div><b>If the modulus p is prime and p ∤ a:</b> a<sup>p−1</sup> ≡ 1, so replace the exponent n by <b>n mod (p − 1)</b>.<br><b>Then (or if the modulus isn't prime):</b> square repeatedly, a, a², a⁴, a⁸, …, reducing each time. Write the exponent in binary and multiply the matching squares.</div></div>
-    <div class="row ex"><span>Example</span><div>4<sup>1000</sup> mod 13: 13 is prime, so the exponent works mod 12. 1000 = 83·12 + 4, so 4<sup>1000</sup> ≡ 4⁴ = 256 = 19·13 + 9 ≡ <b>9</b>.<br>
-      3<sup>45</sup> mod 20 (not prime, so square):
-<div class="calc">3¹ ≡ 3, 3² ≡ 9, 3⁴ ≡ 81 ≡ 1, 3⁸ ≡ 1, 3¹⁶ ≡ 1, 3³² ≡ 1
-45 = 32 + 8 + 4 + 1  →  3⁴⁵ ≡ 1·1·1·3 = 3 (mod 20)</div></div></div>
-    <div class="row trap"><span>Trap</span><div>Reducing the exponent mod p instead of mod <b>p − 1</b>. Using Fermat with a composite modulus.</div></div>
+    <h3>11.2 · Fermat's little theorem</h3>
+    <div class="row"><span>Rule</span><div>If <b>p is prime and p ∤ a</b>, then <b>a<sup>p−1</sup> ≡ 1 (mod p)</b>. For every a: a<sup>p</sup> ≡ a (mod p).<br>
+      <b>Use:</b> mod a prime, exponents only matter <b>mod p − 1</b>. Write n = q(p−1) + r; then a<sup>n</sup> = (a<sup>p−1</sup>)<sup>q</sup>·a<sup>r</sup> ≡ 1·a<sup>r</sup>.</div></div>
+    <div class="row ex"><span>Example</span><div><b>3¹⁰⁰ mod 7.</b> 7 is prime and 7 ∤ 3, so 3⁶ ≡ 1. 100 = 16·6 + 4, so 3¹⁰⁰ = (3⁶)¹⁶·3⁴ ≡ 1·81 ≡ <b>4</b> (81 = 11·7 + 4).<br>
+      <b>4¹⁰⁰⁰ mod 13.</b> Exponents work mod 12: 1000 = 83·12 + 4, so 4¹⁰⁰⁰ ≡ 4⁴ = 256 ≡ <b>9</b> (256 = 19·13 + 9).</div></div>
+    <div class="row"><span>Why</span><div><b>Freshman's dream:</b> (x + y)<sup>p</sup> ≡ x<sup>p</sup> + y<sup>p</sup> (mod p), because p divides every middle binomial coefficient C(p, k). Write a = 1 + 1 + ⋯ + 1 and apply it repeatedly: a<sup>p</sup> ≡ 1 + 1 + ⋯ + 1 = a. Then cancel one a (allowed since gcd(a, p) = 1).</div></div>
+    <div class="row"><span>Test</span><div><b>Primality test:</b> if a<sup>n−1</sup> ≢ 1 (mod n), then n is <b>definitely composite</b>. If it ≡ 1, n might still be composite. Example: 2¹⁴ mod 15 = 4, so 15 is composite. A composite that passes for base b is a <b>pseudoprime</b>; one that passes for every b coprime to n is a <b>Carmichael number</b> (561).</div></div>
+    <div class="row trap"><span>Trap</span><div>Reduce the exponent mod <b>p − 1</b>, not p. Only for prime moduli, and only if p ∤ a. For a composite modulus, use repeated squaring (7.5).</div></div>
   </div>
 
   <div class="skill" id="sk6">
-    <h3>6 · RSA</h3>
-    <div class="row"><span>Setup</span><div>Primes p, q. n = pq. φ = (p−1)(q−1). Pick e with gcd(e, φ) = 1.<br><b>Public:</b> (n, e). <b>Private:</b> p, q, d where <b>d = inverse of e mod φ</b>.<br><b>Encrypt:</b> c = m<sup>e</sup> mod n. <b>Decrypt:</b> m = c<sup>d</sup> mod n.</div></div>
-    <div class="row ex"><span>Example</span><div>p = 7, q = 13: n = 91, φ = 6·12 = 72. e = 5 (gcd(5, 72) = 1). 72 = 14·5 + 2, 5 = 2·2 + 1, so 1 = 5 − 2·2 = 5 − 2(72 − 14·5) = 29·5 − 2·72, so <b>d = 29</b>. Check 5·29 = 145 = 2·72 + 1 ✓.<br>
-      Encrypt m = 2: c = 2⁵ = <b>32</b>. Decrypt: 32<sup>29</sup> mod 91 gives back 2 (by repeated squaring: 32² ≡ 23, 32⁴ ≡ 74, 32⁸ ≡ 16, 32¹⁶ ≡ 74; 29 = 16+8+4+1 → 74·16·74·32 ≡ 2 ✓).</div></div>
-    <div class="row trap"><span>Trap</span><div>Finding d mod n instead of mod φ = (p−1)(q−1). Mixing up which numbers are public.</div></div>
+    <h3>11.3 · RSA</h3>
+    <div class="row"><span>Idea</span><div>Public-key encryption works like an open padlock. Anyone can lock a message with the public key (n, e), but only the owner knows d, which unlocks it. Security comes from factoring n being hard.</div></div>
+    <div class="row"><span>Setup</span><div>
+      1. Pick primes p, q. Let <b>n = pq</b> and φ = <b>(p−1)(q−1)</b>.<br>
+      2. Pick e with gcd(e, φ) = 1. <b>Public key: (n, e).</b><br>
+      3. <b>d = inverse of e mod φ</b> (extended Euclid). <b>Private: p, q, d.</b><br>
+      4. Encrypt: <b>c = m<sup>e</sup> mod n</b>. Decrypt: <b>m = c<sup>d</sup> mod n</b>.</div></div>
+    <div class="row ex"><span>Example</span><div>p = 7, q = 13 → n = 91, φ = 6·12 = 72. e = 5 works (gcd(5, 72) = 1).<br>
+      <b>Find d:</b> 72 = 14·5 + 2, 5 = 2·2 + 1. Back: 1 = 5 − 2·2 = 5 − 2(72 − 14·5) = 29·5 − 2·72. So <b>d = 29</b> (check: 5·29 = 145 = 2·72 + 1 ✓).<br>
+      <b>Encrypt m = 2:</b> c = 2⁵ = 32 mod 91 = <b>32</b>.<br>
+      <b>Decrypt:</b> 32²⁹ mod 91 by repeated squaring: 32² ≡ 23, 32⁴ ≡ 74, 32⁸ ≡ 16, 32¹⁶ ≡ 74. Since 29 = 16 + 8 + 4 + 1, the product 74·16·74·32 ≡ <b>2</b> ✓, the original message.</div></div>
+    <div class="row"><span>Why</span><div>de = 1 + k(p−1)(q−1), so c<sup>d</sup> = m<sup>de</sup> = m·(m<sup>(p−1)(q−1)</sup>)<sup>k</sup>. By Fermat this is ≡ m mod p and ≡ m mod q, so ≡ m mod pq by the uniqueness part of the CRT.</div></div>
+    <div class="row trap"><span>Trap</span><div>d is the inverse of e mod <b>(p−1)(q−1)</b>, not mod n. n and e are public; p, q, d are secret.</div></div>
   </div>
+</section>
 
-  <div class="note"><b>HW 5 lines up with these skills.</b> It's due tonight, so redo these yourself; this page doesn't solve them. Skill 1 and 2: Ex 5.1, 5.5. Skill 3: 5.2–5.4. Skill 4: 5.7, 5.8. Skill 5: 5.9, 5.10 (and 5.6 on x² ≡ 1). Skill 6: 5.11, 5.12. Exams reuse homework problems a lot, so redoing HW 5 cold is great practice after you submit it.</div>
+<!-- ======================= TOOLS ======================= -->
+<section id="tools" class="lecture">
+  <p class="eyebrow">From earlier chapters</p>
+  <h2><span class="n">★</span>Proof tools you'll need</h2>
+  <div class="skill">
+    <div class="row"><span>Defs</span><div><b>even:</b> n = 2k; <b>odd:</b> n = 2k + 1 (k an integer). In mod language: n ≡ 0 or n ≡ 1 (mod 2). Use a <b>different letter</b> for each number (m = 2j + 1, n = 2k + 1).</div></div>
+    <div class="row"><span>Direct</span><div>Assume the hypothesis, unpack the definitions, and do algebra until the conclusion appears (like 7.1).</div></div>
+    <div class="row"><span>Contra&shy;position</span><div>To prove p → q, prove ¬q → ¬p. <b>Write “By contraposition” first.</b> Example: “if 3 ∤ ab then 3 ∤ a” is the same as proving “if 3 | a then 3 | ab”, which is easy.</div></div>
+    <div class="row"><span>Contra&shy;diction</span><div>Assume the opposite and reach something impossible (infinitely many primes, √2 irrational). <b>Start with “Assume for a contradiction”</b> and end by naming the contradiction.</div></div>
+    <div class="row"><span>Cases mod m</span><div>Every integer is ≡ 0, 1, …, m−1 (mod m), so you can check each case. Example: <b>n² mod 3 is always 0 or 1.</b> If n ≡ 0, n² ≡ 0. If n ≡ 1, n² ≡ 1. If n ≡ 2, n² ≡ 4 ≡ 1. So n² ≢ 2 (mod 3) ever.</div></div>
+    <div class="row"><span>“iff”</span><div>Prove both directions separately, labeled (⇒) and (⇐).</div></div>
+  </div>
 </section>
 
 <section id="drill">
-  <h2><span class="n">03</span>Drill machine</h2>
-  <p class="sub">A new problem every time, so you can't run out. Work it on paper, type your answer, check it, and open the steps if you're stuck.</p>
+  <h2><span class="n">▶</span>Drill machine</h2>
+  <p class="sub">Unlimited new problems. Work on paper, type your answer, check. If you're wrong, open <i>Show steps</i>, then do another of the same type.</p>
   <div class="drill">
     <div class="topics" role="group" aria-label="Topic">
       <button type="button" data-t="mixed" aria-pressed="true">Mixed</button>
-      <button type="button" data-t="bezout" aria-pressed="false">gcd &amp; Bézout</button>
+      <button type="button" data-t="divalg" aria-pressed="false">a mod d</button>
+      <button type="button" data-t="modarith" aria-pressed="false">Mod arithmetic</button>
+      <button type="button" data-t="base" aria-pressed="false">Base b</button>
+      <button type="button" data-t="factor" aria-pressed="false">gcd/lcm</button>
+      <button type="button" data-t="bezout" aria-pressed="false">Euclid &amp; Bézout</button>
       <button type="button" data-t="inverse" aria-pressed="false">Inverse</button>
       <button type="button" data-t="lincong" aria-pressed="false">ax ≡ b</button>
       <button type="button" data-t="crt" aria-pressed="false">CRT</button>
@@ -312,85 +470,88 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
 </section>
 
 <section id="cards">
-  <h2><span class="n">04</span>Flashcards</h2>
+  <h2><span class="n">◆</span>Flashcards</h2>
   <p class="sub">Say the answer out loud, then tap.</p>
   <div class="cards">
-    <details class="card"><summary>Bézout's theorem</summary><p>For positive integers a, b there are integers s, t with gcd(a, b) = sa + tb. Extended Euclid finds them.</p></details>
-    <details class="card"><summary>The lemma that makes Euclid work</summary><p>If a = bq + r then gcd(a, b) = gcd(b, r): a, b and b, r have exactly the same common divisors.</p></details>
-    <details class="card"><summary>When does a have an inverse mod m?</summary><p>Exactly when gcd(a, m) = 1. It's the s in 1 = sa + tm, and it's unique mod m.</p></details>
-    <details class="card"><summary>When is ax ≡ b (mod m) solvable?</summary><p>Exactly when d = gcd(a, m) divides b.</p></details>
-    <details class="card"><summary>How many solutions does ax ≡ b (mod m) have?</summary><p>d of them mod m (when d | b): x₀ + k(m/d) for k = 0, …, d − 1.</p></details>
-    <details class="card"><summary>When can you cancel c from ac ≡ bc (mod m)?</summary><p>When gcd(c, m) = 1 (multiply by c's inverse). Counterexample otherwise: 2·3 ≡ 4·3 (mod 6) but 2 ≢ 4.</p></details>
-    <details class="card"><summary>gcd(a, b) = 1 and a | bc ⇒ ?</summary><p>a | c. (1 = sa + tb, multiply by c: c = sac + tbc, and a divides both terms.)</p></details>
-    <details class="card"><summary>p prime and p | ab ⇒ ?</summary><p>p | a or p | b. Fails for composites: 6 | 3·10 but 6 ∤ 3 and 6 ∤ 10.</p></details>
-    <details class="card"><summary>Chinese remainder theorem</summary><p>If m₁, …, mₙ are pairwise relatively prime, then x ≡ aᵢ (mod mᵢ) for all i has a solution, and it's unique mod M = m₁⋯mₙ.</p></details>
-    <details class="card"><summary>CRT construction formula</summary><p>x = Σ aᵢMᵢyᵢ where Mᵢ = M/mᵢ and yᵢ is the inverse of Mᵢ mod mᵢ.</p></details>
-    <details class="card"><summary>Fermat's little theorem</summary><p>p prime, p ∤ a ⇒ a<sup>p−1</sup> ≡ 1 (mod p). For every a: a<sup>p</sup> ≡ a (mod p).</p></details>
-    <details class="card"><summary>Freshman's dream</summary><p>(x + y)<sup>p</sup> ≡ x<sup>p</sup> + y<sup>p</sup> (mod p) for p prime, because p divides C(p, k) for 0 &lt; k &lt; p. That's the key step in the lecture's proof of Fermat.</p></details>
-    <details class="card"><summary>a<sup>n</sup> mod a prime p: what do you do to n?</summary><p>Reduce n mod (p − 1), as long as p ∤ a.</p></details>
-    <details class="card"><summary>Fermat primality test</summary><p>If a<sup>n−1</sup> ≢ 1 (mod n) then n is definitely composite. If ≡ 1, it proves nothing.</p></details>
-    <details class="card"><summary>Pseudoprime vs Carmichael number</summary><p>Pseudoprime to base b: a composite n with b<sup>n−1</sup> ≡ 1 (mod n). Carmichael: a composite that passes for every b coprime to n (e.g. 561 = 3·11·17).</p></details>
-    <details class="card"><summary>RSA: what's public, what's private?</summary><p>Public: n = pq and e. Private: p, q, (p−1)(q−1), and d.</p></details>
-    <details class="card"><summary>RSA: how do you get d?</summary><p>d is the inverse of e mod (p−1)(q−1). Needs gcd(e, (p−1)(q−1)) = 1; find it with extended Euclid.</p></details>
-    <details class="card"><summary>Why does RSA decryption work?</summary><p>m<sup>de</sup> = m·(m<sup>(p−1)(q−1)</sup>)<sup>k</sup>. By Fermat that's ≡ m mod p and mod q, so ≡ m mod n by CRT uniqueness.</p></details>
-    <details class="card"><summary>When is m ↦ m<sup>e</sup> mod p one-to-one?</summary><p>When gcd(e, p − 1) = 1. The inverse is c ↦ c<sup>d</sup> with de ≡ 1 (mod p − 1).</p></details>
-    <details class="card"><summary>Why is Euclid fast?</summary><p>Every two steps the remainder at least halves. So if a &lt; 2ⁿ it takes at most 2n steps.</p></details>
+    <details class="card"><summary>Definition of a | b</summary><p>a ≠ 0 and b = ac for some integer c.</p></details>
+    <details class="card"><summary>a | b and a | c ⇒ ?</summary><p>a | mb + nc for all integers m, n (in particular a | b + c).</p></details>
+    <details class="card"><summary>Division algorithm</summary><p>For integer a and d &gt; 0: unique q, r with a = dq + r and 0 ≤ r &lt; d. q = a div d, r = a mod d.</p></details>
+    <details class="card"><summary>−11 mod 3 = ?</summary><p>1, since −11 = 3(−4) + 1. Round the quotient down, and the remainder is never negative.</p></details>
+    <details class="card"><summary>Definition of a ≡ b (mod m)</summary><p>m | (a − b). Same as a mod m = b mod m, same as a = b + km.</p></details>
+    <details class="card"><summary>What can you do to congruences?</summary><p>Add, subtract, multiply, raise to powers. Not divide, unless the divisor is coprime to m.</p></details>
+    <details class="card"><summary>Decimal → base b</summary><p>Divide by b repeatedly; the remainders are the digits, read from the last one up.</p></details>
+    <details class="card"><summary>Repeated squaring</summary><p>Compute a, a², a⁴, a⁸, … mod m; write n in binary; multiply the matching powers.</p></details>
+    <details class="card"><summary>Prime</summary><p>An integer p &gt; 1 whose only positive divisors are 1 and p. 1 is not prime.</p></details>
+    <details class="card"><summary>Fundamental theorem of arithmetic</summary><p>Every integer &gt; 1 is a product of primes in exactly one way, up to order.</p></details>
+    <details class="card"><summary>How far do you test to see if n is prime?</summary><p>Primes up to √n. A composite always has a prime factor ≤ √n.</p></details>
+    <details class="card"><summary>Why are there infinitely many primes?</summary><p>For any finite list, p₁⋯pₙ + 1 leaves remainder 1 when divided by each one, so its prime factors aren't on the list.</p></details>
+    <details class="card"><summary>gcd / lcm from factorizations</summary><p>gcd: min of the exponents. lcm: max. And gcd·lcm = ab.</p></details>
+    <details class="card"><summary>a | b from factorizations</summary><p>Every exponent in a is ≤ the matching exponent in b.</p></details>
+    <details class="card"><summary>Euclid's key lemma</summary><p>a = bq + r ⇒ gcd(a, b) = gcd(b, r). Stop when the remainder is 0; the gcd is the last nonzero remainder.</p></details>
+    <details class="card"><summary>Bézout's theorem</summary><p>gcd(a, b) = sa + tb for some integers s, t. Find them with extended Euclid.</p></details>
+    <details class="card"><summary>gcd(a, b) = 1 and a | bc ⇒ ?</summary><p>a | c.</p></details>
+    <details class="card"><summary>p prime, p | ab ⇒ ?</summary><p>p | a or p | b. False for composites: 6 | 3·10.</p></details>
+    <details class="card"><summary>When does a have an inverse mod m?</summary><p>Exactly when gcd(a, m) = 1. It's the s from 1 = sa + tm.</p></details>
+    <details class="card"><summary>When is ax ≡ b (mod m) solvable, and how many solutions?</summary><p>When d = gcd(a, m) divides b. Then there are d solutions mod m, spaced m/d apart.</p></details>
+    <details class="card"><summary>Cancellation law</summary><p>ac ≡ bc (mod m) and gcd(c, m) = 1 ⇒ a ≡ b (mod m).</p></details>
+    <details class="card"><summary>Chinese remainder theorem</summary><p>For pairwise coprime moduli, the system x ≡ aᵢ (mod mᵢ) has a unique solution mod M = ∏mᵢ.</p></details>
+    <details class="card"><summary>CRT formula</summary><p>x = Σ aᵢMᵢyᵢ, with Mᵢ = M/mᵢ and yᵢ = Mᵢ⁻¹ mod mᵢ.</p></details>
+    <details class="card"><summary>Fermat's little theorem</summary><p>p prime, p ∤ a ⇒ a<sup>p−1</sup> ≡ 1 (mod p). For every a, a<sup>p</sup> ≡ a.</p></details>
+    <details class="card"><summary>Freshman's dream</summary><p>(x + y)<sup>p</sup> ≡ x<sup>p</sup> + y<sup>p</sup> (mod p) for p prime.</p></details>
+    <details class="card"><summary>Fermat test says a<sup>n−1</sup> ≢ 1 (mod n). Conclusion?</summary><p>n is composite. (If it is ≡ 1, you can't conclude anything.)</p></details>
+    <details class="card"><summary>RSA keys</summary><p>Public (n, e) with n = pq. Private d = e⁻¹ mod (p−1)(q−1). c = m<sup>e</sup>, m = c<sup>d</sup> (mod n).</p></details>
   </div>
 </section>
 
 <section id="proofs">
-  <h2><span class="n">05</span>Proof skeletons</h2>
-  <p class="sub">The short proofs from Lectures 10–11. Know the one key move in each.</p>
-
-  <details class="pf"><summary><span class="t">Lemma</span>a = bq + r ⇒ gcd(a, b) = gcd(b, r)</summary>
-    <p>Show the two pairs have the same common divisors. If d | a and d | b, then d | a − bq = r. If d | b and d | r, then d | bq + r = a. Same set of common divisors, so the same greatest one.</p></details>
-  <details class="pf"><summary><span class="t">Cor</span>gcd(a, b) = 1 and a | bc ⇒ a | c</summary>
-    <p>Bézout: 1 = sa + tb. Multiply by c: c = csa + ctb. a | csa, and a | ctb because a | bc. So a | c.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>p prime, p | ab ⇒ p | a or p | b</summary>
-    <p>If p | a, done. Otherwise p ∤ a; p's only positive divisors are 1 and p, so gcd(a, p) = 1. By the corollary, p | b.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>gcd(a, m) ∤ b ⇒ ax ≡ b (mod m) has no solution</summary>
-    <p>By contraposition. If ax ≡ b, then ax − b = km for some k, so b = ax − km. d = gcd(a, m) divides a and m, so it divides ax − km = b.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>d = gcd(a, m) | b ⇒ a solution exists</summary>
-    <p>Write d = sa + tm and b = cd. Then a(cs) = c(sa) = c(d − tm) ≡ cd = b (mod m), since m ≡ 0.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>Cancellation: ac ≡ bc and gcd(c, m) = 1 ⇒ a ≡ b</summary>
-    <p>gcd(c, m) = 1 gives an inverse c̄ with cc̄ ≡ 1. Multiply both sides by c̄: a ≡ a(cc̄) ≡ b(cc̄) ≡ b (mod m).</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>CRT existence</summary>
-    <p>Let M = m₁⋯mₙ and Mᵢ = M/mᵢ. Since the moduli are pairwise coprime, gcd(Mᵢ, mᵢ) = 1, so Mᵢ has an inverse yᵢ mod mᵢ. Set x = Σ aⱼMⱼyⱼ. Mod mᵢ, each Mⱼ with j ≠ i contains the factor mᵢ, so it's ≡ 0, leaving x ≡ aᵢMᵢyᵢ ≡ aᵢ·1 = aᵢ.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>Fermat's little theorem</summary>
-    <p>Write a = 1 + 1 + ⋯ + 1 and use the Freshman's dream repeatedly: a<sup>p</sup> = (1 + (a−1))<sup>p</sup> ≡ 1 + (a−1)<sup>p</sup> ≡ ⋯ ≡ 1 + 1 + ⋯ + 1 = a (mod p). If p ∤ a, gcd(a, p) = 1, so cancel one a: a<sup>p−1</sup> ≡ 1.</p></details>
-  <details class="pf"><summary><span class="t">Thm</span>RSA decrypts correctly (case gcd(m, n) = 1)</summary>
-    <p>de = 1 + k(p−1)(q−1), so c<sup>d</sup> ≡ m<sup>de</sup> = m·x with x = m<sup>k(p−1)(q−1)</sup>. Mod p: x = (m<sup>p−1</sup>)<sup>k(q−1)</sup> ≡ 1 by Fermat. Same mod q. 1 also solves both congruences, so by uniqueness in the CRT x ≡ 1 (mod pq). So c<sup>d</sup> ≡ m (mod n).</p></details>
-  <p class="sub">Proof rules still apply: say “by contraposition” or “assume for a contradiction” in the first line.</p>
+  <h2><span class="n">∎</span>Proof skeletons</h2>
+  <p class="sub">The short proofs from these lectures. Each has one key move.</p>
+  <details class="pf"><summary><span class="t">L7</span>a | b and a | c ⇒ a | b + c</summary>
+    <p>b = sa, c = ta, so b + c = (s + t)a. Similarly bc = (sc)a gives a | bc.</p></details>
+  <details class="pf"><summary><span class="t">L7</span>a ≡ b, c ≡ d (mod m) ⇒ a + c ≡ b + d and ac ≡ bd</summary>
+    <p>m | a − b and m | c − d. Sum: (a + c) − (b + d) = (a − b) + (c − d). Product: ac − bd = c(a − b) + b(c − d). m divides each piece, so m divides the total.</p></details>
+  <details class="pf"><summary><span class="t">L8</span>Infinitely many primes</summary>
+    <p>Assume for a contradiction p₁, …, pₙ are all the primes. Q = p₁⋯pₙ + 1 leaves remainder 1 on division by each pᵢ, so no pᵢ divides Q. Q &gt; 1 has a prime factor, which isn't on the list. Contradiction!</p></details>
+  <details class="pf"><summary><span class="t">L8</span>a = bq + r ⇒ gcd(a, b) = gcd(b, r)</summary>
+    <p>If d | a and d | b then d | a − bq = r. If d | b and d | r then d | bq + r = a. Same common divisors, so same gcd.</p></details>
+  <details class="pf"><summary><span class="t">L8</span>gcd(a, b)·lcm(a, b) = ab</summary>
+    <p>Exponent of each prime: min(aᵢ, bᵢ) + max(aᵢ, bᵢ) = aᵢ + bᵢ (check both cases aᵢ ≤ bᵢ and aᵢ &gt; bᵢ).</p></details>
+  <details class="pf"><summary><span class="t">L10</span>gcd(a, b) = 1 and a | bc ⇒ a | c</summary>
+    <p>1 = sa + tb, so c = sac + tbc. a | sac, and a | tbc since a | bc. So a | c.</p></details>
+  <details class="pf"><summary><span class="t">L10</span>gcd(a, m) ∤ b ⇒ no solution</summary>
+    <p>By contraposition: if ax ≡ b, then b = ax − km. d divides a and m, so d | b.</p></details>
+  <details class="pf"><summary><span class="t">L10</span>d | b ⇒ a solution exists</summary>
+    <p>d = sa + tm and b = cd. Then a(cs) = c(d − tm) ≡ cd = b (mod m).</p></details>
+  <details class="pf"><summary><span class="t">L10</span>Cancellation law</summary>
+    <p>gcd(c, m) = 1 gives an inverse c̄. Multiply ac ≡ bc by c̄: a ≡ b.</p></details>
+  <details class="pf"><summary><span class="t">L11</span>CRT existence</summary>
+    <p>gcd(Mᵢ, mᵢ) = 1, so yᵢ exists. Mod mᵢ, every Mⱼ with j ≠ i contains mᵢ, so it's ≡ 0. That leaves x ≡ aᵢMᵢyᵢ ≡ aᵢ.</p></details>
+  <details class="pf"><summary><span class="t">L11</span>Fermat's little theorem</summary>
+    <p>a<sup>p</sup> = (1 + ⋯ + 1)<sup>p</sup> ≡ 1<sup>p</sup> + ⋯ + 1<sup>p</sup> = a by the freshman's dream. If p ∤ a, cancel one a to get a<sup>p−1</sup> ≡ 1.</p></details>
+  <details class="pf"><summary><span class="t">L11</span>RSA decrypts (gcd(m, n) = 1)</summary>
+    <p>m<sup>de</sup> = m·(m<sup>(p−1)(q−1)</sup>)<sup>k</sup> ≡ m mod p and mod q by Fermat, so ≡ m mod n by CRT uniqueness.</p></details>
 </section>
 
 <section id="traps">
-  <h2><span class="n">06</span>Traps</h2>
+  <h2><span class="n">!</span>Traps</h2>
   <ul class="traps">
-    <li><b>Negative answers.</b> −7 mod 26 is 19. Answers live in 0…m−1 unless the question says otherwise.</li>
-    <li><b>One answer when there are d.</b> ax ≡ b (mod m) with d = gcd(a, m) &gt; 1 has d solutions mod m.</li>
-    <li><b>Cancelling illegally.</b> Never divide a congruence by c unless gcd(c, m) = 1.</li>
-    <li><b>CRT inverses.</b> yᵢ inverts Mᵢ (the product of the other moduli) mod mᵢ. And the moduli must be pairwise coprime.</li>
-    <li><b>Fermat's exponent.</b> Reduce it mod p − 1, not p, and only if p is prime and p ∤ a.</li>
-    <li><b>RSA's d.</b> Inverse of e mod (p−1)(q−1), not mod n.</li>
-    <li><b>Euclid line order.</b> Write it as “dividend = quotient · divisor + remainder”, with 0 ≤ remainder &lt; divisor.</li>
-    <li><b>Always plug back in.</b> Every answer on this quiz can be checked in seconds. Do it.</li>
+    <li><b>Negative remainders.</b> −11 mod 3 = 1, not −2. Always land in 0…m−1.</li>
+    <li><b>Dividing congruences.</b> Only cancel c when gcd(c, m) = 1.</li>
+    <li><b>Base conversion order.</b> The first remainder is the <i>last</i> digit. Read bottom-up.</li>
+    <li><b>Repeated squaring.</b> Square the <i>reduced</i> number and reduce every time.</li>
+    <li><b>1 isn't prime</b>, and p₁⋯pₙ + 1 isn't necessarily prime.</li>
+    <li><b>gcd vs lcm.</b> gcd uses the smaller exponents, lcm the larger.</li>
+    <li><b>Euclid's answer</b> is the last <i>nonzero</i> remainder.</li>
+    <li><b>Missing solutions.</b> ax ≡ b has d = gcd(a, m) solutions mod m.</li>
+    <li><b>CRT.</b> Invert Mᵢ (not mᵢ) mod mᵢ; the moduli must be pairwise coprime.</li>
+    <li><b>Fermat.</b> Reduce exponents mod p − 1, only for prime p with p ∤ a.</li>
+    <li><b>RSA.</b> d inverts e mod (p−1)(q−1), not mod n.</li>
+    <li><b>Check by plugging in.</b> Every computation here takes seconds to verify.</li>
   </ul>
 </section>
 
-<section id="induction">
-  <h2><span class="n">07</span>Just in case: induction</h2>
-  <p class="sub">The syllabus put induction on Thu Oct 8. If it was covered, a quiz question could be a simple induction proof.</p>
-  <div class="skill">
-    <div class="row"><span>Idea</span><div>Dominoes: if the first one falls (base case) and each falling domino knocks over the next (inductive step), then they all fall.</div></div>
-    <div class="row"><span>Template</span><div>To prove P(n) for all n ≥ 1: <b>Base case:</b> check P(1). <b>Inductive step:</b> “Assume P(k) for some k ≥ 1” (the inductive hypothesis). Use it to prove P(k + 1). <b>Conclude</b> P(n) for all n ≥ 1 by induction.</div></div>
-    <div class="row ex"><span>Example</span><div>1 + 2 + ⋯ + n = n(n + 1)/2. Base: 1 = 1·2/2 ✓. Step: assume 1 + ⋯ + k = k(k + 1)/2. Then 1 + ⋯ + k + (k + 1) = k(k + 1)/2 + (k + 1) = (k + 1)(k + 2)/2, which is P(k + 1) ✓.</div></div>
-    <div class="row"><span>Strong</span><div>Strong induction: in the step, assume P(1), …, P(k) all hold, not just P(k). Use it when k + 1 breaks into smaller pieces (e.g. every n ≥ 2 is a product of primes). <b>Well-ordering:</b> every nonempty set of positive integers has a least element.</div></div>
-    <div class="row trap"><span>Trap</span><div>Assuming what you want to prove (P(k + 1)). Skipping the base case.</div></div>
-  </div>
-</section>
-
 <footer>
-  Made as a study aid for Math 55 at UC Berkeley, Fall 2026. All examples and practice problems are original; homework problems are referenced, not solved. Scope is inferred from the course schedule; trust what your GSI announces.
+  A study aid for Math 55 at UC Berkeley, Fall 2026. All examples and practice problems are original; homework problems are not reproduced or solved.
 </footer>
 </main>
 
@@ -457,6 +618,102 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
   const HW_BLOCK={bezout:["37,101","101,37","42,114","114,42"],power:["7,2026,13","3,1001,17","7,222,13","2,340,341","2,340,11","2,340,31"],rsa:["5,11,3","11,5,3"],crt:["4,7,9"]};
 
   const gen={
+    divalg(){
+      let a,d;
+      const block=["73,12","3,5","-60,7"];
+      do{ d=R(3,25); a=Math.random()<0.45?-R(5,300):R(10,500); }while(block.includes(a+","+d)||a%d===0&&Math.random()<0.7);
+      const q=Math.floor(a/d), r=a-d*q;
+      const dec=(a/d).toFixed(2);
+      return {
+        topic:"divalg",
+        prompt:"Divide <b>"+fmt(a)+" by "+d+"</b>: find q = "+fmt(a)+" div "+d+" and r = "+fmt(a)+" mod "+d+" (so "+fmt(a)+" = "+d+"q + r, 0 ≤ r &lt; "+d+").",
+        fields:[["q","q (quotient)"],["r","r (remainder)"]],
+        check(v){
+          if(v.r!==null&&v.r<0) return [false,"The remainder can't be negative. Round the quotient down (toward −∞)."];
+          if(v.q===q&&v.r===r) return [true,"Correct: "+fmt(a)+" = "+d+"·"+fmtp(q)+" + "+r+"."];
+          if(v.q!==null&&v.r!==null&&d*v.q+v.r===a) return [false,"That satisfies a = dq + r but r must be in 0…"+(d-1)+"."];
+          return [false,"Not quite. q = "+fmt(a)+"/"+d+" rounded down; then r = a − "+d+"q."];
+        },
+        steps:"<ol><li>"+fmt(a)+" / "+d+" ≈ "+fmt(+dec)+". Round <b>down</b>"+(a<0?" (toward −∞, so further from 0)":"")+": q = <b>"+fmt(q)+"</b>.</li><li>r = a − dq = "+fmt(a)+" − "+d+"·"+fmtp(q)+" = "+fmt(a)+(d*q<0?" + "+(-d*q):" − "+d*q)+" = <b>"+r+"</b>.</li><li>Check: "+d+"·"+fmtp(q)+" + "+r+" = "+fmt(d*q+r)+" ✓ and 0 ≤ "+r+" &lt; "+d+" ✓</li></ol>"
+      };
+    },
+    modarith(){
+      let m,A,B,C,form;
+      do{ m=R(5,31); A=R(100,999); B=R(20,999); C=R(100,9999); form=R(0,1); }while(A===218&&B===95);
+      const val= form===0 ? mod(A*B+C,m) : mod((A+B)*C,m);
+      const rA=A%m, rB=B%m, rC=C%m;
+      const red=(x,r)=>x+" = "+Math.floor(x/m)+"·"+m+" + "+r+", so "+x+" ≡ "+r;
+      const expr= form===0 ? A+"·"+B+" + "+C : "("+A+" + "+B+")·"+C;
+      const small= form===0 ? rA+"·"+rB+" + "+rC+" = "+(rA*rB+rC) : "("+rA+" + "+rB+")·"+rC+" = "+((rA+rB)*rC);
+      const smallVal= form===0 ? rA*rB+rC : (rA+rB)*rC;
+      return {
+        topic:"modarith",
+        prompt:"Compute <b>("+expr+") mod "+m+"</b> without multiplying the big numbers.",
+        fields:[["x","answer (0…"+(m-1)+")"]],
+        check(v){ return v.x!==null&&v.x>=0&&v.x<m&&v.x===val?[true,"Correct."]:(v.x!==null&&mod(v.x,m)===val?[true,"Congruent, but give it in 0…"+(m-1)+": "+val+"."]:[false,"Reduce each number mod "+m+" first, then combine and reduce again."]); },
+        steps:"<ol><li>Reduce each number mod "+m+":"+calc([red(A,rA),red(B,rB),red(C,rC)])+"</li><li>Combine the small numbers: "+small+".</li><li>Reduce: "+smallVal+" = "+Math.floor(smallVal/m)+"·"+m+" + "+val+", so the answer is <b>"+val+"</b>.</li></ol>"
+      };
+    },
+    base(){
+      const DIG="0123456789ABCDEF";
+      const toB=(n,b)=>{let s="";while(n>0){s=DIG[n%b]+s;n=Math.floor(n/b);}return s||"0";};
+      let n,b;
+      do{ b=pick([2,2,3,5,7,8,16]); n=R(20,999); }while(n===423&&b===2);
+      const s=toB(n,b);
+      if(Math.random()<0.6){
+        const lines=[]; let x=n;
+        while(x>0){ lines.push(x+" = "+Math.floor(x/b)+"·"+b+" + "+(x%b)+(x%b>9?"  ("+DIG[x%b]+")":"")); x=Math.floor(x/b); }
+        lines[0]+="   ← last digit"; lines[lines.length-1]+="   ← first digit";
+        return {
+          topic:"base",
+          prompt:"Write <b>"+n+" in base "+b+"</b>."+(b===16?" (Use A–F for 10–15.)":""),
+          fields:[["s","base-"+b+" digits"]], str:true,
+          check(v){ const g=(v.s||"").toUpperCase().replace(/^0+/,""); if(g===s) return [true,"Correct: ("+s+")"+subs(b)+"."]; if(g.split("").reverse().join("")===s) return [false,"Digits are reversed. The first remainder is the last digit."]; return [false,"Not quite. Divide by "+b+" repeatedly and read the remainders bottom-up."]; },
+          steps:"<ol><li>Divide by "+b+" repeatedly:"+calc(lines)+"</li><li>Read the remainders from bottom to top: <b>("+s+")"+subs(b)+"</b>.</li><li>Check: "+placeSum(s,b)+" = "+n+" ✓</li></ol>"
+        };
+      }
+      return {
+        topic:"base",
+        prompt:"Convert <b>("+s+")"+subs(b)+"</b> to decimal.",
+        fields:[["x","decimal value"]],
+        check(v){ return v.x===n?[true,"Correct."]:[false,"Multiply each digit by its place value ("+b+"⁰, "+b+"¹, "+b+"², …) and add."]; },
+        steps:"<ol><li>Place values from the right: "+s.split("").map((_,i)=>b+"^"+(s.length-1-i)).join(", ")+".</li><li>"+placeSum(s,b)+" = <b>"+n+"</b>.</li></ol>"
+      };
+      function subs(b){ return "<sub>"+b+"</sub>"; }
+      function placeSum(s,b){ return s.split("").map((c,i)=>{const dv=DIG.indexOf(c),p=Math.pow(b,s.length-1-i);return dv+"·"+p;}).join(" + "); }
+    },
+    factor(){
+      const P=[2,3,5,7,11];
+      let ea,eb,a,b;
+      for(;;){
+        ea=P.map(()=>Math.random()<0.4?0:R(1,3)); eb=P.map(()=>Math.random()<0.4?0:R(1,3));
+        if(Math.random()<0.35) eb=ea.map(e=>e+(Math.random()<0.5?R(0,1):0)); // make a | b sometimes
+        a=P.reduce((x,p,i)=>x*Math.pow(p,ea[i]),1); b=P.reduce((x,p,i)=>x*Math.pow(p,eb[i]),1);
+        if(a===1||b===1||a===b) continue;
+        const L=P.reduce((x,p,i)=>x*Math.pow(p,Math.max(ea[i],eb[i])),1);
+        if(a<=6000&&b<=6000&&L<=200000) break;
+      }
+      const G=P.reduce((x,p,i)=>x*Math.pow(p,Math.min(ea[i],eb[i])),1);
+      const L=P.reduce((x,p,i)=>x*Math.pow(p,Math.max(ea[i],eb[i])),1);
+      const div=ea.every((e,i)=>e<=eb[i]);
+      const fac=e=>P.map((p,i)=>e[i]?(p+(e[i]>1?sup(e[i]):"")):null).filter(Boolean).join("·");
+      let tbl='<div class="scroll"><table class="et"><tr><th>prime</th><th>a</th><th>b</th><th>min</th><th>max</th></tr>';
+      P.forEach((p,i)=>{ if(ea[i]||eb[i]) tbl+="<tr><td>"+p+"</td><td>"+ea[i]+"</td><td>"+eb[i]+"</td><td>"+Math.min(ea[i],eb[i])+"</td><td>"+Math.max(ea[i],eb[i])+"</td></tr>"; });
+      tbl+="</table></div>";
+      const bad=P.findIndex((p,i)=>ea[i]>eb[i]);
+      return {
+        topic:"factor",
+        prompt:"a = "+fac(ea)+" (= "+a+"), &nbsp;b = "+fac(eb)+" (= "+b+").<br>Find <b>gcd(a, b)</b>, <b>lcm(a, b)</b>, and whether <b>a | b</b>.",
+        fields:[["g","gcd"],["l","lcm"],["yn","a | b? yes/no"]], yn:["yn"],
+        check(v){
+          if(v.g!==G) return [false,"gcd: use the smaller exponent of each prime."];
+          if(v.l!==L) return [false,"gcd is right. lcm: use the larger exponent of each prime (check gcd·lcm = a·b)."];
+          if(v.yn!==div) return [false,"gcd and lcm are right. a | b needs every exponent of a ≤ the one in b."];
+          return [true,"All correct."];
+        },
+        steps:"<ol><li>Line up exponents (0 if the prime is missing):"+tbl+"</li><li>gcd = min exponents = <b>"+G+"</b>. lcm = max exponents = <b>"+L+"</b>.</li><li>Check: gcd·lcm = "+G+"·"+L+" = "+(G*L)+" = a·b = "+a+"·"+b+" ✓</li><li>a | b? <b>"+(div?"Yes":"No")+"</b>: "+(div?"every exponent in a is ≤ the one in b.":"the exponent of "+P[bad]+" in a is "+ea[bad]+" &gt; "+eb[bad]+".")+"</li></ol>"
+      };
+    },
     bezout(){
       let a,b;
       do{ a=R(40,400); b=R(12,a-1); }while(b===a||a%b===0||gcd(a,b)===b||HW_BLOCK.bezout.includes(a+","+b));
@@ -639,8 +896,8 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
       };
     }
   };
-  const TOPICS=["bezout","inverse","lincong","crt","power","rsa"];
-  const NAMES={bezout:"gcd & Bézout",inverse:"Inverse",lincong:"ax ≡ b",crt:"CRT",power:"Powers",rsa:"RSA"};
+  const TOPICS=["divalg","modarith","base","factor","bezout","inverse","lincong","crt","power","rsa"];
+  const NAMES={divalg:"a mod d",modarith:"Mod arithmetic",base:"Base b",factor:"gcd/lcm",bezout:"Euclid & Bézout",inverse:"Inverse",lincong:"ax ≡ b",crt:"CRT",power:"Powers",rsa:"RSA"};
 
   // ---- UI ----
   const $=id=>document.getElementById(id);
@@ -660,7 +917,7 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
     if(t==="mixed"){ const opts=TOPICS.filter(x=>x!==lastMixed); t=pick(opts); lastMixed=t; }
     cur=gen[t](); answered=false;
     $("prob").innerHTML='<span class="tag">'+NAMES[cur.topic]+'</span>'+cur.prompt;
-    $("inputs").innerHTML=cur.fields.map(([k,l])=>'<label for="in-'+k+'">'+l+'<input id="in-'+k+'" name="'+k+'" inputmode="'+(cur.allowNone?'text':'numeric')+'" spellcheck="false"></label>').join("");
+    $("inputs").innerHTML=cur.fields.map(([k,l])=>'<label for="in-'+k+'">'+l+'<input id="in-'+k+'" name="'+k+'" inputmode="'+((cur.allowNone||cur.str||cur.yn)?'text':'numeric')+'" spellcheck="false"></label>').join("");
     $("fb").hidden=true; $("steps").hidden=true; $("steps").innerHTML=cur.steps;
     $("stepsBtn").textContent="Show steps";
   }
@@ -671,6 +928,8 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
       const raw=($("in-"+k).value||"").trim();
       if(cur.allowNone && /^(none|no|no solution|n\/a|∅)$/i.test(raw)) v.none=true;
       if(cur.list){ v.list=raw.split(/[,;\s]+/).filter(Boolean).map(parseInt2).filter(x=>x!==null); }
+      else if(cur.str) v[k]=raw.replace(/\s/g,"").replace(/^\((.*)\)_?\d*$/,"$1");
+      else if(cur.yn&&cur.yn.includes(k)) v[k]=/^y/i.test(raw)?true:(/^n/i.test(raw)?false:null);
       else v[k]=parseInt2(raw);
     });
     return v;
