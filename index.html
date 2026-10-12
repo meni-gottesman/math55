@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Math 55 Quiz 3</title>
+<meta name="description" content="Fast study page for Math 55 Quiz 3: extended Euclid, inverses, linear congruences, CRT, Fermat's little theorem and RSA, with an endless practice drill.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%89%A1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one phone-first column with a sticky jump bar; the drill machine is the centerpiece.
+   Colors reuse the lecture slide code: blue = definition/method, orange = theorem, red = trap, green = example. */
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --ink:#17202b; --muted:#566070; --rule:#dce1e8;
+  --blue:#1f4cc9; --blue-bg:#edf2ff; --orange:#b4520a; --orange-bg:#fff4e6;
+  --red:#c02a2a; --red-bg:#fff0ef; --green:#15773a; --green-bg:#ecf8f0;
+  --slate:#35587e; --slate-bg:#edf2f8;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-hand:"Caveat","Bradley Hand","Segoe Print",cursive;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141a; --surface:#161b23; --ink:#e5e9f0; --muted:#9aa4b4; --rule:#2a323f;
+    --blue:#93b2ff; --blue-bg:#16213b; --orange:#f2a65e; --orange-bg:#2a1e12;
+    --red:#ff8f8a; --red-bg:#2d1718; --green:#72d497; --green-bg:#12251a;
+    --slate:#abc1dc; --slate-bg:#18212d; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141a; --surface:#161b23; --ink:#e5e9f0; --muted:#9aa4b4; --rule:#2a323f;
+  --blue:#93b2ff; --blue-bg:#16213b; --orange:#f2a65e; --orange-bg:#2a1e12;
+  --red:#ff8f8a; --red-bg:#2d1718; --green:#72d497; --green-bg:#12251a;
+  --slate:#abc1dc; --slate-bg:#18212d; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.wrap{max-width:820px;margin:0 auto;padding-inline:18px}
+header.top{padding-block:calc(env(safe-area-inset-top,0px) + 36px) 18px}
+.eyebrow{font:600 12px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h1{font:800 clamp(2.3rem,7vw,3.4rem)/1 var(--f-display);letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+h1 .hand{font-family:var(--f-hand);color:var(--blue);font-size:.6em;display:inline-block;transform:rotate(-3deg);margin-left:.15em;letter-spacing:0}
+.lede{color:var(--muted);margin:0 0 16px;max-width:62ch}
+.scope{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 16px;font-size:.95rem}
+.scope b{font-family:var(--f-display)}
+.scope ul{margin:6px 0 0;padding-left:1.2em}
+.scope li{margin:2px 0}
+
+nav.jump{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+nav.jump .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+nav.jump .wrap::-webkit-scrollbar{display:none}
+nav.jump a{flex:none;font:600 .82rem var(--f-display);text-decoration:none;color:var(--ink);border:1px solid var(--rule);background:var(--surface);padding:5px 12px;border-radius:999px}
+nav.jump a.go{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+section{padding-top:34px}
+h2{font:800 1.6rem/1.15 var(--f-display);margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
+h2 .n{font:400 .9rem var(--f-mono);color:var(--muted);margin-right:8px}
+.sub{color:var(--muted);margin:0 0 14px;font-size:.95rem}
+h3{font:700 1.1rem/1.25 var(--f-display);margin:0}
+p{margin:8px 0}
+.m{font-family:var(--f-mono);font-size:.9em;white-space:nowrap}
+sup,sub{line-height:0}
+
+/* plan */
+.plan{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.plan li{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:10px 14px}
+.plan .t{font:600 .8rem var(--f-mono);color:var(--blue);padding-top:3px;font-variant-numeric:tabular-nums}
+.plan b{font-family:var(--f-display)}
+
+/* map */
+.map{display:grid;gap:10px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px}
+.chain .lab{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:100%}
+.node{font:600 .88rem var(--f-display);background:var(--blue-bg);color:var(--blue);border-radius:8px;padding:6px 10px}
+.node.o{background:var(--orange-bg);color:var(--orange)}
+.arr{color:var(--muted);font-family:var(--f-mono)}
+
+/* skill cards */
+.skill{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;margin:14px 0}
+.skill h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.skill h3 .k{font:400 .8rem var(--f-mono);color:var(--muted)}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 14px;margin-top:10px;font-size:.96rem}
+.row > span:first-child{font:700 1.15rem/1.3 var(--f-hand);color:var(--blue)}
+.row.trap > span:first-child{color:var(--red)}
+.row.ex > span:first-child{color:var(--green)}
+.row.hw > span:first-child{color:var(--muted)}
+.calc{font:400 .84rem/1.55 var(--f-mono);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:9px 12px;overflow-x:auto;white-space:pre;margin:4px 0 0}
+table.et{border-collapse:collapse;font:400 .84rem var(--f-mono);margin:6px 0;font-variant-numeric:tabular-nums}
+table.et th,table.et td{border-bottom:1px solid var(--rule);padding:3px 10px;text-align:right}
+table.et th{font-family:var(--f-display);color:var(--muted);font-weight:600}
+table.et tr.hit td{background:var(--green-bg);color:var(--green);font-weight:600}
+.scroll{overflow-x:auto}
+
+/* drill */
+.drill{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:16px 18px}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.topics button,.btn{font:600 .85rem var(--f-display);border:1px solid var(--rule);background:var(--bg);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
+.topics button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0d1424}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0d1424}}
+.prob{font-size:1.08rem;margin:4px 0 12px;min-height:3em}
+.prob .tag{display:block;font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.inputs{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.inputs label{display:grid;gap:3px;font:600 .78rem var(--f-display);color:var(--muted);flex:1 1 110px;min-width:0}
+.inputs input{font:400 1rem var(--f-mono);padding:9px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fb{margin-top:12px;padding:10px 14px;border-radius:10px;font-weight:600}
+.fb.ok{background:var(--green-bg);color:var(--green)}
+.fb.no{background:var(--red-bg);color:var(--red)}
+.steps{margin-top:12px;border-top:1px dashed var(--rule);padding-top:10px;font-size:.95rem}
+.steps ol{padding-left:1.3em;margin:6px 0}
+.steps li{margin:6px 0}
+.score{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;font:400 .8rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.score b{color:var(--ink)}
+
+/* flashcards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+details.card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 14px}
+details.card summary{cursor:pointer;list-style:none;font:600 .98rem/1.35 var(--f-display)}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"tap to flip";display:block;font:400 11px var(--f-mono);color:var(--muted);margin-top:6px;letter-spacing:.04em}
+details.card[open]{background:var(--blue-bg);border-color:transparent}
+details.card[open] summary::after{content:""}
+details.card p{margin:6px 0 0;font-size:.95rem}
+
+/* proofs */
+details.pf{background:var(--orange-bg);border-radius:12px;padding:10px 16px;margin:8px 0}
+details.pf summary{cursor:pointer;font:600 .98rem var(--f-display);color:var(--ink)}
+details.pf summary .t{color:var(--orange);font-family:var(--f-hand);font-size:1.2rem;margin-right:6px}
+details.pf p{font-size:.95rem}
+
+.traps{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.traps li{background:var(--red-bg);border-radius:10px;padding:10px 14px;font-size:.96rem}
+.traps b{color:var(--red);font-family:var(--f-display)}
+.note{background:var(--slate-bg);border-radius:12px;padding:12px 16px;font-size:.95rem}
+footer{color:var(--muted);font-size:.85rem;padding-block:40px 30px;border-top:1px solid var(--rule);margin-top:40px}
+
+@media (max-width:520px){
+  body{font-size:16px}
+  .plan li{grid-template-columns:1fr;gap:2px}
+  .row{grid-template-columns:1fr;gap:0}
+  .row > span:first-child{margin-top:6px}
+  .skill,.drill{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="top wrap">
+  <p class="eyebrow">Math 55 · Discrete Math · Quiz 3 · Mon Oct 12, in discussion</p>
+  <h1>Math 55 Quiz 3 <span class="hand">speedrun</span></h1>
+  <p class="lede">Everything since Midterm 1 on one page: the six computations you'll be asked to do, a practice machine that writes new problems and shows every step, flashcards for the statements, and the short proofs.</p>
+  <div class="scope">
+    <b>What's in scope.</b> My best read of the schedule: Quiz 3 covers the material after the midterm.
+    <ul>
+      <li><b>Lecture 10:</b> extended Euclid, Bézout, solving <span class="m">ax ≡ b (mod m)</span>, inverses, cancellation, and the start of CRT</li>
+      <li><b>Lecture 11:</b> Chinese remainder theorem, Fermat's little theorem, primality testing, RSA</li>
+      <li>Tools from before the midterm that these lean on: the Euclidean algorithm and repeated squaring</li>
+      <li>Thursday's lecture (induction, per the syllabus) might be included too. There's a 1-minute primer at the bottom.</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to">
+  <div class="wrap">
+    <a href="#plan">Plan</a><a href="#map">Map</a><a href="#skills">6 skills</a><a class="go" href="#drill">Drill ▶</a><a href="#cards">Flashcards</a><a href="#proofs">Proofs</a><a href="#traps">Traps</a><a href="#induction">Induction</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="plan">
+  <h2><span class="n">00</span>The 15-minute plan</h2>
+  <p class="sub">If you only have a few minutes before section, do this in order.</p>
+  <ol class="plan">
+    <li><span class="t">0:00–1:00</span><div><b>Read the map.</b> Every problem on this quiz is one of two chains.</div></li>
+    <li><span class="t">1:00–5:00</span><div><b>Flip the flashcards.</b> Say each answer out loud before flipping. Re-flip the ones you missed.</div></li>
+    <li><span class="t">5:00–13:00</span><div><b>Drill on “Mixed”.</b> Do at least one of each type. Solve on paper, then check. If you miss one, open <i>Show steps</i>, then press <i>New problem</i> on that same topic until you get one right.</div></li>
+    <li><span class="t">13:00–15:00</span><div><b>Read the traps</b> and skim the proof skeletons. Last thing before you walk in.</div></li>
+  </ol>
+</section>
+
+<section id="map">
+  <h2><span class="n">01</span>The map</h2>
+  <p class="sub">Two chains. Each box uses the one before it.</p>
+  <div class="map">
+    <div class="chain"><span class="lab">Chain A · gcd → solving</span>
+      <span class="node">Euclid: gcd</span><span class="arr">→</span>
+      <span class="node">Extended Euclid: gcd = sa + tb</span><span class="arr">→</span>
+      <span class="node">Inverse mod m</span><span class="arr">→</span>
+      <span class="node">Solve ax ≡ b</span><span class="arr">→</span>
+      <span class="node">CRT</span>
+    </div>
+    <div class="chain"><span class="lab">Chain B · powers → crypto</span>
+      <span class="node o">Repeated squaring</span><span class="arr">→</span>
+      <span class="node o">Fermat: shrink the exponent</span><span class="arr">→</span>
+      <span class="node o">RSA (also needs an inverse from Chain A)</span>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2><span class="n">02</span>The six skills</h2>
+  <p class="sub">Each card says when to use it, the method, a worked example, and the classic mistake.</p>
+
+  <div class="skill" id="sk1">
+    <h3>1 · Extended Euclid <span class="k">gcd(a, b) = sa + tb</span></h3>
+    <div class="row"><span>When</span><div>“Find gcd and integers s, t”, or any time you need an inverse.</div></div>
+    <div class="row"><span>Do</span><div><b>Forwards:</b> divide, then replace (a, b) by (b, r) until the remainder is 0. The last nonzero remainder is the gcd.<br><b>Backwards:</b> solve the second-to-last line for the gcd, then substitute the line above it, and keep going up. <b>Collect terms after every substitution.</b><br><b>Speed version (table):</b> keep columns r, s, t where every row means r = s·a + t·b. Start with rows (a, 1, 0) and (b, 0, 1). Each new row = row two above − q × row above. The row before the 0 gives the answer.</div></div>
+    <div class="row ex"><span>Example</span><div>gcd(84, 33):
+<div class="calc">84 = 2·33 + 18          3 = 18 − 1·15
+33 = 1·18 + 15            = 18 − (33 − 18)        = 2·18 − 33
+18 = 1·15 + 3   ← gcd     = 2(84 − 2·33) − 33     = 2·84 − 5·33
+15 = 5·3  + 0             check: 168 − 165 = 3 ✓</div>
+      <div class="scroll"><table class="et"><tr><th>q</th><th>r</th><th>s</th><th>t</th></tr>
+        <tr><td></td><td>84</td><td>1</td><td>0</td></tr>
+        <tr><td>2</td><td>33</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>18</td><td>1</td><td>−2</td></tr>
+        <tr><td>1</td><td>15</td><td>−1</td><td>3</td></tr>
+        <tr class="hit"><td>5</td><td>3</td><td>2</td><td>−5</td></tr>
+        <tr><td></td><td>0</td><td></td><td></td></tr></table></div>
+      The q in each row is the quotient when the row above is divided by this row's r.</div></div>
+    <div class="row trap"><span>Trap</span><div>Arithmetic slips in the back-substitution. Always plug s, t back in to check. It takes 10 seconds.</div></div>
+  </div>
+
+  <div class="skill" id="sk2">
+    <h3>2 · Inverse mod m <span class="k">find ā with aā ≡ 1</span></h3>
+    <div class="row"><span>When</span><div>“Find an inverse of a modulo m”, or you need to divide in a congruence.</div></div>
+    <div class="row"><span>Do</span><div>An inverse exists <b>iff gcd(a, m) = 1</b>. Extended Euclid gives 1 = sa + tm, so <b>s is the inverse</b>. Reduce s into 0…m−1. Small m: just try multiples.</div></div>
+    <div class="row ex"><span>Example</span><div>Inverse of 33 mod 84? gcd = 3, so <b>none</b>. Inverse of 11 mod 26: 26 = 2·11 + 4, 11 = 2·4 + 3, 4 = 3 + 1, so 1 = 4 − 3 = 4 − (11 − 2·4) = 3·4 − 11 = 3(26 − 2·11) − 11 = 3·26 − 7·11. s = −7 ≡ <b>19</b>. Check: 11·19 = 209 = 8·26 + 1 ✓</div></div>
+    <div class="row trap"><span>Trap</span><div>Leaving the answer negative (−7). Write −7 ≡ 19 (mod 26). Also: you want the coefficient of <b>a</b>, not of m.</div></div>
+  </div>
+
+  <div class="skill" id="sk3">
+    <h3>3 · Solve ax ≡ b (mod m)</h3>
+    <div class="row"><span>Do</span><div>
+      1. d = gcd(a, m).<br>2. If <b>d ∤ b</b>: no solution.<br>3. Else write d = sa + tm. Then x₀ = (b/d)·s.<br>4. All solutions: <b>x₀ + k·(m/d)</b>. That's exactly <b>d</b> answers in 0…m−1.</div></div>
+    <div class="row ex"><span>Example</span><div>12x ≡ 8 (mod 20). d = gcd(12, 20) = 4 and 4 | 8 ✓. 20 = 12 + 8, 12 = 8 + 4, so 4 = 12 − 8 = 12 − (20 − 12) = 2·12 − 20, so s = 2. x₀ = (8/4)·2 = 4. m/d = 5, so <b>x ≡ 4 (mod 5): x = 4, 9, 14, 19</b>. Check 12·9 = 108 ≡ 8 ✓</div></div>
+    <div class="row trap"><span>Trap</span><div>Giving one answer when d &gt; 1. The quiz will want all d of them in 0…m−1, or the form x ≡ x₀ (mod m/d).</div></div>
+  </div>
+
+  <div class="skill" id="sk4">
+    <h3>4 · Chinese remainder theorem</h3>
+    <div class="row"><span>When</span><div>Several congruences x ≡ aᵢ (mod mᵢ) with <b>pairwise coprime</b> mᵢ. There's a unique answer mod M = m₁m₂⋯.</div></div>
+    <div class="row"><span>Do</span><div>M = product. Mᵢ = M/mᵢ (the product of the <i>other</i> moduli). yᵢ = inverse of <b>Mᵢ mod mᵢ</b> (reduce Mᵢ mod mᵢ first, it's tiny). Then x = Σ aᵢMᵢyᵢ, reduced mod M.<br><i>Why:</i> mod mᵢ, every other term has mᵢ hiding inside its Mⱼ, so it's 0, and Mᵢyᵢ ≡ 1.</div></div>
+    <div class="row ex"><span>Example</span><div>x ≡ 1 (mod 3), x ≡ 4 (mod 5), x ≡ 6 (mod 7). M = 105.
+<div class="calc">M₁ = 35 ≡ 2 (mod 3)   inverse of 2 mod 3 → y₁ = 2
+M₂ = 21 ≡ 1 (mod 5)                    → y₂ = 1
+M₃ = 15 ≡ 1 (mod 7)                    → y₃ = 1
+x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
+      Check: 34 = 11·3+1 ✓, 34 = 6·5+4 ✓, 34 = 4·7+6 ✓. <b>Back-substitution</b> also works: x = 6 + 7t, then plug into the others one at a time.</div></div>
+    <div class="row trap"><span>Trap</span><div>Using the inverse of mᵢ instead of the inverse of Mᵢ. Forgetting to reduce mod M at the end.</div></div>
+  </div>
+
+  <div class="skill" id="sk5">
+    <h3>5 · Big powers: repeated squaring + Fermat</h3>
+    <div class="row"><span>Do</span><div><b>If the modulus p is prime and p ∤ a:</b> a<sup>p−1</sup> ≡ 1, so replace the exponent n by <b>n mod (p − 1)</b>.<br><b>Then (or if the modulus isn't prime):</b> square repeatedly, a, a², a⁴, a⁸, …, reducing each time. Write the exponent in binary and multiply the matching squares.</div></div>
+    <div class="row ex"><span>Example</span><div>4<sup>1000</sup> mod 13: 13 is prime, so the exponent works mod 12. 1000 = 83·12 + 4, so 4<sup>1000</sup> ≡ 4⁴ = 256 = 19·13 + 9 ≡ <b>9</b>.<br>
+      3<sup>45</sup> mod 20 (not prime, so square):
+<div class="calc">3¹ ≡ 3, 3² ≡ 9, 3⁴ ≡ 81 ≡ 1, 3⁸ ≡ 1, 3¹⁶ ≡ 1, 3³² ≡ 1
+45 = 32 + 8 + 4 + 1  →  3⁴⁵ ≡ 1·1·1·3 = 3 (mod 20)</div></div></div>
+    <div class="row trap"><span>Trap</span><div>Reducing the exponent mod p instead of mod <b>p − 1</b>. Using Fermat with a composite modulus.</div></div>
+  </div>
+
+  <div class="skill" id="sk6">
+    <h3>6 · RSA</h3>
+    <div class="row"><span>Setup</span><div>Primes p, q. n = pq. φ = (p−1)(q−1). Pick e with gcd(e, φ) = 1.<br><b>Public:</b> (n, e). <b>Private:</b> p, q, d where <b>d = inverse of e mod φ</b>.<br><b>Encrypt:</b> c = m<sup>e</sup> mod n. <b>Decrypt:</b> m = c<sup>d</sup> mod n.</div></div>
+    <div class="row ex"><span>Example</span><div>p = 7, q = 13: n = 91, φ = 6·12 = 72. e = 5 (gcd(5, 72) = 1). 72 = 14·5 + 2, 5 = 2·2 + 1, so 1 = 5 − 2·2 = 5 − 2(72 − 14·5) = 29·5 − 2·72, so <b>d = 29</b>. Check 5·29 = 145 = 2·72 + 1 ✓.<br>
+      Encrypt m = 2: c = 2⁵ = <b>32</b>. Decrypt: 32<sup>29</sup> mod 91 gives back 2 (by repeated squaring: 32² ≡ 23, 32⁴ ≡ 74, 32⁸ ≡ 16, 32¹⁶ ≡ 74; 29 = 16+8+4+1 → 74·16·74·32 ≡ 2 ✓).</div></div>
+    <div class="row trap"><span>Trap</span><div>Finding d mod n instead of mod φ = (p−1)(q−1). Mixing up which numbers are public.</div></div>
+  </div>
+
+  <div class="note"><b>HW 5 lines up with these skills.</b> It's due tonight, so redo these yourself; this page doesn't solve them. Skill 1 and 2: Ex 5.1, 5.5. Skill 3: 5.2–5.4. Skill 4: 5.7, 5.8. Skill 5: 5.9, 5.10 (and 5.6 on x² ≡ 1). Skill 6: 5.11, 5.12. Exams reuse homework problems a lot, so redoing HW 5 cold is great practice after you submit it.</div>
+</section>
+
+<section id="drill">
+  <h2><span class="n">03</span>Drill machine</h2>
+  <p class="sub">A new problem every time, so you can't run out. Work it on paper, type your answer, check it, and open the steps if you're stuck.</p>
+  <div class="drill">
+    <div class="topics" role="group" aria-label="Topic">
+      <button type="button" data-t="mixed" aria-pressed="true">Mixed</button>
+      <button type="button" data-t="bezout" aria-pressed="false">gcd &amp; Bézout</button>
+      <button type="button" data-t="inverse" aria-pressed="false">Inverse</button>
+      <button type="button" data-t="lincong" aria-pressed="false">ax ≡ b</button>
+      <button type="button" data-t="crt" aria-pressed="false">CRT</button>
+      <button type="button" data-t="power" aria-pressed="false">Powers</button>
+      <button type="button" data-t="rsa" aria-pressed="false">RSA</button>
+    </div>
+    <div class="prob" id="prob" aria-live="polite"></div>
+    <form id="ansForm" autocomplete="off">
+      <div class="inputs" id="inputs"></div>
+      <div class="actions">
+        <button class="btn primary" type="submit" id="checkBtn">Check</button>
+        <button class="btn" type="button" id="stepsBtn">Show steps</button>
+        <button class="btn" type="button" id="nextBtn">New problem →</button>
+      </div>
+    </form>
+    <div id="fb" class="fb" hidden></div>
+    <div id="steps" class="steps" hidden></div>
+    <div class="score" id="score"></div>
+  </div>
+</section>
+
+<section id="cards">
+  <h2><span class="n">04</span>Flashcards</h2>
+  <p class="sub">Say the answer out loud, then tap.</p>
+  <div class="cards">
+    <details class="card"><summary>Bézout's theorem</summary><p>For positive integers a, b there are integers s, t with gcd(a, b) = sa + tb. Extended Euclid finds them.</p></details>
+    <details class="card"><summary>The lemma that makes Euclid work</summary><p>If a = bq + r then gcd(a, b) = gcd(b, r): a, b and b, r have exactly the same common divisors.</p></details>
+    <details class="card"><summary>When does a have an inverse mod m?</summary><p>Exactly when gcd(a, m) = 1. It's the s in 1 = sa + tm, and it's unique mod m.</p></details>
+    <details class="card"><summary>When is ax ≡ b (mod m) solvable?</summary><p>Exactly when d = gcd(a, m) divides b.</p></details>
+    <details class="card"><summary>How many solutions does ax ≡ b (mod m) have?</summary><p>d of them mod m (when d | b): x₀ + k(m/d) for k = 0, …, d − 1.</p></details>
+    <details class="card"><summary>When can you cancel c from ac ≡ bc (mod m)?</summary><p>When gcd(c, m) = 1 (multiply by c's inverse). Counterexample otherwise: 2·3 ≡ 4·3 (mod 6) but 2 ≢ 4.</p></details>
+    <details class="card"><summary>gcd(a, b) = 1 and a | bc ⇒ ?</summary><p>a | c. (1 = sa + tb, multiply by c: c = sac + tbc, and a divides both terms.)</p></details>
+    <details class="card"><summary>p prime and p | ab ⇒ ?</summary><p>p | a or p | b. Fails for composites: 6 | 3·10 but 6 ∤ 3 and 6 ∤ 10.</p></details>
+    <details class="card"><summary>Chinese remainder theorem</summary><p>If m₁, …, mₙ are pairwise relatively prime, then x ≡ aᵢ (mod mᵢ) for all i has a solution, and it's unique mod M = m₁⋯mₙ.</p></details>
+    <details class="card"><summary>CRT construction formula</summary><p>x = Σ aᵢMᵢyᵢ where Mᵢ = M/mᵢ and yᵢ is the inverse of Mᵢ mod mᵢ.</p></details>
+    <details class="card"><summary>Fermat's little theorem</summary><p>p prime, p ∤ a ⇒ a<sup>p−1</sup> ≡ 1 (mod p). For every a: a<sup>p</sup> ≡ a (mod p).</p></details>
+    <details class="card"><summary>Freshman's dream</summary><p>(x + y)<sup>p</sup> ≡ x<sup>p</sup> + y<sup>p</sup> (mod p) for p prime, because p divides C(p, k) for 0 &lt; k &lt; p. That's the key step in the lecture's proof of Fermat.</p></details>
+    <details class="card"><summary>a<sup>n</sup> mod a prime p: what do you do to n?</summary><p>Reduce n mod (p − 1), as long as p ∤ a.</p></details>
+    <details class="card"><summary>Fermat primality test</summary><p>If a<sup>n−1</sup> ≢ 1 (mod n) then n is definitely composite. If ≡ 1, it proves nothing.</p></details>
+    <details class="card"><summary>Pseudoprime vs Carmichael number</summary><p>Pseudoprime to base b: a composite n with b<sup>n−1</sup> ≡ 1 (mod n). Carmichael: a composite that passes for every b coprime to n (e.g. 561 = 3·11·17).</p></details>
+    <details class="card"><summary>RSA: what's public, what's private?</summary><p>Public: n = pq and e. Private: p, q, (p−1)(q−1), and d.</p></details>
+    <details class="card"><summary>RSA: how do you get d?</summary><p>d is the inverse of e mod (p−1)(q−1). Needs gcd(e, (p−1)(q−1)) = 1; find it with extended Euclid.</p></details>
+    <details class="card"><summary>Why does RSA decryption work?</summary><p>m<sup>de</sup> = m·(m<sup>(p−1)(q−1)</sup>)<sup>k</sup>. By Fermat that's ≡ m mod p and mod q, so ≡ m mod n by CRT uniqueness.</p></details>
+    <details class="card"><summary>When is m ↦ m<sup>e</sup> mod p one-to-one?</summary><p>When gcd(e, p − 1) = 1. The inverse is c ↦ c<sup>d</sup> with de ≡ 1 (mod p − 1).</p></details>
+    <details class="card"><summary>Why is Euclid fast?</summary><p>Every two steps the remainder at least halves. So if a &lt; 2ⁿ it takes at most 2n steps.</p></details>
+  </div>
+</section>
+
+<section id="proofs">
+  <h2><span class="n">05</span>Proof skeletons</h2>
+  <p class="sub">The short proofs from Lectures 10–11. Know the one key move in each.</p>
+
+  <details class="pf"><summary><span class="t">Lemma</span>a = bq + r ⇒ gcd(a, b) = gcd(b, r)</summary>
+    <p>Show the two pairs have the same common divisors. If d | a and d | b, then d | a − bq = r. If d | b and d | r, then d | bq + r = a. Same set of common divisors, so the same greatest one.</p></details>
+  <details class="pf"><summary><span class="t">Cor</span>gcd(a, b) = 1 and a | bc ⇒ a | c</summary>
+    <p>Bézout: 1 = sa + tb. Multiply by c: c = csa + ctb. a | csa, and a | ctb because a | bc. So a | c.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>p prime, p | ab ⇒ p | a or p | b</summary>
+    <p>If p | a, done. Otherwise p ∤ a; p's only positive divisors are 1 and p, so gcd(a, p) = 1. By the corollary, p | b.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>gcd(a, m) ∤ b ⇒ ax ≡ b (mod m) has no solution</summary>
+    <p>By contraposition. If ax ≡ b, then ax − b = km for some k, so b = ax − km. d = gcd(a, m) divides a and m, so it divides ax − km = b.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>d = gcd(a, m) | b ⇒ a solution exists</summary>
+    <p>Write d = sa + tm and b = cd. Then a(cs) = c(sa) = c(d − tm) ≡ cd = b (mod m), since m ≡ 0.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>Cancellation: ac ≡ bc and gcd(c, m) = 1 ⇒ a ≡ b</summary>
+    <p>gcd(c, m) = 1 gives an inverse c̄ with cc̄ ≡ 1. Multiply both sides by c̄: a ≡ a(cc̄) ≡ b(cc̄) ≡ b (mod m).</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>CRT existence</summary>
+    <p>Let M = m₁⋯mₙ and Mᵢ = M/mᵢ. Since the moduli are pairwise coprime, gcd(Mᵢ, mᵢ) = 1, so Mᵢ has an inverse yᵢ mod mᵢ. Set x = Σ aⱼMⱼyⱼ. Mod mᵢ, each Mⱼ with j ≠ i contains the factor mᵢ, so it's ≡ 0, leaving x ≡ aᵢMᵢyᵢ ≡ aᵢ·1 = aᵢ.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>Fermat's little theorem</summary>
+    <p>Write a = 1 + 1 + ⋯ + 1 and use the Freshman's dream repeatedly: a<sup>p</sup> = (1 + (a−1))<sup>p</sup> ≡ 1 + (a−1)<sup>p</sup> ≡ ⋯ ≡ 1 + 1 + ⋯ + 1 = a (mod p). If p ∤ a, gcd(a, p) = 1, so cancel one a: a<sup>p−1</sup> ≡ 1.</p></details>
+  <details class="pf"><summary><span class="t">Thm</span>RSA decrypts correctly (case gcd(m, n) = 1)</summary>
+    <p>de = 1 + k(p−1)(q−1), so c<sup>d</sup> ≡ m<sup>de</sup> = m·x with x = m<sup>k(p−1)(q−1)</sup>. Mod p: x = (m<sup>p−1</sup>)<sup>k(q−1)</sup> ≡ 1 by Fermat. Same mod q. 1 also solves both congruences, so by uniqueness in the CRT x ≡ 1 (mod pq). So c<sup>d</sup> ≡ m (mod n).</p></details>
+  <p class="sub">Proof rules still apply: say “by contraposition” or “assume for a contradiction” in the first line.</p>
+</section>
+
+<section id="traps">
+  <h2><span class="n">06</span>Traps</h2>
+  <ul class="traps">
+    <li><b>Negative answers.</b> −7 mod 26 is 19. Answers live in 0…m−1 unless the question says otherwise.</li>
+    <li><b>One answer when there are d.</b> ax ≡ b (mod m) with d = gcd(a, m) &gt; 1 has d solutions mod m.</li>
+    <li><b>Cancelling illegally.</b> Never divide a congruence by c unless gcd(c, m) = 1.</li>
+    <li><b>CRT inverses.</b> yᵢ inverts Mᵢ (the product of the other moduli) mod mᵢ. And the moduli must be pairwise coprime.</li>
+    <li><b>Fermat's exponent.</b> Reduce it mod p − 1, not p, and only if p is prime and p ∤ a.</li>
+    <li><b>RSA's d.</b> Inverse of e mod (p−1)(q−1), not mod n.</li>
+    <li><b>Euclid line order.</b> Write it as “dividend = quotient · divisor + remainder”, with 0 ≤ remainder &lt; divisor.</li>
+    <li><b>Always plug back in.</b> Every answer on this quiz can be checked in seconds. Do it.</li>
+  </ul>
+</section>
+
+<section id="induction">
+  <h2><span class="n">07</span>Just in case: induction</h2>
+  <p class="sub">The syllabus put induction on Thu Oct 8. If it was covered, a quiz question could be a simple induction proof.</p>
+  <div class="skill">
+    <div class="row"><span>Idea</span><div>Dominoes: if the first one falls (base case) and each falling domino knocks over the next (inductive step), then they all fall.</div></div>
+    <div class="row"><span>Template</span><div>To prove P(n) for all n ≥ 1: <b>Base case:</b> check P(1). <b>Inductive step:</b> “Assume P(k) for some k ≥ 1” (the inductive hypothesis). Use it to prove P(k + 1). <b>Conclude</b> P(n) for all n ≥ 1 by induction.</div></div>
+    <div class="row ex"><span>Example</span><div>1 + 2 + ⋯ + n = n(n + 1)/2. Base: 1 = 1·2/2 ✓. Step: assume 1 + ⋯ + k = k(k + 1)/2. Then 1 + ⋯ + k + (k + 1) = k(k + 1)/2 + (k + 1) = (k + 1)(k + 2)/2, which is P(k + 1) ✓.</div></div>
+    <div class="row"><span>Strong</span><div>Strong induction: in the step, assume P(1), …, P(k) all hold, not just P(k). Use it when k + 1 breaks into smaller pieces (e.g. every n ≥ 2 is a product of primes). <b>Well-ordering:</b> every nonempty set of positive integers has a least element.</div></div>
+    <div class="row trap"><span>Trap</span><div>Assuming what you want to prove (P(k + 1)). Skipping the base case.</div></div>
+  </div>
+</section>
+
+<footer>
+  Made as a study aid for Math 55 at UC Berkeley, Fall 2026. All examples and practice problems are original; homework problems are referenced, not solved. Scope is inferred from the course schedule; trust what your GSI announces.
+</footer>
+</main>
+
+<script>
+"use strict";
+(function(){
+  const R=(lo,hi)=>lo+Math.floor(Math.random()*(hi-lo+1));
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  const mod=(a,m)=>((a%m)+m)%m;
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a;};
+  const PRIMES=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97];
+  const isPrime=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;};
+  const sup=x=>"<sup>"+x+"</sup>";
+  const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  // Extended Euclid with a full record: rows satisfy r = s*a + t*b.
+  function egcd(a,b){
+    const rows=[{q:"",r:a,s:1,t:0},{q:"",r:b,s:0,t:1}];
+    const lines=[];
+    while(rows[rows.length-1].r!==0){
+      const p=rows[rows.length-2], c=rows[rows.length-1];
+      const q=Math.floor(p.r/c.r), r=p.r-q*c.r;
+      lines.push(p.r+" = "+q+"·"+c.r+" + "+r);
+      rows.push({q:"",r:r,s:p.s-q*c.s,t:p.t-q*c.t});
+      c.q=q;
+    }
+    const g=rows[rows.length-2];
+    return {g:g.r,s:g.s,t:g.t,rows:rows,lines:lines};
+  }
+  function eTable(E,a,b){
+    let h='<div class="scroll"><table class="et"><tr><th>q</th><th>r</th><th>s</th><th>t</th></tr>';
+    E.rows.forEach((row,i)=>{
+      const hit=(i===E.rows.length-2);
+      const last=(i===E.rows.length-1);
+      h+='<tr'+(hit?' class="hit"':'')+'><td>'+row.q+'</td><td>'+row.r+'</td><td>'+(last?'':fmt(row.s))+'</td><td>'+(last?'':fmt(row.t))+'</td></tr>';
+    });
+    return h+'</table></div><p>Each row means r = s·'+a+' + t·'+b+'. New row = (row two up) − q × (row above).</p>';
+  }
+  const fmt=n=>n<0?"−"+(-n):String(n);
+  const fmtp=n=>n<0?"(−"+(-n)+")":String(n);
+  const lin=(s,a,t,b)=>fmt(s)+"·"+a+(t<0?" − "+(-t):" + "+t)+"·"+b;
+  const calc=lines=>'<div class="calc">'+lines.map(esc).join("\n")+'</div>';
+
+  // Repeated squaring, returns {val, html}
+  function powSteps(a,n,m){
+    a=mod(a,m);
+    if(n===0) return {val:1%m, html:"<p>Anything to the 0 is 1.</p>"};
+    const pows=[a]; const lines=[a+"^1 ≡ "+a];
+    let k=0;
+    while(Math.pow(2,k+1)<=n){
+      const prev=pows[k], sq=prev*prev%m; k++;
+      pows.push(sq);
+      lines.push(a+"^"+Math.pow(2,k)+" ≡ "+prev+"² = "+(prev*prev)+" ≡ "+sq);
+    }
+    const used=[]; for(let i=k;i>=0;i--) if(Math.floor(n/Math.pow(2,i))%2===1) used.push(i);
+    lines.push("");
+    lines.push(n+" = "+used.map(i=>Math.pow(2,i)).join(" + ")+"   (binary "+n.toString(2)+")");
+    let acc=1; const prods=[];
+    used.forEach((i,j)=>{const before=acc; acc=acc*pows[i]%m; if(j>0) prods.push(before+"·"+pows[i]+" = "+(before*pows[i])+" ≡ "+acc); else prods.push("start with "+pows[i]);});
+    lines.push("multiply: "+prods.join(";  "));
+    return {val:acc, html:calc(lines)};
+  }
+
+  const HW_BLOCK={bezout:["37,101","101,37","42,114","114,42"],power:["7,2026,13","3,1001,17","7,222,13","2,340,341","2,340,11","2,340,31"],rsa:["5,11,3","11,5,3"],crt:["4,7,9"]};
+
+  const gen={
+    bezout(){
+      let a,b;
+      do{ a=R(40,400); b=R(12,a-1); }while(b===a||a%b===0||gcd(a,b)===b||HW_BLOCK.bezout.includes(a+","+b));
+      const E=egcd(a,b);
+      return {
+        topic:"bezout",
+        prompt:"Find <b>gcd("+a+", "+b+")</b> and integers s, t with gcd = s·"+a+" + t·"+b+".",
+        fields:[["g","gcd"],["s","s"],["t","t"]],
+        check(v){
+          if(v.g!==E.g) return [false,"The gcd isn't "+v.g+". Redo the forward Euclid steps."];
+          if(v.s===null||v.t===null) return [false,"gcd is right. Now find s and t."];
+          if(v.s*a+v.t*b!==E.g) return [false,"gcd is right, but "+lin(v.s,a,v.t,b)+" = "+fmt(v.s*a+v.t*b)+", not "+E.g+". Check the back-substitution."];
+          return [true,"Correct. (s, t aren't unique: any pair that checks out counts.)"];
+        },
+        steps:"<ol><li>Forwards:"+calc(E.lines)+"The last nonzero remainder is <b>"+E.g+"</b>.</li><li>Table method:"+eTable(E,a,b)+"</li><li>So "+E.g+" = "+lin(E.s,a,E.t,b)+". Check: "+fmt(E.s*a)+(E.t*b<0?" − "+(-E.t*b):" + "+E.t*b)+" = "+E.g+" ✓</li></ol>"
+      };
+    },
+    inverse(){
+      let a,m,E;
+      const wantNone=Math.random()<0.2;
+      for(;;){
+        m=R(9,97); a=R(2,m-1);
+        if(HW_BLOCK.bezout.includes(a+","+m)) continue;
+        const g=gcd(a,m);
+        if(wantNone? g>1 : g===1) break;
+      }
+      E=egcd(m,a);
+      const ans = E.g===1 ? mod(E.t,m) : null;
+      return {
+        topic:"inverse",
+        prompt:"Find an inverse of <b>"+a+" modulo "+m+"</b> in 0…"+(m-1)+", or type <b>none</b>.",
+        fields:[["x","inverse (or none)"]],
+        allowNone:true,
+        check(v){
+          if(ans===null) return v.none?[true,"Correct: gcd("+a+", "+m+") = "+E.g+" ≠ 1, so no inverse."]:[false,"Check gcd("+a+", "+m+") first."];
+          if(v.none) return [false,"gcd("+a+", "+m+") = 1, so an inverse does exist."];
+          if(v.x===null) return [false,"Enter a number."];
+          if(mod(a*v.x,m)===1 && (v.x<0||v.x>=m)) return [true,"That works. Its standard form in 0…"+(m-1)+" is "+ans+"."];
+          if(mod(a*v.x,m)===1) return [true,"Correct: "+a+"·"+v.x+" = "+(a*v.x)+" ≡ 1 (mod "+m+")."];
+          return [false,a+"·"+v.x+" ≡ "+mod(a*v.x,m)+", not 1 (mod "+m+")."];
+        },
+        steps: ans===null
+          ? "<ol><li>Euclid:"+calc(E.lines)+"gcd("+a+", "+m+") = "+E.g+" &gt; 1.</li><li>An inverse exists only when the gcd is 1, so: <b>none</b>.</li></ol>"
+          : "<ol><li>Extended Euclid on ("+m+", "+a+"):"+calc(E.lines)+eTable(E,m,a)+"</li><li>1 = "+lin(E.s,m,E.t,a)+", so "+fmtp(E.t)+"·"+a+" ≡ 1 (mod "+m+").</li><li>The coefficient of "+a+" is "+fmt(E.t)+" ≡ <b>"+ans+"</b> (mod "+m+"). Check: "+a+"·"+ans+" = "+(a*ans)+" = "+Math.floor(a*ans/m)+"·"+m+" + 1 ✓</li></ol>"
+      };
+    },
+    lincong(){
+      let a,b,m,d;
+      const block=["37,12,101","42,30,114","42,25,114"];
+      const solvable=Math.random()<0.8;
+      for(;;){
+        m=R(12,90); a=R(2,m-1); d=gcd(a,m);
+        if(solvable && d===1 && Math.random()<0.5) continue; // prefer d>1 sometimes
+        b = solvable ? mod(d*R(1,Math.floor((m-1)/d)),m) : R(1,m-1);
+        if(b===0) continue;
+        if(!solvable && b%d===0) continue;
+        if(block.includes(a+","+b+","+m)) continue;
+        break;
+      }
+      const sols=[]; for(let x=0;x<m;x++) if(mod(a*x-b,m)===0) sols.push(x);
+      const E=egcd(m,a);
+      let steps="<ol><li>d = gcd("+a+", "+m+") = <b>"+d+"</b>."+calc(E.lines)+"</li>";
+      if(b%d!==0){
+        steps+="<li>"+d+" ∤ "+b+", so there is <b>no solution</b>.</li></ol>";
+      } else {
+        const s=E.t, x0=mod((b/d)*s, m/d);
+        steps+="<li>"+d+" | "+b+" ✓. Bézout: "+d+" = "+lin(E.s,m,s,a)+", so s = "+fmt(s)+".</li>";
+        steps+="<li>x₀ = (b/d)·s = "+(b/d)+"·"+fmtp(s)+" = "+fmt((b/d)*s)+" ≡ "+x0+" (mod "+(m/d)+").</li>";
+        steps+="<li>All solutions: x ≡ "+x0+" (mod "+(m/d)+"), i.e. <b>"+sols.join(", ")+"</b> in 0…"+(m-1)+" ("+d+" of them).</li>";
+        steps+="<li>Check: "+a+"·"+sols[0]+" = "+(a*sols[0])+" ≡ "+mod(a*sols[0],m)+" (mod "+m+") ✓</li></ol>";
+      }
+      return {
+        topic:"lincong",
+        prompt:"Solve <b>"+a+"x ≡ "+b+" (mod "+m+")</b>. List <i>all</i> solutions in 0…"+(m-1)+", separated by commas, or type <b>none</b>.",
+        fields:[["list","solutions (e.g. 3, 17) or none"]],
+        allowNone:true, list:true,
+        check(v){
+          if(sols.length===0) return v.none?[true,"Correct: gcd = "+d+" doesn't divide "+b+"."]:[false,"Check whether gcd("+a+", "+m+") divides "+b+"."];
+          if(v.none) return [false,"gcd("+a+", "+m+") = "+d+" divides "+b+", so there are solutions."];
+          const got=[...new Set((v.list||[]).map(x=>mod(x,m)))].sort((x,y)=>x-y);
+          if(got.length===sols.length && got.every((x,i)=>x===sols[i])) return [true,"Correct: all "+sols.length+" solution"+(sols.length>1?"s":"")+"."];
+          const wrong=got.filter(x=>!sols.includes(x));
+          if(wrong.length) return [false,wrong.join(", ")+(wrong.length>1?" don't":" doesn't")+" work: plug it in."];
+          return [false,"Those work, but there should be "+sols.length+" solutions (d = "+d+"). Step by m/d = "+(m/d)+"."];
+        },
+        steps:steps
+      };
+    },
+    crt(){
+      const pool=[3,4,5,7,8,9,11,13];
+      let ms;
+      for(;;){
+        const n=Math.random()<0.55?2:3;
+        ms=[]; const p=pool.slice();
+        while(ms.length<n){ const x=p.splice(Math.floor(Math.random()*p.length),1)[0]; if(ms.every(y=>gcd(x,y)===1)) ms.push(x); if(!p.length) break; }
+        if(ms.length!==n) continue;
+        const M=ms.reduce((x,y)=>x*y,1);
+        if(M>1200) continue;
+        if(HW_BLOCK.crt.includes(ms.slice().sort((x,y)=>x-y).join(","))) continue;
+        break;
+      }
+      const as=ms.map(m=>R(0,m-1));
+      const M=ms.reduce((x,y)=>x*y,1);
+      let x=0; const lines=["M = "+ms.join("·")+" = "+M];
+      ms.forEach((m,i)=>{
+        const Mi=M/m, r=Mi%m, y=mod(egcd(m,r).t,m);
+        lines.push("M"+(i+1)+" = "+Mi+" ≡ "+r+" (mod "+m+")  →  y"+(i+1)+" = "+y+"   ("+r+"·"+y+" = "+(r*y)+" ≡ 1)");
+        x+=as[i]*Mi*y;
+      });
+      const xs=ms.map((m,i)=>as[i]+"·"+(M/m)+"·"+mod(egcd(m,(M/m)%m).t,m)).join(" + ");
+      lines.push("x = "+xs+" = "+x+" ≡ "+mod(x,M)+" (mod "+M+")");
+      const ans=mod(x,M);
+      return {
+        topic:"crt",
+        prompt:"Find x with 0 ≤ x &lt; "+M+":<br>"+ms.map((m,i)=>"x ≡ "+as[i]+" (mod "+m+")").join(", &nbsp;"),
+        fields:[["x","x"]],
+        check(v){
+          if(v.x===null) return [false,"Enter a number."];
+          const bad=ms.findIndex((m,i)=>mod(v.x,m)!==as[i]);
+          if(bad>=0) return [false,v.x+" ≡ "+mod(v.x,ms[bad])+" (mod "+ms[bad]+"), but it should be "+as[bad]+"."];
+          if(v.x<0||v.x>=M) return [true,"That satisfies all of them. Reduced into 0…"+(M-1)+" it's "+ans+"."];
+          return [true,"Correct, and it's the unique answer mod "+M+"."];
+        },
+        steps:"<ol><li>Construction (yᵢ = inverse of Mᵢ mod mᵢ):"+calc(lines)+"</li><li>Check: "+ms.map((m,i)=>ans+" mod "+m+" = "+mod(ans,m)).join(", ")+" ✓</li></ol>"
+      };
+    },
+    power(){
+      if(Math.random()<0.65){
+        let p,a,n;
+        do{ p=pick([7,11,13,17,19,23,29,31]); a=R(2,60); n=R(100,9999); }while(a%p===0||HW_BLOCK.power.includes(a+","+n+","+p));
+        const r=n%(p-1), ar=a%p;
+        const P=powSteps(ar,r,p);
+        return {
+          topic:"power",
+          prompt:"Compute <b>"+a+sup(n)+" mod "+p+"</b>.",
+          fields:[["x","answer"]],
+          check(v){ return v.x!==null&&mod(v.x,p)===P.val?[true,"Correct."]:[false,"Not quite. Hint: "+p+" is prime, so the exponent only matters mod "+(p-1)+"."]; },
+          steps:"<ol><li>"+p+" is prime and "+p+" ∤ "+a+", so Fermat gives "+a+sup(p-1)+" ≡ 1 (mod "+p+").</li><li>"+n+" = "+Math.floor(n/(p-1))+"·"+(p-1)+" + "+r+", so "+a+sup(n)+" ≡ "+a+sup(r)+(a!==ar?" ≡ "+ar+sup(r):"")+" (mod "+p+")"+(a!==ar?" (first "+a+" ≡ "+ar+")":"")+".</li><li>"+(r===0?"Exponent 0, so the answer is <b>1</b>.":"Repeated squaring:"+P.html+"Answer: <b>"+P.val+"</b>.")+"</li></ol>"
+        };
+      } else {
+        let m,a,n;
+        do{ m=R(10,60); a=R(2,m-1); n=R(20,300); }while(isPrime(m)||gcd(a,m)===m);
+        const P=powSteps(a,n,m);
+        return {
+          topic:"power",
+          prompt:"Compute <b>"+a+sup(n)+" mod "+m+"</b>.",
+          fields:[["x","answer"]],
+          check(v){ return v.x!==null&&mod(v.x,m)===P.val?[true,"Correct."]:[false,"Not quite. "+m+" isn't prime, so no Fermat: use repeated squaring."]; },
+          steps:"<ol><li>"+m+" is not prime, so Fermat doesn't apply. Use repeated squaring mod "+m+":"+P.html+"</li><li>Answer: <b>"+P.val+"</b>.</li></ol>"
+        };
+      }
+    },
+    rsa(){
+      let p,q,e,n,phi;
+      for(;;){
+        p=pick([3,5,7,11,13,17,19]); q=pick([5,7,11,13,17,19,23]);
+        if(p===q) continue;
+        n=p*q; phi=(p-1)*(q-1);
+        const es=[3,5,7,11,13,17].filter(x=>x<phi&&gcd(x,phi)===1);
+        if(!es.length) continue;
+        e=pick(es);
+        if(HW_BLOCK.rsa.includes(p+","+q+","+e)) continue;
+        break;
+      }
+      let msg; do{ msg=R(2,n-1); }while(gcd(msg,n)!==1);
+      const E=egcd(phi,e), d=mod(E.t,phi);
+      const P=powSteps(msg,e,n);
+      const D=powSteps(P.val,d,n);
+      return {
+        topic:"rsa",
+        prompt:"RSA with p = "+p+", q = "+q+", e = "+e+". Find the private key <b>d</b> (least positive), and encrypt the message <b>m = "+msg+"</b>.",
+        fields:[["d","d"],["c","ciphertext c"]],
+        check(v){
+          const okd=v.d!==null&&mod(v.d*e,phi)===1, okc=v.c!==null&&mod(v.c,n)===P.val;
+          if(okd&&okc) return [true,"Both correct. Decrypting "+P.val+sup(d)+" mod "+n+" gives back "+msg+"."];
+          if(!okd) return [false,"d should satisfy "+e+"d ≡ 1 mod (p−1)(q−1) = "+phi+" (not mod n)."+(okc?" Your c is right.":"")];
+          return [false,"d is right. c = "+msg+sup(e)+" mod "+n+": recheck the powers."];
+        },
+        steps:"<ol><li>n = "+p+"·"+q+" = "+n+", and (p−1)(q−1) = "+(p-1)+"·"+(q-1)+" = "+phi+".</li><li>d = inverse of "+e+" mod "+phi+":"+calc(E.lines)+eTable(E,phi,e)+"So d = "+fmt(E.t)+" ≡ <b>"+d+"</b>. Check: "+e+"·"+d+" = "+(e*d)+" = "+Math.floor(e*d/phi)+"·"+phi+" + 1 ✓</li><li>Encrypt c = "+msg+sup(e)+" mod "+n+":"+P.html+"c = <b>"+P.val+"</b>.</li><li>Sanity check: decrypting, "+P.val+sup(d)+" mod "+n+" = "+D.val+" = m ✓</li></ol>"
+      };
+    }
+  };
+  const TOPICS=["bezout","inverse","lincong","crt","power","rsa"];
+  const NAMES={bezout:"gcd & Bézout",inverse:"Inverse",lincong:"ax ≡ b",crt:"CRT",power:"Powers",rsa:"RSA"};
+
+  // ---- UI ----
+  const $=id=>document.getElementById(id);
+  let topic="mixed", cur=null, lastMixed=null, answered=false;
+  let score={}; try{ score=JSON.parse(localStorage.getItem("m55q3-score")||"{}")||{}; }catch(e){ score={}; }
+  try{ const t=localStorage.getItem("m55q3-topic"); if(t&&(t==="mixed"||TOPICS.includes(t))) topic=t; }catch(e){}
+
+  function renderScore(){
+    const parts=TOPICS.map(t=>{const s=score[t]||{r:0,n:0};return '<span>'+NAMES[t]+': <b>'+s.r+'/'+s.n+'</b></span>';});
+    $("score").innerHTML=parts.join("")+'<span><button type="button" class="btn" id="resetBtn" style="padding:2px 10px;font-size:.75rem">Reset</button></span>';
+    $("resetBtn").onclick=()=>{score={};save();renderScore();};
+  }
+  function save(){ try{ localStorage.setItem("m55q3-score",JSON.stringify(score)); }catch(e){} }
+
+  function newProblem(){
+    let t=topic;
+    if(t==="mixed"){ const opts=TOPICS.filter(x=>x!==lastMixed); t=pick(opts); lastMixed=t; }
+    cur=gen[t](); answered=false;
+    $("prob").innerHTML='<span class="tag">'+NAMES[cur.topic]+'</span>'+cur.prompt;
+    $("inputs").innerHTML=cur.fields.map(([k,l])=>'<label for="in-'+k+'">'+l+'<input id="in-'+k+'" name="'+k+'" inputmode="'+(cur.allowNone?'text':'numeric')+'" spellcheck="false"></label>').join("");
+    $("fb").hidden=true; $("steps").hidden=true; $("steps").innerHTML=cur.steps;
+    $("stepsBtn").textContent="Show steps";
+  }
+  function parseInt2(s){ s=(s||"").trim().replace(/−/g,"-").replace(/\s+/g,""); if(!/^-?\d+$/.test(s)) return null; return parseInt(s,10); }
+  function read(){
+    const v={};
+    cur.fields.forEach(([k])=>{
+      const raw=($("in-"+k).value||"").trim();
+      if(cur.allowNone && /^(none|no|no solution|n\/a|∅)$/i.test(raw)) v.none=true;
+      if(cur.list){ v.list=raw.split(/[,;\s]+/).filter(Boolean).map(parseInt2).filter(x=>x!==null); }
+      else v[k]=parseInt2(raw);
+    });
+    return v;
+  }
+  $("ansForm").addEventListener("submit",ev=>{
+    ev.preventDefault();
+    if(!cur) return;
+    const [ok,msg]=cur.check(read());
+    const fb=$("fb"); fb.hidden=false; fb.className="fb "+(ok?"ok":"no"); fb.textContent=(ok?"✓ ":"✗ ")+msg;
+    if(!answered){ const s=score[cur.topic]||(score[cur.topic]={r:0,n:0}); s.n++; if(ok) s.r++; answered=true; save(); renderScore(); }
+    else if(ok){ /* retries don't change the score */ }
+  });
+  $("stepsBtn").onclick=()=>{ const st=$("steps"); st.hidden=!st.hidden; $("stepsBtn").textContent=st.hidden?"Show steps":"Hide steps"; };
+  $("nextBtn").onclick=()=>{ newProblem(); const f=$("inputs").querySelector("input"); if(f) f.focus({preventScroll:true}); };
+  document.querySelectorAll(".topics button").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.t===topic?"true":"false");
+    b.onclick=()=>{ topic=b.dataset.t; try{localStorage.setItem("m55q3-topic",topic);}catch(e){}
+      document.querySelectorAll(".topics button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false")); newProblem(); };
+  });
+  renderScore(); newProblem();
+
+  // expose for testing
+  window.__m55 = {gen, egcd, powSteps};
+})();
+</script>
+</body>
+</html>

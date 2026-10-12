@@ -1,0 +1,3 @@
+# A personal study page, not worth indexing.
+User-agent: *
+Disallow: /
