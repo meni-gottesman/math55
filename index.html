@@ -668,7 +668,7 @@ x = 1·35·2 + 4·21·1 + 6·15·1 = 70 + 84 + 90 = 244 ≡ 34 (mod 105)</div>
           topic:"base",
           prompt:"Write <b>"+n+" in base "+b+"</b>."+(b===16?" (Use A–F for 10–15.)":""),
           fields:[["s","base-"+b+" digits"]], str:true,
-          check(v){ const g=(v.s||"").toUpperCase().replace(/^0+/,""); if(g===s) return [true,"Correct: ("+s+")"+subs(b)+"."]; if(g.split("").reverse().join("")===s) return [false,"Digits are reversed. The first remainder is the last digit."]; return [false,"Not quite. Divide by "+b+" repeatedly and read the remainders bottom-up."]; },
+          check(v){ const g=(v.s||"").toUpperCase().replace(/^0+/,""); if(g===s) return [true,"Correct: "+s+" in base "+b+"."]; if(g.split("").reverse().join("")===s) return [false,"Digits are reversed. The first remainder is the last digit."]; return [false,"Not quite. Divide by "+b+" repeatedly and read the remainders bottom-up."]; },
           steps:"<ol><li>Divide by "+b+" repeatedly:"+calc(lines)+"</li><li>Read the remainders from bottom to top: <b>("+s+")"+subs(b)+"</b>.</li><li>Check: "+placeSum(s,b)+" = "+n+" ✓</li></ol>"
         };
       }
