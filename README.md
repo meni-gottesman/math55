@@ -1,12 +1,11 @@
-# Math 55 study pages
+# Math 55 notes
 
-Study pages for Math 55 (Discrete Mathematics), UC Berkeley, Fall 2026.
+Course notes for Math 55 (Discrete Mathematics), UC Berkeley, Fall 2026.
 Live at <https://meni-gottesman.github.io/math55/>.
 
-- `index.html` — Quiz 3 (Lectures 7, 8, 10, 11), taught from zero: divisibility, mod,
-  bases, primes, gcd/lcm, Euclid, Bézout, inverses, linear congruences,
-  the Chinese remainder theorem, Fermat's little theorem and RSA, with a drill that
-  generates unlimited practice problems and shows every step.
+Logic, proofs, sets and functions, infinity, number theory through RSA, induction and
+recursion, and counting. Every section has a one-line gist, definitions, analogies,
+worked examples, and a short check-yourself with hints and answers. Ends with an
+exam-day sheet and a list of common mistakes.
 
-Single self-contained page, no build step. All examples and practice problems are
-original; homework problems are referenced, not solved.
+One self-contained page, no build step. Homework answers are not published here.
