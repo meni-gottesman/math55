@@ -15,6 +15,8 @@ and answer).
 Gated and auto-graded: each section unlocks only after the previous one's mastery quiz is
 passed (with a written proof checked against a checklist where relevant), sections become
 mastered through later recall rounds, practice midterms are timed and graded, and a
-progress bar tracks it all. Progress is saved in the browser and can be exported.
+progress bar tracks it all, with a daily pace plan, XP, levels, streaks and badges.
+On this site progress stays on the device (exportable); the private Claude copy syncs it
+to the owner's Claude account.
 
 One self-contained page, no build step.

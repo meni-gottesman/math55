@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Interactive Math 55 course: all 16 lectures, gated auto-graded mastery quizzes, recall rounds, timed practice midterms and a progress bar.">
+<meta name="description" content="Interactive Math 55 course: gated auto-graded mastery quizzes, recall rounds, timed practice midterms, a daily pace plan, XP, streaks and badges.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%80%3C/text%3E%3C/svg%3E">
+<script>window.SYNCED_URL="https://claude.ai/artifact/UXTMSm4YJxrXis5L9d8dNw";</script>
 <title>Math 55 Study Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -213,6 +214,33 @@ table.plan-t td:nth-child(2){font-family:var(--f-mono);font-size:.82rem;white-sp
 .cprog .bar,.ready .bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
 .cprog .bar i,.ready .bar i{display:block;height:100%;background:var(--green);transition:width .4s}
 .cprog .pnext{font-weight:400;color:var(--muted);font-size:.8rem}
+.cgame{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font:600 .8rem var(--f-display);margin-bottom:6px}
+.cgame .lvl{color:var(--blue)}
+.cgame .xpbar{flex:0 1 120px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.cgame .xpbar i{display:block;height:100%;background:var(--blue);transition:width .5s}
+.cgame .xp{font-family:var(--f-mono);font-weight:400;color:var(--muted)}
+.cgame .streak{color:var(--muted)} .cgame .streak.on{color:var(--orange)}
+.cgame .goal{margin-left:auto;font-weight:400;color:var(--muted)}
+.cgame .goal b{color:var(--ink)}
+table.pace tr.today td{background:var(--blue-bg)}
+table.pace tr.met td:last-child{color:var(--green);font-weight:600}
+table.pace tr.missed td:last-child{color:var(--red);font-weight:600}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.bdg{border:1px solid var(--rule);border-radius:10px;padding:8px 10px;background:var(--surface);opacity:.55}
+.bdg.got{opacity:1;border-color:var(--orange);background:var(--orange-bg)}
+.bdg b{display:block;font-family:var(--f-display);font-size:.88rem}
+.bdg span{font-size:.8rem;color:var(--muted)}
+.m55-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translate(-50%,20px);opacity:0;z-index:50;background:var(--ink);color:var(--bg);font:700 .95rem var(--f-display);padding:10px 18px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.25);transition:opacity .25s,transform .25s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.m55-toast.show{opacity:1;transform:translate(-50%,0)}
+.m55-toast span{font-weight:400;opacity:.8;margin-left:4px}
+.m55-toast.lvl{background:var(--blue);color:#fff} .m55-toast.badge{background:var(--orange);color:#fff} .m55-toast.combo{background:var(--red);color:#fff}
+.m55-confetti{position:fixed;inset:0;pointer-events:none;z-index:49;overflow:hidden}
+.m55-confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation-name:m55fall;animation-timing-function:cubic-bezier(.25,.6,.4,1);animation-fill-mode:forwards}
+@keyframes m55fall{to{top:105%;transform:translateX(40px) rotate(540deg)}}
+@media (prefers-reduced-motion: reduce){.m55-toast{transition:none}}
+.syncstate{font-weight:600;font-size:.78rem;padding:2px 8px;border-radius:999px;background:var(--slate-bg);color:var(--slate)}
+.syncstate.synced{background:var(--green-bg);color:var(--green)}
+.syncstate.error{background:var(--red-bg);color:var(--red)}
 .sec.locked > :not(h2):not(.src):not(.gist):not(.goals):not(.lockmsg){display:none!important}
 .lockmsg{background:var(--slate-bg);border-radius:10px;padding:10px 14px;font-weight:600}
 nav.toc a[data-st]::after{margin-left:auto;font-size:.8rem;padding-left:6px}
@@ -391,6 +419,7 @@ img{max-width:100%}
 
 <main id="main" data-show="all">
   <div class="filter" role="group" aria-label="Show only">
+    <div class="cgame" id="cgame"></div>
     <div class="cprog" id="cprog"></div>
     <span class="lbl">Show</span>
     <button type="button" id="f-all" data-f="all" aria-pressed="true">Everything</button>
@@ -495,6 +524,13 @@ img{max-width:100%}
       <p><b>Test yourself:</b> on blank paper, write this whole sheet from memory, then compare. Anything you missed goes on tomorrow's first flex block.</p>
     </div>
 
+    <h3 id="pace">Daily pace: finish early <span class="pill">live</span></h3>
+    <p>Every section is passed by <b>Monday night</b> and all three practice midterms are done by <b>Wednesday midday</b>, which leaves Wednesday afternoon free before Thursday's exam. The bar at the top shows today's target and whether you're ahead.</p>
+    <div class="pace-box" id="pace-box"></div>
+
+    <h3 id="badges">Badges &amp; levels</h3>
+    <div class="badge-box" id="badge-box"></div>
+
     <h3 id="plan">Study plan: Sat Oct 24 → Thu Oct 29</h3>
     <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do the warm-up → do 2–3 textbook exercises → <b>pass the mastery quiz</b>, which unlocks the next section. <b>Start and end every day with a recall round</b> (~10 min each); that's where sections become mastered and where forgotten ones get caught.</p>
     <div class="tbl"><table class="plan-t">
@@ -512,14 +548,13 @@ img{max-width:100%}
       <tr><td>1.5 h</td><td>§29–§31 Combinatorial proofs, binomial theorem, stars &amp; bars, probability</td></tr>
       <tr><td>0.5 h</td><td>HW 6 problems cold (induction)</td></tr>
       <tr><td>0.5 h</td><td><b>Flex</b> · readiness check</td></tr>
-      <tr><td rowspan="4"><b>Tue Oct 27</b><br><span class="pill">test 1</span></td><td>2 h</td><td><b>Practice Midterm A</b>, timed 80 min and closed notes; grade it with the solutions; mark every miss</td></tr>
+      <tr><td rowspan="4"><b>Tue Oct 27</b><br><span class="pill">tests A + B</span></td><td>2 h</td><td><b>Practice Midterm A</b> (morning), timed + graded</td></tr>
       <tr><td>class</td><td><b>Review lecture</b> 2:10–3:30. Note anything emphasized.</td></tr>
-      <tr><td>1.5 h</td><td>Fix: for each missed problem, reread its section and redo its check questions</td></tr>
-      <tr><td>1.5 h</td><td>Posted review materials (if out), or the GSI's extra problems (Misc. #7, 8, 9, 13–18 in <i>Math_55_probs.pdf</i>)</td></tr>
-      <tr><td rowspan="4"><b>Wed Oct 28</b><br><span class="pill">tests 2–3</span></td><td>2 h</td><td><b>Practice Midterm B</b>, timed + graded</td></tr>
-      <tr><td>1 h</td><td>Fix B's misses</td></tr>
-      <tr><td>1.5 h</td><td><b>Practice Midterm C</b>, timed (or only its problems on your weak topics)</td></tr>
-      <tr><td>0.5 h</td><td>Write the memorize sheet from memory · <b>sleep early</b></td></tr>
+      <tr><td>2 h</td><td><b>Practice Midterm B</b> (evening), timed + graded</td></tr>
+      <tr><td>1 h</td><td>Fix A's and B's misses (their sections are flagged) · recall rounds toward 15 mastered</td></tr>
+      <tr><td rowspan="3"><b>Wed Oct 28</b><br><span class="pill">test C · done by noon</span></td><td>2 h</td><td><b>Practice Midterm C</b> (morning), timed + graded, fix its misses</td></tr>
+      <tr><td>1 h</td><td>Recall rounds until all 31 are mastered · posted review materials if any</td></tr>
+      <tr><td>0.5 h</td><td>Afternoon: write the memorize sheet from memory, then rest · <b>sleep early</b></td></tr>
       <tr><td><b>Thu Oct 29</b></td><td>30 min</td><td>Warm-up: memorize sheet, one CRT, one induction, one counting problem. Eat. Arrive early. Exam 2:10.</td></tr>
     </table></div>
 
@@ -3542,7 +3577,67 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const PASS=4, QN=5, PROOF_MIN=80;
   function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s&&s.sec) return s; }catch(e){} return {sec:{},tests:{},rounds:0}; }
   let ST=load();
-  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} }
+  // ---- sync: the source of truth is a private per-person document in the viewer's Claude account ----
+  let REMOTE=null, SYNC='local', WRITING=false, PENDING=false, LASTREV=null, PUSHT=null;
+  const PREV={};
+  const strip=o=>{ const c=Object.assign({},o); delete c.t; return JSON.stringify(c); };
+  function stamp(){ // mark changed records with a timestamp so devices merge record by record
+    ['sec','tests'].forEach(g=>{ Object.keys(ST[g]||{}).forEach(k=>{ const j=strip(ST[g][k]); if(PREV[g+k]!==undefined&&PREV[g+k]!==j) ST[g][k].t=Date.now(); else if(PREV[g+k]===undefined&&ST[g][k].t==null) ST[g][k].t=Date.now(); PREV[g+k]=j; }); });
+  }
+  function merge(a,b){ // newer record wins, per section / per test
+    const out={sec:{},tests:{},rounds:Math.max(a.rounds||0,b.rounds||0)};
+    ['sec','tests'].forEach(g=>{ const ks=new Set([...Object.keys(a[g]||{}),...Object.keys(b[g]||{})]);
+      ks.forEach(k=>{ const x=(a[g]||{})[k], y=(b[g]||{})[k]; out[g][k]= !x? y : !y? x : ((y.t||0)>(x.t||0)? y : x); }); });
+    const ga=a.g||{}, gb=b.g||{};
+    out.g={xp:Math.max(ga.xp||0,gb.xp||0), days:[...new Set([...(ga.days||[]),...(gb.days||[])])], badges:Object.assign({},ga.badges||{},gb.badges||{}), combo:Math.max(ga.combo||0,gb.combo||0), best:Math.max(ga.best||0,gb.best||0)};
+    return out;
+  }
+  function save(){
+    stamp();
+    try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
+    if(REMOTE){ clearTimeout(PUSHT); PUSHT=setTimeout(push,700); }
+  }
+  async function push(){
+    if(!REMOTE) return;
+    if(WRITING){ PENDING=true; return; }
+    WRITING=true; PENDING=false;
+    const rev=Math.random().toString(36).slice(2); LASTREV=rev;
+    const body={v:1, rev, at:Date.now(), st:JSON.parse(JSON.stringify(ST,(k,v)=>k==='_t'?undefined:v))};
+    try{ await REMOTE.set(body); SYNC='synced'; }
+    catch(e){ if(e&&e.code==='unavailable'){ await new Promise(r=>setTimeout(r,800+Math.random()*800)); try{ await REMOTE.set(body); SYNC='synced'; }catch(e2){ SYNC='error'; } } else SYNC='error'; }
+    WRITING=false; renderSync();
+    if(PENDING) push();
+  }
+  function renderSync(){
+    const html= SYNC==='synced' ? '✓ Synced to your Claude account' :
+      SYNC==='connecting' ? 'Connecting to your Claude account…' :
+      SYNC==='error' ? '⚠ Couldn\'t reach your Claude account; saved on this device for now' :
+      'Saved on this device only'+(window.SYNCED_URL?' · <a href="'+window.SYNCED_URL+'">use your synced copy</a>':'');
+    $$('.syncstate').forEach(el=>{ el.className='syncstate '+SYNC; el.innerHTML=html; });
+  }
+  async function initSync(){
+    const c=window.claude;
+    if(!c||typeof c.use!=='function'){ SYNC='local'; renderSync(); return; }
+    SYNC='connecting'; renderSync();
+    let db=null, user=null;
+    try{ [db,user]=await Promise.all([c.use('db'),c.use('user')]); }catch(e){}
+    const id= user ? await user.id().catch(()=>null) : null;
+    if(!db||!id){ SYNC='local'; renderSync(); return; }
+    const ref=db.doc('data/users/'+id+'/progress');
+    try{
+      const snap=await ref.get();
+      if(snap.exists){ const d=snap.data(); if(d&&d.st&&d.st.sec){ LASTREV=d.rev; ST=merge(d.st,ST); } }
+      REMOTE=ref; stamp(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
+      await push();
+    }catch(e){ SYNC='error'; renderSync(); return; }
+    ref.onSnapshot(snap=>{
+      if(!snap.exists||snap.metadata.hasPendingWrites) return;
+      const d=snap.data(); if(!d||!d.st||d.rev===LASTREV) return;
+      LASTREV=d.rev; ST=merge(d.st,ST); stamp(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
+      refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); });
+    }, e=>{ SYNC='error'; renderSync(); });
+    refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); }); renderSync();
+  }
   const S_=id=>ST.sec[id]||(ST.sec[id]={});
   const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
   const $q=(sel,root)=>(root||document).querySelector(sel);
@@ -3550,6 +3645,103 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const secTitle=id=>{const h=$q('#'+id+' > h2'); if(!h) return id; const n=h.querySelector('.n'); return h.textContent.replace(n?n.textContent:'','').trim();};
   const learned=id=>!!S_(id).learned, mastered=id=>!!S_(id).mastered;
   function status(id){ const i=ORDER.indexOf(id); if(i>0&&!learned(ORDER[i-1])&&!learned(id)) return 'locked'; const s=S_(id); if(s.review) return 'review'; if(s.mastered) return 'mastered'; if(s.learned) return 'learned'; return 'open'; }
+  // ================= pace + game layer =================
+  const PACE=[
+    {d:'2026-10-24', passed:13, label:'Pass §1–§13 (logic, proofs, sets, functions, infinity)'},
+    {d:'2026-10-25', passed:21, label:'Pass §14–§21 (number theory through RSA)'},
+    {d:'2026-10-26', passed:31, label:'Pass §22–§31 (induction, counting, probability): every section passed'},
+    {d:'2026-10-27', passed:31, tests:['A','B'], mastered:15, label:'Practice Midterms A and B · 15 sections mastered'},
+    {d:'2026-10-28', passed:31, tests:['C'], mastered:31, label:'Practice Midterm C · all 31 mastered (finish by midday)'},
+    {d:'2026-10-29', passed:31, label:'Exam day: 30-minute warm-up, then go get it'},
+  ];
+  const LEVELS=[[0,'Truth-Table Tourist'],[250,'Quantifier Cadet'],[600,'Proof Apprentice'],[1000,'Set Builder'],[1500,'Bijection Broker'],[2100,'Modular Mage'],[2800,'Bézout Boss'],[3600,'Induction Knight'],[4500,'Pigeonhole Pro'],[5500,'Combinatorics Captain'],[6700,'Midterm Slayer']];
+  const BADGES=[
+    ['first','First blood','Pass your first section'],
+    ['perfect','Flawless','Score 5/5 on a mastery quiz'],
+    ['proof','Q.E.D.','Pass a section with a written proof'],
+    ['comeback','Comeback','Pass a section you failed before'],
+    ['combo10','On fire','10 correct answers in a row'],
+    ['combo25','Unstoppable','25 correct answers in a row'],
+    ['logic','Logician','Pass all of Part I (§1–§5)'],
+    ['proofs','Prover','Pass all of Part II (§6–§9)'],
+    ['sets','Set theorist','Pass all of Part III (§10–§13)'],
+    ['nt','Number theorist','Pass all of Part IV (§14–§21)'],
+    ['ind','Domino master','Pass all of Part V (§22–§25)'],
+    ['count','Counter','Pass all of Parts VI–VII (§26–§31)'],
+    ['allpass','Course complete','Pass all 31 sections'],
+    ['master1','It stuck','Master your first section'],
+    ['master10','Long-term memory','Master 10 sections'],
+    ['masterall','Total recall','Master all 31 sections'],
+    ['test','Test taker','Submit a practice midterm'],
+    ['ace','85% club','Score 85%+ on a practice midterm'],
+    ['ontime','Right on pace','Hit a day\'s pace target'],
+    ['streak3','Three-peat','A 3-day study streak'],
+  ];
+  const todayStr=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  const G=()=>{ ST.g=ST.g||{xp:0,days:[],badges:{},combo:0,best:0}; return ST.g; };
+  function level(xp){ let i=0; while(i+1<LEVELS.length&&xp>=LEVELS[i+1][0]) i++; const cur=LEVELS[i][0], nxt=(LEVELS[i+1]||[cur+1000])[0]; return {n:i+1,title:LEVELS[i][1],into:xp-cur,span:nxt-cur,max:i===LEVELS.length-1}; }
+  function streak(){ const ds=new Set(G().days); let n=0; const d=new Date(); if(!ds.has(todayStr())) d.setDate(d.getDate()-1); for(;;){ const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); if(ds.has(k)){ n++; d.setDate(d.getDate()-1); } else break; } return n; }
+  function active(){ const g=G(), t=todayStr(); if(!g.days.includes(t)){ g.days.push(t); if(streak()>=3) badge('streak3'); } }
+  let TQ=[]; let TT=null;
+  function toast(html,kind){ TQ.push([html,kind]); if(!TT) nextToast(); }
+  function nextToast(){ const it=TQ.shift(); if(!it){ TT=null; return; } let el=document.getElementById('m55-toast'); if(!el){ el=document.createElement('div'); el.id='m55-toast'; document.body.appendChild(el); }
+    el.className='m55-toast '+(it[1]||''); el.innerHTML=it[0]; el.hidden=false; void el.offsetWidth; el.classList.add('show'); TT=setTimeout(()=>{ el.classList.remove('show'); setTimeout(nextToast,250); },2200); }
+  function xp(n,why){ if(!n) return; const g=G(); const before=level(g.xp).n; g.xp+=n; active(); const after=level(g.xp); toast('+'+n+' XP <span>'+why+'</span>','xp'); if(after.n>before){ toast('⬆ Level '+after.n+': <b>'+after.title+'</b>','lvl'); confetti(); } }
+  function badge(id){ const g=G(); if(g.badges[id]) return; g.badges[id]=todayStr(); const b=BADGES.find(x=>x[0]===id); if(b){ toast('🏅 Badge unlocked: <b>'+b[1]+'</b>','badge'); } }
+  function combo(ok){ const g=G(); if(ok){ g.combo=(g.combo||0)+1; g.best=Math.max(g.best||0,g.combo); if(g.combo===10) badge('combo10'); if(g.combo===25) badge('combo25'); if(g.combo>=5&&g.combo%5===0) toast('🔥 '+g.combo+' in a row','combo'); } else g.combo=0; }
+  function confetti(){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box=document.createElement('div'); box.className='m55-confetti'; const cols=['var(--blue)','var(--orange)','var(--green)','var(--pink)','var(--red)'];
+    for(let i=0;i<60;i++){ const p=document.createElement('i'); p.style.left=(Math.random()*100)+'%'; p.style.background=cols[i%cols.length]; p.style.animationDelay=(Math.random()*0.3)+'s'; p.style.animationDuration=(1.4+Math.random()*1.2)+'s'; p.style.transform='rotate('+(Math.random()*360)+'deg)'; box.appendChild(p); }
+    document.body.appendChild(box); setTimeout(()=>box.remove(),3200);
+  }
+  function checkBadges(){
+    const L=id=>learned(id), all=(a,b)=>{ for(let i=a;i<=b;i++) if(!L('s'+i)) return false; return true; };
+    if(ORDER.some(L)) badge('first');
+    if(all(1,5)) badge('logic'); if(all(6,9)) badge('proofs'); if(all(10,13)) badge('sets'); if(all(14,21)) badge('nt'); if(all(22,25)) badge('ind'); if(all(26,31)) badge('count'); if(all(1,31)) badge('allpass');
+    const m=ORDER.filter(id=>mastered(id)).length; if(m>=1) badge('master1'); if(m>=10) badge('master10'); if(m>=31) badge('masterall');
+    if(Object.values(ST.tests).some(t=>t&&t.submitted)) badge('test');
+    if(Object.values(ST.tests).some(t=>t&&t.graded!==undefined&&t.score>=85)) badge('ace');
+    const p=paceToday(); if(p&&p.met) badge('ontime');
+  }
+  function paceToday(){
+    const t=todayStr(); let i=PACE.findIndex(p=>p.d===t);
+    if(i<0){ if(t<PACE[0].d) return {before:true, p:PACE[0]}; return null; }
+    const p=PACE[i]; const passed=ORDER.filter(learned).length, mast=ORDER.filter(mastered).length;
+    const testsDone=(p.tests||[]).filter(T=>ST.tests[T]&&ST.tests[T].submitted).length;
+    const need=[]; let done=0, total=0;
+    total+=p.passed; done+=Math.min(passed,p.passed);
+    if(p.mastered){ total+=p.mastered; done+=Math.min(mast,p.mastered); }
+    if(p.tests){ total+=p.tests.length*5; done+=testsDone*5; }
+    const met= passed>=p.passed && (!p.mastered||mast>=p.mastered) && testsDone===(p.tests||[]).length;
+    const prevTarget= i>0?PACE[i-1].passed:0;
+    return {p,i,passed,mast,testsDone,met,pct:Math.round(100*done/Math.max(1,total)),aheadBy:passed-p.passed,todayNew:Math.max(0,Math.min(passed,p.passed)-prevTarget),todayNeed:p.passed-prevTarget};
+  }
+  function renderGame(){
+    const g=G(), lv=level(g.xp), st=streak(), pc=paceToday();
+    const top=document.getElementById('cgame');
+    if(top){
+      let goal='';
+      if(pc&&pc.before) goal='Pace plan starts <b>Sat Oct 24</b>: pass §1–§13';
+      else if(pc){ goal= pc.met? '✓ Today\'s target hit' + (pc.aheadBy>0?' · '+pc.aheadBy+' ahead':'') : 'Today: <b>'+(pc.p.tests&&pc.passed>=pc.p.passed? (pc.testsDone+'/'+pc.p.tests.length+' tests'+(pc.p.mastered?' · '+Math.min(pc.mast,pc.p.mastered)+'/'+pc.p.mastered+' mastered':'')) : (pc.todayNew+'/'+pc.todayNeed+' sections'))+'</b>'+(pc.aheadBy<0&&!pc.p.tests?' · '+(-pc.aheadBy)+' to go':''); }
+      top.innerHTML='<span class="lvl">Lv '+lv.n+' · '+lv.title+'</span><span class="xpbar"><i style="width:'+(lv.max?100:Math.round(100*lv.into/lv.span))+'%"></i></span><span class="xp">'+g.xp+' XP</span><span class="streak'+(st?' on':'')+'">🔥 '+st+'-day streak</span><span class="goal">'+goal+'</span>';
+    }
+    const pb=document.getElementById('pace-box');
+    if(pb){
+      const t=todayStr();
+      pb.innerHTML='<div class="tbl"><table class="pace"><tr><th>Day</th><th>Target</th><th>Status</th></tr>'+PACE.map(p=>{
+        const passed=ORDER.filter(learned).length, mast=ORDER.filter(mastered).length;
+        const tests=(p.tests||[]).every(T=>ST.tests[T]&&ST.tests[T].submitted);
+        const met= passed>=p.passed&&(!p.mastered||mast>=p.mastered)&&tests;
+        const dt=new Date(p.d+'T12:00:00'); const lbl=dt.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+        const cls= p.d===t?'today':(p.d<t?(met?'met':'missed'):'');
+        return '<tr class="'+cls+'"><td>'+lbl+(p.d===t?' <span class="pill">today</span>':'')+'</td><td>'+p.label+'</td><td>'+(met?'✓ done':(p.d<t?'behind: catch up first thing':(p.d===t?(pc&&!pc.before?pc.pct+'%':'—'):'upcoming')))+'</td></tr>';
+      }).join('')+'</table></div>';
+    }
+    const bb=document.getElementById('badge-box');
+    if(bb){ const n=Object.keys(g.badges).length; bb.innerHTML='<p class="sub-note">'+n+' of '+BADGES.length+' unlocked · best combo '+(g.best||0)+' · total '+g.xp+' XP</p><div class="badges">'+BADGES.map(b=>'<div class="bdg'+(g.badges[b[0]]?' got':'')+'"><b>'+(g.badges[b[0]]?'🏅':'🔒')+' '+b[1]+'</b><span>'+b[2]+'</span></div>').join('')+'</div>'; }
+  }
+
 
   // ---- expression evaluator: numbers, + − × ÷ ^ ! ( ) and C(n,k), P(n,k) ----
   function evalExpr(src){
@@ -3655,14 +3847,18 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       const foot=document.createElement('div'); foot.className='mq-foot'; foot.innerHTML='<p class="tip">Numeric answers accept expressions: 2^10-1, 52!/(47!*5!), C(13,5)/C(52,5), 1/6.</p><button type="button" class="btn primary mq-submit">Submit answers</button><div class="mq-res" hidden></div>';
       box.appendChild(foot);
       foot.querySelector('.mq-submit').onclick=()=>{
-        const score=objs.reduce((n,o)=>n+(gradeItem(o)?1:0),0);
+        let score=0; objs.forEach(o=>{ const ok=gradeItem(o); combo(ok); if(ok) score++; });
+        const wasLearned=learned(sid); xp(score*(wasLearned?4:10), wasLearned?'practice answers':'correct answers');
         foot.querySelector('.mq-submit').remove();
         const res=foot.querySelector('.mq-res'); res.hidden=false;
         const s=S_(sid); s.attempts=(s.attempts||0)+1;
         function finish(){
           const autoPass=score>=PASS, proofPass=!P||P.done();
           if(autoPass&&proofPass){
-            const first=!s.learned; s.learned=true; s.best=Math.max(s.best||0,score); s.review=false; save(); refresh();
+            const first=!s.learned; s.learned=true; s.best=Math.max(s.best||0,score); s.review=false;
+            if(first){ xp(50,'§'+sid.slice(1)+' passed'); if(P) xp(30,'proof written'); if((s.attempts||1)>1) badge('comeback'); confetti(); }
+            if(score===QN) badge('perfect'); if(P) badge('proof');
+            save(); refresh();
             res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first?'The next section is unlocked. ':'')+'Now prove it sticks: this section shows up in <a href="#recall">recall rounds</a>, and two later correct recalls mark it mastered.<br><button type="button" class="btn mq-again">Back</button>';
           } else {
             save();
@@ -3704,12 +3900,12 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       foot.querySelector('button').onclick=()=>{
         let right=0; const touched={};
         objs.forEach(o=>{
-          const ok=gradeItem(o); const s=S_(o.sid);
+          const ok=gradeItem(o); const s=S_(o.sid); combo(ok); if(ok) xp(15,'recall');
           o.el.querySelector('.qsec').textContent+=' · §'+o.sid.slice(1)+' '+secTitle(o.sid);
           if(ok){ right++; if(s.lastRound!==roundId){ s.recall=(s.recall||0)+1; s.lastRound=roundId; } }
           touched[o.sid]=touched[o.sid]||{ok:true}; if(!ok) touched[o.sid].ok=false;
         });
-        Object.keys(touched).forEach(sid=>{ const s=S_(sid); if(touched[sid].ok){ s.review=false; if((s.recall||0)>=2) s.mastered=true; } else { s.recall=0; s.review=true; s.mastered=false; } });
+        Object.keys(touched).forEach(sid=>{ const s=S_(sid); if(touched[sid].ok){ s.review=false; if((s.recall||0)>=2&&!s.mastered){ s.mastered=true; xp(40,'§'+sid.slice(1)+' mastered'); confetti(); } } else { s.recall=0; s.review=true; s.mastered=false; } });
         save(); refresh();
         foot.querySelector('button').remove();
         const res=foot.querySelector('.mq-res'); res.hidden=false; res.className='mq-res '+(right===objs.length?'ok':'no');
@@ -3766,7 +3962,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
           });
           st.auto[p.id]=p.parts.length?ok:null;
         });
-        st.submitted=Date.now(); st.rub=st.rub||{}; save(); applyMisses(true); refresh(); results();
+        st.submitted=Date.now(); st.rub=st.rub||{}; xp(20*probs.filter(p=>p.parts.length&&st.auto[p.id]).length,'practice midterm '+T); save(); applyMisses(true); refresh(); results();
       }
     }
     function results(){
@@ -3782,7 +3978,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
         if(p.rub){ li.querySelector('.mine').textContent=proofTxt||'(nothing written)'; const saved=(st.rub[p.id]||[]); $$('.rub input',li).forEach((c,j)=>{ c.checked=!!saved[j]; c.onchange=()=>{ st.rub[p.id]=$$('.rub input',li).map(x=>x.checked); save(); if(st.graded) applyMisses(false); refresh(); score(); }; }); }
         ol.appendChild(li);
       });
-      if(probs.some(p=>p.rub)&&!st.graded){ const b=document.createElement('button'); b.type='button'; b.className='btn primary'; b.textContent='I\'ve finished grading my proofs'; b.onclick=()=>{ st.graded=true; save(); applyMisses(false); refresh(); b.remove(); score(); }; box.appendChild(b); }
+      if(probs.some(p=>p.rub)&&!st.graded){ const b=document.createElement('button'); b.type='button'; b.className='btn primary'; b.textContent='I\'ve finished grading my proofs'; b.onclick=()=>{ st.graded=true; xp(25*probs.filter(p=>p.rub&&((st.rub[p.id]||[]).filter(Boolean).length===p.rub.length)).length,'proofs graded'); save(); applyMisses(false); refresh(); b.remove(); score(); if(st.score>=85){ badge('ace'); confetti(); } save(); }; box.appendChild(b); }
       score();
       function score(){
         let pts=0; probs.forEach(p=>{ if(problemOK(T,p)) pts++; });
@@ -3821,9 +4017,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     const pc=Math.round(100*sc/ORDER.length), pm=Math.round(100*cs/CORE.length);
     const next=ORDER.find(id=>!learned(id));
     const pb=document.getElementById('cprog');
-    if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span>';
+    if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span><span class="syncstate"></span>';
     const tp=document.getElementById('progress'); if(tp) tp.textContent=ORDER.filter(learned).length+' of 31 passed · '+ORDER.filter(mastered).length+' mastered';
-    applyLocks(); readiness();
+    applyLocks(); readiness(); if(typeof renderSync==='function') renderSync(); checkBadges(); renderGame();
     const rcb=document.getElementById('recall-box'); if(rcb&&rcb._idle&&!rcb._active) rcb._idle();
   }
   function readiness(){
@@ -3836,7 +4032,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
 
   // ---- export / import ----
   function mountSync(box){
-    box.innerHTML='<p>Progress is saved in this browser only. To move it to another device, copy the code here and load it there.</p><textarea rows="3" placeholder="progress code"></textarea><div class="pf-row"><button type="button" class="btn ex">Show my code</button><button type="button" class="btn im">Load code</button><span class="msg"></span></div>';
+    box.innerHTML='<p><span class="syncstate" id="syncstate"></span></p><p>In your private Claude copy, progress is saved to your Claude account and follows you to every device where you\'re signed in. On any other copy (like the GitHub site) it stays on that device. To move it by hand, copy the code here and load it there.</p><textarea rows="3" placeholder="progress code"></textarea><div class="pf-row"><button type="button" class="btn ex">Show my code</button><button type="button" class="btn im">Load code</button><span class="msg"></span></div>';
     const ta=box.querySelector('textarea'), msg=box.querySelector('.msg');
     box.querySelector('.ex').onclick=()=>{ ta.value=btoa(unescape(encodeURIComponent(JSON.stringify(ST)))); ta.select(); try{ navigator.clipboard.writeText(ta.value).then(()=>msg.textContent='Copied.',()=>msg.textContent='Select and copy the code.'); }catch(e){ msg.textContent='Select and copy the code.'; } };
     box.querySelector('.im').onclick=()=>{ try{ const s=JSON.parse(decodeURIComponent(escape(atob(ta.value.trim())))); if(!s||!s.sec) throw 0; ST=s; save(); msg.textContent='Loaded.'; refresh(); $$('.mastery').forEach(mountQuiz); }catch(e){ msg.textContent='That code didn\'t work.'; } };
@@ -3846,6 +4042,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
   const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
   refresh();
+  renderSync(); initSync();
   window.__m55c={evalExpr,numOK,gen,BANK,TESTS,ST:()=>ST};
 
 })();
