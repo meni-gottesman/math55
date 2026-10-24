@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Math 55 (Discrete Mathematics) notes for all 16 lectures, with goals, check-yourself practice, a Midterm 2 plan, three practice midterms and a homework playbook.">
+<meta name="description" content="Interactive Math 55 course: all 16 lectures, gated auto-graded mastery quizzes, recall rounds, timed practice midterms and a progress bar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%80%3C/text%3E%3C/svg%3E">
 <title>Math 55 Study Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -206,6 +206,66 @@ table.cov td:first-child{font-family:var(--f-mono);white-space:nowrap}
 table.cov a{margin-right:6px}
 table.plan-t td:first-child{white-space:nowrap}
 table.plan-t td:nth-child(2){font-family:var(--f-mono);font-size:.82rem;white-space:nowrap;color:var(--muted)}
+
+.cprog{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font:600 .8rem var(--f-display);margin-bottom:4px}
+.cprog .pg{display:flex;align-items:center;gap:8px;min-width:170px;flex:1 1 170px}
+.cprog .pg span{white-space:nowrap}
+.cprog .bar,.ready .bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.cprog .bar i,.ready .bar i{display:block;height:100%;background:var(--green);transition:width .4s}
+.cprog .pnext{font-weight:400;color:var(--muted);font-size:.8rem}
+.sec.locked > :not(h2):not(.src):not(.gist):not(.goals):not(.lockmsg){display:none!important}
+.lockmsg{background:var(--slate-bg);border-radius:10px;padding:10px 14px;font-weight:600}
+nav.toc a[data-st]::after{margin-left:auto;font-size:.8rem;padding-left:6px}
+nav.toc a[data-st=locked]{opacity:.55}
+nav.toc a[data-st=locked]::after{content:"🔒"}
+nav.toc a[data-st=open]::after{content:"○";color:var(--muted)}
+nav.toc a[data-st=learned]::after{content:"◐";color:var(--blue)}
+nav.toc a[data-st=mastered]::after{content:"●";color:var(--green)}
+nav.toc a[data-st=review]::after{content:"⚠";color:var(--red)}
+.mastery,.recall,.sync,.pt-wrap{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;margin:22px 0 6px}
+.mq-head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.mq-head .tag{font-family:var(--f-hand);font-weight:700;font-size:1.5rem;color:var(--blue)}
+.mq-state{font-size:.95rem}
+.mq-state.ok,.mq-res.ok,p.ok{color:var(--green)}
+p.no{color:var(--red)}
+.qi{border-top:1px solid var(--rule);padding:12px 0}
+.qsec{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.qp{margin-bottom:8px}
+.qc{display:grid;gap:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--rule);border-radius:8px;padding:7px 10px;cursor:pointer;background:var(--bg)}
+.opt input{margin-top:5px}
+.opt.right{border-color:var(--green);background:var(--green-bg)}
+.opt.wrong{border-color:var(--red);background:var(--red-bg)}
+.qf{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.qf label{display:grid;gap:3px;font:600 .78rem var(--f-display);color:var(--muted);flex:1 1 160px;min-width:0}
+.qf input,.qf select,.proofbox textarea,.pt-wrap textarea,.sync textarea{font:400 1rem var(--f-mono);padding:9px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.proofbox textarea,.pt-wrap textarea,.sync textarea{font:400 .95rem var(--f-body);margin-top:6px}
+.hintb{font:600 .78rem var(--f-display);border:1px dashed var(--rule);background:transparent;color:var(--muted);border-radius:999px;padding:6px 10px;cursor:pointer}
+.hintt{background:var(--slate-bg);border-radius:8px;padding:6px 10px;margin-top:6px;font-size:.92rem}
+.qr{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.95rem}
+.qr.ok{background:var(--green-bg)} .qr.no{background:var(--red-bg)}
+.stp summary{cursor:pointer;font:600 .8rem var(--f-display);color:var(--muted);margin-top:4px}
+.proofbox{border-top:1px solid var(--rule);padding:12px 0}
+.pf-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.pcount{font:400 .8rem var(--f-mono);color:var(--muted)}
+.pf-model{margin-top:10px;background:var(--orange-bg);border-radius:10px;padding:10px 14px}
+.mlabel{font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:8px 0 4px}
+.rub{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:.95rem;cursor:pointer}
+.rub input{margin-top:4px;accent-color:var(--green)}
+.mq-foot{border-top:1px solid var(--rule);padding-top:12px}
+.mq-foot .tip,.recall .tip{font-size:.85rem;color:var(--muted)}
+.mq-res{margin-top:10px;padding:10px 14px;border-radius:10px;background:var(--bg)}
+.mq-res.no{color:var(--ink);background:var(--red-bg)} .mq-res.ok{background:var(--green-bg)}
+.btn{font:600 .88rem var(--f-display);border:1px solid var(--rule);background:var(--bg);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;margin-top:6px}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.timer{position:sticky;top:120px;z-index:4;display:inline-block;background:var(--ink);color:var(--bg);font:600 .9rem var(--f-mono);padding:6px 12px;border-radius:999px;margin-bottom:8px}
+ol.exam.live > li{border-top:1px solid var(--rule);padding-top:10px}
+.tscore{background:var(--slate-bg);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:8px 10px;margin:0}
+.proofgrade{background:var(--orange-bg);border-radius:10px;padding:8px 14px;margin:8px 0}
+:root[data-theme="dark"] .btn.primary{color:#0d1424}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0d1424}}
 [hidden]{display:none!important}
 img{max-width:100%}
 </style>
@@ -214,7 +274,7 @@ img{max-width:100%}
 <header class="mast">
   <p class="eyebrow">Math 55 · Discrete Mathematics · UC Berkeley · Fall 2026</p>
   <h1>Math 55 Study Guide <span class="hand">the full course</span></h1>
-  <p class="lede">All 16 lectures in one place, from logic through probability. Every section has a one-line gist, goals (what to be able to do and what to memorize), definitions, a picture to hang it on, worked examples, a check-yourself with hints, and textbook exercises. Midterm 2 HQ has the plan, a readiness check that catches gaps, and three practice midterms.</p>
+  <p class="lede">All 16 lectures in one place, from logic through probability. Every section has a one-line gist, goals (what to be able to do and what to memorize), definitions, a picture to hang it on, worked examples, a check-yourself with hints, and textbook exercises. Midterm 2 HQ has the plan, a readiness check that catches gaps, and three practice midterms. <b>It's interactive and gated:</b> each section unlocks only after you pass the previous one's auto-graded quiz, sections become mastered only through later recall rounds, and the bar up top tracks it all.</p>
   <div class="facts">
     <div><b>Textbook</b><span>Rosen, <i>Discrete Mathematics and Its Applications</i>, 8th ed.</span></div>
     <div><b>Midterm 2</b><span>Thu Oct 29, 2:10–3:30 pm, 150 Wheeler</span></div>
@@ -331,14 +391,15 @@ img{max-width:100%}
 
 <main id="main" data-show="all">
   <div class="filter" role="group" aria-label="Show only">
+    <div class="cprog" id="cprog"></div>
     <span class="lbl">Show</span>
     <button type="button" id="f-all" data-f="all" aria-pressed="true">Everything</button>
     <button type="button" id="f-defn" data-f="defn" aria-pressed="false">Definitions</button>
     <button type="button" id="f-thm" data-f="thm" aria-pressed="false">Theorems</button>
     <button type="button" id="f-caution" data-f="caution" aria-pressed="false">Cautions</button>
     <button type="button" id="f-ex" data-f="ex" aria-pressed="false">Examples</button>
-    <button type="button" id="f-check" data-f="check" aria-pressed="false">Check yourself</button>
-    <p class="hint">Filter for fast review: “Definitions” turns the page into a flashcard list; “Check yourself” shows only the practice questions.</p>
+    <button type="button" id="f-check" data-f="check" aria-pressed="false">Warm-ups</button>
+    <p class="hint">Filters work on the sections you've unlocked. “Warm-ups” shows only the ungraded practice questions.</p>
   </div>
 
   <section class="sec" style="padding-top:8px">
@@ -380,9 +441,15 @@ img{max-width:100%}
       </ul>
     </div>
 
-    <h3 id="ready-h">Readiness check <span class="pill">updates as you tick boxes</span></h3>
+    <h3 id="ready-h">Readiness check <span class="pill">live</span></h3>
     <div class="ready" id="ready"><p>Loading your progress…</p></div>
-    <p class="sub-note">This catches gaps two ways. A section counts as done only when you tick its “Got it” box, which means you did its Check yourself questions without peeking. A practice-midterm problem you mark “I missed this” sends its sections back to the review list.</p>
+    <p class="sub-note">Nothing here is self-reported. A section <b>passes</b> only when you score 4/5 on its auto-graded quiz (plus its proof task), and that's what unlocks the next one. It's <b>mastered</b> only after you answer it correctly again in two separate recall rounds. A miss in recall, or on a practice midterm, flags it for review.</p>
+
+    <h3 id="recall">Recall rounds <span class="pill">spaced · interleaved</span></h3>
+    <div class="recall" id="recall-box"></div>
+
+    <h3 id="sync">Move your progress to another device</h3>
+    <div class="sync" id="sync-box"></div>
 
     <h3 id="memorize">Memorize sheet (Midterm 2)</h3>
     <div class="cheat">
@@ -429,7 +496,7 @@ img{max-width:100%}
     </div>
 
     <h3 id="plan">Study plan: Sat Oct 24 → Thu Oct 29</h3>
-    <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do Check yourself without peeking → do 2–3 of its textbook exercises → tick “Got it.” If you miss 2 or more check questions, reread and retry before moving on.</p>
+    <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do the warm-up → do 2–3 textbook exercises → <b>pass the mastery quiz</b>, which unlocks the next section. <b>Start and end every day with a recall round</b> (~10 min each); that's where sections become mastered and where forgotten ones get caught.</p>
     <div class="tbl"><table class="plan-t">
       <tr><th>Day</th><th>Block</th><th>Do</th></tr>
       <tr><td rowspan="4"><b>Sat Oct 24</b><br><span class="pill">foundations</span></td><td>1.5 h</td><td>§1–§5 Logic (truth tables, equivalences, quantifiers, negation)</td></tr>
@@ -600,15 +667,15 @@ img{max-width:100%}
       </table></div>
       <p>The last two columns match, so <span class="m">(p ∧ q) ∨ ¬p ≡ p → q</span>. This is the method HW 1.1 asks for: build the table, then read off a simpler formula with the same column.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Is “x + 2 = 5” a proposition?</p><details class="hint"><summary>Hint</summary><div>Does it have a definite truth value on its own?</div></details><details class="ans"><summary>Answer</summary><div>No. Its truth depends on x, so it's a predicate (§3).</div></details></li>
         <li><p>When exactly is p → q false?</p><details class="ans"><summary>Answer</summary><div>Only when p is true and q is false.</div></details></li>
         <li><p>Translate “You get dessert only if you eat your vegetables” (d, v).</p><details class="hint"><summary>Hint</summary><div>“Only if” points at the requirement.</div></details><details class="ans"><summary>Answer</summary><div>d → v.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s1" data-sec="s1"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s1"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.1: 1, 13, 25, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -680,15 +747,15 @@ img{max-width:100%}
     <div class="blk side"><span class="tag">Sidebar <small>P vs NP</small></span>
       <p>Checking a tautology by truth table takes <span class="m">2<sup>n</sup></span> rows. With 400 variables that's more rows than atoms in the universe. Is there a <i>fast</i> (polynomial-time) program to decide whether a formula is a tautology? That's essentially the P = NP question, a $1 million Millennium Prize problem. It matters for computer science because propositional formulas are basically logic circuits.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Simplify ¬(p ∧ ¬q).</p><details class="hint"><summary>Hint</summary><div>De Morgan, then double negation.</div></details><details class="ans"><summary>Answer</summary><div>¬p ∨ q, which is the same as p → q.</div></details></li>
         <li><p>Is (p → q) ∨ (q → p) a tautology?</p><details class="hint"><summary>Hint</summary><div>Split on whether q is true.</div></details><details class="ans"><summary>Answer</summary><div>Yes. If q is true, p → q is true. If q is false, q → p is true.</div></details></li>
         <li><p>Write ¬(p → q) without using →.</p><details class="ans"><summary>Answer</summary><div>p ∧ ¬q.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s2" data-sec="s2"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s2"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.3: 7, 9, 15, 19, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -787,15 +854,15 @@ img{max-width:100%}
       <p>Examples: <span class="m">(∀x ∈ ℝ)(x &gt; 0)</span> false; <span class="m">(∀x ∈ ℝ)(x² ≥ 0)</span> true; <span class="m">(∀x ∈ ℕ)(x &gt; 0)</span> false (x = 0); <span class="m">(∃x ∈ ℕ)(x − 1 = 0)</span> true.</p>
       <p class="formal">Over the empty set: <span class="m">(∀x ∈ ∅) P(x)</span> is always <b>true</b> (vacuously: there is no x to break it), and <span class="m">(∃x ∈ ∅) P(x)</span> is always <b>false</b> (there's nothing to be the witness).</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Domain ℤ: true or false, ∃x (x² = 2)?</p><details class="ans"><summary>Answer</summary><div>False. √2 isn't an integer.</div></details></li>
         <li><p>Negate “Every student passed.”</p><details class="ans"><summary>Answer</summary><div>“Some student didn't pass”: ∃x ¬P(x).</div></details></li>
         <li><p>Translate “Some dog is not friendly” using D(x), F(x).</p><details class="hint"><summary>Hint</summary><div>∃ goes with ∧.</div></details><details class="ans"><summary>Answer</summary><div>∃x (D(x) ∧ ¬F(x)).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s3" data-sec="s3"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s3"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.4: 9, 13, 23, 35, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -856,14 +923,14 @@ img{max-width:100%}
       </div>
       <p>Meaning: every x either fails P or has a different y that also satisfies P. So there are zero solutions, or at least two.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Domain ℝ. Is ∀x ∃y (x + y = 0) true? Is ∃y ∀x (x + y = 0)?</p><details class="hint"><summary>Hint</summary><div>In the second, one fixed y has to work for every x.</div></details><details class="ans"><summary>Answer</summary><div>First: true (take y = −x). Second: false (no single y cancels every x).</div></details></li>
         <li><p>Negate ∀x ∃y (y &gt; x²).</p><details class="hint"><summary>Hint</summary><div>Flip each quantifier, then negate the inside.</div></details><details class="ans"><summary>Answer</summary><div>∃x ∀y (y ≤ x²).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s4" data-sec="s4"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s4"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.5: 9, 25, 27, 31, 39 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -947,14 +1014,14 @@ img{max-width:100%}
     <div class="blk side"><span class="tag">Sidebar <small>“the rules of math”</small></span>
       <p>All of mathematics = valid propositional rules of inference + the four quantifier rules + an axiom system (usually ZFC set theory). Russell and Whitehead's <i>Principia Mathematica</i> (1910) tried to do math fully formally this way, and needed hundreds of pages to reach 1 + 1 = 2.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>“If it's a weekday, I have class. I don't have class.” What follows?</p><details class="ans"><summary>Answer</summary><div>It isn't a weekday (modus tollens).</div></details></li>
         <li><p>Valid? “If I study, I pass. I passed. So I studied.”</p><details class="ans"><summary>Answer</summary><div>Invalid: that's affirming the conclusion. You could have passed without studying.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s5" data-sec="s5"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s5"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.6: 3, 5, 9, 15, 23 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1026,14 +1093,14 @@ img{max-width:100%}
 
     <h3>Proving “if and only if”</h3>
     <p>To prove <span class="m">p ↔ q</span>, prove both <span class="m">p → q</span> and <span class="m">q → p</span>, usually as two labeled parts “(⇒)” and “(⇐)”. Each direction can use a different technique.</p>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Prove the sum of two even integers is even.</p><details class="hint"><summary>Hint</summary><div>Call them 2a and 2b, using two different letters.</div></details><details class="ans"><summary>Answer</summary><div>2a + 2b = 2(a + b), and a + b is an integer.</div></details></li>
         <li><p>Prove: if n is odd, then 3n + 1 is even.</p><details class="ans"><summary>Answer</summary><div>n = 2k + 1, so 3n + 1 = 6k + 4 = 2(3k + 2).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s6" data-sec="s6"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s6"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.7: 1, 3, 5, 7 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1102,15 +1169,15 @@ img{max-width:100%}
         <li>Don't prove the <b>converse</b> by accident. Assuming the conclusion and deriving the hypothesis proves q → p, not p → q.</li>
       </ul>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>What's the contrapositive of “if n² is odd then n is odd”?</p><details class="ans"><summary>Answer</summary><div>If n is even, then n² is even.</div></details></li>
         <li><p>Prove by contradiction that there's no largest integer.</p><details class="hint"><summary>Hint</summary><div>Suppose N is the largest. Look at N + 1.</div></details><details class="ans"><summary>Answer</summary><div>N + 1 is an integer bigger than N. Contradiction!</div></details></li>
         <li><p>Proving p → q by contradiction: what's your first line?</p><details class="ans"><summary>Answer</summary><div>“Assume for a contradiction that p is true and q is false.”</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s7" data-sec="s7"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s7"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.7: 9, 13, 17, 19, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1187,15 +1254,15 @@ img{max-width:100%}
       <p class="proof qed">Existence: let r = −m/n (rational since n ≠ 0). Then nr + m = −m + m = 0. Uniqueness: suppose nr + m = 0 and ns + m = 0. Then nr = −m = ns, so r = s since n ≠ 0.</p>
     </div>
     <p>Rosen §1.8 also uses <b>“without loss of generality” (WLOG)</b>: when two cases are symmetric (e.g. x ≤ y vs y ≤ x), prove one and say the other is the same with the roles swapped.</p>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Prove n² + n is even for every integer n.</p><details class="hint"><summary>Hint</summary><div>Cases: n even, n odd. (Or notice n² + n = n(n + 1).)</div></details><details class="ans"><summary>Answer</summary><div>n = 2k: 4k² + 2k = 2(2k² + k). n = 2k + 1: 4k² + 6k + 2 = 2(2k² + 3k + 1).</div></details></li>
         <li><p>Disprove: “every prime is odd.”</p><details class="ans"><summary>Answer</summary><div>2 is prime and even. One counterexample is enough.</div></details></li>
         <li><p>Is the √2^√2 proof constructive?</p><details class="ans"><summary>Answer</summary><div>No. It shows x, y exist without telling you which case is true.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s8" data-sec="s8"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s8"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §1.8: 3, 5, 9, 15, 19, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1221,14 +1288,14 @@ img{max-width:100%}
       <p class="proof qed">By contradiction. Suppose player I has no winning strategy. By Zermelo, player II has one. Player I imagines opening by eating only the bottom-right cookie, and looks up the bite X that II's winning strategy answers with. Every bite eats the bottom-right cookie too, so the board after “bottom-right, then X” is the same as the board after X alone. So player I really opens with X, and from then on follows II's strategy. Player I is now sitting in II's winning seat, so player I has a winning strategy. Contradiction: both players can't have winning strategies.</p>
       <p>This <b>strategy-stealing</b> proof is nonconstructive. It's an open problem to describe the winning strategy explicitly for all board sizes (there was progress on 3 × n boards in 2026).</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Chomp on a 1×2 board (the poisoned cookie plus one more). Who wins?</p><details class="ans"><summary>Answer</summary><div>Player 1: eat the safe cookie, and player 2 is left with the poison.</div></details></li>
         <li><p>Why is the strategy-stealing argument nonconstructive?</p><details class="ans"><summary>Answer</summary><div>It proves player 1 has a winning strategy without saying what it is.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s9" data-sec="s9"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s9"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §5.2: 15 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1339,15 +1406,15 @@ img{max-width:100%}
     <div class="blk ex"><span class="tag">Example</span>
       <p><span class="m">{1, 2} × {x, y} = {(1, x), (1, y), (2, x), (2, y)}</span>. <span class="m">ℝ × ℝ = ℝ²</span> is the plane. In general <span class="m">A × B ≠ B × A</span>, and <span class="m">|A × B| = |A|·|B|</span>.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>A = {1, {2}, {1, 2}}. Is 2 ∈ A? {2} ∈ A? {1} ⊆ A? {1, 2} ⊆ A?</p><details class="hint"><summary>Hint</summary><div>∈: is it listed? ⊆: is every item listed?</div></details><details class="ans"><summary>Answer</summary><div>No · yes · yes · no (that would need 2 ∈ A).</div></details></li>
         <li><p>How big is 𝒫({a, b, c})? List its 2-element subsets.</p><details class="ans"><summary>Answer</summary><div>2³ = 8. The 2-element subsets are {a, b}, {a, c}, {b, c}.</div></details></li>
         <li><p>Is ∅ ∈ {1, 2}? Is ∅ ⊆ {1, 2}?</p><details class="ans"><summary>Answer</summary><div>No (it isn't listed). Yes (∅ is a subset of everything).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s10" data-sec="s10"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s10"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §2.1: 1, 5, 11, 13, 21, 23 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1410,15 +1477,15 @@ img{max-width:100%}
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.2 Defs 6–7</small></span>
       <p>For a collection of sets, <span class="m">A₁ ∪ ⋯ ∪ Aₙ = ⋃ᵢ Aᵢ</span> contains elements in <b>at least one</b> Aᵢ; <span class="m">A₁ ∩ ⋯ ∩ Aₙ = ⋂ᵢ Aᵢ</span> contains elements in <b>all</b> of them.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>A = {1, 2, 3, 4}, B = {3, 4, 5}. Find A ∪ B, A ∩ B, A − B, B − A.</p><details class="ans"><summary>Answer</summary><div>{1, 2, 3, 4, 5} · {3, 4} · {1, 2} · {5}.</div></details></li>
         <li><p>U = {1, …, 6}. What's the complement of {2, 4, 6}?</p><details class="ans"><summary>Answer</summary><div>{1, 3, 5}.</div></details></li>
         <li><p>State De Morgan's law for sets.</p><details class="ans"><summary>Answer</summary><div>The complement of A ∪ B is Ā ∩ B̄, and the complement of A ∩ B is Ā ∪ B̄.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s11" data-sec="s11"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s11"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §2.2: 3, 15, 19, 21, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1522,15 +1589,15 @@ img{max-width:100%}
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.3 Def 12</small></span>
       <p><span class="term">Floor</span> <span class="m">⌊x⌋</span> = the largest integer ≤ x. <span class="term">Ceiling</span> <span class="m">⌈x⌉</span> = the smallest integer ≥ x. E.g. ⌊3.7⌋ = 3, ⌈3.2⌉ = 4, ⌊−1.5⌋ = −2.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>f : ℤ → ℤ, f(x) = 3x + 1. Injective? Surjective?</p><details class="hint"><summary>Hint</summary><div>Can f(x) ever equal 0?</div></details><details class="ans"><summary>Answer</summary><div>Injective (3a + 1 = 3b + 1 ⇒ a = b). Not surjective: 3x + 1 = 0 has no integer solution.</div></details></li>
         <li><p>Same formula on ℝ → ℝ: is it a bijection? What's the inverse?</p><details class="ans"><summary>Answer</summary><div>Yes. f⁻¹(y) = (y − 1)/3.</div></details></li>
         <li><p>f(x) = x + 1, g(x) = 2x. Find (f ∘ g)(3) and (g ∘ f)(3).</p><details class="hint"><summary>Hint</summary><div>f ∘ g means do g first.</div></details><details class="ans"><summary>Answer</summary><div>f(g(3)) = f(6) = 7, and g(f(3)) = g(4) = 8.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s12" data-sec="s12"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s12"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §2.3: 1, 11, 23, 31, 33, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1608,15 +1675,15 @@ img{max-width:100%}
       <p>Let <span class="m">A = {x | x ∉ x}</span>. Is A ∈ A? If A ∉ A, then A satisfies the rule, so A ∈ A. If A ∈ A, then A breaks the rule, so A ∉ A. Contradiction either way, so Cantor's original (“naive”) set theory was inconsistent. (Analogy: the barber who shaves exactly those who don't shave themselves.)</p>
       <p>The fix, after about 30 years: modern set theory (ZFC) only lets you use set-builder notation to carve a <b>subset out of an existing set</b>, <span class="m">{x ∈ S | P(x)}</span>, and has other axioms to build sets (e.g. every set has a power set). Take Math 135 for more.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Show ℕ and the even naturals have the same cardinality.</p><details class="ans"><summary>Answer</summary><div>f(n) = 2n is a bijection between them.</div></details></li>
         <li><p>Countable or uncountable: ℤ × ℤ? the interval (0, 1)? all finite strings of letters?</p><details class="ans"><summary>Answer</summary><div>Countable · uncountable · countable.</div></details></li>
         <li><p>In the diagonal argument, why can't the new number y be on the list?</p><details class="ans"><summary>Answer</summary><div>For every n, y differs from the n-th number in its n-th digit.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s13" data-sec="s13"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s13"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §2.5: 1, 3, 5, 11, 15, 33 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1705,16 +1772,16 @@ img{max-width:100%}
     <div class="blk thm"><span class="tag">Freshman's dream mod 2</span>
       <p><span class="m">(a + b)² ≡ a² + b² (mod 2)</span>, since (a + b)² = a² + 2ab + b² and 2ab ≡ 0. False over the integers, true mod 2. Later (§20): <span class="m">(a + b)ᵖ ≡ aᵖ + bᵖ (mod p)</span> for every prime p (the Frobenius identity), which matters for cryptography and primality testing.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Find 45 div 7 and 45 mod 7. Then find −45 mod 7.</p><details class="hint"><summary>Hint</summary><div>For the negative one, round the quotient down.</div></details><details class="ans"><summary>Answer</summary><div>45 = 7·6 + 3, so 6 and 3. −45 = 7(−7) + 4, so 4.</div></details></li>
         <li><p>True or false: 23 ≡ −5 (mod 7)?</p><details class="hint"><summary>Hint</summary><div>Is 23 − (−5) divisible by 7?</div></details><details class="ans"><summary>Answer</summary><div>True: 28 = 4·7.</div></details></li>
         <li><p>Compute (123·456) mod 5 without multiplying.</p><details class="ans"><summary>Answer</summary><div>123 ≡ 3 and 456 ≡ 1, so the answer is 3.</div></details></li>
         <li><p>If 4 | a and 4 | b, must 4 | 3a − 2b?</p><details class="ans"><summary>Answer</summary><div>Yes. a = 4s and b = 4t, so 3a − 2b = 4(3s − 2t).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s14" data-sec="s14"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s14"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.1: 5, 11, 13, 17, 27, 33, 43, 47 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1772,15 +1839,15 @@ img{max-width:100%}
 5⁴³ ≡ 3·4·3·5 = 180 ≡ 4 (mod 11)</div>
       <p>Sanity check with Fermat (§20): 5¹⁰ ≡ 1, so 5⁴³ ≡ 5³ = 125 ≡ 4. ✓</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Convert (10110)₂ to decimal.</p><details class="ans"><summary>Answer</summary><div>16 + 4 + 2 = 22.</div></details></li>
         <li><p>Convert 50 to binary.</p><details class="hint"><summary>Hint</summary><div>Divide by 2 repeatedly; read the remainders bottom-up.</div></details><details class="ans"><summary>Answer</summary><div>(110010)₂ = 32 + 16 + 2.</div></details></li>
         <li><p>Compute 3¹⁰ mod 11 by repeated squaring.</p><details class="hint"><summary>Hint</summary><div>10 = 8 + 2.</div></details><details class="ans"><summary>Answer</summary><div>3² = 9, 3⁴ ≡ 81 ≡ 4, 3⁸ ≡ 16 ≡ 5, so 3¹⁰ ≡ 5·9 = 45 ≡ 1.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s15" data-sec="s15"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s15"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.2: 1, 3, 25, 27, 31 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1831,15 +1898,15 @@ img{max-width:100%}
         <li><b>Twin Prime Conjecture</b> (open): infinitely many p with p and p + 2 both prime. Heuristic: treat n as “prime with probability 1/ln n.” Then the expected number of twin primes is about Σ 1/(ln n)², which diverges.</li>
       </ul>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Is 91 prime?</p><details class="hint"><summary>Hint</summary><div>Test primes up to √91 ≈ 9.5.</div></details><details class="ans"><summary>Answer</summary><div>No: 91 = 7·13.</div></details></li>
         <li><p>Prime-factor 360.</p><details class="ans"><summary>Answer</summary><div>2³·3²·5.</div></details></li>
         <li><p>Why isn't 1 prime?</p><details class="ans"><summary>Answer</summary><div>A prime needs exactly two positive divisors, and 1 has only one. (This also keeps factorizations unique.)</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s16" data-sec="s16"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s16"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.3: 1, 3, 9, 15, 17 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -1891,14 +1958,14 @@ img{max-width:100%}
       <p class="proof qed">Case 1: rᵢ₊₁ ≤ rᵢ/2. Then rᵢ₊₂ &lt; rᵢ₊₁ ≤ rᵢ/2. Case 2: rᵢ₊₁ &gt; rᵢ/2. Then the quotient is 1, so rᵢ₊₂ = rᵢ − rᵢ₊₁ &lt; rᵢ − rᵢ/2 = rᵢ/2.</p>
       <p>Factoring is slow (much of modern cryptography would break if it weren't), so computing gcds by factoring is inefficient. Euclid's way avoids factoring entirely.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Use factorizations to find gcd(48, 180) and lcm(48, 180).</p><details class="hint"><summary>Hint</summary><div>48 = 2⁴·3, 180 = 2²·3²·5.</div></details><details class="ans"><summary>Answer</summary><div>gcd = 2²·3 = 12, lcm = 2⁴·3²·5 = 720. Check: 12·720 = 48·180 = 8640.</div></details></li>
         <li><p>Use Euclid to find gcd(91, 35).</p><details class="ans"><summary>Answer</summary><div>91 = 2·35 + 21, 35 = 1·21 + 14, 21 = 1·14 + 7, 14 = 2·7 + 0. So the gcd is 7.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s17" data-sec="s17"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s17"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.3: 25, 27, 29, 33, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2023,16 +2090,16 @@ img{max-width:100%}
       <p>If <span class="m">ac ≡ bc (mod m)</span> and <span class="m">gcd(c, m) = 1</span>, then <span class="m">a ≡ b (mod m)</span>.</p>
       <p class="proof qed">Since gcd(c, m) = 1, c has an inverse c̄. Multiply both sides by c̄: a(cc̄) ≡ b(cc̄), so a·1 ≡ b·1 (mod m).</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Write gcd(91, 35) = 7 as s·91 + t·35.</p><details class="hint"><summary>Hint</summary><div>Start from 7 = 21 − 14 and work upward.</div></details><details class="ans"><summary>Answer</summary><div>7 = 21 − (35 − 21) = 2·21 − 35 = 2(91 − 2·35) − 35 = 2·91 − 5·35.</div></details></li>
         <li><p>Find the inverse of 3 mod 11.</p><details class="ans"><summary>Answer</summary><div>4, since 3·4 = 12 ≡ 1.</div></details></li>
         <li><p>Solve 3x ≡ 5 (mod 11).</p><details class="hint"><summary>Hint</summary><div>Multiply both sides by the inverse of 3.</div></details><details class="ans"><summary>Answer</summary><div>x ≡ 4·5 = 20 ≡ 9. Check: 27 ≡ 5.</div></details></li>
         <li><p>Does 6x ≡ 4 (mod 9) have a solution?</p><details class="ans"><summary>Answer</summary><div>No. gcd(6, 9) = 3 doesn't divide 4.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s18" data-sec="s18"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s18"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.3 #39, 41, 43 and §4.4: 5, 9, 11, 13 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2076,14 +2143,14 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
     <div class="blk caution"><span class="tag">Caution</span>
       <p>The moduli must be pairwise relatively prime. x ≡ 0 (mod 2) and x ≡ 1 (mod 4) has no solution: the first makes x even, the second makes x odd.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Solve x ≡ 2 (mod 3), x ≡ 3 (mod 4).</p><details class="hint"><summary>Hint</summary><div>List the numbers ≡ 3 (mod 4): 3, 7, 11, …</div></details><details class="ans"><summary>Answer</summary><div>x ≡ 11 (mod 12).</div></details></li>
         <li><p>Why doesn't the CRT apply to x ≡ 1 (mod 4), x ≡ 2 (mod 6)?</p><details class="ans"><summary>Answer</summary><div>4 and 6 aren't coprime. In fact there's no solution: the first makes x odd, the second makes it even.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s19" data-sec="s19"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s19"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.4: 21, 23, 31 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2132,15 +2199,15 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
       <p class="proof qed">g(f(m)) ≡ mᵈᵉ = m^{1 + k(p−1)} = m·(mᵖ⁻¹)ᵏ ≡ m·1ᵏ = m (mod p) by Fermat, for p ∤ m; and if m = 0 both sides are 0. So g undoes f, which forces f to be injective.</p>
       <p>Example: p = 7, e = 5 (gcd(5, 6) = 1). 5·5 = 25 = 4·6 + 1, so d = 5. Then f(3) = 3⁵ mod 7 = 5 and g(5) = 5⁵ mod 7 = 3. ✓ Modular powers otherwise behave “randomly” enough to be used in pseudorandom number generators.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Compute 2¹⁰⁰ mod 7.</p><details class="hint"><summary>Hint</summary><div>2⁶ ≡ 1, so reduce 100 mod 6.</div></details><details class="ans"><summary>Answer</summary><div>100 = 16·6 + 4, so 2¹⁰⁰ ≡ 2⁴ = 16 ≡ 2.</div></details></li>
         <li><p>Why can't you use Fermat to compute 3¹⁰⁰ mod 9?</p><details class="ans"><summary>Answer</summary><div>9 isn't prime (and 3 divides 9 anyway).</div></details></li>
         <li><p>2¹⁴ mod 15 = 4. What does that prove?</p><details class="ans"><summary>Answer</summary><div>15 is composite. A prime p would give 2^(p−1) ≡ 1.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s20" data-sec="s20"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s20"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.4: 33, 35, 39 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2184,15 +2251,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       <p>How browser trust works (simplified): your computer ships with public keys of certificate authorities (e.g. GlobalSign, DigiCert). A site like pets.com presents a certificate, signed by such an authority, binding its domain to its own public key. Your browser checks the signature, then uses the site's public key.</p>
       <p>The related problem of recovering m from mᵉ mod n (with e, n known) has no known fast general method when n is composite, short of trying every m.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>p = 3, q = 11, e = 7. Find n, (p − 1)(q − 1), and d.</p><details class="hint"><summary>Hint</summary><div>d is the inverse of e mod (p − 1)(q − 1).</div></details><details class="ans"><summary>Answer</summary><div>n = 33, (p − 1)(q − 1) = 20, and d = 3 since 7·3 = 21 ≡ 1 (mod 20).</div></details></li>
         <li><p>Encrypt m = 2 with the public key (33, 7).</p><details class="ans"><summary>Answer</summary><div>2⁷ = 128 = 3·33 + 29, so c = 29. (Decrypt check: 29³ ≡ (−4)³ = −64 ≡ 2.)</div></details></li>
         <li><p>What would Eve need in order to find d?</p><details class="ans"><summary>Answer</summary><div>(p − 1)(q − 1), which means factoring n.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s21" data-sec="s21"> Got it: I can do these without peeking</label>
     </div>
 
+    <div class="mastery" data-sec="s21"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §4.6: 25, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2264,14 +2331,14 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
         <li>Make sure the step works for the <b>smallest</b> k. HW 6.4's fake proof that “x = y whenever max(x, y) = n” breaks because x − 1 or y − 1 can be 0, which isn't a positive integer, so the IH doesn't apply.</li>
       </ul>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Prove 2 + 4 + ⋯ + 2n = n(n + 1) by induction.</p><details class="hint"><summary>Hint</summary><div>In the step, add the next term 2(k + 1) to k(k + 1).</div></details><details class="ans"><summary>Answer</summary><div>Base case: 2 = 1·2. Induction step: k(k + 1) + 2(k + 1) = (k + 1)(k + 2).</div></details></li>
         <li><p>Prove 5 | 6ⁿ − 1 for all n ≥ 1.</p><details class="hint"><summary>Hint</summary><div>6ᵏ⁺¹ − 1 = 6(6ᵏ − 1) + 5.</div></details><details class="ans"><summary>Answer</summary><div>Base case: 5 | 5. Step: 5 | 6ᵏ − 1 by the IH, so 5 divides 6(6ᵏ − 1) + 5.</div></details></li>
         <li><p>What must every induction proof clearly contain?</p><details class="ans"><summary>Answer</summary><div>A labeled base case, a labeled induction step, and the induction hypothesis stated in words.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s22" data-sec="s22"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s22"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §5.1: 3, 5, 7, 9, 21, 31, 33 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2312,15 +2379,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       <p>Proving Σᵢ₌₁ⁿ 1/i² ≤ 2 directly by induction fails (adding a term could push you past 2). Prove the <b>stronger</b> claim Σ 1/i² ≤ 2 − 1/n instead. Step: (2 − 1/k) + 1/(k + 1)² ≤ 2 − 1/k + 1/(k(k + 1)) = 2 − 1/(k + 1).</p>
       <p>Lesson: a stronger IH can make the step easier.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Prove every n ≥ 4 is 2a + 5b (a, b ≥ 0). How many base cases do you need?</p><details class="hint"><summary>Hint</summary><div>The step uses k − 1 = (k + 1) − 2.</div></details><details class="ans"><summary>Answer</summary><div>Two base cases: 4 = 2·2 and 5 = 5. Step (k ≥ 5): k − 1 ≥ 4 works by the IH, so add a 2.</div></details></li>
         <li><p>Why does the 5a + 3b (n ≥ 8) proof need 3 base cases?</p><details class="ans"><summary>Answer</summary><div>The step goes back 3 (from k + 1 to k − 2), so 8, 9, 10 must be checked directly.</div></details></li>
         <li><p>What's the least element of {n ∈ ℕ : n² &gt; 50}?</p><details class="ans"><summary>Answer</summary><div>8.</div></details></li>
         <li><p>What does “forcing the induction” mean?</p><details class="ans"><summary>Answer</summary><div>Proving a stronger statement because its step is easier, e.g. Σ 1/i² ≤ 2 − 1/n instead of ≤ 2.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s23" data-sec="s23"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s23"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §5.2: 3, 5, 7, 29, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2359,15 +2426,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk thm"><span class="tag">Recursive sets &amp; structural induction <small>Rosen §5.3</small></span>
       <p>A set can be defined the same way: basis elements plus rules for building new elements. Example: 3 ∈ S, and if x, y ∈ S then x + y ∈ S; then S is the positive multiples of 3. To prove every element has a property, show the basis elements have it and each rule preserves it.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Using the lecture's convention, list f₀ through f₇.</p><details class="ans"><summary>Answer</summary><div>1, 1, 2, 3, 5, 8, 13, 21.</div></details></li>
         <li><p>Check f₀ + ⋯ + f₄ = f₆ − 1.</p><details class="ans"><summary>Answer</summary><div>1 + 1 + 2 + 3 + 5 = 12 and f₆ − 1 = 13 − 1 = 12 ✓.</div></details></li>
         <li><p>a₀ = 1, aₙ₊₁ = 3aₙ − 1. Find a₁, a₂, a₃.</p><details class="ans"><summary>Answer</summary><div>2, 5, 14.</div></details></li>
         <li><p>Give a recursive definition of 2ⁿ.</p><details class="ans"><summary>Answer</summary><div>2⁰ = 1 and 2ⁿ⁺¹ = 2·2ⁿ.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s24" data-sec="s24"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s24"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §5.3: 1, 3, 7, 13, 23, 25, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2391,14 +2458,14 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk idea"><span class="tag">Picture it <small>nesting dolls</small></span>
       <p>Open a doll, find a smaller doll, repeat until you reach the solid one in the middle (the base case). Every recursive algorithm needs a base case, and each call must shrink the input.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Trace the recursive gcd(30, 12).</p><details class="ans"><summary>Answer</summary><div>gcd(30, 12) → gcd(12, 6) → gcd(6, 0) = 6.</div></details></li>
         <li><p>How many moves does the Hanoi algorithm use for 5 disks?</p><details class="ans"><summary>Answer</summary><div>2⁵ − 1 = 31.</div></details></li>
         <li><p>What goes wrong if a recursive algorithm has no base case?</p><details class="ans"><summary>Answer</summary><div>It never stops.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s25" data-sec="s25"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s25"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §5.4: 1, 3, 5, 7, 13 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2453,15 +2520,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk idea"><span class="tag">Picture it <small>a restaurant menu</small></span>
       <p>An appetizer <b>and</b> a main: multiply. Soup <b>or</b> salad: add (and subtract anything counted in both). Ordered picks when you only care about the group: divide out the orderings.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>How many 3-letter strings (A–Z) are there with repeats allowed? With no repeats?</p><details class="ans"><summary>Answer</summary><div>26³ = 17,576. 26·25·24 = 15,600.</div></details></li>
         <li><p>How many integers in 1..100 are divisible by 3 or 5?</p><details class="hint"><summary>Hint</summary><div>Inclusion–exclusion; both means divisible by 15.</div></details><details class="ans"><summary>Answer</summary><div>33 + 20 − 6 = 47.</div></details></li>
         <li><p>How many 3-digit numbers (100–999) have at least one 0?</p><details class="hint"><summary>Hint</summary><div>Count those with no 0.</div></details><details class="ans"><summary>Answer</summary><div>900 − 9³ = 171.</div></details></li>
         <li><p>How many 2-element subsets does {1, …, 10} have, by the division rule?</p><details class="ans"><summary>Answer</summary><div>10·9/2 = 45 (each subset is picked in 2 orders).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s26" data-sec="s26"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s26"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §6.1: 1, 3, 11, 21, 23, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2491,14 +2558,14 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk caution"><span class="tag">Caution</span>
       <p>The skill is choosing the <b>boxes</b>: letters, remainders, odd parts, shorter files. Write “boxes = …, objects = …” explicitly. The principle tells you a box is crowded, never which one.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>How many people guarantee two share a birth month?</p><details class="ans"><summary>Answer</summary><div>13.</div></details></li>
         <li><p>Why must two of any 6 integers have the same remainder mod 5?</p><details class="ans"><summary>Answer</summary><div>There are only 5 remainders (boxes) for 6 numbers.</div></details></li>
         <li><p>Show any 5 distinct numbers from 1..8 include one dividing another.</p><details class="hint"><summary>Hint</summary><div>Write each as 2ᵏ·(odd).</div></details><details class="ans"><summary>Answer</summary><div>The odd parts can only be 1, 3, 5, 7 (4 boxes) for 5 numbers, so two share an odd part, and the smaller divides the larger.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s27" data-sec="s27"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s27"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §6.2: 1, 3, 5, 7, 11, 15, 17 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2534,15 +2601,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk side"><span class="tag">Sidebar <small>how big is n!?</small></span>
       <p>(n/3)ⁿ ≤ n! ≤ nⁿ (the upper bound: each of the n factors is ≤ n). Stirling: n! ≈ √(2πn)(n/e)ⁿ.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>From 10 people: (a) president, VP, treasurer; (b) a 3-person team. How many ways?</p><details class="hint"><summary>Hint</summary><div>Does swapping two people change the outcome?</div></details><details class="ans"><summary>Answer</summary><div>(a) P(10, 3) = 720. (b) C(10, 3) = 120.</div></details></li>
         <li><p>Compute P(6, 2) and C(6, 2).</p><details class="ans"><summary>Answer</summary><div>30 and 15.</div></details></li>
         <li><p>How many 5-card hands are all hearts?</p><details class="ans"><summary>Answer</summary><div>C(13, 5) = 1287.</div></details></li>
         <li><p>What are 0! and C(7, 0)?</p><details class="ans"><summary>Answer</summary><div>Both are 1.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s28" data-sec="s28"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s28"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §6.3: 3, 5, 9, 11, 15, 17, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2587,15 +2654,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk thm"><span class="tag">Cor</span>
       <p><b>Σₖ₌₀ⁿ C(n, k) = 2ⁿ.</b> Algebra: set x = y = 1 in the binomial theorem. Counting: both sides count all subsets of an n-set, the left side grouped by size.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Coefficient of x²y³ in (x + y)⁵? And in (2x − y)⁵?</p><details class="hint"><summary>Hint</summary><div>Name the terms, then raise each constant to its power.</div></details><details class="ans"><summary>Answer</summary><div>C(5, 3) = 10. Then C(5, 3)·2²·(−1)³ = −40.</div></details></li>
         <li><p>Outline the combinatorial proof of Pascal's identity.</p><details class="ans"><summary>Answer</summary><div>Count k-groups from n + 1 people including Alice: C(n + 1, k) = (groups with Alice) C(n, k − 1) + (groups without) C(n, k).</div></details></li>
         <li><p>What is Σₖ C(6, k)?</p><details class="ans"><summary>Answer</summary><div>2⁶ = 64.</div></details></li>
         <li><p>Why does a prime p divide C(p, k) for 0 &lt; k &lt; p?</p><details class="ans"><summary>Answer</summary><div>k·C(p, k) = p·C(p − 1, k − 1) is divisible by p, and p ∤ k, so p | C(p, k).</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s29" data-sec="s29"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s29"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §6.4: 1, 7, 9, 13, 23, 25, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2637,15 +2704,15 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk caution"><span class="tag">Caution</span>
       <p>Before using a formula, ask whether the items are <b>distinct or identical</b> (people are distinct; same-type bills aren't) and whether order matters.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>10 identical cookies to 3 kids: how many ways?</p><details class="ans"><summary>Answer</summary><div>Stars and bars: C(12, 2) = 66.</div></details></li>
         <li><p>Same, but each kid gets at least 2?</p><details class="hint"><summary>Hint</summary><div>Hand out 2 each first.</div></details><details class="ans"><summary>Answer</summary><div>4 cookies left: C(6, 2) = 15.</div></details></li>
         <li><p>Arrangements of the letters in LETTER?</p><details class="ans"><summary>Answer</summary><div>6!/(2!·2!) = 180 (two E's and two T's).</div></details></li>
         <li><p>Which table cell? (a) 4-digit PINs (b) 3 scoops from 5 flavors, repeats OK, order irrelevant.</p><details class="ans"><summary>Answer</summary><div>(a) order matters, repetition allowed: 10⁴. (b) no order, repetition: C(7, 3) = 35.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s30" data-sec="s30"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s30"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §6.5: 1, 3, 9, 11, 15, 17, 33 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
@@ -2693,128 +2760,38 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     <div class="blk caution"><span class="tag">Caution</span>
       <p>p = |E|/|S| needs <b>equally likely</b> outcomes. Treat dice and coins as distinguishable (first die, second die) so that they are. The sums of two dice aren't equally likely.</p>
     </div>
-    <div class="check"><span class="tag">Check yourself</span>
+    <div class="check"><span class="tag">Warm-up · not graded</span>
       <ol>
         <li><p>Two dice: probability the sum is 10?</p><details class="ans"><summary>Answer</summary><div>(4,6), (5,5), (6,4): 3/36 = 1/12.</div></details></li>
         <li><p>At least one 6 in three rolls?</p><details class="hint"><summary>Hint</summary><div>Complement.</div></details><details class="ans"><summary>Answer</summary><div>1 − (5/6)³ = 91/216.</div></details></li>
         <li><p>A number from 1..60 divisible by 3 or 4?</p><details class="ans"><summary>Answer</summary><div>(20 + 15 − 5)/60 = 1/2.</div></details></li>
         <li><p>Why can't you treat the 11 possible sums of two dice as equally likely?</p><details class="ans"><summary>Answer</summary><div>They aren't: a sum of 7 happens 6 ways, a sum of 2 only 1 way. Count ordered pairs instead.</div></details></li>
       </ol>
-      <label class="gotit"><input type="checkbox" id="got-s31" data-sec="s31"> Got it: I can do these without peeking</label>
     </div>
+    <div class="mastery" data-sec="s31"></div>
     <p class="tb"><b>Textbook practice</b> Rosen §7.1: 1, 3, 5, 7, 9, 13, 15, 23, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
 
   <div class="part"><p class="eyebrow">Part VIII</p><h2>Practice midterms</h2>
-    <p class="part-note">Three original 80-minute practice exams in the style of a Math 55 midterm, covering Lectures 10–16. Do them timed and closed notes on paper, then open the solutions. Tick “I missed this” on any problem you got wrong or unsure, and its sections go into the readiness check.</p></div>
+    <p class="part-note">Three original 80-minute practice exams in the style of a Math 55 midterm, covering Lectures 10–16. Each is timed and auto-graded (proofs are checked against a checklist after you submit), and every miss sends its sections back to review. A unlocks once all 31 sections are passed; B after A; C after B.</p></div>
 
   <section class="sec pt" id="pt-a">
     <h2><span class="n">A</span>Practice Midterm A</h2>
     <p class="src">80 minutes · closed notes · show your work</p>
-    <ol class="exam">
-      <li><b>(Euclid, Bézout, inverses)</b> Use the Euclidean algorithm to find gcd(97, 35) and write it as 97s + 35t. Then find the inverse of 35 mod 97 and solve 35x ≡ 4 (mod 97). <span class="pill">§17 §18</span></li>
-      <li><b>(Linear congruence)</b> Find all solutions of 14x ≡ 10 (mod 22) with 0 ≤ x &lt; 22. <span class="pill">§18</span></li>
-      <li><b>(CRT)</b> Solve x ≡ 1 (mod 5), x ≡ 2 (mod 7), x ≡ 3 (mod 9). Show M, the Mᵢ, and the yᵢ. <span class="pill">§19</span></li>
-      <li><b>(Fermat)</b> Compute 3¹²³⁴ mod 11. <span class="pill">§20</span></li>
-      <li><b>(Induction)</b> Prove that for all n ≥ 1, 1·2 + 2·3 + ⋯ + n(n + 1) = n(n + 1)(n + 2)/3. <span class="pill">§22</span></li>
-      <li><b>(Counting)</b> (a) How many arrangements of the letters of BANANA? (b) How many 5-card hands contain exactly 2 aces? (c) How many nonnegative integer solutions does x₁ + x₂ + x₃ + x₄ = 10 have? <span class="pill">§28 §30</span></li>
-      <li><b>(Pigeonhole)</b> (a) Show that among any 11 integers, two have a difference divisible by 10. (b) What's the minimum number of students needed to guarantee 4 were born in the same month? <span class="pill">§27</span></li>
-      <li><b>(Probability)</b> Two fair dice are rolled. What's the probability the sum is at least 10? <span class="pill">§31</span></li>
-    </ol>
-    <details class="sol"><summary>Solutions to A</summary>
-      <ol class="exam">
-        <li>97 = 2·35 + 27; 35 = 1·27 + 8; 27 = 3·8 + 3; 8 = 2·3 + 2; 3 = 1·2 + 1. So gcd = 1. Back-substituting: <b>1 = 13·97 − 36·35</b>. Inverse of 35 is −36 ≡ <b>61</b>. Then x ≡ 61·4 = 244 ≡ <b>50</b> (mod 97). Check: 35·50 = 1750 = 18·97 + 4 ✓.
-          <label class="miss"><input type="checkbox" data-miss="A1" data-secs="s17,s18"> I missed this</label></li>
-        <li>gcd(14, 22) = 2 and 2 | 10, so there are 2 solutions mod 22. Divide by 2: 7x ≡ 5 (mod 11). 7⁻¹ ≡ 8 (56 ≡ 1), so x ≡ 40 ≡ 7 (mod 11). <b>x = 7, 18</b>.
-          <label class="miss"><input type="checkbox" data-miss="A2" data-secs="s18"> I missed this</label></li>
-        <li>M = 315. M₁ = 63 ≡ 3 (mod 5) → y₁ = 2. M₂ = 45 ≡ 3 (mod 7) → y₂ = 5. M₃ = 35 ≡ 8 (mod 9) → y₃ = 8. x = 1·63·2 + 2·45·5 + 3·35·8 = 126 + 450 + 840 = 1416 ≡ <b>156 (mod 315)</b>. Check: 156 = 31·5 + 1, 22·7 + 2, 17·9 + 3 ✓.
-          <label class="miss"><input type="checkbox" data-miss="A3" data-secs="s19"> I missed this</label></li>
-        <li>11 is prime and 11 ∤ 3, so 3¹⁰ ≡ 1. 1234 = 123·10 + 4, so 3¹²³⁴ ≡ 3⁴ = 81 ≡ <b>4</b>.
-          <label class="miss"><input type="checkbox" data-miss="A4" data-secs="s20"> I missed this</label></li>
-        <li><b>By induction.</b> <b>Base case (n = 1):</b> 1·2 = 2 = 1·2·3/3 ✓. <b>Induction step:</b> assume 1·2 + ⋯ + k(k + 1) = k(k + 1)(k + 2)/3 (IH). Then adding the next term, k(k + 1)(k + 2)/3 + (k + 1)(k + 2) = (k + 1)(k + 2)(k/3 + 1) = (k + 1)(k + 2)(k + 3)/3, which is the claim for k + 1. □
-          <label class="miss"><input type="checkbox" data-miss="A5" data-secs="s22"> I missed this</label></li>
-        <li>(a) 6!/(3!·2!·1!) = <b>60</b>. (b) C(4, 2)·C(48, 3) = 6·17,296 = <b>103,776</b>. (c) 10 stars, 3 bars: C(13, 3) = <b>286</b>.
-          <label class="miss"><input type="checkbox" data-miss="A6" data-secs="s28,s30"> I missed this</label></li>
-        <li>(a) Boxes = the 10 last digits (remainders mod 10); 11 integers, so two share a remainder, and their difference is divisible by 10. (b) 3·12 + 1 = <b>37</b> (36 students could have exactly 3 per month).
-          <label class="miss"><input type="checkbox" data-miss="A7" data-secs="s27"> I missed this</label></li>
-        <li>(4,6), (5,5), (6,4), (5,6), (6,5), (6,6): 6/36 = <b>1/6</b>.
-          <label class="miss"><input type="checkbox" data-miss="A8" data-secs="s31"> I missed this</label></li>
-      </ol>
-    </details>
+    <div class="pt-wrap" data-test="A"></div>
   </section>
 
   <section class="sec pt" id="pt-b">
     <h2><span class="n">B</span>Practice Midterm B</h2>
     <p class="src">80 minutes · closed notes · show your work</p>
-    <ol class="exam">
-      <li><b>(RSA)</b> Alice picks p = 5, q = 17, e = 5. Find n, (p − 1)(q − 1) and d. Encrypt m = 3, then show that decrypting gives 3 back. <span class="pill">§21</span></li>
-      <li><b>(Proof)</b> Prove: if gcd(a, m) = 1 and gcd(b, m) = 1, then gcd(ab, m) = 1. <span class="pill">§16 §18</span></li>
-      <li><b>(Strong induction)</b> Prove every integer n ≥ 12 can be written as 3a + 7b with a, b ≥ 0. <span class="pill">§23</span></li>
-      <li><b>(Induction)</b> Prove 4 | 5ⁿ − 1 for all n ≥ 1. <span class="pill">§22</span></li>
-      <li><b>(Counting)</b> A committee of 5 is chosen from 6 women and 8 men. How many committees have (a) at least one woman? (b) exactly two women? <span class="pill">§26 §28</span></li>
-      <li><b>(Binomial)</b> (a) Find the coefficient of x⁴ in (2x − 1)⁷. (b) Evaluate C(8, 0) + C(8, 1) + ⋯ + C(8, 8). <span class="pill">§29</span></li>
-      <li><b>(Recursion)</b> a₀ = 0, a₁ = 1, aₙ = aₙ₋₁ + 2aₙ₋₂ for n ≥ 2. Compute a₂ through a₅, then prove aₙ = (2ⁿ − (−1)ⁿ)/3 for all n ≥ 0. <span class="pill">§23 §24</span></li>
-      <li><b>(Probability)</b> A 4-digit PIN (0000–9999) is chosen at random. What's the probability that no digit repeats? <span class="pill">§28 §31</span></li>
-    </ol>
-    <details class="sol"><summary>Solutions to B</summary>
-      <ol class="exam">
-        <li>n = 85, (p − 1)(q − 1) = 64. 5d ≡ 1 (mod 64) → <b>d = 13</b> (65 = 64 + 1). c = 3⁵ = 243 ≡ <b>73</b> (mod 85). Decrypt: 73² ≡ 59, 73⁴ ≡ 81, 73⁸ ≡ 16; 13 = 8 + 4 + 1, so 73¹³ ≡ 16·81·73 ≡ <b>3</b> ✓.
-          <label class="miss"><input type="checkbox" data-miss="B1" data-secs="s21,s15"> I missed this</label></li>
-        <li><b>By contradiction.</b> Suppose gcd(ab, m) &gt; 1; then some prime p divides both ab and m. Since p | ab, p | a or p | b. If p | a, then p is a common divisor of a and m bigger than 1, contradicting gcd(a, m) = 1. Same if p | b. Contradiction! □ (Or use Bézout: 1 = sa + tm and 1 = ub + vm; multiply to get 1 = (su)ab + m(⋯).)
-          <label class="miss"><input type="checkbox" data-miss="B2" data-secs="s16,s18,s7"> I missed this</label></li>
-        <li><b>By strong induction.</b> <b>Base cases:</b> 12 = 3·4, 13 = 3·2 + 7, 14 = 7·2. <b>Induction step:</b> let k ≥ 14 and assume every n with 12 ≤ n ≤ k works. Then k + 1 − 3 = k − 2 ≥ 12, so k − 2 = 3a + 7b by the IH, and k + 1 = 3(a + 1) + 7b. □ (Three base cases because the step reaches back 3.)
-          <label class="miss"><input type="checkbox" data-miss="B3" data-secs="s23"> I missed this</label></li>
-        <li><b>By induction.</b> <b>Base case:</b> 4 | 4. <b>Induction step:</b> assume 4 | 5ᵏ − 1. Then 5ᵏ⁺¹ − 1 = 5(5ᵏ − 1) + 4, a sum of multiples of 4. □
-          <label class="miss"><input type="checkbox" data-miss="B4" data-secs="s22"> I missed this</label></li>
-        <li>(a) Complement: C(14, 5) − C(8, 5) = 2002 − 56 = <b>1946</b>. (b) C(6, 2)·C(8, 3) = 15·56 = <b>840</b>.
-          <label class="miss"><input type="checkbox" data-miss="B5" data-secs="s26,s28"> I missed this</label></li>
-        <li>(a) The term with (2x)⁴(−1)³: C(7, 4)·2⁴·(−1)³ = 35·16·(−1) = <b>−560</b>. (b) 2⁸ = <b>256</b>.
-          <label class="miss"><input type="checkbox" data-miss="B6" data-secs="s29"> I missed this</label></li>
-        <li>a₂ = 1, a₃ = 3, a₄ = 5, a₅ = 11. <b>By strong induction.</b> <b>Base cases:</b> n = 0: (1 − 1)/3 = 0 ✓; n = 1: (2 + 1)/3 = 1 ✓. <b>Induction step</b> (k ≥ 1, assume the formula for k and k − 1): a_{k+1} = (2ᵏ − (−1)ᵏ)/3 + 2(2ᵏ⁻¹ − (−1)ᵏ⁻¹)/3 = (2ᵏ⁺¹ − (−1)ᵏ − 2(−1)ᵏ⁻¹)/3. Since −(−1)ᵏ − 2(−1)ᵏ⁻¹ = (−1)ᵏ⁻¹(1 − 2) = −(−1)ᵏ⁻¹ = (−1)ᵏ = −(−1)ᵏ⁺¹, this equals (2ᵏ⁺¹ − (−1)ᵏ⁺¹)/3. □
-          <label class="miss"><input type="checkbox" data-miss="B7" data-secs="s23,s24"> I missed this</label></li>
-        <li>10·9·8·7/10⁴ = 5040/10,000 = <b>0.504</b>.
-          <label class="miss"><input type="checkbox" data-miss="B8" data-secs="s28,s31"> I missed this</label></li>
-      </ol>
-    </details>
+    <div class="pt-wrap" data-test="B"></div>
   </section>
 
   <section class="sec pt" id="pt-c">
     <h2><span class="n">C</span>Practice Midterm C</h2>
     <p class="src">80 minutes · closed notes · show your work</p>
-    <ol class="exam">
-      <li><b>(gcd)</b> Find gcd(1001, 105) by the Euclidean algorithm and by prime factorization, and find lcm(1001, 105). <span class="pill">§16 §17</span></li>
-      <li><b>(Fermat)</b> Compute 7¹⁰⁰ mod 11, and use Fermat's little theorem to find the inverse of 7 mod 11. <span class="pill">§18 §20</span></li>
-      <li><b>(Induction)</b> Prove 3ⁿ &gt; n³ for all n ≥ 4. <span class="pill">§22</span></li>
-      <li><b>(Pigeonhole)</b> (a) A drawer has 10 red, 8 blue and 6 green socks. How many must you take (in the dark) to guarantee 3 of the same color? (b) How many numbers must you pick from {1, …, 100} to guarantee two that sum to 101? <span class="pill">§27</span></li>
-      <li><b>(Stars &amp; bars)</b> How many ways can 12 identical cookies go to 4 children (a) with no restriction? (b) if each child gets at least one? <span class="pill">§30</span></li>
-      <li><b>(Combinatorial proof)</b> Prove that C(2n, 2) = 2·C(n, 2) + n² by counting something two ways. <span class="pill">§29</span></li>
-      <li><b>(Probability)</b> A die is rolled 4 times. What's the probability of at least one 6? <span class="pill">§31</span></li>
-      <li><b>(CRT)</b> Solve x ≡ 3 (mod 4), x ≡ 4 (mod 5), x ≡ 1 (mod 3). <span class="pill">§19</span></li>
-      <li><b>(True/false, justify)</b> (a) If a ≡ b (mod m) then a² ≡ b² (mod m). (b) If ac ≡ bc (mod m) and c ≢ 0, then a ≡ b (mod m). (c) Every Carmichael number is prime. (d) For every prime p, p | C(p, 2) when p &gt; 2. <span class="pill">§14 §18 §20 §29</span></li>
-    </ol>
-    <details class="sol"><summary>Solutions to C</summary>
-      <ol class="exam">
-        <li>1001 = 9·105 + 56; 105 = 1·56 + 49; 56 = 1·49 + 7; 49 = 7·7 + 0, so gcd = <b>7</b>. Factorizations 1001 = 7·11·13 and 105 = 3·5·7 agree. lcm = 3·5·7·11·13 = <b>15,015</b>.
-          <label class="miss"><input type="checkbox" data-miss="C1" data-secs="s16,s17"> I missed this</label></li>
-        <li>7¹⁰ ≡ 1, so 7¹⁰⁰ = (7¹⁰)¹⁰ ≡ <b>1</b>. The inverse of 7 is 7⁹ (since 7·7⁹ = 7¹⁰ ≡ 1): 7² ≡ 5, 7⁴ ≡ 3, 7⁸ ≡ 9, so 7⁹ ≡ 9·7 = 63 ≡ <b>8</b>. Check 7·8 = 56 ≡ 1 ✓.
-          <label class="miss"><input type="checkbox" data-miss="C2" data-secs="s18,s20,s15"> I missed this</label></li>
-        <li><b>By induction.</b> <b>Base case (n = 4):</b> 81 &gt; 64 ✓. <b>Induction step</b> (k ≥ 4): assume 3ᵏ &gt; k³. Then 3ᵏ⁺¹ = 3·3ᵏ &gt; 3k³. It remains to show 3k³ ≥ (k + 1)³, i.e. (1 + 1/k)³ ≤ 3. For k ≥ 4, (1 + 1/k)³ ≤ (5/4)³ ≈ 1.95 ≤ 3 ✓. □
-          <label class="miss"><input type="checkbox" data-miss="C3" data-secs="s22"> I missed this</label></li>
-        <li>(a) Worst case is 2 of each color (6 socks), so <b>7</b>. (b) Boxes = the 50 pairs {1, 100}, {2, 99}, …, {50, 51}. With 51 numbers, two land in the same pair, so <b>51</b> (50 isn't enough: take 1, …, 50).
-          <label class="miss"><input type="checkbox" data-miss="C4" data-secs="s27"> I missed this</label></li>
-        <li>(a) 12 stars, 3 bars: C(15, 3) = <b>455</b>. (b) Give each child 1 first, leaving 8: C(11, 3) = <b>165</b>.
-          <label class="miss"><input type="checkbox" data-miss="C5" data-secs="s30"> I missed this</label></li>
-        <li>Count the 2-person groups from n boys and n girls. Directly: C(2n, 2). By type: two boys C(n, 2), two girls C(n, 2), or one of each n·n. These cover every group exactly once, so C(2n, 2) = 2C(n, 2) + n². □
-          <label class="miss"><input type="checkbox" data-miss="C6" data-secs="s29"> I missed this</label></li>
-        <li>1 − (5/6)⁴ = 1 − 625/1296 = <b>671/1296 ≈ 0.518</b>.
-          <label class="miss"><input type="checkbox" data-miss="C7" data-secs="s31"> I missed this</label></li>
-        <li>x ≡ 4 (mod 5) and x ≡ 3 (mod 4): try 4, 9, 14, 19: 19 ≡ 3 (mod 4) ✓. So x ≡ 19 (mod 20). And 19 ≡ 1 (mod 3) ✓. <b>x ≡ 19 (mod 60)</b>.
-          <label class="miss"><input type="checkbox" data-miss="C8" data-secs="s19"> I missed this</label></li>
-        <li>(a) <b>True</b>: multiply the congruence by itself. (b) <b>False</b>: 2·3 ≡ 4·3 (mod 6) but 2 ≢ 4. (c) <b>False</b>: Carmichael numbers are composite by definition (561 = 3·11·17). (d) <b>True</b>: C(p, 2) = p(p − 1)/2, and since p is odd, (p − 1)/2 is an integer (or use p | C(p, k) for 0 &lt; k &lt; p).
-          <label class="miss"><input type="checkbox" data-miss="C9" data-secs="s14,s18,s20,s29"> I missed this</label></li>
-      </ol>
-    </details>
+    <div class="pt-wrap" data-test="C"></div>
   </section>
 
   <div class="part"><p class="eyebrow">Review</p><h2>Exam-day sheet</h2></div>
@@ -3115,63 +3092,762 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   }
 })();
 </script>
-
 <script>
+"use strict";
 (function(){
-  var KEY='m55-gotit', state={};
-  try{ state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ state={}; }
-  var boxes=document.querySelectorAll('.gotit input');
-  var prog=document.getElementById('progress');
-  function paint(){
-    var n=0;
-    boxes.forEach(function(b){
-      var id=b.getAttribute('data-sec'); var on=!!state[id]; b.checked=on; if(on) n++;
-      var a=document.querySelector('nav.toc a[href="#'+id+'"]'); if(a) a.classList.toggle('done',on);
-    });
-    if(prog) prog.textContent=n+' of '+boxes.length+' sections checked off';
+  const BANK={"s1": [{"t": "mc", "q": "Which of these is a proposition?", "c": ["x + 1 = 5", "Close the window.", "There are infinitely many primes.", "Is it raining?"], "a": 2, "e": "It has a definite truth value. The others are a predicate, a command and a question."}, {"t": "mc", "q": "When is p → q false?", "c": ["p true, q true", "p true, q false", "p false, q true", "p false, q false"], "a": 1, "e": "A conditional is only broken when the hypothesis holds and the conclusion fails."}, {"t": "tf", "q": "p → q is false when p is false and q is true.", "a": false, "e": "A false hypothesis makes p → q (vacuously) true."}, {"t": "mc", "q": "“You can enroll only if you have taken Math 1A” (e = enroll, a = taken 1A) is", "c": ["a → e", "e → a", "e ↔ a", "¬a → e"], "a": 1, "e": "“p only if q” means p → q."}, {"t": "mc", "q": "“I go out unless it rains” (g = go out, r = rains) is", "c": ["r → g", "¬r → g", "g → ¬r", "g ∧ ¬r"], "a": 1, "e": "“p unless q” means ¬q → p."}, {"t": "mc", "q": "The contrapositive of “if S is a square then S has 4 sides” is", "c": ["If S has 4 sides then S is a square", "If S is not a square then S doesn't have 4 sides", "If S doesn't have 4 sides then S is not a square", "S is a square and has 4 sides"], "a": 2, "e": "Contrapositive of p → q is ¬q → ¬p."}, {"t": "num", "q": "How many rows does a truth table with 4 variables have?", "a": [16, 1], "e": "2⁴ = 16."}, {"t": "mc", "q": "By precedence, p ∨ q ∧ r means", "c": ["(p ∨ q) ∧ r", "p ∨ (q ∧ r)"], "a": 1, "e": "∧ binds tighter than ∨ (like × before +)."}, {"t": "tf", "q": "p ⊕ q is true when both p and q are true.", "a": false, "e": "Exclusive or is true when exactly one is true."}, {"t": "mc", "q": "With p = T and q = T, the value of (p ∧ q) → ¬p is", "c": ["T", "F"], "a": 1, "e": "T → F is F."}], "s2": [{"t": "mc", "q": "¬(p ∧ q) ≡", "c": ["¬p ∧ ¬q", "¬p ∨ ¬q", "p ∨ q", "¬p → q"], "a": 1, "e": "De Morgan: flip ∧ to ∨ and negate each part."}, {"t": "mc", "q": "¬(p → q) ≡", "c": ["¬p → ¬q", "p ∧ ¬q", "¬p ∧ q", "q → p"], "a": 1, "e": "The only way p → q fails: p true and q false."}, {"t": "mc", "q": "p → q ≡", "c": ["q → p", "¬p → ¬q", "¬p ∨ q", "p ∨ ¬q"], "a": 2, "e": "Conditional as “or”."}, {"t": "mc", "q": "(p → q) ∨ (q → p) is a", "c": ["tautology", "contradiction", "contingency"], "a": 0, "e": "If q is true the first part is true; if q is false the second is."}, {"t": "mc", "q": "p ∧ ¬p is a", "c": ["tautology", "contradiction", "contingency"], "a": 1, "e": ""}, {"t": "mc", "q": "(p → q) ∧ (p → r) ≡", "c": ["p → (q ∧ r)", "p → (q ∨ r)", "(p ∧ q) → r", "(q ∧ r) → p"], "a": 0, "e": ""}, {"t": "tf", "q": "p → q and q → p are logically equivalent.", "a": false, "e": "A statement and its converse can differ (squares and 4-sided shapes)."}, {"t": "mc", "q": "Simplify ¬(p ∨ (¬p ∧ q))", "c": ["¬p ∧ ¬q", "p ∨ q", "¬p ∨ q", "F"], "a": 0, "e": "De Morgan twice, distribute, then ¬p ∧ p ≡ F."}, {"t": "mc", "q": "(p ∨ q) → r ≡", "c": ["(p → r) ∧ (q → r)", "(p → r) ∨ (q → r)", "p → (q → r)", "r → (p ∨ q)"], "a": 0, "e": "This is why proof by cases works."}], "s3": [{"t": "mc", "q": "The negation of ∀x (P(x) → Q(x)) is", "c": ["∀x (P(x) ∧ ¬Q(x))", "∃x (P(x) ∧ ¬Q(x))", "∃x (¬P(x) → ¬Q(x))", "∀x (¬P(x) ∨ Q(x))"], "a": 1, "e": "Flip ∀ to ∃, and ¬(p → q) ≡ p ∧ ¬q."}, {"t": "mc", "q": "“Some student likes math” (S = student, L = likes math) is", "c": ["∀x (S(x) → L(x))", "∃x (S(x) → L(x))", "∃x (S(x) ∧ L(x))", "∀x (S(x) ∧ L(x))"], "a": 2, "e": "∃ pairs with ∧."}, {"t": "mc", "q": "“Every student likes math” is", "c": ["∀x (S(x) → L(x))", "∃x (S(x) → L(x))", "∃x (S(x) ∧ L(x))", "∀x (S(x) ∧ L(x))"], "a": 0, "e": "∀ pairs with →."}, {"t": "mc", "q": "“No student likes math” is", "c": ["∀x (S(x) → ¬L(x))", "∃x (S(x) ∧ ¬L(x))", "¬∀x (S(x) → L(x))", "∀x (¬S(x) → L(x))"], "a": 0, "e": ""}, {"t": "tf", "q": "Over ℤ, ∀x (x² ≥ x) is true.", "a": true, "e": "For x ≥ 1, x·x ≥ x; for x ≤ 0, x² ≥ 0 ≥ x."}, {"t": "tf", "q": "Over ℝ, ∀x (x² ≥ x) is true.", "a": false, "e": "x = 1/2 is a counterexample."}, {"t": "tf", "q": "∀x (P(x) ∨ Q(x)) ≡ ∀x P(x) ∨ ∀x Q(x).", "a": false, "e": "Over ℤ: every x is ≥ 0 or ≤ 0, but not every x is ≥ 0."}, {"t": "tf", "q": "∃x (P(x) ∨ Q(x)) ≡ ∃x P(x) ∨ ∃x Q(x).", "a": true, "e": ""}, {"t": "tf", "q": "(∀x ∈ ∅) P(x) is always true.", "a": true, "e": "Vacuously: there's nothing to check."}], "s4": [{"t": "mc", "q": "Domain ℤ. Which is true?", "c": ["∃y ∀x (y > x)", "∀x ∃y (y > x)", "∃x ∀y (x > y)", "∀x ∀y (x > y)"], "a": 1, "e": "Every integer has a bigger one (y = x + 1), but no single integer beats them all."}, {"t": "mc", "q": "The negation of ∀x ∃y P(x, y) is", "c": ["∃x ∀y ¬P(x, y)", "∀x ∃y ¬P(x, y)", "∃x ∃y ¬P(x, y)", "∀y ∃x ¬P(x, y)"], "a": 0, "e": ""}, {"t": "mc", "q": "“Someone loves everyone” (L(x, y): x loves y) is", "c": ["∀x ∃y L(x, y)", "∃x ∀y L(x, y)", "∃y ∀x L(x, y)", "∀y ∃x L(x, y)"], "a": 1, "e": ""}, {"t": "mc", "q": "“Everyone is loved by someone” is", "c": ["∀y ∃x L(x, y)", "∃x ∀y L(x, y)", "∀x ∃y L(x, y)", "∃y ∀x L(x, y)"], "a": 0, "e": ""}, {"t": "tf", "q": "∃y ∀x P(x, y) implies ∀x ∃y P(x, y).", "a": true, "e": "A master key opens every lock."}, {"t": "tf", "q": "∀x ∃y P(x, y) implies ∃y ∀x P(x, y).", "a": false, "e": ""}, {"t": "tf", "q": "∀x ∀y P(x, y) ≡ ∀y ∀x P(x, y).", "a": true, "e": ""}, {"t": "mc", "q": "∃!x P(x) means", "c": ["at least one x", "exactly one x", "at most one x", "no x"], "a": 1, "e": ""}], "s5": [{"t": "mc", "q": "“If it rains, the game is cancelled. The game is not cancelled. So it didn't rain.”", "c": ["modus ponens", "modus tollens", "hypothetical syllogism", "disjunctive syllogism"], "a": 1, "e": ""}, {"t": "mc", "q": "“p ∨ q, ¬p, therefore q” is", "c": ["modus ponens", "modus tollens", "hypothetical syllogism", "disjunctive syllogism"], "a": 3, "e": ""}, {"t": "mc", "q": "“If I study, I pass. I passed. So I studied.”", "c": ["valid (modus ponens)", "valid (modus tollens)", "invalid: affirming the conclusion", "invalid: denying the hypothesis"], "a": 2, "e": ""}, {"t": "mc", "q": "“If I study, I pass. I didn't study. So I didn't pass.”", "c": ["valid (modus ponens)", "valid (modus tollens)", "invalid: affirming the conclusion", "invalid: denying the hypothesis"], "a": 3, "e": ""}, {"t": "mc", "q": "From ∀x P(x), concluding P(c) for a particular c is", "c": ["universal instantiation", "universal generalization", "existential instantiation", "existential generalization"], "a": 0, "e": ""}, {"t": "mc", "q": "To conclude ∀x P(x) from P(c), c must be", "c": ["a specific chosen value", "an arbitrary element", "the smallest element", "any example where it works"], "a": 1, "e": ""}, {"t": "tf", "q": "(p ∧ (p → q)) → q is a tautology.", "a": true, "e": ""}], "s6": [{"t": "mc", "q": "The definition of an odd integer n is", "c": ["n = 2k + 1 for some integer k", "n isn't divisible by 3", "n = 2k for some integer k", "n − 1 is odd"], "a": 0, "e": ""}, {"t": "mc", "q": "A real number r is rational if", "c": ["r = p/q for integers p, q with q ≠ 0", "r has a finite decimal", "r = p/q for real p, q", "r is an integer"], "a": 0, "e": ""}, {"t": "mc", "q": "A direct proof of p → q starts by", "c": ["assuming ¬q", "assuming p", "assuming ¬p", "assuming q"], "a": 1, "e": ""}, {"t": "tf", "q": "Writing a = 2k + 1 and b = 2k + 1 for two arbitrary odd numbers is fine.", "a": false, "e": "That secretly forces a = b. Use different letters."}, {"t": "mc", "q": "A lemma is", "c": ["an especially important result", "a helper result used to prove a bigger theorem", "an unproved guess", "an axiom"], "a": 1, "e": ""}, {"t": "tf", "q": "If p is false, then p → q is true.", "a": true, "e": "This is a vacuous proof."}, {"t": "proof", "q": "Prove: if m and n are odd integers, then mn is odd.", "rub": ["I wrote m = 2k + 1 and n = 2j + 1 with different letters", "I multiplied out and got mn = 2(2kj + k + j) + 1 (or equivalent)", "I concluded mn is odd because it is 2·(integer) + 1"], "m": "Assume m, n are odd: m = 2k + 1, n = 2j + 1 for integers k, j. Then mn = 4kj + 2k + 2j + 1 = 2(2kj + k + j) + 1, and 2kj + k + j is an integer, so mn is odd. □"}], "s7": [{"t": "mc", "q": "The contrapositive of “if n² is even then n is even” is", "c": ["if n is even then n² is even", "if n is odd then n² is odd", "if n² is odd then n is odd", "if n is odd then n² is even"], "a": 1, "e": ""}, {"t": "mc", "q": "To prove p → q by contradiction, you assume", "c": ["¬p", "¬q", "p ∧ ¬q", "¬p ∧ q"], "a": 2, "e": ""}, {"t": "mc", "q": "A proof by contraposition should begin with", "c": ["“By contraposition”", "the theorem restated", "“Assume for a contradiction”", "an example"], "a": 0, "e": ""}, {"t": "tf", "q": "Proof by contraposition proves q → p.", "a": false, "e": "It proves ¬q → ¬p, which is equivalent to p → q."}, {"t": "mc", "q": "In the √2 proof, the contradiction is that", "c": ["p and q end up both even, though the fraction was in lowest terms", "p must be prime", "q must be 1", "p² must be odd"], "a": 0, "e": ""}, {"t": "tf", "q": "Proof by contradiction can prove statements that aren't implications (like “√2 is irrational”).", "a": true, "e": ""}, {"t": "proof", "q": "Prove by contraposition: if n² + 3 is even, then n is odd.", "rub": ["My first words were “By contraposition”", "I stated the contrapositive: if n is even, then n² + 3 is odd", "I wrote n = 2k and showed n² + 3 = 2(2k² + 1) + 1"], "m": "By contraposition. Suppose n is even, n = 2k. Then n² + 3 = 4k² + 3 = 2(2k² + 1) + 1, which is odd. So if n² + 3 is even, n is odd. □"}], "s8": [{"t": "mc", "q": "To prove (p₁ ∨ p₂) → q by cases, you show", "c": ["p₁ → q and p₂ → q", "p₁ → q or p₂ → q", "q → p₁", "(p₁ ∧ p₂) → q"], "a": 0, "e": ""}, {"t": "mc", "q": "|x + y| ≤ |x| + |y| is", "c": ["the triangle inequality", "De Morgan's law", "Bézout's identity", "false for negative numbers"], "a": 0, "e": ""}, {"t": "mc", "q": "The √2^√2 proof that irrationals x, y exist with xʸ rational is", "c": ["constructive", "nonconstructive", "by contraposition", "by induction"], "a": 1, "e": ""}, {"t": "mc", "q": "To disprove “every prime is odd” you need", "c": ["a proof by cases", "one counterexample", "a proof for all primes", "induction"], "a": 1, "e": ""}, {"t": "mc", "q": "A uniqueness proof shows existence and also", "c": ["if P(x) and P(y) then x = y", "P(x) for all x", "¬P(x) for some x", "P(x) → x = 0"], "a": 0, "e": ""}, {"t": "tf", "q": "x = √2, y = −√2 shows two irrationals can have a rational sum.", "a": true, "e": ""}, {"t": "proof", "q": "Prove n² + n is even for every integer n.", "rub": ["I used two cases covering every integer: n even and n odd", "Case n = 2k: n² + n = 2(2k² + k)", "Case n = 2k + 1: n² + n = 2(2k² + 3k + 1)", "I concluded it's even in both cases"], "m": "Case 1: n = 2k, so n² + n = 4k² + 2k = 2(2k² + k). Case 2: n = 2k + 1, so n² + n = 4k² + 4k + 1 + 2k + 1 = 2(2k² + 3k + 1). Even either way. □"}], "s9": [{"t": "mc", "q": "Zermelo's theorem applies to", "c": ["finite two-player games with no draws and full information", "any game with dice", "games with draws", "one-player puzzles"], "a": 0, "e": ""}, {"t": "mc", "q": "In Chomp on a board bigger than 1×1, who has a winning strategy?", "c": ["player 1", "player 2", "it depends on the size", "nobody"], "a": 0, "e": ""}, {"t": "mc", "q": "The strategy-stealing proof is", "c": ["constructive", "nonconstructive"], "a": 1, "e": "It shows a winning strategy exists without describing it."}, {"t": "tf", "q": "In a finite game with no draws, if player I has no winning strategy then player II has one.", "a": true, "e": ""}, {"t": "mc", "q": "“Player I has a winning strategy” is", "c": ["∃m₁ ∀n₁ ∃m₂ ∀n₂ … W", "∀m₁ ∃n₁ … W", "∃m₁ ∃n₁ … W", "∀m₁ ∀n₁ … W"], "a": 0, "e": ""}], "s10": [{"t": "mc", "q": "A = {1, {2}, {1, 2}}. Which is true?", "c": ["2 ∈ A", "{2} ⊆ A", "{1} ⊆ A", "{1, 2} ⊆ A"], "a": 2, "e": "{2} ⊆ A and {1, 2} ⊆ A would need 2 ∈ A, but 2 isn't listed."}, {"t": "num", "q": "|𝒫({a, b, c, d})| =", "a": [16, 1], "e": ""}, {"t": "tf", "q": "∅ ∈ {1, 2}", "a": false, "e": "∅ isn't one of the listed elements."}, {"t": "tf", "q": "∅ ⊆ {1, 2}", "a": true, "e": "∅ is a subset of every set."}, {"t": "tf", "q": "∅ = {∅}", "a": false, "e": ""}, {"t": "num", "q": "|{1, 2} × {a, b, c}| =", "a": [6, 1], "e": ""}, {"t": "tf", "q": "{1, 1, 2} = {2, 1}", "a": true, "e": ""}, {"t": "mc", "q": "𝒫({1}) =", "c": ["{1}", "{∅, {1}}", "{∅, 1}", "{{1}}"], "a": 1, "e": ""}, {"t": "num", "q": "How many elements does {∅, {∅}, {∅, {∅}}} have?", "a": [3, 1], "e": ""}], "s11": [{"t": "mc", "q": "A = {1, 2, 3, 4}, B = {3, 4, 5}. A − B =", "c": ["{1, 2}", "{5}", "{3, 4}", "{1, 2, 5}"], "a": 0, "e": ""}, {"t": "num", "q": "|A| = 10, |B| = 7, |A ∩ B| = 3. |A ∪ B| =", "a": [14, 1], "e": ""}, {"t": "mc", "q": "The complement of A ∩ B is", "c": ["Ā ∩ B̄", "Ā ∪ B̄", "A ∪ B", "Ā − B"], "a": 1, "e": ""}, {"t": "mc", "q": "A ∩ (B ∪ C) =", "c": ["(A ∩ B) ∪ (A ∩ C)", "(A ∪ B) ∩ (A ∪ C)", "A ∪ (B ∩ C)", "(A ∩ B) ∩ C"], "a": 0, "e": ""}, {"t": "tf", "q": "If A ∩ B = ∅, A and B are disjoint.", "a": true, "e": ""}, {"t": "mc", "q": "To prove A = B you can show", "c": ["A ⊆ B and B ⊆ A", "A ⊆ B only", "|A| = |B|", "A ∩ B ≠ ∅"], "a": 0, "e": ""}, {"t": "tf", "q": "A ∪ (A ∩ B) = A", "a": true, "e": "Absorption."}, {"t": "proof", "q": "Prove A − (B ∩ C) = (A − B) ∪ (A − C).", "rub": ["I started from an arbitrary element x", "I used the definitions: x ∈ A and not (x ∈ B and x ∈ C)", "I used De Morgan to get x ∉ B or x ∉ C", "I reached x ∈ (A − B) ∪ (A − C), covering both directions (a ⟺ chain or two inclusions)"], "m": "x ∈ A − (B ∩ C) ⟺ x ∈ A ∧ ¬(x ∈ B ∧ x ∈ C) ⟺ x ∈ A ∧ (x ∉ B ∨ x ∉ C) ⟺ (x ∈ A ∧ x ∉ B) ∨ (x ∈ A ∧ x ∉ C) ⟺ x ∈ (A − B) ∪ (A − C). □"}], "s12": [{"t": "mc", "q": "f : ℤ → ℤ, f(x) = x² is", "c": ["injective only", "surjective only", "both", "neither"], "a": 3, "e": "f(−1) = f(1); and 2 is never hit."}, {"t": "mc", "q": "f : ℝ → ℝ, f(x) = 2x + 3 is", "c": ["injective only", "surjective only", "both", "neither"], "a": 2, "e": ""}, {"t": "mc", "q": "f : ℤ → ℤ, f(x) = 2x is", "c": ["injective only", "surjective only", "both", "neither"], "a": 0, "e": ""}, {"t": "mc", "q": "f : ℝ → ℤ, f(x) = ⌊x⌋ is", "c": ["injective only", "surjective only", "both", "neither"], "a": 1, "e": ""}, {"t": "num", "q": "f(x) = x + 1, g(x) = 3x. (f ∘ g)(2) =", "a": [7, 1], "e": "f(g(2)) = f(6) = 7 (g first)."}, {"t": "num", "q": "⌊−2.5⌋ =", "a": [-3, 1], "e": ""}, {"t": "tf", "q": "The range of a function always equals its codomain.", "a": false, "e": ""}, {"t": "mc", "q": "To prove f is injective, you", "c": ["assume f(a) = f(b) and show a = b", "assume a = b and show f(a) = f(b)", "take b and find a with f(a) = b", "show f is onto"], "a": 0, "e": ""}, {"t": "proof", "q": "Prove f : ℤ → ℤ, f(x) = 5x − 2 is injective but not surjective.", "rub": ["I assumed f(a) = f(b) and derived a = b", "I named a specific integer not in the range (e.g. 0)", "I explained why it's never hit (5x = 2 has no integer solution)"], "m": "Injective: 5a − 2 = 5b − 2 ⇒ 5a = 5b ⇒ a = b. Not surjective: f(x) = 0 needs x = 2/5, not an integer, so 0 isn't in the range. □"}], "s13": [{"t": "mc", "q": "|A| = |B| means", "c": ["there's a bijection A → B", "A ⊆ B", "there's an injection A → B", "both are infinite"], "a": 0, "e": ""}, {"t": "mc", "q": "Which set is uncountable?", "c": ["ℤ", "ℚ", "ℕ × ℕ", "ℝ"], "a": 3, "e": ""}, {"t": "tf", "q": "The even integers have the same cardinality as ℤ.", "a": true, "e": "n ↦ 2n is a bijection."}, {"t": "tf", "q": "A subset of a countable set is countable.", "a": true, "e": ""}, {"t": "mc", "q": "Cantor's diagonal argument shows", "c": ["ℚ is countable", "[0, 1] is uncountable", "ℕ is infinite", "every set is countable"], "a": 1, "e": ""}, {"t": "mc", "q": "Cantor's theorem: |X| < |?|", "c": ["X × X", "𝒫(X)", "ℕ", "X ∪ X"], "a": 1, "e": ""}, {"t": "tf", "q": "0.999… = 1", "a": true, "e": ""}, {"t": "proof", "q": "Show the odd positive integers {1, 3, 5, …} have the same cardinality as ℕ = {0, 1, 2, …}.", "rub": ["I gave an explicit function, e.g. f(n) = 2n + 1", "I showed it's injective", "I showed it's surjective (each odd 2k + 1 equals f(k))"], "m": "f : ℕ → odds, f(n) = 2n + 1. Injective: 2a + 1 = 2b + 1 ⇒ a = b. Surjective: any odd m = 2k + 1 with k ≥ 0 equals f(k). So f is a bijection. □"}], "s14": [{"t": "gen", "g": "divalg"}, {"t": "gen", "g": "modarith"}, {"t": "gen", "g": "divalg"}, {"t": "tf", "q": "−11 mod 3 = −2", "a": false, "e": "−11 = 3(−4) + 1, so it's 1. Remainders are never negative."}, {"t": "tf", "q": "3 | 0", "a": true, "e": "0 = 3·0."}, {"t": "mc", "q": "If a | b and a | c, then a divides", "c": ["b + c only", "bc only", "mb + nc for all integers m, n", "b/c"], "a": 2, "e": ""}, {"t": "tf", "q": "2·3 ≡ 4·3 (mod 6), so 2 ≡ 4 (mod 6).", "a": false, "e": "You can't cancel 3, since gcd(3, 6) ≠ 1."}, {"t": "num", "q": "(17·23) mod 5, reducing first:", "a": [1, 1], "e": "17 ≡ 2 and 23 ≡ 3, so the product ≡ 6 ≡ 1."}, {"t": "tf", "q": "17 ≡ −3 (mod 5)", "a": true, "e": ""}, {"t": "proof", "q": "Prove: if 4 | a and 4 | b, then 4 | 3a − 5b.", "rub": ["I wrote a = 4s and b = 4t (different letters)", "I computed 3a − 5b = 4(3s − 5t)", "I said 3s − 5t is an integer, so 4 divides it"], "m": "a = 4s and b = 4t for integers s, t. Then 3a − 5b = 12s − 20t = 4(3s − 5t), and 3s − 5t is an integer. □"}], "s15": [{"t": "gen", "g": "base"}, {"t": "gen", "g": "base"}, {"t": "gen", "g": "power"}, {"t": "num", "q": "(1011)₂ in decimal", "a": [11, 1], "e": ""}, {"t": "num", "q": "(2F)₁₆ in decimal", "a": [47, 1], "e": ""}, {"t": "mc", "q": "Converting decimal → base b by repeated division, the first remainder you get is", "c": ["the leftmost digit", "the rightmost digit", "the base", "always 0"], "a": 1, "e": ""}, {"t": "num", "q": "3⁸ mod 7, by squaring:", "a": [2, 1], "e": ""}], "s16": [{"t": "tf", "q": "1 is prime.", "a": false, "e": ""}, {"t": "mc", "q": "To test whether 211 is prime, check divisibility by primes up to", "c": ["211", "105", "14 (since √211 ≈ 14.5)", "10"], "a": 2, "e": ""}, {"t": "mc", "q": "The prime factorization of 360 is", "c": ["2³·3²·5", "2²·3²·10", "2³·45", "2·3·5·12"], "a": 0, "e": ""}, {"t": "tf", "q": "2·3·5·7·11·13 + 1 must be prime.", "a": false, "e": "It's 30031 = 59·509. It only has a prime factor not on the list."}, {"t": "mc", "q": "a = 2³·5, b = 2⁴·3·5². Does a | b?", "c": ["yes", "no"], "a": 0, "e": "Every exponent in a is ≤ the matching one in b."}, {"t": "tf", "q": "Every integer > 1 has exactly one prime factorization, up to order.", "a": true, "e": ""}, {"t": "num", "q": "How many positive divisors does 2³·3² have?", "a": [12, 1], "e": "(3 + 1)(2 + 1)."}, {"t": "proof", "q": "Prove there are infinitely many primes.", "rub": ["I assumed for a contradiction there are finitely many, p₁, …, pₙ", "I formed Q = p₁⋯pₙ + 1", "I said each pᵢ leaves remainder 1, so no pᵢ divides Q", "I concluded Q has a prime factor not on the list: contradiction"], "m": "Assume for a contradiction the primes are p₁, …, pₙ. Let Q = p₁⋯pₙ + 1. Dividing Q by any pᵢ leaves remainder 1, so no pᵢ divides Q. But Q > 1 has a prime factor, which isn't on the list. Contradiction! □"}], "s17": [{"t": "gen", "g": "factor"}, {"t": "gen", "g": "factor"}, {"t": "num", "q": "gcd(84, 36) =", "a": [12, 1], "e": ""}, {"t": "num", "q": "lcm(12, 18) =", "a": [36, 1], "e": ""}, {"t": "num", "q": "gcd(a, b) = 6 and ab = 360. lcm(a, b) =", "a": [60, 1], "e": "gcd·lcm = ab."}, {"t": "mc", "q": "The fact behind the Euclidean algorithm is", "c": ["gcd(a, b) = gcd(b, a mod b)", "gcd(a, b) = gcd(a + b, b) + 1", "gcd(a, b) = a mod b", "gcd(a, b) = lcm(a, b)/2"], "a": 0, "e": ""}, {"t": "num", "q": "gcd(0, 15) =", "a": [15, 1], "e": ""}, {"t": "tf", "q": "10, 17, 21 are pairwise relatively prime.", "a": true, "e": ""}], "s18": [{"t": "gen", "g": "bezout"}, {"t": "gen", "g": "inverse"}, {"t": "gen", "g": "lincong"}, {"t": "gen", "g": "inverse"}, {"t": "gen", "g": "lincong"}, {"t": "mc", "q": "a has an inverse mod m exactly when", "c": ["gcd(a, m) = 1", "a < m", "m is prime", "a is odd"], "a": 0, "e": ""}, {"t": "num", "q": "How many solutions mod 30 does 12x ≡ 18 (mod 30) have?", "a": [6, 1], "e": "gcd(12, 30) = 6 divides 18, so 6 solutions."}, {"t": "tf", "q": "If p is prime and p | ab, then p | a or p | b.", "a": true, "e": ""}, {"t": "tf", "q": "If 6 | ab, then 6 | a or 6 | b.", "a": false, "e": "6 | 3·10."}, {"t": "proof", "q": "Prove: if gcd(a, b) = 1 and a | bc, then a | c.", "rub": ["I used Bézout: 1 = sa + tb", "I multiplied by c: c = sac + tbc", "I explained a | sac and a | tbc (since a | bc)", "I concluded a | c"], "m": "By Bézout, 1 = sa + tb. Multiply by c: c = sac + tbc. a divides sac, and a divides tbc because a | bc. So a divides their sum, c. □"}], "s19": [{"t": "gen", "g": "crt"}, {"t": "gen", "g": "crt"}, {"t": "mc", "q": "The CRT requires the moduli to be", "c": ["prime", "pairwise relatively prime", "odd", "increasing"], "a": 1, "e": ""}, {"t": "num", "q": "Smallest x ≥ 0 with x ≡ 2 (mod 3) and x ≡ 3 (mod 5):", "a": [8, 1], "e": ""}, {"t": "mc", "q": "In the CRT construction, yᵢ is the inverse of", "c": ["mᵢ mod Mᵢ", "Mᵢ mod mᵢ", "M mod mᵢ", "aᵢ mod mᵢ"], "a": 1, "e": ""}, {"t": "tf", "q": "x ≡ 0 (mod 2), x ≡ 1 (mod 4) has a solution.", "a": false, "e": "The first makes x even, the second odd."}, {"t": "num", "q": "A system with moduli 4, 9, 5 has a unique solution mod", "a": [180, 1], "e": ""}], "s20": [{"t": "gen", "g": "power"}, {"t": "gen", "g": "power"}, {"t": "num", "q": "2¹⁰⁰ mod 11 =", "a": [1, 1], "e": ""}, {"t": "num", "q": "5³¹ mod 7 =", "a": [5, 1], "e": ""}, {"t": "mc", "q": "Mod a prime p with p ∤ a, reduce the exponent mod", "c": ["p", "p − 1", "p + 1", "2"], "a": 1, "e": ""}, {"t": "tf", "q": "If 2ⁿ⁻¹ ≡ 1 (mod n), then n is prime.", "a": false, "e": "Pseudoprimes like 341 pass."}, {"t": "tf", "q": "If 2ⁿ⁻¹ ≢ 1 (mod n), then n is composite.", "a": true, "e": ""}, {"t": "mc", "q": "561 = 3·11·17 is a", "c": ["prime", "Carmichael number", "Mersenne prime", "perfect number"], "a": 1, "e": ""}], "s21": [{"t": "gen", "g": "rsa"}, {"t": "gen", "g": "rsa"}, {"t": "mc", "q": "In RSA, which is public?", "c": ["p and q", "d", "n and e", "(p − 1)(q − 1)"], "a": 2, "e": ""}, {"t": "mc", "q": "d is the inverse of e modulo", "c": ["n", "(p − 1)(q − 1)", "p", "e"], "a": 1, "e": ""}, {"t": "num", "q": "p = 3, q = 7, e = 5. The private d is", "a": [5, 1], "e": "(p − 1)(q − 1) = 12, and 5·5 = 25 ≡ 1 (mod 12)."}, {"t": "tf", "q": "RSA's security relies on factoring n being hard.", "a": true, "e": ""}, {"t": "num", "q": "Encrypt m = 2 with (n, e) = (15, 3):", "a": [8, 1], "e": ""}], "s22": [{"t": "mc", "q": "The two labeled parts of an induction proof are", "c": ["base case and induction step", "hypothesis and conclusion", "case 1 and case 2", "existence and uniqueness"], "a": 0, "e": ""}, {"t": "mc", "q": "In the induction step you assume", "c": ["P(k + 1)", "P(k)", "P(n) for all n", "¬P(k)"], "a": 1, "e": ""}, {"t": "num", "q": "1 + 2 + ⋯ + 100 =", "a": [5050, 1], "e": ""}, {"t": "num", "q": "1 + 2 + 4 + ⋯ + 2¹⁰ =", "a": [2047, 1], "e": ""}, {"t": "tf", "q": "To prove 2ⁿ > n² for n ≥ 5, the base case is n = 5.", "a": true, "e": ""}, {"t": "mc", "q": "For 3 | 4ⁿ − 1, the key rewrite in the step is", "c": ["4ᵏ⁺¹ − 1 = 3·4ᵏ + (4ᵏ − 1)", "4ᵏ⁺¹ − 1 = (4 − 1)ᵏ", "4ᵏ⁺¹ = 4ᵏ + 1", "4ᵏ⁺¹ − 1 = 4(4ᵏ − 1) − 3"], "a": 0, "e": ""}, {"t": "tf", "q": "If the step works for all k ≥ 1 but the base case fails, the claim could still be false for every n.", "a": true, "e": "e.g. “n = n + 1” has a valid step but no base case."}, {"t": "proof", "q": "Prove 1 + 3 + 5 + ⋯ + (2n − 1) = n² for all n ≥ 1.", "rub": ["I wrote “By induction” and labeled the base case n = 1 (1 = 1²)", "I stated the induction hypothesis 1 + ⋯ + (2k − 1) = k²", "I added the next term 2k + 1 and used the IH", "I got (k + 1)² and concluded"], "m": "By induction. Base case (n = 1): 1 = 1². Induction step: assume 1 + ⋯ + (2k − 1) = k². Adding the next odd number, 2(k + 1) − 1 = 2k + 1: k² + 2k + 1 = (k + 1)². □"}], "s23": [{"t": "mc", "q": "Strong induction assumes", "c": ["P(k) only", "P(1), …, P(k)", "P(k + 1)", "P(n) for all n"], "a": 1, "e": ""}, {"t": "num", "q": "Proving every n ≥ 8 is 5a + 3b, with the step k + 1 = (k − 2) + 3: how many base cases?", "a": [3, 1], "e": ""}, {"t": "tf", "q": "Every nonempty subset of ℕ has a smallest element.", "a": true, "e": ""}, {"t": "tf", "q": "Every nonempty subset of ℤ has a smallest element.", "a": false, "e": "ℤ itself has no smallest element."}, {"t": "mc", "q": "Proving every n ≥ 2 is a product of primes needs strong induction because", "c": ["k + 1 = ab with a, b smaller than k + 1 but not necessarily equal to k", "the base case is 2", "there are infinitely many primes", "k + 1 is always prime"], "a": 0, "e": ""}, {"t": "mc", "q": "“Forcing the induction” means", "c": ["proving a stronger statement so the step works", "skipping the base case", "using two base cases", "assuming P(k + 1)"], "a": 0, "e": ""}, {"t": "proof", "q": "Prove every n ≥ 4 can be written as 2a + 5b with a, b ≥ 0.", "rub": ["I wrote “By strong induction”", "Base cases 4 = 2·2 and 5 = 5 (two, since the step goes back 2)", "Step: for k ≥ 5, (k + 1) − 2 = k − 1 ≥ 4 works by the IH, so add one 2", "I concluded"], "m": "By strong induction. Base cases: 4 = 2·2, 5 = 5. Induction step: let k ≥ 5 and assume 4, …, k all work. Then k − 1 ≥ 4, so k − 1 = 2a + 5b, and k + 1 = 2(a + 1) + 5b. □"}], "s24": [{"t": "mc", "q": "With the lecture's convention, f₀, f₁, f₂, f₃ are", "c": ["0, 1, 1, 2", "1, 1, 2, 3", "1, 2, 3, 5", "0, 1, 2, 3"], "a": 1, "e": ""}, {"t": "num", "q": "f₇ (lecture convention f₀ = f₁ = 1) =", "a": [21, 1], "e": ""}, {"t": "num", "q": "a₀ = 2, aₙ = 3aₙ₋₁ − 1. a₃ =", "a": [41, 1], "e": ""}, {"t": "num", "q": "f₀ + f₁ + ⋯ + f₅ (lecture convention) =", "a": [20, 1], "e": ""}, {"t": "mc", "q": "A recursive definition needs", "c": ["base cases and a rule using earlier values", "a closed formula", "only a rule", "a proof by contradiction"], "a": 0, "e": ""}, {"t": "tf", "q": "The Fibonacci recursion needs two base cases.", "a": true, "e": ""}, {"t": "gen", "g": "recur"}, {"t": "gen", "g": "recur"}, {"t": "proof", "q": "Prove f₀ + f₁ + ⋯ + fₙ = fₙ₊₂ − 1 for n ≥ 0 (f₀ = f₁ = 1).", "rub": ["Base case n = 0: f₀ = 1 = f₂ − 1", "I stated the IH for k", "I added fₖ₊₁ and used the IH to get (fₖ₊₂ − 1) + fₖ₊₁", "I used fₖ₊₃ = fₖ₊₂ + fₖ₊₁ to finish"], "m": "Base case: f₀ = 1 = 2 − 1 = f₂ − 1. Induction step: assume f₀ + ⋯ + fₖ = fₖ₊₂ − 1. Then f₀ + ⋯ + fₖ₊₁ = (fₖ₊₂ − 1) + fₖ₊₁ = fₖ₊₃ − 1. □"}], "s25": [{"t": "num", "q": "Moves the Hanoi algorithm uses for 6 disks:", "a": [63, 1], "e": ""}, {"t": "mc", "q": "The Hanoi move count satisfies", "c": ["Hₙ = 2Hₙ₋₁ + 1", "Hₙ = Hₙ₋₁ + 2", "Hₙ = Hₙ₋₁ + Hₙ₋₂", "Hₙ = nHₙ₋₁"], "a": 0, "e": ""}, {"t": "num", "q": "Recursive gcd(48, 18) returns", "a": [6, 1], "e": ""}, {"t": "mc", "q": "A recursive algorithm must have", "c": ["a base case, and calls on smaller inputs", "a loop", "two base cases", "no base case"], "a": 0, "e": ""}, {"t": "tf", "q": "No solution to the Tower of Hanoi with n disks uses fewer than 2ⁿ − 1 moves.", "a": true, "e": ""}, {"t": "proof", "q": "Prove Hₙ = 2ⁿ − 1 from H₁ = 1 and Hₙ = 2Hₙ₋₁ + 1.", "rub": ["Base case n = 1: 2¹ − 1 = 1 = H₁", "I stated the IH Hₖ = 2ᵏ − 1", "Hₖ₊₁ = 2(2ᵏ − 1) + 1 = 2ᵏ⁺¹ − 1"], "m": "By induction. Base case: H₁ = 1 = 2¹ − 1. Step: assume Hₖ = 2ᵏ − 1. Then Hₖ₊₁ = 2Hₖ + 1 = 2ᵏ⁺¹ − 2 + 1 = 2ᵏ⁺¹ − 1. □"}], "s26": [{"t": "gen", "g": "incexc"}, {"t": "gen", "g": "complement"}, {"t": "num", "q": "Outfits from 4 shirts, 3 pants, 2 pairs of shoes:", "a": [24, 1], "e": ""}, {"t": "num", "q": "Bit strings of length 8:", "a": [256, 1], "e": ""}, {"t": "num", "q": "One-to-one functions from a 3-element set to a 5-element set:", "a": [60, 1], "e": ""}, {"t": "num", "q": "Ways to seat 6 people around a round table (rotations count as the same):", "a": [120, 1], "e": ""}, {"t": "num", "q": "2-element subsets of {1, …, 12}:", "a": [66, 1], "e": ""}, {"t": "mc", "q": "“At least one” counting is usually easiest as", "c": ["total − none", "adding all the cases", "dividing by 2", "pigeonhole"], "a": 0, "e": ""}], "s27": [{"t": "gen", "g": "pigeon"}, {"t": "gen", "g": "pigeon"}, {"t": "num", "q": "Minimum number of people to guarantee two share a birthday (366 possible days):", "a": [367, 1], "e": ""}, {"t": "num", "q": "Among 50 people, at least how many share a birth month?", "a": [5, 1], "e": ""}, {"t": "num", "q": "Cards to draw to guarantee 4 of the same suit:", "a": [13, 1], "e": ""}, {"t": "mc", "q": "To show any 6 integers include two whose difference is divisible by 5, the boxes are", "c": ["remainders mod 5", "the 6 integers", "multiples of 5", "pairs of integers"], "a": 0, "e": ""}, {"t": "tf", "q": "If f : A → B and |A| > |B|, then f can't be one-to-one.", "a": true, "e": ""}, {"t": "proof", "q": "Prove: among any 8 integers, two have a difference divisible by 7.", "rub": ["Boxes: the 7 remainders mod 7", "Objects: the 8 integers (8 > 7)", "Two share a remainder, so their difference ≡ 0 (mod 7)"], "m": "There are 7 possible remainders mod 7 (boxes) and 8 integers (objects), so by pigeonhole two integers a, b have the same remainder. Then a − b ≡ 0 (mod 7). □"}], "s28": [{"t": "gen", "g": "perm"}, {"t": "gen", "g": "perm"}, {"t": "num", "q": "P(7, 3) =", "a": [210, 1], "e": ""}, {"t": "num", "q": "C(9, 4) =", "a": [126, 1], "e": ""}, {"t": "num", "q": "C(10, 0) =", "a": [1, 1], "e": ""}, {"t": "mc", "q": "A 4-person team from 12 people (no roles) is counted by", "c": ["P(12, 4)", "C(12, 4)", "12⁴", "4¹²"], "a": 1, "e": ""}, {"t": "num", "q": "Ways to award gold, silver, bronze among 10 runners:", "a": [720, 1], "e": ""}, {"t": "num", "q": "5-card hands with exactly 3 hearts:", "a": [211926, 1], "e": "C(13, 3)·C(39, 2). You may type C(13,3)*C(39,2)."}, {"t": "tf", "q": "C(n, r) = P(n, r)/r!", "a": true, "e": ""}], "s29": [{"t": "gen", "g": "binom"}, {"t": "gen", "g": "binom"}, {"t": "num", "q": "Coefficient of x³y² in (x + y)⁵:", "a": [10, 1], "e": ""}, {"t": "num", "q": "Σₖ C(7, k) =", "a": [128, 1], "e": ""}, {"t": "mc", "q": "Pascal's identity is", "c": ["C(n + 1, k) = C(n, k − 1) + C(n, k)", "C(n, k) = C(n − 1, k) − C(n − 1, k − 1)", "C(n, k) = n·C(n − 1, k)", "C(n + 1, k + 1) = C(n, k)²"], "a": 0, "e": ""}, {"t": "tf", "q": "k·C(n, k) = n·C(n − 1, k − 1)", "a": true, "e": ""}, {"t": "tf", "q": "7 divides C(7, 3).", "a": true, "e": "C(7, 3) = 35."}, {"t": "num", "q": "C(6, 3) =", "a": [20, 1], "e": ""}, {"t": "proof", "q": "Give a combinatorial proof that C(n, k) = C(n, n − k).", "rub": ["I said what both sides count (ways to choose a k-element subset of an n-element set)", "I explained that choosing the k members is the same as choosing the n − k non-members", "I concluded the two counts are equal (a bijection between them)"], "m": "C(n, k) counts k-subsets of an n-set. Each k-subset is determined by its complement, an (n − k)-subset, and vice versa (complementing is a bijection). So the number of k-subsets equals the number of (n − k)-subsets: C(n, k) = C(n, n − k). □"}], "s30": [{"t": "gen", "g": "stars"}, {"t": "gen", "g": "multinom"}, {"t": "gen", "g": "stars"}, {"t": "num", "q": "Ways to choose 5 donuts from 3 kinds (repeats allowed):", "a": [21, 1], "e": ""}, {"t": "num", "q": "Nonnegative integer solutions to x₁ + x₂ + x₃ = 7:", "a": [36, 1], "e": ""}, {"t": "num", "q": "Arrangements of the letters of MISSISSIPPI:", "a": [34650, 1], "e": ""}, {"t": "mc", "q": "4-digit PINs (repeats allowed) are counted by", "c": ["P(10, 4)", "C(10, 4)", "10⁴", "C(13, 4)"], "a": 2, "e": ""}, {"t": "num", "q": "Ways to put 5 different balls into 3 different boxes:", "a": [243, 1], "e": ""}, {"t": "mc", "q": "Stars and bars counts", "c": ["identical items into distinct bins", "distinct items in order", "items into identical bins", "choices without repetition"], "a": 0, "e": ""}], "s31": [{"t": "gen", "g": "dice"}, {"t": "gen", "g": "dice"}, {"t": "num", "q": "Probability that 3 fair coin flips are all heads:", "a": [1, 8], "e": ""}, {"t": "num", "q": "Probability a fair die shows a prime:", "a": [1, 2], "e": ""}, {"t": "num", "q": "Probability a number from 1..100 is divisible by 4 or 6:", "a": [33, 100], "e": ""}, {"t": "num", "q": "Probability of at least one head in 4 flips:", "a": [15, 16], "e": ""}, {"t": "mc", "q": "p(Ē) =", "c": ["1 − p(E)", "p(E)", "1/p(E)", "p(E) − 1"], "a": 0, "e": ""}, {"t": "num", "q": "Probability a 5-card hand is a flush (all one suit); you may type an expression with C(…):", "a": [33, 16660], "e": ""}, {"t": "tf", "q": "In Monty Hall, switching wins with probability 1/2.", "a": false, "e": "It's 2/3."}]};
+  const TESTS={"A": [{"id": "A1", "secs": ["s17", "s18"], "parts": [{"k": "num", "a": [1, 1], "l": "gcd"}, {"k": "bez", "a": 97, "b": 35, "g": 1, "l": "s and t with 97s + 35t = 1"}, {"k": "num", "a": [61, 1], "l": "inverse of 35"}, {"k": "num", "a": [50, 1], "l": "x"}], "rub": null, "q": "<b>(Euclid, Bézout, inverses)</b> Use the Euclidean algorithm to find gcd(97, 35) and write it as 97s + 35t. Then find the inverse of 35 mod 97 and solve 35x ≡ 4 (mod 97). <span class=\"pill\">§17 §18</span>", "sol": "97 = 2·35 + 27; 35 = 1·27 + 8; 27 = 3·8 + 3; 8 = 2·3 + 2; 3 = 1·2 + 1. So gcd = 1. Back-substituting: <b>1 = 13·97 − 36·35</b>. Inverse of 35 is −36 ≡ <b>61</b>. Then x ≡ 61·4 = 244 ≡ <b>50</b> (mod 97). Check: 35·50 = 1750 = 18·97 + 4 ✓."}, {"id": "A2", "secs": ["s18"], "parts": [{"k": "set", "a": [7, 18], "l": "all solutions (comma-separated)"}], "rub": null, "q": "<b>(Linear congruence)</b> Find all solutions of 14x ≡ 10 (mod 22) with 0 ≤ x &lt; 22. <span class=\"pill\">§18</span>", "sol": "gcd(14, 22) = 2 and 2 | 10, so there are 2 solutions mod 22. Divide by 2: 7x ≡ 5 (mod 11). 7⁻¹ ≡ 8 (56 ≡ 1), so x ≡ 40 ≡ 7 (mod 11). <b>x = 7, 18</b>."}, {"id": "A3", "secs": ["s19"], "parts": [{"k": "num", "a": [156, 1], "l": "x (0 ≤ x < 315)"}], "rub": null, "q": "<b>(CRT)</b> Solve x ≡ 1 (mod 5), x ≡ 2 (mod 7), x ≡ 3 (mod 9). Show M, the Mᵢ, and the yᵢ. <span class=\"pill\">§19</span>", "sol": "M = 315. M₁ = 63 ≡ 3 (mod 5) → y₁ = 2. M₂ = 45 ≡ 3 (mod 7) → y₂ = 5. M₃ = 35 ≡ 8 (mod 9) → y₃ = 8. x = 1·63·2 + 2·45·5 + 3·35·8 = 126 + 450 + 840 = 1416 ≡ <b>156 (mod 315)</b>. Check: 156 = 31·5 + 1, 22·7 + 2, 17·9 + 3 ✓."}, {"id": "A4", "secs": ["s20"], "parts": [{"k": "num", "a": [4, 1], "l": "answer"}], "rub": null, "q": "<b>(Fermat)</b> Compute 3¹²³⁴ mod 11. <span class=\"pill\">§20</span>", "sol": "11 is prime and 11 ∤ 3, so 3¹⁰ ≡ 1. 1234 = 123·10 + 4, so 3¹²³⁴ ≡ 3⁴ = 81 ≡ <b>4</b>."}, {"id": "A5", "secs": ["s22"], "parts": [], "rub": ["Wrote “By induction” and checked the base case n = 1 (2 = 1·2·3/3)", "Stated the induction hypothesis", "Added (k + 1)(k + 2) and factored out (k + 1)(k + 2)", "Reached (k + 1)(k + 2)(k + 3)/3"], "q": "<b>(Induction)</b> Prove that for all n ≥ 1, 1·2 + 2·3 + ⋯ + n(n + 1) = n(n + 1)(n + 2)/3. <span class=\"pill\">§22</span>", "sol": "<b>By induction.</b> <b>Base case (n = 1):</b> 1·2 = 2 = 1·2·3/3 ✓. <b>Induction step:</b> assume 1·2 + ⋯ + k(k + 1) = k(k + 1)(k + 2)/3 (IH). Then adding the next term, k(k + 1)(k + 2)/3 + (k + 1)(k + 2) = (k + 1)(k + 2)(k/3 + 1) = (k + 1)(k + 2)(k + 3)/3, which is the claim for k + 1. □"}, {"id": "A6", "secs": ["s28", "s30"], "parts": [{"k": "num", "a": [60, 1], "l": "(a)"}, {"k": "num", "a": [103776, 1], "l": "(b)"}, {"k": "num", "a": [286, 1], "l": "(c)"}], "rub": null, "q": "<b>(Counting)</b> (a) How many arrangements of the letters of BANANA? (b) How many 5-card hands contain exactly 2 aces? (c) How many nonnegative integer solutions does x₁ + x₂ + x₃ + x₄ = 10 have? <span class=\"pill\">§28 §30</span>", "sol": "(a) 6!/(3!·2!·1!) = <b>60</b>. (b) C(4, 2)·C(48, 3) = 6·17,296 = <b>103,776</b>. (c) 10 stars, 3 bars: C(13, 3) = <b>286</b>."}, {"id": "A7", "secs": ["s27"], "parts": [{"k": "num", "a": [37, 1], "l": "(b)"}], "rub": ["(a) Named the boxes: the 10 remainders mod 10", "(a) 11 integers > 10 boxes, so two share a remainder", "(a) So their difference is divisible by 10"], "q": "<b>(Pigeonhole)</b> (a) Show that among any 11 integers, two have a difference divisible by 10. (b) What's the minimum number of students needed to guarantee 4 were born in the same month? <span class=\"pill\">§27</span>", "sol": "(a) Boxes = the 10 last digits (remainders mod 10); 11 integers, so two share a remainder, and their difference is divisible by 10. (b) 3·12 + 1 = <b>37</b> (36 students could have exactly 3 per month)."}, {"id": "A8", "secs": ["s31"], "parts": [{"k": "num", "a": [1, 6], "l": "probability"}], "rub": null, "q": "<b>(Probability)</b> Two fair dice are rolled. What's the probability the sum is at least 10? <span class=\"pill\">§31</span>", "sol": "(4,6), (5,5), (6,4), (5,6), (6,5), (6,6): 6/36 = <b>1/6</b>."}], "B": [{"id": "B1", "secs": ["s21", "s15"], "parts": [{"k": "num", "a": [85, 1], "l": "n"}, {"k": "num", "a": [64, 1], "l": "(p−1)(q−1)"}, {"k": "num", "a": [13, 1], "l": "d"}, {"k": "num", "a": [73, 1], "l": "c"}], "rub": null, "q": "<b>(RSA)</b> Alice picks p = 5, q = 17, e = 5. Find n, (p − 1)(q − 1) and d. Encrypt m = 3, then show that decrypting gives 3 back. <span class=\"pill\">§21</span>", "sol": "n = 85, (p − 1)(q − 1) = 64. 5d ≡ 1 (mod 64) → <b>d = 13</b> (65 = 64 + 1). c = 3⁵ = 243 ≡ <b>73</b> (mod 85). Decrypt: 73² ≡ 59, 73⁴ ≡ 81, 73⁸ ≡ 16; 13 = 8 + 4 + 1, so 73¹³ ≡ 16·81·73 ≡ <b>3</b> ✓."}, {"id": "B2", "secs": ["s16", "s18", "s7"], "parts": [], "rub": ["Set up a proof by contradiction (or used Bézout)", "A prime p dividing both ab and m must divide a or b", "Explained that this contradicts gcd(a, m) = 1 or gcd(b, m) = 1"], "q": "<b>(Proof)</b> Prove: if gcd(a, m) = 1 and gcd(b, m) = 1, then gcd(ab, m) = 1. <span class=\"pill\">§16 §18</span>", "sol": "<b>By contradiction.</b> Suppose gcd(ab, m) &gt; 1; then some prime p divides both ab and m. Since p | ab, p | a or p | b. If p | a, then p is a common divisor of a and m bigger than 1, contradicting gcd(a, m) = 1. Same if p | b. Contradiction! □ (Or use Bézout: 1 = sa + tm and 1 = ub + vm; multiply to get 1 = (su)ab + m(⋯).)"}, {"id": "B3", "secs": ["s23"], "parts": [], "rub": ["Said “By strong induction” with base cases 12, 13, 14", "Step: k − 2 ≥ 12 works by the IH, then add one 3", "Concluded"], "q": "<b>(Strong induction)</b> Prove every integer n ≥ 12 can be written as 3a + 7b with a, b ≥ 0. <span class=\"pill\">§23</span>", "sol": "<b>By strong induction.</b> <b>Base cases:</b> 12 = 3·4, 13 = 3·2 + 7, 14 = 7·2. <b>Induction step:</b> let k ≥ 14 and assume every n with 12 ≤ n ≤ k works. Then k + 1 − 3 = k − 2 ≥ 12, so k − 2 = 3a + 7b by the IH, and k + 1 = 3(a + 1) + 7b. □ (Three base cases because the step reaches back 3.)"}, {"id": "B4", "secs": ["s22"], "parts": [], "rub": ["Base case: 4 | 5 − 1", "Rewrote 5ᵏ⁺¹ − 1 = 5(5ᵏ − 1) + 4", "Used the IH so both terms are divisible by 4"], "q": "<b>(Induction)</b> Prove 4 | 5ⁿ − 1 for all n ≥ 1. <span class=\"pill\">§22</span>", "sol": "<b>By induction.</b> <b>Base case:</b> 4 | 4. <b>Induction step:</b> assume 4 | 5ᵏ − 1. Then 5ᵏ⁺¹ − 1 = 5(5ᵏ − 1) + 4, a sum of multiples of 4. □"}, {"id": "B5", "secs": ["s26", "s28"], "parts": [{"k": "num", "a": [1946, 1], "l": "(a)"}, {"k": "num", "a": [840, 1], "l": "(b)"}], "rub": null, "q": "<b>(Counting)</b> A committee of 5 is chosen from 6 women and 8 men. How many committees have (a) at least one woman? (b) exactly two women? <span class=\"pill\">§26 §28</span>", "sol": "(a) Complement: C(14, 5) − C(8, 5) = 2002 − 56 = <b>1946</b>. (b) C(6, 2)·C(8, 3) = 15·56 = <b>840</b>."}, {"id": "B6", "secs": ["s29"], "parts": [{"k": "num", "a": [-560, 1], "l": "(a)"}, {"k": "num", "a": [256, 1], "l": "(b)"}], "rub": null, "q": "<b>(Binomial)</b> (a) Find the coefficient of x⁴ in (2x − 1)⁷. (b) Evaluate C(8, 0) + C(8, 1) + ⋯ + C(8, 8). <span class=\"pill\">§29</span>", "sol": "(a) The term with (2x)⁴(−1)³: C(7, 4)·2⁴·(−1)³ = 35·16·(−1) = <b>−560</b>. (b) 2⁸ = <b>256</b>."}, {"id": "B7", "secs": ["s23", "s24"], "parts": [{"k": "num", "a": [1, 1], "l": "a₂"}, {"k": "num", "a": [3, 1], "l": "a₃"}, {"k": "num", "a": [5, 1], "l": "a₄"}, {"k": "num", "a": [11, 1], "l": "a₅"}], "rub": ["Two base cases, n = 0 and n = 1", "Assumed the formula for k and k − 1 (strong induction)", "Algebra reached (2ᵏ⁺¹ − (−1)ᵏ⁺¹)/3"], "q": "<b>(Recursion)</b> a₀ = 0, a₁ = 1, aₙ = aₙ₋₁ + 2aₙ₋₂ for n ≥ 2. Compute a₂ through a₅, then prove aₙ = (2ⁿ − (−1)ⁿ)/3 for all n ≥ 0. <span class=\"pill\">§23 §24</span>", "sol": "a₂ = 1, a₃ = 3, a₄ = 5, a₅ = 11. <b>By strong induction.</b> <b>Base cases:</b> n = 0: (1 − 1)/3 = 0 ✓; n = 1: (2 + 1)/3 = 1 ✓. <b>Induction step</b> (k ≥ 1, assume the formula for k and k − 1): a_{k+1} = (2ᵏ − (−1)ᵏ)/3 + 2(2ᵏ⁻¹ − (−1)ᵏ⁻¹)/3 = (2ᵏ⁺¹ − (−1)ᵏ − 2(−1)ᵏ⁻¹)/3. Since −(−1)ᵏ − 2(−1)ᵏ⁻¹ = (−1)ᵏ⁻¹(1 − 2) = −(−1)ᵏ⁻¹ = (−1)ᵏ = −(−1)ᵏ⁺¹, this equals (2ᵏ⁺¹ − (−1)ᵏ⁺¹)/3. □"}, {"id": "B8", "secs": ["s28", "s31"], "parts": [{"k": "num", "a": [63, 125], "l": "probability"}], "rub": null, "q": "<b>(Probability)</b> A 4-digit PIN (0000–9999) is chosen at random. What's the probability that no digit repeats? <span class=\"pill\">§28 §31</span>", "sol": "10·9·8·7/10⁴ = 5040/10,000 = <b>0.504</b>."}], "C": [{"id": "C1", "secs": ["s16", "s17"], "parts": [{"k": "num", "a": [7, 1], "l": "gcd"}, {"k": "num", "a": [15015, 1], "l": "lcm"}], "rub": null, "q": "<b>(gcd)</b> Find gcd(1001, 105) by the Euclidean algorithm and by prime factorization, and find lcm(1001, 105). <span class=\"pill\">§16 §17</span>", "sol": "1001 = 9·105 + 56; 105 = 1·56 + 49; 56 = 1·49 + 7; 49 = 7·7 + 0, so gcd = <b>7</b>. Factorizations 1001 = 7·11·13 and 105 = 3·5·7 agree. lcm = 3·5·7·11·13 = <b>15,015</b>."}, {"id": "C2", "secs": ["s18", "s20", "s15"], "parts": [{"k": "num", "a": [1, 1], "l": "7¹⁰⁰ mod 11"}, {"k": "num", "a": [8, 1], "l": "inverse of 7 mod 11"}], "rub": null, "q": "<b>(Fermat)</b> Compute 7¹⁰⁰ mod 11, and use Fermat's little theorem to find the inverse of 7 mod 11. <span class=\"pill\">§18 §20</span>", "sol": "7¹⁰ ≡ 1, so 7¹⁰⁰ = (7¹⁰)¹⁰ ≡ <b>1</b>. The inverse of 7 is 7⁹ (since 7·7⁹ = 7¹⁰ ≡ 1): 7² ≡ 5, 7⁴ ≡ 3, 7⁸ ≡ 9, so 7⁹ ≡ 9·7 = 63 ≡ <b>8</b>. Check 7·8 = 56 ≡ 1 ✓."}, {"id": "C3", "secs": ["s22"], "parts": [], "rub": ["Base case n = 4: 81 > 64", "Used the IH: 3ᵏ⁺¹ = 3·3ᵏ > 3k³", "Showed 3k³ ≥ (k + 1)³ for k ≥ 4"], "q": "<b>(Induction)</b> Prove 3ⁿ &gt; n³ for all n ≥ 4. <span class=\"pill\">§22</span>", "sol": "<b>By induction.</b> <b>Base case (n = 4):</b> 81 &gt; 64 ✓. <b>Induction step</b> (k ≥ 4): assume 3ᵏ &gt; k³. Then 3ᵏ⁺¹ = 3·3ᵏ &gt; 3k³. It remains to show 3k³ ≥ (k + 1)³, i.e. (1 + 1/k)³ ≤ 3. For k ≥ 4, (1 + 1/k)³ ≤ (5/4)³ ≈ 1.95 ≤ 3 ✓. □"}, {"id": "C4", "secs": ["s27"], "parts": [{"k": "num", "a": [7, 1], "l": "(a)"}, {"k": "num", "a": [51, 1], "l": "(b)"}], "rub": null, "q": "<b>(Pigeonhole)</b> (a) A drawer has 10 red, 8 blue and 6 green socks. How many must you take (in the dark) to guarantee 3 of the same color? (b) How many numbers must you pick from {1, …, 100} to guarantee two that sum to 101? <span class=\"pill\">§27</span>", "sol": "(a) Worst case is 2 of each color (6 socks), so <b>7</b>. (b) Boxes = the 50 pairs {1, 100}, {2, 99}, …, {50, 51}. With 51 numbers, two land in the same pair, so <b>51</b> (50 isn't enough: take 1, …, 50)."}, {"id": "C5", "secs": ["s30"], "parts": [{"k": "num", "a": [455, 1], "l": "(a)"}, {"k": "num", "a": [165, 1], "l": "(b)"}], "rub": null, "q": "<b>(Stars &amp; bars)</b> How many ways can 12 identical cookies go to 4 children (a) with no restriction? (b) if each child gets at least one? <span class=\"pill\">§30</span>", "sol": "(a) 12 stars, 3 bars: C(15, 3) = <b>455</b>. (b) Give each child 1 first, leaving 8: C(11, 3) = <b>165</b>."}, {"id": "C6", "secs": ["s29"], "parts": [], "rub": ["Named what's being counted (2-person groups from n boys and n girls)", "Split into two boys / two girls / one of each", "Matched C(n, 2) + C(n, 2) + n² to C(2n, 2)"], "q": "<b>(Combinatorial proof)</b> Prove that C(2n, 2) = 2·C(n, 2) + n² by counting something two ways. <span class=\"pill\">§29</span>", "sol": "Count the 2-person groups from n boys and n girls. Directly: C(2n, 2). By type: two boys C(n, 2), two girls C(n, 2), or one of each n·n. These cover every group exactly once, so C(2n, 2) = 2C(n, 2) + n². □"}, {"id": "C7", "secs": ["s31"], "parts": [{"k": "num", "a": [671, 1296], "l": "probability"}], "rub": null, "q": "<b>(Probability)</b> A die is rolled 4 times. What's the probability of at least one 6? <span class=\"pill\">§31</span>", "sol": "1 − (5/6)⁴ = 1 − 625/1296 = <b>671/1296 ≈ 0.518</b>."}, {"id": "C8", "secs": ["s19"], "parts": [{"k": "num", "a": [19, 1], "l": "x (0 ≤ x < 60)"}], "rub": null, "q": "<b>(CRT)</b> Solve x ≡ 3 (mod 4), x ≡ 4 (mod 5), x ≡ 1 (mod 3). <span class=\"pill\">§19</span>", "sol": "x ≡ 4 (mod 5) and x ≡ 3 (mod 4): try 4, 9, 14, 19: 19 ≡ 3 (mod 4) ✓. So x ≡ 19 (mod 20). And 19 ≡ 1 (mod 3) ✓. <b>x ≡ 19 (mod 60)</b>."}, {"id": "C9", "secs": ["s14", "s18", "s20", "s29"], "parts": [{"k": "tf", "a": true, "l": "(a)"}, {"k": "tf", "a": false, "l": "(b)"}, {"k": "tf", "a": false, "l": "(c)"}, {"k": "tf", "a": true, "l": "(d)"}], "rub": null, "q": "<b>(True/false, justify)</b> (a) If a ≡ b (mod m) then a² ≡ b² (mod m). (b) If ac ≡ bc (mod m) and c ≢ 0, then a ≡ b (mod m). (c) Every Carmichael number is prime. (d) For every prime p, p | C(p, 2) when p &gt; 2. <span class=\"pill\">§14 §18 §20 §29</span>", "sol": "(a) <b>True</b>: multiply the congruence by itself. (b) <b>False</b>: 2·3 ≡ 4·3 (mod 6) but 2 ≢ 4. (c) <b>False</b>: Carmichael numbers are composite by definition (561 = 3·11·17). (d) <b>True</b>: C(p, 2) = p(p − 1)/2, and since p is odd, (p − 1)/2 is an integer (or use p | C(p, k) for 0 &lt; k &lt; p)."}]};
+  const R=(lo,hi)=>lo+Math.floor(Math.random()*(hi-lo+1));
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  const mod=(a,m)=>((a%m)+m)%m;
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t;}return a;};
+  const PRIMES=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97];
+  const isPrime=n=>{if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;};
+  const sup=x=>"<sup>"+x+"</sup>";
+  const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+  // Extended Euclid with a full record: rows satisfy r = s*a + t*b.
+  function egcd(a,b){
+    const rows=[{q:"",r:a,s:1,t:0},{q:"",r:b,s:0,t:1}];
+    const lines=[];
+    while(rows[rows.length-1].r!==0){
+      const p=rows[rows.length-2], c=rows[rows.length-1];
+      const q=Math.floor(p.r/c.r), r=p.r-q*c.r;
+      lines.push(p.r+" = "+q+"·"+c.r+" + "+r);
+      rows.push({q:"",r:r,s:p.s-q*c.s,t:p.t-q*c.t});
+      c.q=q;
+    }
+    const g=rows[rows.length-2];
+    return {g:g.r,s:g.s,t:g.t,rows:rows,lines:lines};
   }
-  boxes.forEach(function(b){ b.addEventListener('change',function(){ state[b.getAttribute('data-sec')]=b.checked; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} paint(); }); });
-  paint();
-})();
-</script>
+  function eTable(E,a,b){
+    let h='<div class="scroll"><table class="et"><tr><th>q</th><th>r</th><th>s</th><th>t</th></tr>';
+    E.rows.forEach((row,i)=>{
+      const hit=(i===E.rows.length-2);
+      const last=(i===E.rows.length-1);
+      h+='<tr'+(hit?' class="hit"':'')+'><td>'+row.q+'</td><td>'+row.r+'</td><td>'+(last?'':fmt(row.s))+'</td><td>'+(last?'':fmt(row.t))+'</td></tr>';
+    });
+    return h+'</table></div><p>Each row means r = s·'+a+' + t·'+b+'. New row = (row two up) − q × (row above).</p>';
+  }
+  const fmt=n=>n<0?"−"+(-n):String(n);
+  const fmtp=n=>n<0?"(−"+(-n)+")":String(n);
+  const lin=(s,a,t,b)=>fmt(s)+"·"+a+(t<0?" − "+(-t):" + "+t)+"·"+b;
+  const calc=lines=>'<div class="calc">'+lines.map(esc).join("\n")+'</div>';
 
-<script>
-(function(){
-  var CORE=[], TOOLS=[];
-  for(var i=18;i<=31;i++) CORE.push('s'+i);
-  for(var j=1;j<=17;j++) TOOLS.push('s'+j);
-  function load(k){ try{ return JSON.parse(localStorage.getItem(k)||'{}')||{}; }catch(e){ return {}; } }
-  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
-  function title(id){ var h=document.querySelector('#'+id+' > h2'); if(!h) return id; var n=h.querySelector('.n'); return (n?n.textContent+' ':'')+h.textContent.replace(n?n.textContent:'','').trim(); }
-  var missed=load('m55-missed');
-  document.querySelectorAll('input[data-miss]').forEach(function(b){
-    b.checked=!!missed[b.getAttribute('data-miss')];
-    b.addEventListener('change',function(){ missed=load('m55-missed'); missed[b.getAttribute('data-miss')]=b.checked; save('m55-missed',missed); render(); });
+  // Repeated squaring, returns {val, html}
+  function powSteps(a,n,m){
+    a=mod(a,m);
+    if(n===0) return {val:1%m, html:"<p>Anything to the 0 is 1.</p>"};
+    const pows=[a]; const lines=[a+"^1 ≡ "+a];
+    let k=0;
+    while(Math.pow(2,k+1)<=n){
+      const prev=pows[k], sq=prev*prev%m; k++;
+      pows.push(sq);
+      lines.push(a+"^"+Math.pow(2,k)+" ≡ "+prev+"² = "+(prev*prev)+" ≡ "+sq);
+    }
+    const used=[]; for(let i=k;i>=0;i--) if(Math.floor(n/Math.pow(2,i))%2===1) used.push(i);
+    lines.push("");
+    lines.push(n+" = "+used.map(i=>Math.pow(2,i)).join(" + ")+"   (binary "+n.toString(2)+")");
+    let acc=1; const prods=[];
+    used.forEach((i,j)=>{const before=acc; acc=acc*pows[i]%m; if(j>0) prods.push(before+"·"+pows[i]+" = "+(before*pows[i])+" ≡ "+acc); else prods.push("start with "+pows[i]);});
+    lines.push("multiply: "+prods.join(";  "));
+    return {val:acc, html:calc(lines)};
+  }
+
+  const HW_BLOCK={bezout:["37,101","101,37","42,114","114,42"],power:["7,2026,13","3,1001,17","7,222,13","2,340,341","2,340,11","2,340,31"],rsa:["5,11,3","11,5,3"],crt:["4,7,9"]};
+
+  const gen={
+    divalg(){
+      let a,d;
+      const block=["73,12","3,5","-60,7"];
+      do{ d=R(3,25); a=Math.random()<0.45?-R(5,300):R(10,500); }while(block.includes(a+","+d)||a%d===0&&Math.random()<0.7);
+      const q=Math.floor(a/d), r=a-d*q;
+      const dec=(a/d).toFixed(2);
+      return {
+        topic:"divalg",
+        prompt:"Divide <b>"+fmt(a)+" by "+d+"</b>: find q = "+fmt(a)+" div "+d+" and r = "+fmt(a)+" mod "+d+" (so "+fmt(a)+" = "+d+"q + r, 0 ≤ r &lt; "+d+").",
+        fields:[["q","q (quotient)"],["r","r (remainder)"]],
+        check(v){
+          if(v.r!==null&&v.r<0) return [false,"The remainder can't be negative. Round the quotient down (toward −∞)."];
+          if(v.q===q&&v.r===r) return [true,"Correct: "+fmt(a)+" = "+d+"·"+fmtp(q)+" + "+r+"."];
+          if(v.q!==null&&v.r!==null&&d*v.q+v.r===a) return [false,"That satisfies a = dq + r but r must be in 0…"+(d-1)+"."];
+          return [false,"Not quite. q = "+fmt(a)+"/"+d+" rounded down; then r = a − "+d+"q."];
+        },
+        steps:"<ol><li>"+fmt(a)+" / "+d+" ≈ "+fmt(+dec)+". Round <b>down</b>"+(a<0?" (toward −∞, so further from 0)":"")+": q = <b>"+fmt(q)+"</b>.</li><li>r = a − dq = "+fmt(a)+" − "+d+"·"+fmtp(q)+" = "+fmt(a)+(d*q<0?" + "+(-d*q):" − "+d*q)+" = <b>"+r+"</b>.</li><li>Check: "+d+"·"+fmtp(q)+" + "+r+" = "+fmt(d*q+r)+" ✓ and 0 ≤ "+r+" &lt; "+d+" ✓</li></ol>"
+      };
+    },
+    modarith(){
+      let m,A,B,C,form;
+      do{ m=R(5,31); A=R(100,999); B=R(20,999); C=R(100,9999); form=R(0,1); }while(A===218&&B===95);
+      const val= form===0 ? mod(A*B+C,m) : mod((A+B)*C,m);
+      const rA=A%m, rB=B%m, rC=C%m;
+      const red=(x,r)=>x+" = "+Math.floor(x/m)+"·"+m+" + "+r+", so "+x+" ≡ "+r;
+      const expr= form===0 ? A+"·"+B+" + "+C : "("+A+" + "+B+")·"+C;
+      const small= form===0 ? rA+"·"+rB+" + "+rC+" = "+(rA*rB+rC) : "("+rA+" + "+rB+")·"+rC+" = "+((rA+rB)*rC);
+      const smallVal= form===0 ? rA*rB+rC : (rA+rB)*rC;
+      return {
+        topic:"modarith",
+        prompt:"Compute <b>("+expr+") mod "+m+"</b> without multiplying the big numbers.",
+        fields:[["x","answer (0…"+(m-1)+")"]],
+        check(v){ return v.x!==null&&v.x>=0&&v.x<m&&v.x===val?[true,"Correct."]:(v.x!==null&&mod(v.x,m)===val?[true,"Congruent, but give it in 0…"+(m-1)+": "+val+"."]:[false,"Reduce each number mod "+m+" first, then combine and reduce again."]); },
+        steps:"<ol><li>Reduce each number mod "+m+":"+calc([red(A,rA),red(B,rB),red(C,rC)])+"</li><li>Combine the small numbers: "+small+".</li><li>Reduce: "+smallVal+" = "+Math.floor(smallVal/m)+"·"+m+" + "+val+", so the answer is <b>"+val+"</b>.</li></ol>"
+      };
+    },
+    base(){
+      const DIG="0123456789ABCDEF";
+      const toB=(n,b)=>{let s="";while(n>0){s=DIG[n%b]+s;n=Math.floor(n/b);}return s||"0";};
+      let n,b;
+      do{ b=pick([2,2,3,5,7,8,16]); n=R(20,999); }while(n===423&&b===2);
+      const s=toB(n,b);
+      if(Math.random()<0.6){
+        const lines=[]; let x=n;
+        while(x>0){ lines.push(x+" = "+Math.floor(x/b)+"·"+b+" + "+(x%b)+(x%b>9?"  ("+DIG[x%b]+")":"")); x=Math.floor(x/b); }
+        lines[0]+="   ← last digit"; lines[lines.length-1]+="   ← first digit";
+        return {
+          topic:"base",
+          prompt:"Write <b>"+n+" in base "+b+"</b>."+(b===16?" (Use A–F for 10–15.)":""),
+          fields:[["s","base-"+b+" digits"]], str:true,
+          check(v){ const g=(v.s||"").toUpperCase().replace(/^0+/,""); if(g===s) return [true,"Correct: "+s+" in base "+b+"."]; if(g.split("").reverse().join("")===s) return [false,"Digits are reversed. The first remainder is the last digit."]; return [false,"Not quite. Divide by "+b+" repeatedly and read the remainders bottom-up."]; },
+          steps:"<ol><li>Divide by "+b+" repeatedly:"+calc(lines)+"</li><li>Read the remainders from bottom to top: <b>("+s+")"+subs(b)+"</b>.</li><li>Check: "+placeSum(s,b)+" = "+n+" ✓</li></ol>"
+        };
+      }
+      return {
+        topic:"base",
+        prompt:"Convert <b>("+s+")"+subs(b)+"</b> to decimal.",
+        fields:[["x","decimal value"]],
+        check(v){ return v.x===n?[true,"Correct."]:[false,"Multiply each digit by its place value ("+b+"⁰, "+b+"¹, "+b+"², …) and add."]; },
+        steps:"<ol><li>Place values from the right: "+s.split("").map((_,i)=>b+"^"+(s.length-1-i)).join(", ")+".</li><li>"+placeSum(s,b)+" = <b>"+n+"</b>.</li></ol>"
+      };
+      function subs(b){ return "<sub>"+b+"</sub>"; }
+      function placeSum(s,b){ return s.split("").map((c,i)=>{const dv=DIG.indexOf(c),p=Math.pow(b,s.length-1-i);return dv+"·"+p;}).join(" + "); }
+    },
+    factor(){
+      const P=[2,3,5,7,11];
+      let ea,eb,a,b;
+      for(;;){
+        ea=P.map(()=>Math.random()<0.4?0:R(1,3)); eb=P.map(()=>Math.random()<0.4?0:R(1,3));
+        if(Math.random()<0.35) eb=ea.map(e=>e+(Math.random()<0.5?R(0,1):0)); // make a | b sometimes
+        a=P.reduce((x,p,i)=>x*Math.pow(p,ea[i]),1); b=P.reduce((x,p,i)=>x*Math.pow(p,eb[i]),1);
+        if(a===1||b===1||a===b) continue;
+        const L=P.reduce((x,p,i)=>x*Math.pow(p,Math.max(ea[i],eb[i])),1);
+        if(a<=6000&&b<=6000&&L<=200000) break;
+      }
+      const G=P.reduce((x,p,i)=>x*Math.pow(p,Math.min(ea[i],eb[i])),1);
+      const L=P.reduce((x,p,i)=>x*Math.pow(p,Math.max(ea[i],eb[i])),1);
+      const div=ea.every((e,i)=>e<=eb[i]);
+      const fac=e=>P.map((p,i)=>e[i]?(p+(e[i]>1?sup(e[i]):"")):null).filter(Boolean).join("·");
+      let tbl='<div class="scroll"><table class="et"><tr><th>prime</th><th>a</th><th>b</th><th>min</th><th>max</th></tr>';
+      P.forEach((p,i)=>{ if(ea[i]||eb[i]) tbl+="<tr><td>"+p+"</td><td>"+ea[i]+"</td><td>"+eb[i]+"</td><td>"+Math.min(ea[i],eb[i])+"</td><td>"+Math.max(ea[i],eb[i])+"</td></tr>"; });
+      tbl+="</table></div>";
+      const bad=P.findIndex((p,i)=>ea[i]>eb[i]);
+      return {
+        topic:"factor",
+        prompt:"a = "+fac(ea)+" (= "+a+"), &nbsp;b = "+fac(eb)+" (= "+b+").<br>Find <b>gcd(a, b)</b>, <b>lcm(a, b)</b>, and whether <b>a | b</b>.",
+        fields:[["g","gcd"],["l","lcm"],["yn","a | b? yes/no"]], yn:["yn"],
+        check(v){
+          if(v.g!==G) return [false,"gcd: use the smaller exponent of each prime."];
+          if(v.l!==L) return [false,"gcd is right. lcm: use the larger exponent of each prime (check gcd·lcm = a·b)."];
+          if(v.yn!==div) return [false,"gcd and lcm are right. a | b needs every exponent of a ≤ the one in b."];
+          return [true,"All correct."];
+        },
+        steps:"<ol><li>Line up exponents (0 if the prime is missing):"+tbl+"</li><li>gcd = min exponents = <b>"+G+"</b>. lcm = max exponents = <b>"+L+"</b>.</li><li>Check: gcd·lcm = "+G+"·"+L+" = "+(G*L)+" = a·b = "+a+"·"+b+" ✓</li><li>a | b? <b>"+(div?"Yes":"No")+"</b>: "+(div?"every exponent in a is ≤ the one in b.":"the exponent of "+P[bad]+" in a is "+ea[bad]+" &gt; "+eb[bad]+".")+"</li></ol>"
+      };
+    },
+    bezout(){
+      let a,b;
+      do{ a=R(40,400); b=R(12,a-1); }while(b===a||a%b===0||gcd(a,b)===b||HW_BLOCK.bezout.includes(a+","+b));
+      const E=egcd(a,b);
+      return {
+        topic:"bezout",
+        prompt:"Find <b>gcd("+a+", "+b+")</b> and integers s, t with gcd = s·"+a+" + t·"+b+".",
+        fields:[["g","gcd"],["s","s"],["t","t"]],
+        check(v){
+          if(v.g!==E.g) return [false,"The gcd isn't "+v.g+". Redo the forward Euclid steps."];
+          if(v.s===null||v.t===null) return [false,"gcd is right. Now find s and t."];
+          if(v.s*a+v.t*b!==E.g) return [false,"gcd is right, but "+lin(v.s,a,v.t,b)+" = "+fmt(v.s*a+v.t*b)+", not "+E.g+". Check the back-substitution."];
+          return [true,"Correct. (s, t aren't unique: any pair that checks out counts.)"];
+        },
+        steps:"<ol><li>Forwards:"+calc(E.lines)+"The last nonzero remainder is <b>"+E.g+"</b>.</li><li>Table method:"+eTable(E,a,b)+"</li><li>So "+E.g+" = "+lin(E.s,a,E.t,b)+". Check: "+fmt(E.s*a)+(E.t*b<0?" − "+(-E.t*b):" + "+E.t*b)+" = "+E.g+" ✓</li></ol>"
+      };
+    },
+    inverse(){
+      let a,m,E;
+      const wantNone=Math.random()<0.2;
+      for(;;){
+        m=R(9,97); a=R(2,m-1);
+        if(HW_BLOCK.bezout.includes(a+","+m)) continue;
+        const g=gcd(a,m);
+        if(wantNone? g>1 : g===1) break;
+      }
+      E=egcd(m,a);
+      const ans = E.g===1 ? mod(E.t,m) : null;
+      return {
+        topic:"inverse",
+        prompt:"Find an inverse of <b>"+a+" modulo "+m+"</b> in 0…"+(m-1)+", or type <b>none</b>.",
+        fields:[["x","inverse (or none)"]],
+        allowNone:true,
+        check(v){
+          if(ans===null) return v.none?[true,"Correct: gcd("+a+", "+m+") = "+E.g+" ≠ 1, so no inverse."]:[false,"Check gcd("+a+", "+m+") first."];
+          if(v.none) return [false,"gcd("+a+", "+m+") = 1, so an inverse does exist."];
+          if(v.x===null) return [false,"Enter a number."];
+          if(mod(a*v.x,m)===1 && (v.x<0||v.x>=m)) return [true,"That works. Its standard form in 0…"+(m-1)+" is "+ans+"."];
+          if(mod(a*v.x,m)===1) return [true,"Correct: "+a+"·"+v.x+" = "+(a*v.x)+" ≡ 1 (mod "+m+")."];
+          return [false,a+"·"+v.x+" ≡ "+mod(a*v.x,m)+", not 1 (mod "+m+")."];
+        },
+        steps: ans===null
+          ? "<ol><li>Euclid:"+calc(E.lines)+"gcd("+a+", "+m+") = "+E.g+" &gt; 1.</li><li>An inverse exists only when the gcd is 1, so: <b>none</b>.</li></ol>"
+          : "<ol><li>Extended Euclid on ("+m+", "+a+"):"+calc(E.lines)+eTable(E,m,a)+"</li><li>1 = "+lin(E.s,m,E.t,a)+", so "+fmtp(E.t)+"·"+a+" ≡ 1 (mod "+m+").</li><li>The coefficient of "+a+" is "+fmt(E.t)+" ≡ <b>"+ans+"</b> (mod "+m+"). Check: "+a+"·"+ans+" = "+(a*ans)+" = "+Math.floor(a*ans/m)+"·"+m+" + 1 ✓</li></ol>"
+      };
+    },
+    lincong(){
+      let a,b,m,d;
+      const block=["37,12,101","42,30,114","42,25,114"];
+      const solvable=Math.random()<0.8;
+      for(;;){
+        m=R(12,90); a=R(2,m-1); d=gcd(a,m);
+        if(solvable && d===1 && Math.random()<0.5) continue; // prefer d>1 sometimes
+        b = solvable ? mod(d*R(1,Math.floor((m-1)/d)),m) : R(1,m-1);
+        if(b===0) continue;
+        if(!solvable && b%d===0) continue;
+        if(block.includes(a+","+b+","+m)) continue;
+        break;
+      }
+      const sols=[]; for(let x=0;x<m;x++) if(mod(a*x-b,m)===0) sols.push(x);
+      const E=egcd(m,a);
+      let steps="<ol><li>d = gcd("+a+", "+m+") = <b>"+d+"</b>."+calc(E.lines)+"</li>";
+      if(b%d!==0){
+        steps+="<li>"+d+" ∤ "+b+", so there is <b>no solution</b>.</li></ol>";
+      } else {
+        const s=E.t, x0=mod((b/d)*s, m/d);
+        steps+="<li>"+d+" | "+b+" ✓. Bézout: "+d+" = "+lin(E.s,m,s,a)+", so s = "+fmt(s)+".</li>";
+        steps+="<li>x₀ = (b/d)·s = "+(b/d)+"·"+fmtp(s)+" = "+fmt((b/d)*s)+" ≡ "+x0+" (mod "+(m/d)+").</li>";
+        steps+="<li>All solutions: x ≡ "+x0+" (mod "+(m/d)+"), i.e. <b>"+sols.join(", ")+"</b> in 0…"+(m-1)+" ("+d+" of them).</li>";
+        steps+="<li>Check: "+a+"·"+sols[0]+" = "+(a*sols[0])+" ≡ "+mod(a*sols[0],m)+" (mod "+m+") ✓</li></ol>";
+      }
+      return {
+        topic:"lincong",
+        prompt:"Solve <b>"+a+"x ≡ "+b+" (mod "+m+")</b>. List <i>all</i> solutions in 0…"+(m-1)+", separated by commas, or type <b>none</b>.",
+        fields:[["list","solutions (e.g. 3, 17) or none"]],
+        allowNone:true, list:true,
+        check(v){
+          if(sols.length===0) return v.none?[true,"Correct: gcd = "+d+" doesn't divide "+b+"."]:[false,"Check whether gcd("+a+", "+m+") divides "+b+"."];
+          if(v.none) return [false,"gcd("+a+", "+m+") = "+d+" divides "+b+", so there are solutions."];
+          const got=[...new Set((v.list||[]).map(x=>mod(x,m)))].sort((x,y)=>x-y);
+          if(got.length===sols.length && got.every((x,i)=>x===sols[i])) return [true,"Correct: all "+sols.length+" solution"+(sols.length>1?"s":"")+"."];
+          const wrong=got.filter(x=>!sols.includes(x));
+          if(wrong.length) return [false,wrong.join(", ")+(wrong.length>1?" don't":" doesn't")+" work: plug it in."];
+          return [false,"Those work, but there should be "+sols.length+" solutions (d = "+d+"). Step by m/d = "+(m/d)+"."];
+        },
+        steps:steps
+      };
+    },
+    crt(){
+      const pool=[3,4,5,7,8,9,11,13];
+      let ms;
+      for(;;){
+        const n=Math.random()<0.55?2:3;
+        ms=[]; const p=pool.slice();
+        while(ms.length<n){ const x=p.splice(Math.floor(Math.random()*p.length),1)[0]; if(ms.every(y=>gcd(x,y)===1)) ms.push(x); if(!p.length) break; }
+        if(ms.length!==n) continue;
+        const M=ms.reduce((x,y)=>x*y,1);
+        if(M>1200) continue;
+        if(HW_BLOCK.crt.includes(ms.slice().sort((x,y)=>x-y).join(","))) continue;
+        break;
+      }
+      const as=ms.map(m=>R(0,m-1));
+      const M=ms.reduce((x,y)=>x*y,1);
+      let x=0; const lines=["M = "+ms.join("·")+" = "+M];
+      ms.forEach((m,i)=>{
+        const Mi=M/m, r=Mi%m, y=mod(egcd(m,r).t,m);
+        lines.push("M"+(i+1)+" = "+Mi+" ≡ "+r+" (mod "+m+")  →  y"+(i+1)+" = "+y+"   ("+r+"·"+y+" = "+(r*y)+" ≡ 1)");
+        x+=as[i]*Mi*y;
+      });
+      const xs=ms.map((m,i)=>as[i]+"·"+(M/m)+"·"+mod(egcd(m,(M/m)%m).t,m)).join(" + ");
+      lines.push("x = "+xs+" = "+x+" ≡ "+mod(x,M)+" (mod "+M+")");
+      const ans=mod(x,M);
+      return {
+        topic:"crt",
+        prompt:"Find x with 0 ≤ x &lt; "+M+":<br>"+ms.map((m,i)=>"x ≡ "+as[i]+" (mod "+m+")").join(", &nbsp;"),
+        fields:[["x","x"]],
+        check(v){
+          if(v.x===null) return [false,"Enter a number."];
+          const bad=ms.findIndex((m,i)=>mod(v.x,m)!==as[i]);
+          if(bad>=0) return [false,v.x+" ≡ "+mod(v.x,ms[bad])+" (mod "+ms[bad]+"), but it should be "+as[bad]+"."];
+          if(v.x<0||v.x>=M) return [true,"That satisfies all of them. Reduced into 0…"+(M-1)+" it's "+ans+"."];
+          return [true,"Correct, and it's the unique answer mod "+M+"."];
+        },
+        steps:"<ol><li>Construction (yᵢ = inverse of Mᵢ mod mᵢ):"+calc(lines)+"</li><li>Check: "+ms.map((m,i)=>ans+" mod "+m+" = "+mod(ans,m)).join(", ")+" ✓</li></ol>"
+      };
+    },
+    power(){
+      if(Math.random()<0.65){
+        let p,a,n;
+        do{ p=pick([7,11,13,17,19,23,29,31]); a=R(2,60); n=R(100,9999); }while(a%p===0||HW_BLOCK.power.includes(a+","+n+","+p));
+        const r=n%(p-1), ar=a%p;
+        const P=powSteps(ar,r,p);
+        return {
+          topic:"power",
+          prompt:"Compute <b>"+a+sup(n)+" mod "+p+"</b>.",
+          fields:[["x","answer"]],
+          check(v){ return v.x!==null&&mod(v.x,p)===P.val?[true,"Correct."]:[false,"Not quite. Hint: "+p+" is prime, so the exponent only matters mod "+(p-1)+"."]; },
+          steps:"<ol><li>"+p+" is prime and "+p+" ∤ "+a+", so Fermat gives "+a+sup(p-1)+" ≡ 1 (mod "+p+").</li><li>"+n+" = "+Math.floor(n/(p-1))+"·"+(p-1)+" + "+r+", so "+a+sup(n)+" ≡ "+a+sup(r)+(a!==ar?" ≡ "+ar+sup(r):"")+" (mod "+p+")"+(a!==ar?" (first "+a+" ≡ "+ar+")":"")+".</li><li>"+(r===0?"Exponent 0, so the answer is <b>1</b>.":"Repeated squaring:"+P.html+"Answer: <b>"+P.val+"</b>.")+"</li></ol>"
+        };
+      } else {
+        let m,a,n;
+        do{ m=R(10,60); a=R(2,m-1); n=R(20,300); }while(isPrime(m)||gcd(a,m)===m);
+        const P=powSteps(a,n,m);
+        return {
+          topic:"power",
+          prompt:"Compute <b>"+a+sup(n)+" mod "+m+"</b>.",
+          fields:[["x","answer"]],
+          check(v){ return v.x!==null&&mod(v.x,m)===P.val?[true,"Correct."]:[false,"Not quite. "+m+" isn't prime, so no Fermat: use repeated squaring."]; },
+          steps:"<ol><li>"+m+" is not prime, so Fermat doesn't apply. Use repeated squaring mod "+m+":"+P.html+"</li><li>Answer: <b>"+P.val+"</b>.</li></ol>"
+        };
+      }
+    },
+    rsa(){
+      let p,q,e,n,phi;
+      for(;;){
+        p=pick([3,5,7,11,13,17,19]); q=pick([5,7,11,13,17,19,23]);
+        if(p===q) continue;
+        n=p*q; phi=(p-1)*(q-1);
+        const es=[3,5,7,11,13,17].filter(x=>x<phi&&gcd(x,phi)===1);
+        if(!es.length) continue;
+        e=pick(es);
+        if(HW_BLOCK.rsa.includes(p+","+q+","+e)) continue;
+        break;
+      }
+      let msg; do{ msg=R(2,n-1); }while(gcd(msg,n)!==1);
+      const E=egcd(phi,e), d=mod(E.t,phi);
+      const P=powSteps(msg,e,n);
+      const D=powSteps(P.val,d,n);
+      return {
+        topic:"rsa",
+        prompt:"RSA with p = "+p+", q = "+q+", e = "+e+". Find the private key <b>d</b> (least positive), and encrypt the message <b>m = "+msg+"</b>.",
+        fields:[["d","d"],["c","ciphertext c"]],
+        check(v){
+          const okd=v.d!==null&&mod(v.d*e,phi)===1, okc=v.c!==null&&mod(v.c,n)===P.val;
+          if(okd&&okc) return [true,"Both correct. Decrypting "+P.val+sup(d)+" mod "+n+" gives back "+msg+"."];
+          if(!okd) return [false,"d should satisfy "+e+"d ≡ 1 mod (p−1)(q−1) = "+phi+" (not mod n)."+(okc?" Your c is right.":"")];
+          return [false,"d is right. c = "+msg+sup(e)+" mod "+n+": recheck the powers."];
+        },
+        steps:"<ol><li>n = "+p+"·"+q+" = "+n+", and (p−1)(q−1) = "+(p-1)+"·"+(q-1)+" = "+phi+".</li><li>d = inverse of "+e+" mod "+phi+":"+calc(E.lines)+eTable(E,phi,e)+"So d = "+fmt(E.t)+" ≡ <b>"+d+"</b>. Check: "+e+"·"+d+" = "+(e*d)+" = "+Math.floor(e*d/phi)+"·"+phi+" + 1 ✓</li><li>Encrypt c = "+msg+sup(e)+" mod "+n+":"+P.html+"c = <b>"+P.val+"</b>.</li><li>Sanity check: decrypting, "+P.val+sup(d)+" mod "+n+" = "+D.val+" = m ✓</li></ol>"
+      };
+    }
+  };
+
+  // ---- generators for counting, binomial, probability, pigeonhole, recursion ----
+  const fact=n=>{let r=1;for(let i=2;i<=n;i++)r*=i;return r;};
+  const Cn=(n,k)=>{if(k<0||k>n)return 0;let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return Math.round(r);};
+  const Pn=(n,k)=>{let r=1;for(let i=0;i<k;i++)r*=n-i;return r;};
+  const near=(x,t)=>x!==null&&Math.abs(x-t)<=Math.max(1e-9*Math.abs(t),1e-9);
+  const nearP=(x,t)=>x!==null&&Math.abs(x-t)<=5e-4;
+  Object.assign(gen,{
+    perm(){
+      const n=R(6,15), r=R(2,Math.min(5,n-1));
+      const ordered=Math.random()<0.5;
+      const who=pick(["people","students","club members","runners"]);
+      const ans= ordered? Pn(n,r) : Cn(n,r);
+      const prompt= ordered
+        ? "From "+n+" "+who+", how many ways can you fill "+r+" <b>different</b> roles (1st, 2nd, …), one person each?"
+        : "From "+n+" "+who+", how many ways can you choose a group of "+r+" (no roles)?";
+      return {topic:"perm",prompt,fields:[["x","answer (you can type P(n,r) or C(n,r))"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+(ordered?"P(":"C(")+n+", "+r+") = "+ans+"."]:[false,"Ask whether order matters. Here it "+(ordered?"does → P(n, r)":"doesn't → C(n, r)")+"."]; },
+        steps:"<p>"+(ordered?"Roles are different, so order matters: P("+n+", "+r+") = "+Array.from({length:r},(_,i)=>n-i).join("·")+" = <b>"+ans+"</b>.":"A group has no order: C("+n+", "+r+") = P("+n+", "+r+")/"+r+"! = "+Pn(n,r)+"/"+fact(r)+" = <b>"+ans+"</b>.")+"</p>"};
+    },
+    stars(){
+      const k=R(3,5), n=R(6,14); const atleast=Math.random()<0.45?R(1,2):0;
+      const left=n-atleast*k;
+      if(left<0) return gen.stars();
+      const ans=Cn(left+k-1,k-1);
+      const item=pick(["identical cookies","identical marbles","identical pencils"]);
+      return {topic:"stars",prompt:"In how many ways can "+n+" "+item+" be given to "+k+" (different) children"+(atleast?", if each child gets at least "+atleast:"")+"?",
+        fields:[["x","answer"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"Stars and bars: r identical items into k bins is C(r + k − 1, k − 1)"+(atleast?". Hand out the minimum first.":".")]; },
+        steps:"<ol>"+(atleast?"<li>Give each child "+atleast+" first: "+n+" − "+(atleast*k)+" = "+left+" left.</li>":"")+"<li>"+left+" stars and "+(k-1)+" bars: C("+(left+k-1)+", "+(k-1)+") = <b>"+ans+"</b>.</li></ol>"};
+    },
+    multinom(){
+      const W=pick(["BOOKKEEPER","STATISTICS","COMMITTEE","PEPPER","TENNESSEE","ADDRESSES","BALLOON","LETTERS"]);
+      const cnt={}; for(const ch of W) cnt[ch]=(cnt[ch]||0)+1;
+      let den=1; const parts=[]; for(const [ch,c] of Object.entries(cnt)){ den*=fact(c); if(c>1) parts.push(ch+"×"+c); }
+      const ans=fact(W.length)/den;
+      return {topic:"multinom",prompt:"How many different arrangements of the letters of <b>"+W+"</b> are there?",fields:[["x","answer (e.g. 9!/(2!*3!))"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"n!/(n₁!·n₂!⋯) where nᵢ counts each repeated letter."]; },
+        steps:"<p>"+W.length+" letters with repeats "+parts.join(", ")+": "+W.length+"!/("+Object.values(cnt).filter(c=>c>1).map(c=>c+"!").join("·")+") = <b>"+ans+"</b>.</p>"};
+    },
+    incexc(){
+      let a,b; do{ a=pick([2,3,4,5,6,7]); b=pick([3,4,5,6,7,9,10]); }while(a===b);
+      const N=pick([60,100,120,150,200]); const l=a*b/gcd(a,b);
+      const A=Math.floor(N/a), Bc=Math.floor(N/b), AB=Math.floor(N/l), ans=A+Bc-AB;
+      return {topic:"incexc",prompt:"How many integers in {1, …, "+N+"} are divisible by "+a+" <b>or</b> "+b+"?",fields:[["x","answer"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"|A ∪ B| = |A| + |B| − |A ∩ B|. Divisible by both means divisible by lcm("+a+", "+b+") = "+l+"."]; },
+        steps:"<p>⌊"+N+"/"+a+"⌋ + ⌊"+N+"/"+b+"⌋ − ⌊"+N+"/"+l+"⌋ = "+A+" + "+Bc+" − "+AB+" = <b>"+ans+"</b>.</p>"};
+    },
+    complement(){
+      const k=pick([2,10,26]), n=R(3,6);
+      const ans=Math.pow(k,n)-Math.pow(k-1,n);
+      const what= k===2?["bit strings","at least one 1"]: k===10?["strings of decimal digits","at least one 7"]:["strings of capital letters","the letter A at least once"];
+      return {topic:"complement",prompt:"How many "+what[0]+" of length "+n+" contain "+what[1]+"?",fields:[["x","answer (expressions like 10^4-9^4 are fine)"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"Count the complement: total minus those with none."]; },
+        steps:"<p>Total "+k+"<sup>"+n+"</sup>, none: "+(k-1)+"<sup>"+n+"</sup>. Answer "+k+"<sup>"+n+"</sup> − "+(k-1)+"<sup>"+n+"</sup> = <b>"+ans+"</b>.</p>"};
+    },
+    pigeon(){
+      if(Math.random()<0.5){
+        const k=pick([7,12,26,4,5]); const N=R(k+3,6*k);
+        const lbl={7:"days of the week",12:"months",26:"first letters (A–Z)",4:"suits",5:"remainders mod 5"}[k];
+        const ans=Math.ceil(N/k);
+        return {topic:"pigeon",prompt:N+" objects are sorted by "+lbl+" ("+k+" boxes). What's the largest number we can <b>guarantee</b> share one box?",fields:[["x","answer"]],expr:true,
+          check(v){ return near(v.x,ans)?[true,"Correct: ⌈"+N+"/"+k+"⌉ = "+ans+"."]:[false,"Generalized pigeonhole: ⌈N/k⌉."]; },
+          steps:"<p>⌈"+N+"/"+k+"⌉ = <b>"+ans+"</b>. (With "+(ans-1)+" per box you could fit at most "+((ans-1)*k)+" &lt; "+N+".)</p>"};
+      }
+      const k=pick([4,7,12,3]); const m=R(2,5); const ans=k*(m-1)+1;
+      const lbl={4:"suits (cards)",7:"days of the week (birthdays)",12:"months (birthdays)",3:"colors (socks, 3 colors)"}[k];
+      return {topic:"pigeon",prompt:"Boxes: "+lbl+". What's the minimum number of objects that guarantees <b>"+m+"</b> in the same box?",fields:[["x","answer"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"Worst case: "+(m-1)+" in every box, then one more."]; },
+        steps:"<p>Worst case "+(m-1)+" per box = "+(k*(m-1))+" objects with no box reaching "+m+". One more forces it: <b>"+ans+"</b>.</p>"};
+    },
+    binom(){
+      const n=R(4,8), j=R(1,n-1); const a=pick([1,2,3,-1,-2]), b=pick([1,2,-1,3]);
+      const ans=Cn(n,j)*Math.pow(a,n-j)*Math.pow(b,j);
+      const term=(c,v)=>c===1?v:(c===-1?"−"+v:(c<0?"−"+(-c):c)+v);
+      return {topic:"binom",prompt:"Find the coefficient of x<sup>"+(n-j)+"</sup>y<sup>"+j+"</sup> in ("+term(a,"x")+(b<0?" − ":" + ")+term(Math.abs(b),"y")+")<sup>"+n+"</sup>.",fields:[["x","coefficient"]],expr:true,
+        check(v){ return near(v.x,ans)?[true,"Correct: "+ans+"."]:[false,"C(n, j)·(x-coefficient)^(n−j)·(y-coefficient)^j, signs included."]; },
+        steps:"<p>C("+n+", "+j+")·("+a+")<sup>"+(n-j)+"</sup>·("+b+")<sup>"+j+"</sup> = "+Cn(n,j)+"·"+Math.pow(a,n-j)+"·"+Math.pow(b,j)+" = <b>"+ans+"</b>.</p>"};
+    },
+    dice(){
+      const mode=R(0,2); let good=0, desc;
+      const s=R(4,11);
+      for(let a=1;a<=6;a++)for(let b=1;b<=6;b++){ if(mode===0&&a+b===s)good++; if(mode===1&&a+b>=s)good++; if(mode===2&&(a===6||b===6))good++; }
+      desc= mode===0?"the sum is exactly "+s: mode===1?"the sum is at least "+s:"at least one die shows a 6";
+      const g=gcd(good,36);
+      return {topic:"dice",prompt:"Two fair dice are rolled. What's the probability that "+desc+"? (fraction or decimal)",fields:[["x","probability"]],expr:true,
+        check(v){ return nearP(v.x,good/36)?[true,"Correct: "+good+"/36 = "+(good/g)+"/"+(36/g)+"."]:[false,"Count ordered pairs (die 1, die 2) out of 36."]; },
+        steps:"<p>Count ordered outcomes: "+good+" of 36, so p = "+good+"/36 = <b>"+(good/g)+"/"+(36/g)+"</b>"+(mode===2?" (= 1 − 25/36)":"")+".</p>"};
+    },
+    recur(){
+      const c1=pick([1,2,3]), c2=pick([0,1,2]), k=pick([0,1,-1,2]);
+      const a0=R(0,3), a1=R(1,4); const seq=[a0,a1];
+      for(let i=2;i<=5;i++) seq.push(c1*seq[i-1]+c2*seq[i-2]+k);
+      const rule="aₙ = "+(c1===1?"":c1)+"aₙ₋₁"+(c2?" + "+(c2===1?"":c2)+"aₙ₋₂":"")+(k>0?" + "+k:k<0?" − "+(-k):"");
+      return {topic:"recur",prompt:"a₀ = "+a0+", a₁ = "+a1+", and "+rule+" for n ≥ 2. Find a₅.",fields:[["x","a₅"]],expr:true,
+        check(v){ return near(v.x,seq[5])?[true,"Correct: "+seq[5]+"."]:[false,"Compute a₂, a₃, a₄, a₅ one at a time."]; },
+        steps:"<p>Sequence: "+seq.map((x,i)=>"a"+"₀₁₂₃₄₅"[i]+" = "+x).join(", ")+". So a₅ = <b>"+seq[5]+"</b>.</p>"};
+    },
   });
-  document.addEventListener('change',function(e){ if(e.target && e.target.matches && e.target.matches('.gotit input')) setTimeout(render,0); });
-  function group(name,list,got){
-    var done=list.filter(function(id){return got[id];});
-    var todo=list.filter(function(id){return !got[id];});
-    var pct=Math.round(100*done.length/list.length);
-    var h='<h4>'+name+': '+done.length+' of '+list.length+' checked off</h4><div class="bar"><i style="width:'+pct+'%"></i></div>';
-    h+= todo.length ? '<div class="todo">Not yet: '+todo.map(function(id){return '<a href="#'+id+'">'+title(id).replace(/^§\d+\s*/,'§'+id.slice(1)+' ')+'</a>';}).join('')+'</div>' : '<p class="ok">All checked off ✓</p>';
-    return h;
+
+  // ================= course engine =================
+  const ORDER=[]; for(let i=1;i<=31;i++) ORDER.push('s'+i);
+  const CORE=ORDER.slice(17); // s18..s31
+  const KEY='m55-course-v1';
+  const PASS=4, QN=5, PROOF_MIN=80;
+  function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s&&s.sec) return s; }catch(e){} return {sec:{},tests:{},rounds:0}; }
+  let ST=load();
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} }
+  const S_=id=>ST.sec[id]||(ST.sec[id]={});
+  const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const $q=(sel,root)=>(root||document).querySelector(sel);
+  const $$=(sel,root)=>Array.from((root||document).querySelectorAll(sel));
+  const secTitle=id=>{const h=$q('#'+id+' > h2'); if(!h) return id; const n=h.querySelector('.n'); return h.textContent.replace(n?n.textContent:'','').trim();};
+  const learned=id=>!!S_(id).learned, mastered=id=>!!S_(id).mastered;
+  function status(id){ const i=ORDER.indexOf(id); if(i>0&&!learned(ORDER[i-1])&&!learned(id)) return 'locked'; const s=S_(id); if(s.review) return 'review'; if(s.mastered) return 'mastered'; if(s.learned) return 'learned'; return 'open'; }
+
+  // ---- expression evaluator: numbers, + − × ÷ ^ ! ( ) and C(n,k), P(n,k) ----
+  function evalExpr(src){
+    if(src==null) return null; let s=String(src).trim(); if(!s) return null;
+    s=s.replace(/−/g,'-').replace(/[×·]/g,'*').replace(/÷/g,'/').replace(/\s+/g,'');
+    let i=0;
+    const peek=()=>s[i];
+    function num(){ let j=i; while(i<s.length&&/[0-9.]/.test(s[i])) i++; if(j===i) throw 0; return parseFloat(s.slice(j,i)); }
+    function prim(){
+      if(peek()==='('){ i++; const v=add(); if(s[i++]!==')') throw 0; return v; }
+      if(peek()==='-'){ i++; return -pow(); }
+      if(peek()==='+'){ i++; return pow(); }
+      if(/[CP]/i.test(peek())&&s[i+1]==='('){ const f=s[i].toUpperCase(); i+=2; const a=add(); if(s[i++]!==',') throw 0; const b=add(); if(s[i++]!==')') throw 0; return f==='C'?Cn(a,b):Pn(a,b); }
+      return num();
+    }
+    function post(){ let v=prim(); while(peek()==='!'){ i++; if(v<0||v>170||v!==Math.floor(v)) throw 0; v=fact(v); } return v; }
+    function pow(){ const b=post(); if(peek()==='^'){ i++; return Math.pow(b,pow()); } return b; }
+    function mul(){ let v=pow(); while(peek()==='*'||peek()==='/'){ const o=s[i++]; const r=pow(); v= o==='*'?v*r:v/r; } return v; }
+    function add(){ let v=mul(); while(peek()==='+'||peek()==='-'){ const o=s[i++]; const r=mul(); v= o==='+'?v+r:v-r; } return v; }
+    try{ const v=add(); if(i!==s.length||!isFinite(v)) return null; return v; }catch(e){ return null; }
   }
-  function render(){
-    var got=load('m55-gotit'); missed=load('m55-missed');
-    var el=document.getElementById('ready'); if(!el) return;
-    var h=group('Midterm 2 sections (§18–§31)',CORE,got)+group('Foundations you build on (§1–§17)',TOOLS,got);
-    var bySec={};
-    document.querySelectorAll('input[data-miss]').forEach(function(b){
-      var k=b.getAttribute('data-miss'); if(!missed[k]) return;
-      b.getAttribute('data-secs').split(',').forEach(function(sid){ (bySec[sid]=bySec[sid]||[]).push(k); });
+  function numOK(raw,a){ const x=evalExpr(raw); if(x===null) return false; const t=a[0]/a[1]; const dec=/\.\d/.test(String(raw)); return Math.abs(x-t)<=Math.max(1e-9*Math.abs(t),dec?5e-4:1e-9); }
+  const fracStr=a=>a[1]===1?String(a[0]).replace('-','−'):(String(a[0]).replace('-','−')+'/'+a[1]);
+
+  // ---- rendering one question ----
+  let UID=0;
+  function renderItem(it,box,opt){
+    const id='q'+(++UID); const o={it,id,el:document.createElement('div')};
+    o.el.className='qi';
+    const lbl=opt&&opt.label?'<span class="qsec">'+opt.label+'</span>':'';
+    if(it.t==='gen'){
+      const g=gen[it.g](); o.g=g;
+      o.el.innerHTML=lbl+'<div class="qp">'+g.prompt+'</div><div class="qf">'+g.fields.map(([k,l])=>'<label>'+l+'<input data-k="'+k+'" id="'+id+'-'+k+'" autocomplete="off" spellcheck="false"></label>').join('')+'</div><div class="qr" hidden></div>';
+    } else if(it.t==='mc'||it.t==='tf'){
+      const ch= it.t==='tf' ? [['True',true],['False',false]] : shuffle(it.c.map((c,j)=>[c,j]));
+      o.ch=ch;
+      o.el.innerHTML=lbl+'<div class="qp">'+it.q+'</div><div class="qc">'+ch.map(([c,v],j)=>'<label class="opt"><input type="radio" name="'+id+'" value="'+j+'"> <span>'+c+'</span></label>').join('')+'</div><div class="qr" hidden></div>';
+    } else if(it.t==='num'){
+      o.el.innerHTML=lbl+'<div class="qp">'+it.q+'</div><div class="qf"><label>answer<input id="'+id+'-x" autocomplete="off" spellcheck="false" placeholder="number, fraction, or expression"></label>'+(it.h?'<button type="button" class="hintb">Hint (this one won\'t count)</button>':'')+'</div><div class="hintt" hidden>'+(it.h||'')+'</div><div class="qr" hidden></div>';
+    }
+    box.appendChild(o.el);
+    const hb=o.el.querySelector('.hintb'); if(hb) hb.onclick=()=>{ o.hinted=true; o.el.querySelector('.hintt').hidden=false; hb.disabled=true; };
+    return o;
+  }
+  function gradeItem(o){
+    const it=o.it, r=o.el.querySelector('.qr'); let ok=false, msg='';
+    if(it.t==='gen'){
+      const v={}; const g=o.g;
+      g.fields.forEach(([k])=>{ const raw=(o.el.querySelector('[data-k="'+k+'"]').value||'').trim();
+        if(g.allowNone && /^(none|no|no solution|∅)$/i.test(raw)) v.none=true;
+        if(g.list) v.list=raw.split(/[,;\s]+/).filter(Boolean).map(x=>{const y=evalExpr(x);return y===null?null:Math.round(y);}).filter(x=>x!==null);
+        else if(g.str) v[k]=raw.replace(/\s/g,'').replace(/^\((.*)\)_?\d*$/,'$1');
+        else if(g.yn&&g.yn.includes(k)) v[k]=/^y/i.test(raw)?true:(/^n/i.test(raw)?false:null);
+        else if(g.expr) v[k]=evalExpr(raw);
+        else { const y=evalExpr(raw); v[k]= (y===null||Math.abs(y-Math.round(y))>1e-9)?null:Math.round(y); }
+      });
+      const res=g.check(v); ok=res[0]; msg=res[1]+'<details class="stp"><summary>Steps</summary>'+g.steps+'</details>';
+    } else if(it.t==='mc'||it.t==='tf'){
+      const sel=o.el.querySelector('input[type=radio]:checked');
+      const correctIdx= it.t==='tf' ? (it.a?0:1) : o.ch.findIndex(([,v])=>v===it.a);
+      ok= !!sel && +sel.value===correctIdx;
+      msg=(ok?'Correct.':'Answer: <b>'+o.ch[correctIdx][0]+'</b>.')+(it.e?' '+it.e:'');
+      $$('.opt',o.el).forEach((l,j)=>{ if(j===correctIdx) l.classList.add('right'); else if(sel&&+sel.value===j) l.classList.add('wrong'); });
+    } else if(it.t==='num'){
+      const raw=o.el.querySelector('input').value; ok=numOK(raw,it.a);
+      msg=(ok?'Correct.':'Answer: <b>'+fracStr(it.a)+'</b>.')+(it.e?' '+it.e:'');
+    }
+    if(o.hinted&&ok) msg='Right, but you used the hint, so it doesn\'t count. '+msg;
+    const counted= ok && !o.hinted;
+    r.hidden=false; r.className='qr '+(counted?'ok':'no'); r.innerHTML=(counted?'✓ ':'✗ ')+msg;
+    $$('input',o.el).forEach(x=>x.disabled=true); const hb=o.el.querySelector('.hintb'); if(hb) hb.disabled=true;
+    return counted;
+  }
+  function renderProof(it,box,onChange){
+    const el=document.createElement('div'); el.className='proofbox';
+    el.innerHTML='<div class="qp"><b>Proof task (required).</b> '+it.q+'</div><textarea rows="6" placeholder="Write your full proof here before looking. At least '+PROOF_MIN+' characters."></textarea><div class="pf-row"><button type="button" class="btn rv" disabled>Reveal model proof &amp; checklist</button><span class="pcount">0 / '+PROOF_MIN+'</span></div><div class="pf-model" hidden><p class="mlabel">Model proof</p><div class="model">'+it.m+'</div><p class="mlabel">Grade yourself honestly: tick only what your written proof actually does.</p>'+it.rub.map((r,j)=>'<label class="rub"><input type="checkbox"> '+r+'</label>').join('')+'</div>';
+    box.appendChild(el);
+    const ta=el.querySelector('textarea'), rv=el.querySelector('.rv'), pc=el.querySelector('.pcount');
+    ta.addEventListener('input',()=>{ const n=ta.value.trim().length; pc.textContent=Math.min(n,PROOF_MIN)+' / '+PROOF_MIN; rv.disabled=n<PROOF_MIN; });
+    rv.onclick=()=>{ ta.readOnly=true; el.querySelector('.pf-model').hidden=false; rv.disabled=true; onChange&&onChange(); };
+    $$('.rub input',el).forEach(c=>c.addEventListener('change',()=>onChange&&onChange()));
+    return { done:()=>!el.querySelector('.pf-model').hidden && $$('.rub input',el).every(c=>c.checked), revealed:()=>!el.querySelector('.pf-model').hidden };
+  }
+
+  // ---- section mastery quiz ----
+  function mountQuiz(box){
+    const sid=box.dataset.sec; const bank=BANK[sid]||[];
+    const autos=bank.filter(x=>x.t!=='proof'), pr=bank.find(x=>x.t==='proof');
+    function idle(){
+      const s=S_(sid);
+      box.innerHTML='<div class="mq-head"><span class="tag">Mastery quiz</span><span class="pill">'+QN+' auto-graded questions · pass '+PASS+'/'+QN+(pr?' + the proof task':'')+' · new questions every attempt</span></div>'+
+        (s.learned?'<p class="mq-state ok">✓ Passed'+(s.best!=null?' ('+s.best+'/'+QN+')':'')+'. '+(s.mastered?'Mastered through recall.':(s.review?'<b>Flagged for review</b> after a miss: retake or do a recall round.':'Next: get it right again in a <a href="#recall">recall round</a> to master it.'))+'</p>':
+        '<p class="mq-state">Answers stay hidden until you submit. You can take it before reading if you think you already know this; passing unlocks the next section.</p>')+
+        '<button type="button" class="btn primary mq-start">'+(s.learned?'Retake for practice':'Start quiz')+'</button>';
+      box.querySelector('.mq-start').onclick=start;
+    }
+    function start(){
+      box.innerHTML='<div class="mq-head"><span class="tag">Mastery quiz</span><span class="pill">pass '+PASS+'/'+QN+(pr?' + proof':'')+'</span></div><div class="mq-items"></div>';
+      const list=box.querySelector('.mq-items');
+      let pick5=shuffle(autos); while(pick5.length<QN) pick5=pick5.concat(shuffle(autos)); pick5=pick5.slice(0,QN);
+      const objs=pick5.map((it,j)=>{ const o=renderItem(it,list,{label:'Q'+(j+1)}); return o; });
+      let P=null; if(pr) P=renderProof(pr,list);
+      const foot=document.createElement('div'); foot.className='mq-foot'; foot.innerHTML='<p class="tip">Numeric answers accept expressions: 2^10-1, 52!/(47!*5!), C(13,5)/C(52,5), 1/6.</p><button type="button" class="btn primary mq-submit">Submit answers</button><div class="mq-res" hidden></div>';
+      box.appendChild(foot);
+      foot.querySelector('.mq-submit').onclick=()=>{
+        const score=objs.reduce((n,o)=>n+(gradeItem(o)?1:0),0);
+        foot.querySelector('.mq-submit').remove();
+        const res=foot.querySelector('.mq-res'); res.hidden=false;
+        const s=S_(sid); s.attempts=(s.attempts||0)+1;
+        function finish(){
+          const autoPass=score>=PASS, proofPass=!P||P.done();
+          if(autoPass&&proofPass){
+            const first=!s.learned; s.learned=true; s.best=Math.max(s.best||0,score); s.review=false; save(); refresh();
+            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first?'The next section is unlocked. ':'')+'Now prove it sticks: this section shows up in <a href="#recall">recall rounds</a>, and two later correct recalls mark it mastered.<br><button type="button" class="btn mq-again">Back</button>';
+          } else {
+            save();
+            res.className='mq-res no';
+            if(autoPass) res.innerHTML='<b>Questions passed ('+score+'/'+QN+').</b> To pass the section, finish the proof task above: write it, reveal the model, and tick every checklist item your proof really meets. If it falls short, rewrite it, or retake for a new set.<br><button type="button" class="btn mq-again">Retake</button>';
+            else res.innerHTML='<b>Not yet: '+score+'/'+QN+'</b> (need '+PASS+'). Read the explanations, reread what you missed, then retake. You\'ll get new questions.<br><button type="button" class="btn mq-again">Retake</button>';
+          }
+          const ag=res.querySelector('.mq-again'); if(ag) ag.onclick=()=>{ learned(sid)?idle():start(); };
+        }
+        finish();
+        if(P && !P.done()){ // allow finishing the proof after the auto part is graded
+          const watch=()=>{ if(P.done()&&score>=PASS&&!learned(sid)) finish(); };
+          $$('.proofbox textarea, .proofbox .rub input, .proofbox .rv',box).forEach(x=>{ x.addEventListener('change',watch); x.addEventListener('click',()=>setTimeout(watch,0)); });
+        }
+      };
+    }
+    idle();
+  }
+
+  // ---- recall rounds (spaced, interleaved) ----
+  function mountRecall(box){
+    function idle(msg){
+      box._active=false;
+      const L=ORDER.filter(learned);
+      box.innerHTML='<p>'+(msg||'')+'Recall rounds mix questions from every section you\'ve passed, <b>without telling you which section each one is from</b>. A section is <b>mastered</b> after it\'s answered correctly in two different rounds. A wrong answer flags it for review and resets its count.</p><p class="tip">'+L.length+' section'+(L.length===1?'':'s')+' eligible.</p><button type="button" class="btn primary" '+(L.length?'':'disabled')+'>Start recall round</button>';
+      box.querySelector('button').onclick=start;
+    }
+    function start(){
+      const L=ORDER.filter(learned); if(!L.length) return idle();
+      const roundId=++ST.rounds; save(); box._active=true;
+      const pri=id=>{const s=S_(id); return (s.review?0:s.mastered?3:1+(s.recall||0))+Math.random();};
+      let secs=L.slice().sort((a,b)=>pri(a)-pri(b)).slice(0,8);
+      while(secs.length<Math.min(8,L.length*2)) secs.push(pick(L));
+      secs=shuffle(secs);
+      box.innerHTML='<div class="mq-items"></div>';
+      const list=box.querySelector('.mq-items');
+      const objs=secs.map((sid,j)=>{ const autos=(BANK[sid]||[]).filter(x=>x.t!=='proof'); const o=renderItem(pick(autos),list,{label:'R'+(j+1)}); o.sid=sid; return o; });
+      const foot=document.createElement('div'); foot.className='mq-foot'; foot.innerHTML='<button type="button" class="btn primary">Submit round</button><div class="mq-res" hidden></div>'; box.appendChild(foot);
+      foot.querySelector('button').onclick=()=>{
+        let right=0; const touched={};
+        objs.forEach(o=>{
+          const ok=gradeItem(o); const s=S_(o.sid);
+          o.el.querySelector('.qsec').textContent+=' · §'+o.sid.slice(1)+' '+secTitle(o.sid);
+          if(ok){ right++; if(s.lastRound!==roundId){ s.recall=(s.recall||0)+1; s.lastRound=roundId; } }
+          touched[o.sid]=touched[o.sid]||{ok:true}; if(!ok) touched[o.sid].ok=false;
+        });
+        Object.keys(touched).forEach(sid=>{ const s=S_(sid); if(touched[sid].ok){ s.review=false; if((s.recall||0)>=2) s.mastered=true; } else { s.recall=0; s.review=true; s.mastered=false; } });
+        save(); refresh();
+        foot.querySelector('button').remove();
+        const res=foot.querySelector('.mq-res'); res.hidden=false; res.className='mq-res '+(right===objs.length?'ok':'no');
+        const flagged=Object.keys(touched).filter(k=>!touched[k].ok);
+        res.innerHTML='<b>'+right+'/'+objs.length+' correct.</b> '+(flagged.length?'Flagged for review: '+flagged.map(k=>'<a href="#'+k+'">§'+k.slice(1)+'</a>').join(', ')+'. Reread, then retake its quiz or another round.':'Nothing flagged.')+'<br><button type="button" class="btn">New round</button>';
+        res.querySelector('button').onclick=()=>{ box._active=false; idle(); };
+      };
+    }
+    box._idle=idle;
+    idle();
+  }
+
+  // ---- practice midterms (timed, graded) ----
+  const TIMERS={};
+  function mountTest(box){
+    const T=box.dataset.test, probs=TESTS[T]; const t=()=>ST.tests[T]||(ST.tests[T]={});
+    clearTimeout(TIMERS[T]);
+    function unlocked(){ if(T==='A') return ORDER.every(learned); if(T==='B') return !!(ST.tests.A&&ST.tests.A.submitted); return !!(ST.tests.B&&ST.tests.B.submitted); }
+    function view(){
+      const st=t();
+      box.dataset.locked=unlocked()?'0':'1';
+      if(!unlocked()){ box.innerHTML='<p class="lockmsg">🔒 '+(T==='A'?'Unlocks when all 31 sections have passed their mastery quizzes.':'Unlocks after you submit Practice Midterm '+(T==='B'?'A':'B')+'.')+'</p>'; return; }
+      if(st.submitted){ return results(); }
+      box.innerHTML='<p>80 minutes, closed notes, paper for scratch work. Problems stay hidden until you start, and the timer can\'t be paused. Proofs: write them in the boxes, then grade them against the checklist after you submit.</p><button type="button" class="btn primary">Start timed test</button>';
+      box.querySelector('button').onclick=()=>{ st.start=Date.now(); save(); run(); };
+      if(st.start) run();
+    }
+    function run(){
+      const st=t(); box.innerHTML='<div class="timer">⏱ <span></span></div><ol class="exam live"></ol><button type="button" class="btn primary tsub">Submit test</button>';
+      const ol=box.querySelector('ol');
+      probs.forEach(p=>{
+        const li=document.createElement('li'); li.dataset.id=p.id;
+        li.innerHTML='<div class="qp">'+p.q+'</div><div class="qf">'+p.parts.map((pt,j)=>{
+          if(pt.k==='bez') return '<label>s<input data-j="'+j+'" data-f="s"></label><label>t<input data-j="'+j+'" data-f="t"></label>';
+          if(pt.k==='tf') return '<label>'+pt.l+'<select data-j="'+j+'"><option value="">—</option><option value="T">True</option><option value="F">False</option></select></label>';
+          return '<label>'+pt.l+'<input data-j="'+j+'" autocomplete="off"></label>'; }).join('')+'</div>'+(p.rub?'<textarea data-proof rows="5" placeholder="Write the proof here."></textarea>':'');
+        ol.appendChild(li);
+        const saved=(st.ans||{})[p.id]; if(saved){ $$('input,select,textarea',li).forEach((x,i)=>{ if(saved[i]!=null) x.value=saved[i]; }); }
+        $$('input,select,textarea',li).forEach(x=>x.addEventListener('input',()=>{ st.ans=st.ans||{}; st.ans[p.id]=$$('input,select,textarea',li).map(y=>y.value); save(); }));
+      });
+      const span=box.querySelector('.timer span');
+      const tick=()=>{ if(!box.isConnected) return; const left=st.start+80*60000-Date.now(); if(left<=0){ span.textContent='0:00, time\'s up'; submit(); return; } const m=Math.floor(left/60000), s=Math.floor(left/1000)%60; span.textContent=m+':'+String(s).padStart(2,'0')+' left'; TIMERS[T]=setTimeout(tick,1000); };
+      tick();
+      box.querySelector('.tsub').onclick=submit;
+      function submit(){
+        if(st.submitted) return; clearTimeout(TIMERS[T]);
+        st.auto={}; probs.forEach(p=>{
+          const li=ol.querySelector('[data-id="'+p.id+'"]'); let ok=true;
+          p.parts.forEach((pt,j)=>{
+            if(pt.k==='bez'){ const s=evalExpr(li.querySelector('[data-j="'+j+'"][data-f="s"]').value), tt=evalExpr(li.querySelector('[data-j="'+j+'"][data-f="t"]').value); if(s===null||tt===null||s*pt.a+tt*pt.b!==pt.g) ok=false; }
+            else if(pt.k==='tf'){ const v=li.querySelector('[data-j="'+j+'"]').value; if(v!==(pt.a?'T':'F')) ok=false; }
+            else if(pt.k==='set'){ const got=[...new Set(li.querySelector('[data-j="'+j+'"]').value.split(/[,;\s]+/).filter(Boolean).map(x=>Math.round(evalExpr(x))))].sort((a,b)=>a-b); if(JSON.stringify(got)!==JSON.stringify(pt.a)) ok=false; }
+            else { if(!numOK(li.querySelector('[data-j="'+j+'"]').value,pt.a)) ok=false; }
+          });
+          st.auto[p.id]=p.parts.length?ok:null;
+        });
+        st.submitted=Date.now(); st.rub=st.rub||{}; save(); applyMisses(true); refresh(); results();
+      }
+    }
+    function results(){
+      const st=t(); const ans=st.ans||{};
+      box.innerHTML='<div class="tscore"></div><ol class="exam"></ol>';
+      const ol=box.querySelector('ol');
+      probs.forEach(p=>{
+        const li=document.createElement('li'); const mine=ans[p.id]||[];
+        const proofTxt= p.rub ? mine[mine.length-1]||'' : '';
+        li.innerHTML='<div class="qp">'+p.q+'</div>'+(p.parts.length?'<p class="'+(st.auto[p.id]?'ok':'no')+'">'+(st.auto[p.id]?'✓ Answers correct':'✗ At least one answer wrong')+(mine.length?' · you wrote: '+mine.slice(0,p.rub?-1:undefined).map(x=>x||'—').join(' | ').replace(/</g,'&lt;'):'')+'</p>':'')+
+          (p.rub?'<div class="proofgrade"><p class="mlabel">Your proof</p><pre class="mine"></pre><p class="mlabel">Checklist: tick only what your proof actually does</p>'+p.rub.map((r,j)=>'<label class="rub"><input type="checkbox" data-r="'+j+'"> '+r+'</label>').join('')+'</div>':'')+
+          '<details class="sol"><summary>Solution</summary><div>'+p.sol+'</div></details>';
+        if(p.rub){ li.querySelector('.mine').textContent=proofTxt||'(nothing written)'; const saved=(st.rub[p.id]||[]); $$('.rub input',li).forEach((c,j)=>{ c.checked=!!saved[j]; c.onchange=()=>{ st.rub[p.id]=$$('.rub input',li).map(x=>x.checked); save(); if(st.graded) applyMisses(false); refresh(); score(); }; }); }
+        ol.appendChild(li);
+      });
+      if(probs.some(p=>p.rub)&&!st.graded){ const b=document.createElement('button'); b.type='button'; b.className='btn primary'; b.textContent='I\'ve finished grading my proofs'; b.onclick=()=>{ st.graded=true; save(); applyMisses(false); refresh(); b.remove(); score(); }; box.appendChild(b); }
+      score();
+      function score(){
+        let pts=0; probs.forEach(p=>{ if(problemOK(T,p)) pts++; });
+        const pct=Math.round(100*pts/probs.length); st.score=pct; save();
+        box.querySelector('.tscore').innerHTML='<b>Score: '+pts+'/'+probs.length+' problems ('+pct+'%)</b>. Proof problems count once their checklist is fully ticked. Every miss sends its sections to review. '+(pct>=85?'Strong. Use the next fix block as flex time.':pct>=70?'Solid. Fix the misses before the next test.':'Under 70%: reread the flagged sections and redo their quizzes before the next test.');
+      }
+    }
+    view();
+  }
+  function problemOK(T,p){ const st=ST.tests[T]||{}; const autoOK= p.parts.length? !!(st.auto&&st.auto[p.id]) : true; const rubOK= p.rub? ((st.rub&&st.rub[p.id])||[]).filter(Boolean).length===p.rub.length : true; return autoOK&&rubOK; }
+  function applyMisses(onlyAuto){
+    // a missed test problem flags its sections for review (until re-proved in recall or a retake)
+    Object.keys(ST.tests).forEach(T=>{ const st=ST.tests[T]; if(!st.submitted) return; st.missFlagged=st.missFlagged||{};
+      const auto=onlyAuto||!st.graded;
+      TESTS[T].forEach(p=>{ const bad= auto ? (p.parts.length>0 && !(st.auto&&st.auto[p.id])) : !problemOK(T,p); if(bad&&!st.missFlagged[p.id]){ p.secs.forEach(sid=>{ const s=S_(sid); s.review=true; s.mastered=false; s.recall=0; }); st.missFlagged[p.id]=true; } }); });
+    save();
+  }
+
+  // ---- locks, progress, readiness ----
+  function applyLocks(){
+    ORDER.forEach((sid,i)=>{
+      const sec=document.getElementById(sid); if(!sec) return;
+      const lockedNow= i>0 && !learned(ORDER[i-1]) && !learned(sid);
+      sec.classList.toggle('locked',lockedNow);
+      let m=sec.querySelector(':scope > .lockmsg');
+      if(lockedNow&&!m){ m=document.createElement('p'); m.className='lockmsg'; const g=sec.querySelector(':scope > .goals')||sec.querySelector(':scope > .gist'); g.after(m); }
+      if(m) m.innerHTML= lockedNow?'🔒 Locked. Pass the <a href="#'+ORDER[i-1]+'">§'+i+' mastery quiz</a> to unlock this section.':'';
+      if(m&&!lockedNow) m.remove();
+      const a=$q('nav.toc a[href="#'+sid+'"]'); if(a){ a.dataset.st=status(sid); }
     });
-    var keys=Object.keys(bySec).sort(function(a,b){return (+a.slice(1))-(+b.slice(1));});
-    h+='<h4>From your practice midterms</h4>';
-    h+= keys.length ? '<div class="todo">Review: '+keys.map(function(sid){return '<a class="miss" href="#'+sid+'">§'+sid.slice(1)+' ('+bySec[sid].join(', ')+')</a>';}).join('')+'</div>' : '<p class="sub-note">No missed problems marked yet. After grading a practice midterm, tick “I missed this” under each problem you got wrong.</p>';
-    el.innerHTML=h;
+    $$('.pt-wrap').forEach(w=>{ if(!w.dataset.locked || w.dataset.locked==='1') mountTest(w); });
   }
-  render();
+  function refresh(){
+    let sc=0, cs=0;
+    ORDER.forEach(id=>{ const v= mastered(id)&&!S_(id).review?1:(learned(id)?0.6:0); sc+=v; if(CORE.includes(id)) cs+=v; });
+    const pc=Math.round(100*sc/ORDER.length), pm=Math.round(100*cs/CORE.length);
+    const next=ORDER.find(id=>!learned(id));
+    const pb=document.getElementById('cprog');
+    if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span>';
+    const tp=document.getElementById('progress'); if(tp) tp.textContent=ORDER.filter(learned).length+' of 31 passed · '+ORDER.filter(mastered).length+' mastered';
+    applyLocks(); readiness();
+    const rcb=document.getElementById('recall-box'); if(rcb&&rcb._idle&&!rcb._active) rcb._idle();
+  }
+  function readiness(){
+    const el=document.getElementById('ready'); if(!el) return;
+    const grp=(title,ids,cls)=>'<h4>'+title+' ('+ids.length+')</h4>'+(ids.length?'<div class="todo">'+ids.map(id=>'<a class="'+(cls||'')+'" href="#'+id+'">§'+id.slice(1)+' '+secTitle(id)+'</a>').join('')+'</div>':'<p class="ok">None ✓</p>');
+    const notPassed=ORDER.filter(id=>!learned(id)), review=ORDER.filter(id=>S_(id).review), notMast=ORDER.filter(id=>learned(id)&&!mastered(id)&&!S_(id).review), mast=ORDER.filter(id=>mastered(id)&&!S_(id).review);
+    const tests=['A','B','C'].map(T=>{ const st=ST.tests[T]; return 'Practice '+T+': '+(st&&st.submitted?'<b>'+(st.score!=null?st.score+'%':'submitted')+'</b>':'not taken'); }).join(' · ');
+    el.innerHTML=grp('Needs review (missed in recall or on a practice test)',review,'miss')+grp('Not passed yet',notPassed)+grp('Passed, not yet mastered (do recall rounds)',notMast)+'<h4>Mastered ('+mast.length+'/31)</h4><div class="bar"><i style="width:'+Math.round(100*mast.length/31)+'%"></i></div><p class="sub-note">'+tests+'</p>';
+  }
+
+  // ---- export / import ----
+  function mountSync(box){
+    box.innerHTML='<p>Progress is saved in this browser only. To move it to another device, copy the code here and load it there.</p><textarea rows="3" placeholder="progress code"></textarea><div class="pf-row"><button type="button" class="btn ex">Show my code</button><button type="button" class="btn im">Load code</button><span class="msg"></span></div>';
+    const ta=box.querySelector('textarea'), msg=box.querySelector('.msg');
+    box.querySelector('.ex').onclick=()=>{ ta.value=btoa(unescape(encodeURIComponent(JSON.stringify(ST)))); ta.select(); try{ navigator.clipboard.writeText(ta.value).then(()=>msg.textContent='Copied.',()=>msg.textContent='Select and copy the code.'); }catch(e){ msg.textContent='Select and copy the code.'; } };
+    box.querySelector('.im').onclick=()=>{ try{ const s=JSON.parse(decodeURIComponent(escape(atob(ta.value.trim())))); if(!s||!s.sec) throw 0; ST=s; save(); msg.textContent='Loaded.'; refresh(); $$('.mastery').forEach(mountQuiz); }catch(e){ msg.textContent='That code didn\'t work.'; } };
+  }
+
+  $$('.mastery').forEach(mountQuiz);
+  const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
+  const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
+  refresh();
+  window.__m55c={evalExpr,numOK,gen,BANK,TESTS,ST:()=>ST};
+
 })();
 </script>
 </body>
