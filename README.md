@@ -9,4 +9,7 @@ worked examples, and a short check-yourself with hints and answers. Includes a M
 plan with a readiness check, three practice midterms with solutions, an exam-day sheet
 and a list of common mistakes.
 
-One self-contained page, no build step. Homework answers are not published here.
+Also includes a homework playbook for HW 1–6 (each problem condensed, with its key idea
+and answer).
+
+One self-contained page, no build step.

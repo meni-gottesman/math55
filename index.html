@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Math 55 (Discrete Mathematics) notes for all 16 lectures, with goals, check-yourself practice, a Midterm 2 plan and three practice midterms.">
+<meta name="description" content="Math 55 (Discrete Mathematics) notes for all 16 lectures, with goals, check-yourself practice, a Midterm 2 plan, three practice midterms and a homework playbook.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%80%3C/text%3E%3C/svg%3E">
 <title>Math 55 Study Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -322,6 +322,7 @@ img{max-width:100%}
   <ol>
     <li><a href="#cheat"><span>★</span>Exam-day sheet</a></li>
     <li><a href="#mistakes"><span>!</span>Mistakes to avoid</a></li>
+    <li><a href="#playbook"><span>HW</span>Homework playbook (HW 1–6)</a></li>
   </ol>
   </div>
   </div>
@@ -2973,6 +2974,110 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
 
 
 
+  <section class="sec cheat-sec" id="playbook">
+    <h2><span class="n">HW</span>Homework playbook (HW 1–6)</h2>
+    <p class="src">Every homework problem, condensed in plain words, with the idea that cracks it and the answer · exams reuse homework, often word for word</p>
+    <div class="gist"><p>Cover the last two columns, do the problem, then check. HW 5 and HW 6 are the most likely to show up on Midterm 2.</p></div>
+
+    <details class="hw" open><summary><b>HW 6</b> · induction, strong induction, recursion (Midterm 2)</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>6.1</td><td>Induction: Σⱼ₌₀ⁿ arʲ = (arⁿ⁺¹ − a)/(r − 1) for r ≠ 0, 1</td><td>Base n = 0; add the term arᵏ⁺¹</td><td>(arᵏ⁺¹ − a)/(r − 1) + arᵏ⁺¹ = (arᵏ⁺² − a)/(r − 1)</td></tr>
+      <tr><td>6.2</td><td>Induction: Σ j² = n(n + 1)(2n + 1)/6</td><td>Add (k + 1)² and factor out (k + 1)</td><td>(k + 1)[k(2k + 1) + 6(k + 1)]/6 = (k + 1)(k + 2)(2k + 3)/6</td></tr>
+      <tr><td>6.3</td><td>3ⁿ &lt; n! for n ≥ 7</td><td>Base n = 7: 2187 &lt; 5040</td><td>3ᵏ⁺¹ = 3·3ᵏ &lt; 3·k! &lt; (k + 1)·k!</td></tr>
+      <tr><td>6.4</td><td>Find the error in “max(x, y) = n ⇒ x = y”</td><td>The IH needs positive integers</td><td>x = 1, y = 2: x − 1 = 0 isn't positive, so the IH can't be applied (the step from 1 to 2 fails)</td></tr>
+      <tr><td>6.5</td><td>Every n ≥ 18 is 4a + 7b (strong induction)</td><td>The step reaches back 4, so 4 base cases</td><td>18 = 4 + 14, 19 = 12 + 7, 20 = 4·5, 21 = 7·3; k + 1 = (k − 3) + 4</td></tr>
+      <tr><td>6.6</td><td>a₀ = 2, aₙ₊₁ = 3aₙ + 2: compute, guess, prove</td><td>2, 8, 26, 80, 242</td><td>aₙ = 3ⁿ⁺¹ − 1; step 3(3ᵏ⁺¹ − 1) + 2 = 3ᵏ⁺² − 1</td></tr>
+      <tr><td>6.7</td><td>Fibonacci (f₀ = f₁ = 1): Σ fⱼ² = fₙfₙ₊₁; gcd(fₙ, fₙ₊₁) = 1</td><td>Factor out fₖ₊₁; gcd(a, b) = gcd(b − a, a)</td><td>fₖfₖ₊₁ + fₖ₊₁² = fₖ₊₁fₖ₊₂; gcd(fₖ₊₁, fₖ₊₂) = gcd(fₖ, fₖ₊₁) = 1</td></tr>
+      <tr><td>6.8</td><td>Every positive integer is a sum of distinct Fibonacci numbers</td><td>Take the largest fₙ ≤ k + 1, then use the IH on the rest</td><td>The rest is &lt; fₙ₋₁, so its sum doesn't reuse fₙ</td></tr>
+      <tr><td>6.9</td><td>Tower of Hanoi: Hₙ = 2ⁿ − 1, and no solution does better</td><td>Look at the first and last moves of the biggest disk</td><td>≥ (2ⁿ⁻¹ − 1) + 1 + (2ⁿ⁻¹ − 1) = 2ⁿ − 1</td></tr>
+      <tr><td>6.10</td><td>p | a₁⋯aₙ ⇒ p | some aᵢ</td><td>Induction on n using p | ab ⇒ p | a or p | b</td><td>Write a₁⋯aₙ₊₁ = (a₁⋯aₙ)·aₙ₊₁</td></tr>
+      <tr><td>6.11</td><td>Uniqueness of prime factorization (strong induction on N)</td><td>p₁ divides q₁⋯qₛ, so p₁ = some qⱼ; cancel it</td><td>N/p₁ &lt; N has a unique factorization by the IH</td></tr>
+      <tr><td>6.12</td><td>Every n ≥ 2 has a prime divisor (well-ordering)</td><td>Take the least divisor d &gt; 1</td><td>If d = ab with 1 &lt; a &lt; d, then a is a smaller divisor of n; contradiction</td></tr>
+    </table></div></details>
+
+    <details class="hw" open><summary><b>HW 5</b> · Bézout, congruences, CRT, Fermat, RSA (Midterm 2)</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>5.1</td><td>Extended Euclid and inverses for (37, 101) and (42, 114)</td><td>Back-substitute</td><td>1 = −30·37 + 11·101, inverse 71 · gcd 6 = −8·42 + 3·114, no inverse</td></tr>
+      <tr><td>5.2</td><td>ac ≡ bc (mod m) ⇒ a ≡ b (mod m/d), d = gcd(c, m)</td><td>Divide c and m by d; use Bézout on c/d, m/d</td><td>(m/d) | (a − b)</td></tr>
+      <tr><td>5.3</td><td>x₀ + k(m/d) are exactly all the solutions of ax ≡ b</td><td>a = da′, m = dm′, gcd(a′, m′) = 1</td><td>m′ | a′(x − x₀) ⇒ m′ | x − x₀</td></tr>
+      <tr><td>5.4</td><td>Solve 37x ≡ 12 (101), 42x ≡ 30 (114), 42x ≡ 25 (114)</td><td>Use 5.1's inverses; divide by d</td><td>44 · 17, 36, 55, 74, 93, 112 · none (6 ∤ 25)</td></tr>
+      <tr><td>5.5</td><td>Inverse ⟺ gcd = 1; any two inverses are congruent</td><td>Bézout both directions; cancellation</td><td>Both follow</td></tr>
+      <tr><td>5.6</td><td>x² ≡ 1 (mod p) ⟺ x ≡ ±1; all solutions mod 15</td><td>(x − 1)(x + 1) ≡ 0 and p | ab</td><td>1, 4, 11, 14 mod 15 (15 isn't prime)</td></tr>
+      <tr><td>5.7</td><td>CRT: x ≡ 3 (4), 5 (7), 2 (9)</td><td>M = 252; Mᵢ = 63, 36, 28; yᵢ = 3, 1, 1</td><td>x ≡ 47 (mod 252)</td></tr>
+      <tr><td>5.8</td><td>Prove CRT uniqueness</td><td>Each mᵢ | x − y, and they're pairwise coprime</td><td>M | x − y</td></tr>
+      <tr><td>5.9</td><td>7²⁰²⁶ mod 13, 3¹⁰⁰¹ mod 17, a^(p−2) is an inverse</td><td>Exponent mod p − 1</td><td>4 · 14 · 5⁻¹ ≡ 7 (mod 17)</td></tr>
+      <tr><td>5.10</td><td>Fermat test; 2³⁴⁰ mod 341</td><td>Contrapositive of Fermat; CRT with 11, 31</td><td>2³⁴⁰ ≡ 1 though 341 is composite (pseudoprime)</td></tr>
+      <tr><td>5.11</td><td>RSA with p = 5, q = 11, e = 3, m = 7</td><td>φ = 40</td><td>d = 27 · c = 13 · decrypts to 7</td></tr>
+      <tr><td>5.12</td><td>RSA works even when gcd(m, pq) &gt; 1</td><td>Case p | m: both sides ≡ 0 mod p</td><td>≡ m mod p and mod q ⇒ mod pq</td></tr>
+    </table></div></details>
+
+    <details class="hw"><summary><b>HW 4</b> · divisibility, mod, bases, Euclid</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>4.1</td><td>Quotient and remainder for (73, 12), (3, 5), (−60, 7)</td><td>Round the quotient down</td><td>12·6 + 1 · 5·0 + 3 · 7(−9) + 3</td></tr>
+      <tr><td>4.2</td><td>(218·95) mod 31, (5⁴ + 73) mod 12, (2²⁰ + 3¹⁵) mod 5</td><td>Reduce first</td><td>2 · 2 · 3</td></tr>
+      <tr><td>4.3</td><td>a | b and b | a ⇒ a = ±b</td><td>b = ak, a = bl ⇒ kl = 1</td><td>k = ±1</td></tr>
+      <tr><td>4.4</td><td>Prove or disprove three divisibility claims</td><td>Counterexamples</td><td>6 | 2·3 · 2 | 1 + 1 · (3) true</td></tr>
+      <tr><td>4.5</td><td>a ≡ b ⟺ same remainder</td><td>Division algorithm</td><td>Both directions</td></tr>
+      <tr><td>4.6</td><td>n³ ≡ n (mod 6)</td><td>(n − 1)n(n + 1)</td><td>Divisible by 2 and 3</td></tr>
+      <tr><td>4.7</td><td>423 in binary</td><td>Divide by 2 repeatedly</td><td>(110100111)₂</td></tr>
+      <tr><td>4.8</td><td>7²²² mod 13 by repeated squaring</td><td>222 = 128 + 64 + 16 + 8 + 4 + 2</td><td>12</td></tr>
+      <tr><td>4.9</td><td>Divisibility test for 11; test 8,372,419</td><td>10 ≡ −1 (mod 11)</td><td>Alternating sum 22 ⇒ divisible</td></tr>
+      <tr><td>4.10</td><td>gcd(1234, 567)</td><td>Remainders 100, 67, 33, 1</td><td>1</td></tr>
+      <tr><td>4.11</td><td>Infinitely many primes ≡ 3 (mod 4)</td><td>N = 4q₁⋯qₙ − 1</td><td>Some prime factor ≡ 3, and it isn't any qᵢ</td></tr>
+    </table></div></details>
+
+    <details class="hw"><summary><b>HW 3</b> · sets, functions, countability</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>3.1</td><td>∈ / ⊆ questions for A = {∅, {∅}, {1, 2}}</td><td>∈ means listed</td><td>T · T · T · F · T · F</td></tr>
+      <tr><td>3.2</td><td>Truth of four quantified statements over ℕ, ℤ, ∅</td><td>Domain; vacuous truth</td><td>T · F · T · F</td></tr>
+      <tr><td>3.3</td><td>A − (B ∪ C) = (A − B) ∩ (A − C)? 𝒫(A ∪ B) = 𝒫(A) ∪ 𝒫(B)?</td><td>Element chase / small sets</td><td>true · false (A = {1}, B = {2})</td></tr>
+      <tr><td>3.4</td><td>List A × B etc.; X × (Y ∩ Z) identity</td><td>Ordered pairs</td><td>A × ∅ = ∅</td></tr>
+      <tr><td>3.5</td><td>Range, injective, surjective for (x − 1)² with two codomains</td><td>Range vs codomain</td><td>neither · onto only</td></tr>
+      <tr><td>3.6</td><td>Three claims about increasing functions</td><td>Counterexamples</td><td>all false</td></tr>
+      <tr><td>3.7</td><td>g ∘ f bijective, f not onto, g not 1-1</td><td>Tiny sets</td><td>A = {0}, B = {0, 1}, C = {0}</td></tr>
+      <tr><td>3.8</td><td>Inverse of a bijection is a bijection</td><td>f⁻¹(f(a)) = a</td><td>✓</td></tr>
+      <tr><td>3.9</td><td>f(S₁ ∪ S₂) = f(S₁) ∪ f(S₂); ∩ can fail</td><td>Non-injective f</td><td>x², {−1}, {1}</td></tr>
+      <tr><td>3.10</td><td>A bijection ℤ → ℕ</td><td>Alternate signs</td><td>n ↦ 2n, −n ↦ 2n − 1</td></tr>
+      <tr><td>3.11</td><td>Unions of countable sets; X − C; irrationals uncountable</td><td>List alternately; contradiction</td><td>ℝ = (ℝ − ℚ) ∪ ℚ</td></tr>
+      <tr><td>3.12</td><td>|X| &lt; |𝒫(X)|</td><td>Diagonal set D = {x ∉ F(x)}</td><td>D = F(x) is contradictory</td></tr>
+    </table></div></details>
+
+    <details class="hw"><summary><b>HW 2</b> · proof techniques</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>2.1</td><td>rs and r/s are rational</td><td>Write as fractions</td><td>ac/bd, ad/bc</td></tr>
+      <tr><td>2.2</td><td>a + b, a + c even ⇒ b + c even (direct and contradiction)</td><td>b + c = (a + b) + (a + c) − 2a</td><td>even</td></tr>
+      <tr><td>2.3</td><td>a + b + c &gt; 9 ⇒ some variable &gt; 3</td><td>Contrapositive</td><td>all ≤ 3 ⇒ sum ≤ 9</td></tr>
+      <tr><td>2.4</td><td>Find the errors in two proofs</td><td>Same k; proved the converse</td><td>different letters; contraposition</td></tr>
+      <tr><td>2.5</td><td>∛2 is irrational</td><td>The √2 argument with cubes</td><td>p and q both even</td></tr>
+      <tr><td>2.6</td><td>Three claims about irrationals</td><td>Counterexamples; contrapositive</td><td>F · F · T</td></tr>
+      <tr><td>2.7</td><td>Squares are 0 or 1 mod 4; x² + y² ≠ 4z + 3</td><td>Cases</td><td>Sums of two squares are 0, 1, 2 mod 4</td></tr>
+      <tr><td>2.8</td><td>|x + y| = |x| + |y| ⟺ xy ≥ 0</td><td>Cases on signs</td><td>✓</td></tr>
+      <tr><td>2.9</td><td>An irrational between two rationals</td><td>r + (s − r)/√2</td><td>✓</td></tr>
+      <tr><td>2.10</td><td>Parity game a, b, c</td><td>Player I moves last</td><td>Player I wins</td></tr>
+      <tr><td>2.11</td><td>Chomp on n × n; 3 × 3 after the corner move</td><td>Take (2, 2), then mirror</td><td>II answers the corner with (2, 2)</td></tr>
+    </table></div></details>
+
+    <details class="hw"><summary><b>HW 1</b> · logic</summary>
+    <div class="tbl"><table>
+      <tr><th>#</th><th>Problem</th><th>Key idea</th><th>Answer</th></tr>
+      <tr><td>1.1</td><td>Truth table of (p ∧ q) ∨ (¬q → p); simplify</td><td>¬q → p ≡ p ∨ q</td><td>≡ p ∨ q</td></tr>
+      <tr><td>1.2</td><td>Formulas → English</td><td>Symbol by symbol</td><td>—</td></tr>
+      <tr><td>1.3</td><td>English → formulas (one uses “unless”)</td><td>A unless B ≡ ¬B → A</td><td>p → (q ∨ r); q → ¬r</td></tr>
+      <tr><td>1.4</td><td>(¬q → p) ↔ (p → q) without conditionals</td><td>Rewrite → then ↔</td><td>≡ q</td></tr>
+      <tr><td>1.5</td><td>Two tautology checks</td><td>Find a false row</td><td>no · yes</td></tr>
+      <tr><td>1.6</td><td>¬p → (q → r) ≡ q → (p ∨ r)</td><td>Both ≡ p ∨ ¬q ∨ r</td><td>✓</td></tr>
+      <tr><td>1.7</td><td>P(x): x + 2 &gt; 2x over ℤ</td><td>⟺ x &lt; 2</td><td>T · T · F</td></tr>
+      <tr><td>1.8</td><td>Nested quantifiers → English</td><td>Left to right</td><td>—</td></tr>
+      <tr><td>1.9</td><td>Push negations inward</td><td>Flip each quantifier</td><td>∀∀¬P · ∀(¬Q ∨ ∃R) · ∀(∀¬R ∧ ∃¬S)</td></tr>
+      <tr><td>1.10</td><td>Name the rules</td><td>Match shapes</td><td>simplification · tollens · hyp. syllogism</td></tr>
+      <tr><td>1.11</td><td>Argument about the discussion section</td><td>Chain the rules</td><td>tollens twice, then disjunctive syllogism</td></tr>
+    </table></div></details>
+  </section>
 
 
   <footer>
