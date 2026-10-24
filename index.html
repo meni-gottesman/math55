@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Math 55 (Discrete Mathematics) course notes: logic, proofs, sets and functions, infinity, number theory through RSA, induction, and counting, with check-yourself practice.">
+<meta name="description" content="Math 55 (Discrete Mathematics) notes for all 16 lectures, with goals, check-yourself practice, a Midterm 2 plan and three practice midterms.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%80%3C/text%3E%3C/svg%3E">
 <title>Math 55 Study Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -134,10 +134,10 @@ table.tt .hl{background:color-mix(in srgb,var(--blue) 12%,transparent)}
 .cheat h3{font-family:var(--f-display);font-size:1.05rem;margin:14px 0 4px}
 footer{color:var(--muted);font-size:.9rem;margin-top:60px;border-top:1px solid var(--rule);padding-top:16px}
 
-main[data-show="defn"] .sec > :not(h2):not(.src):not(.gist):not(.defn),
-main[data-show="thm"] .sec > :not(h2):not(.src):not(.gist):not(.thm),
-main[data-show="caution"] .sec > :not(h2):not(.src):not(.gist):not(.caution),
-main[data-show="ex"] .sec > :not(h2):not(.src):not(.gist):not(.ex),
+main[data-show="defn"] .sec > :not(h2):not(.src):not(.gist):not(.goals):not(.defn),
+main[data-show="thm"] .sec > :not(h2):not(.src):not(.gist):not(.goals):not(.thm),
+main[data-show="caution"] .sec > :not(h2):not(.src):not(.gist):not(.goals):not(.caution),
+main[data-show="ex"] .sec > :not(h2):not(.src):not(.gist):not(.goals):not(.ex),
 main[data-show="check"] .sec > :not(h2):not(.src):not(.check){display:none}
 main:not([data-show="all"]) .cheat-sec{display:none}
 
@@ -178,6 +178,34 @@ table.big td:first-child{font-family:var(--f-display);font-weight:700;white-spac
 .gotit input{width:18px;height:18px;accent-color:var(--green)}
 nav.toc a.done::after{content:"✓";margin-left:auto;color:var(--green);font-weight:700}
 .progress{font:400 .78rem var(--f-mono);color:var(--muted);margin:6px 8px 0}
+
+.goals{border:1px solid var(--rule);border-radius:10px;padding:10px 16px;margin:4px 0 14px;background:var(--surface)}
+.goals > .tag{font-family:var(--f-hand);font-weight:700;font-size:1.3rem;color:var(--slate)}
+.goals .gl{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 24px}
+.goals .gl > div{min-width:0}
+.goals b{font-family:var(--f-display);font-size:.85rem;color:var(--muted)}
+.goals ul{margin:4px 0 6px;padding-left:1.1em;font-size:.93rem}
+.goals li{margin:2px 0}
+.tb{font-size:.9rem;color:var(--muted);margin:10px 0 0;padding:8px 12px;border-left:3px solid var(--rule)}
+.tb b{font-family:var(--f-display);color:var(--ink)}
+.tb span{font-size:.82rem}
+.sub-note{font-size:.88rem;color:var(--muted)}
+.ready{background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:12px 18px}
+.ready h4{font-family:var(--f-display);font-size:.95rem;margin:10px 0 4px}
+.ready .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:4px 0 8px}
+.ready .bar i{display:block;height:100%;background:var(--green)}
+.ready .todo a{display:inline-block;margin:2px 6px 2px 0;font-size:.85rem;padding:2px 8px;border:1px solid var(--rule);border-radius:999px;text-decoration:none}
+.ready .todo a.miss{border-color:var(--red);color:var(--red)}
+.ready .ok{color:var(--green);font-weight:600}
+ol.exam > li{margin:12px 0}
+details.sol{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:8px 16px;margin:14px 0}
+details.sol summary{cursor:pointer;font-family:var(--f-display);font-weight:700}
+label.miss{display:flex;gap:6px;align-items:center;font:600 .8rem var(--f-display);color:var(--red);margin-top:4px;cursor:pointer}
+label.miss input{accent-color:var(--red)}
+table.cov td:first-child{font-family:var(--f-mono);white-space:nowrap}
+table.cov a{margin-right:6px}
+table.plan-t td:first-child{white-space:nowrap}
+table.plan-t td:nth-child(2){font-family:var(--f-mono);font-size:.82rem;white-space:nowrap;color:var(--muted)}
 [hidden]{display:none!important}
 img{max-width:100%}
 </style>
@@ -186,10 +214,10 @@ img{max-width:100%}
 <header class="mast">
   <p class="eyebrow">Math 55 · Discrete Mathematics · UC Berkeley · Fall 2026</p>
   <h1>Math 55 Study Guide <span class="hand">the full course</span></h1>
-  <p class="lede">The whole class so far in one place: logic, proofs, sets and functions, infinity, number theory through RSA, induction and recursion, and counting. Every section opens with a one-line gist, then the precise definitions, a picture to hang it on, and worked examples.</p>
+  <p class="lede">All 16 lectures in one place, from logic through probability. Every section has a one-line gist, goals (what to be able to do and what to memorize), definitions, a picture to hang it on, worked examples, a check-yourself with hints, and textbook exercises. Midterm 2 HQ has the plan, a readiness check that catches gaps, and three practice midterms.</p>
   <div class="facts">
     <div><b>Textbook</b><span>Rosen, <i>Discrete Mathematics and Its Applications</i>, 8th ed.</span></div>
-    <div><b>Midterm 2</b><span>Thu Oct 29, in class</span></div>
+    <div><b>Midterm 2</b><span>Thu Oct 29, 2:10–3:30 pm, 150 Wheeler</span></div>
     <div><b>Final</b><span>Tue Dec 15, 8–11 am</span></div>
     <div><b>Grade</b><span>Best of 5H+10Q+20M1+20M2+45F or 5H+10Q+30·max(M1,M2)+55F (%)</span></div>
     <div><b>Weekly</b><span>HW due Mon 11:59 pm (free extension to Tue); quiz Mon in your own section; 2 lowest of each dropped</span></div>
@@ -213,6 +241,8 @@ img{max-width:100%}
   <p>Start</p>
   <ol>
     <li><a href="#big"><span>◎</span>The course in 2 minutes</a></li>
+    <li><a href="#mt"><span>MT2</span>Midterm 2 HQ &amp; plan</a></li>
+    <li><a href="#coverage"><span>↳</span>Coverage map</a></li>
   </ol>
   <p>Part I · Logic</p>
   <ol>
@@ -259,16 +289,32 @@ img{max-width:100%}
   <ol>
     <li><a href="#s22"><span>22</span>Mathematical induction</a></li>
     <li><a href="#s23"><span>23</span>Strong induction &amp; well-ordering</a></li>
-    <li><a href="#s24"><span>24</span>Recursive definitions</a></li>
-    <li><a href="#s25"><span>25</span>Recursive algorithms</a></li>
+    <li><a href="#s24"><span>24</span>Recursion &amp; Fibonacci</a></li>
+    <li><a href="#s25"><span>25</span>Recursive algorithms &amp; Hanoi</a></li>
   </ol>
   </div>
   <div>
   <p>Part VI · Counting</p>
   <ol>
-    <li><a href="#s26"><span>26</span>Product &amp; sum rules</a></li>
+    <li><a href="#s26"><span>26</span>Counting rules</a></li>
     <li><a href="#s27"><span>27</span>Pigeonhole principle</a></li>
     <li><a href="#s28"><span>28</span>Permutations &amp; combinations</a></li>
+  </ol>
+  </div>
+  <div>
+  <p>Part VII · Proofs by counting &amp; probability</p>
+  <ol>
+    <li><a href="#s29"><span>29</span>Combinatorial proofs, binomial</a></li>
+    <li><a href="#s30"><span>30</span>Stars &amp; bars, repetition</a></li>
+    <li><a href="#s31"><span>31</span>Probability</a></li>
+  </ol>
+  </div>
+  <div>
+  <p>Part VIII · Practice midterms</p>
+  <ol>
+    <li><a href="#pt-a"><span>A</span>Practice Midterm A</a></li>
+    <li><a href="#pt-b"><span>B</span>Practice Midterm B</a></li>
+    <li><a href="#pt-c"><span>C</span>Practice Midterm C</a></li>
   </ol>
   </div>
   <div>
@@ -310,13 +356,137 @@ img{max-width:100%}
       <tr><td>II · Proofs</td><td>How to argue that a statement is always true: direct, contraposition, contradiction, cases, examples and counterexamples.</td><td>A lawyer's case: every step must follow from evidence or earlier steps.</td></tr>
       <tr><td>III · Sets &amp; functions</td><td>The objects math talks about (collections and rules that match inputs to outputs) and how to compare infinite sizes.</td><td>Bags of items, and pairing items up one to one.</td></tr>
       <tr><td>IV · Number theory</td><td>Divisibility, remainders, primes, gcd, solving equations mod m, and how it all powers RSA encryption.</td><td>Clock arithmetic: numbers that wrap around.</td></tr>
-      <tr><td>V · Induction</td><td>Proving infinitely many cases at once, and defining things step by step.</td><td>Dominoes: knock over the first one, and each one knocks over the next.</td></tr>
-      <tr><td>VI · Counting</td><td>Counting outcomes without listing them: multiply, add, pigeonhole, permutations, combinations.</td><td>Ordering from a menu: an appetizer <i>and</i> a main multiplies; soup <i>or</i> salad adds.</td></tr>
+      <tr><td>V · Induction</td><td>Proving infinitely many cases at once, defining things step by step, recursive algorithms.</td><td>Dominoes: knock over the first one, and each one knocks over the next.</td></tr>
+      <tr><td>VI · Counting</td><td>Counting outcomes without listing them: multiply, divide out overcounts, pigeonhole, permutations, combinations.</td><td>Ordering from a menu: an appetizer <i>and</i> a main multiplies; soup <i>or</i> salad adds.</td></tr>
+      <tr><td>VII · Probability</td><td>Proving identities by counting two ways, the binomial theorem, stars and bars, and probability as “counting with a denominator.”</td><td>Two people counting the same crowd from different spots must get the same number.</td></tr>
     </table></div>
     <div class="blk idea"><span class="tag">How the pieces connect</span>
       <p>Logic is the language every proof is written in. Proofs (Part II) are the method used everywhere after. Number theory leans on sets and proofs, and the induction of Part V is what proves the division algorithm and prime factorization from Part IV. Counting uses sets (a set of size n has 2ⁿ subsets) and the binomial coefficients that showed up in Fermat's little theorem.</p>
     </div>
   </section>
+
+  <section class="sec" id="mt">
+    <h2><span class="n">MT2</span>Midterm 2 headquarters</h2>
+    <p class="src">Thu Oct 29 · 2:10–3:30 pm (80 min) · in class, 150 Wheeler · review lecture Tue Oct 27</p>
+    <div class="gist"><p>The midterm covers Lectures 10–16 (§18–§31: congruences, CRT, Fermat, RSA, induction, recursion, counting, binomial coefficients, probability). It's built on everything before it, especially proof writing and mod arithmetic, so §1–§17 are the tools you'll need.</p></div>
+
+    <div class="blk idea"><span class="tag">Exam facts</span>
+      <ul>
+        <li>Confirmed on the bCourses syllabus and in Lecture 15: <b>Thursday Oct 29, in class</b>.</li>
+        <li>Lecture 16: “Review materials for midterm 2 will be posted soon.” <b>Check bCourses</b> and do them when they appear (the plan reserves time).</li>
+        <li>Expect the Midterm 1 rules: closed notes, no devices. Write “By induction”, “By contraposition”, “Assume for a contradiction” at the start, and label base cases and induction steps.</li>
+        <li>About a quarter of exam problems come from the homework, often word for word. Redo HW 5 and HW 6 cold.</li>
+      </ul>
+    </div>
+
+    <h3 id="ready-h">Readiness check <span class="pill">updates as you tick boxes</span></h3>
+    <div class="ready" id="ready"><p>Loading your progress…</p></div>
+    <p class="sub-note">This catches gaps two ways. A section counts as done only when you tick its “Got it” box, which means you did its Check yourself questions without peeking. A practice-midterm problem you mark “I missed this” sends its sections back to the review list.</p>
+
+    <h3 id="memorize">Memorize sheet (Midterm 2)</h3>
+    <div class="cheat">
+      <div class="two">
+        <div>
+          <h3>Number theory</h3>
+          <ul>
+            <li>a = dq + r, 0 ≤ r &lt; d; a ≡ b (mod m) ⟺ m | a − b</li>
+            <li>gcd(a, b) = gcd(b, a mod b); gcd·lcm = ab</li>
+            <li><b>Bézout:</b> gcd(a, b) = sa + tb</li>
+            <li>gcd(a, b) = 1, a | bc ⇒ a | c; p | ab ⇒ p | a or p | b</li>
+            <li>Inverse mod m exists ⟺ gcd(a, m) = 1</li>
+            <li>ax ≡ b (mod m) solvable ⟺ d = gcd(a, m) | b; d solutions, m/d apart</li>
+            <li>Cancel c only if gcd(c, m) = 1</li>
+            <li><b>CRT:</b> pairwise coprime ⇒ unique mod M; x = Σ aᵢMᵢyᵢ</li>
+            <li><b>Fermat:</b> p ∤ a ⇒ a<sup>p−1</sup> ≡ 1; a<sup>p</sup> ≡ a; reduce exponents mod p − 1</li>
+            <li><b>RSA:</b> n = pq, gcd(e, (p−1)(q−1)) = 1, d = e⁻¹ mod (p−1)(q−1), c = mᵉ, m = cᵈ</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Induction &amp; recursion</h3>
+          <ul>
+            <li>Base case + induction step, both labeled; state the IH</li>
+            <li>Strong induction assumes P(1)…P(k); base cases = how far back the step reaches</li>
+            <li>Well-ordering: nonempty A ⊆ ℕ has a least element</li>
+            <li>Fibonacci (lecture): f₀ = f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂</li>
+            <li>Σ i = n(n+1)/2; Σ 2ⁱ (i = 0..n) = 2ⁿ⁺¹ − 1; Σ fᵢ = fₙ₊₂ − 1</li>
+            <li>Hanoi: Hₙ = 2Hₙ₋₁ + 1 = 2ⁿ − 1</li>
+          </ul>
+          <h3>Counting &amp; probability</h3>
+          <ul>
+            <li>Product rule; division rule n/d; |A ∪ B| = |A| + |B| − |A ∩ B|; complement</li>
+            <li>Pigeonhole: k + 1 in k boxes; generalized ⌈N/k⌉</li>
+            <li>P(n, r) = n!/(n − r)!; C(n, r) = n!/((n − r)! r!); 0! = 1</li>
+            <li>Repetition: nʳ (ordered), C(n + r − 1, r) (stars &amp; bars)</li>
+            <li>Repeated letters: n!/(n₁!⋯nₖ!)</li>
+            <li>C(n, r) = C(n, n − r); Pascal; k·C(n, k) = n·C(n − 1, k − 1)</li>
+            <li>(x + y)ⁿ = Σ C(n, j)xⁿ⁻ʲyʲ; Σ C(n, k) = 2ⁿ</li>
+            <li>p(E) = |E|/|S|; p(Ē) = 1 − p(E); p(E₁∪E₂) = p(E₁) + p(E₂) − p(E₁∩E₂)</li>
+          </ul>
+        </div>
+      </div>
+      <p><b>Test yourself:</b> on blank paper, write this whole sheet from memory, then compare. Anything you missed goes on tomorrow's first flex block.</p>
+    </div>
+
+    <h3 id="plan">Study plan: Sat Oct 24 → Thu Oct 29</h3>
+    <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do Check yourself without peeking → do 2–3 of its textbook exercises → tick “Got it.” If you miss 2 or more check questions, reread and retry before moving on.</p>
+    <div class="tbl"><table class="plan-t">
+      <tr><th>Day</th><th>Block</th><th>Do</th></tr>
+      <tr><td rowspan="4"><b>Sat Oct 24</b><br><span class="pill">foundations</span></td><td>1.5 h</td><td>§1–§5 Logic (truth tables, equivalences, quantifiers, negation)</td></tr>
+      <tr><td>1.75 h</td><td>§6–§9 Proofs: direct, contraposition, contradiction, cases. <b>Induction depends on these.</b></td></tr>
+      <tr><td>1.75 h</td><td>§10–§13 Sets, functions, cardinality</td></tr>
+      <tr><td>1 h</td><td><b>Flex</b>: redo any check you missed today · end-of-day readiness check</td></tr>
+      <tr><td rowspan="4"><b>Sun Oct 25</b><br><span class="pill">number theory</span></td><td>2 h</td><td>§14–§17 Divisibility, mod, bases, fast powers, primes, gcd, Euclid</td></tr>
+      <tr><td>2 h</td><td>§18–§19 Bézout, inverses, ax ≡ b, CRT. <b>Hardest stretch: slow down.</b></td></tr>
+      <tr><td>1.5 h</td><td>§20–§21 Fermat, RSA (one full RSA by hand)</td></tr>
+      <tr><td>1 h</td><td><b>Flex</b> · readiness check · HW 5 problems cold</td></tr>
+      <tr><td rowspan="5"><b>Mon Oct 26</b><br><span class="pill">new material</span></td><td>2.5 h</td><td>§22–§25 Induction, strong induction, well-ordering, recursion, Hanoi. Write 3 full induction proofs.</td></tr>
+      <tr><td>1.5 h</td><td>§26–§28 Counting rules, pigeonhole, P and C</td></tr>
+      <tr><td>1.5 h</td><td>§29–§31 Combinatorial proofs, binomial theorem, stars &amp; bars, probability</td></tr>
+      <tr><td>0.5 h</td><td>HW 6 problems cold (induction)</td></tr>
+      <tr><td>0.5 h</td><td><b>Flex</b> · readiness check</td></tr>
+      <tr><td rowspan="4"><b>Tue Oct 27</b><br><span class="pill">test 1</span></td><td>2 h</td><td><b>Practice Midterm A</b>, timed 80 min and closed notes; grade it with the solutions; mark every miss</td></tr>
+      <tr><td>class</td><td><b>Review lecture</b> 2:10–3:30. Note anything emphasized.</td></tr>
+      <tr><td>1.5 h</td><td>Fix: for each missed problem, reread its section and redo its check questions</td></tr>
+      <tr><td>1.5 h</td><td>Posted review materials (if out), or the GSI's extra problems (Misc. #7, 8, 9, 13–18 in <i>Math_55_probs.pdf</i>)</td></tr>
+      <tr><td rowspan="4"><b>Wed Oct 28</b><br><span class="pill">tests 2–3</span></td><td>2 h</td><td><b>Practice Midterm B</b>, timed + graded</td></tr>
+      <tr><td>1 h</td><td>Fix B's misses</td></tr>
+      <tr><td>1.5 h</td><td><b>Practice Midterm C</b>, timed (or only its problems on your weak topics)</td></tr>
+      <tr><td>0.5 h</td><td>Write the memorize sheet from memory · <b>sleep early</b></td></tr>
+      <tr><td><b>Thu Oct 29</b></td><td>30 min</td><td>Warm-up: memorize sheet, one CRT, one induction, one counting problem. Eat. Arrive early. Exam 2:10.</td></tr>
+    </table></div>
+
+    <div class="blk caution"><span class="tag">Adjusting the plan</span>
+      <ul>
+        <li><b>Behind schedule?</b> Use that day's flex block first. Still behind? Cut in this order: Practice C (do only your weak-topic problems), the Tuesday extra problems, Saturday's §9 games and §13 sidebars. <b>Never cut</b>: Monday's new material, Practice A and B, the memorize sheet.</li>
+        <li><b>Ahead?</b> Do more textbook exercises in the sections with the fewest ticks, or start Practice A on Monday night.</li>
+        <li><b>Scored under 70% on a practice topic?</b> That section goes first in the next flex block: reread its gist and examples, redo its checks, then do one textbook exercise.</li>
+        <li><b>Scored 85%+ on a test?</b> Turn the next fix block into extra flex time.</li>
+        <li><b>Every night:</b> look at the readiness check. Anything listed is tomorrow's first task.</li>
+      </ul>
+    </div>
+
+    <h3 id="coverage">Coverage map: every lecture → where it lives here</h3>
+    <div class="tbl"><table class="cov">
+      <tr><th>Lecture</th><th>Topics</th><th>Sections</th></tr>
+      <tr><td>1</td><td>Propositions, connectives, truth tables, converse/contrapositive, equivalences, De Morgan, tautologies</td><td><a href="#s1">§1</a> <a href="#s2">§2</a></td></tr>
+      <tr><td>2</td><td>Predicates, ∀/∃, negation, translation patterns, nested quantifiers, uniqueness, rules of inference</td><td><a href="#s3">§3</a> <a href="#s4">§4</a> <a href="#s5">§5</a></td></tr>
+      <tr><td>3</td><td>Terminology, direct proof, contraposition, contradiction, √2 irrational</td><td><a href="#s6">§6</a> <a href="#s7">§7</a></td></tr>
+      <tr><td>4</td><td>Cases, absolute value, triangle inequality, existence, counterexamples, uniqueness, Zermelo, Chomp</td><td><a href="#s8">§8</a> <a href="#s9">§9</a></td></tr>
+      <tr><td>5</td><td>Sets, subsets, power set, tuples, Cartesian product, set operations</td><td><a href="#s10">§10</a> <a href="#s11">§11</a></td></tr>
+      <tr><td>6</td><td>Functions, injective/surjective/bijective, inverse, composition, cardinality, Hilbert's hotel, diagonalization</td><td><a href="#s12">§12</a> <a href="#s13">§13</a></td></tr>
+      <tr><td>7</td><td>0.999… = 1, Russell, divisibility, division algorithm, congruences, bases, fast exponentiation</td><td><a href="#s13">§13</a> <a href="#s14">§14</a> <a href="#s15">§15</a></td></tr>
+      <tr><td>8</td><td>Primes, FTA, infinitely many primes, gcd/lcm, Euclidean algorithm</td><td><a href="#s16">§16</a> <a href="#s17">§17</a></td></tr>
+      <tr><td>9</td><td>Midterm 1 review</td><td>§1–§17</td></tr>
+      <tr><td>10</td><td>Extended Euclid, Bézout, p | ab, solving ax ≡ b, inverses, cancellation, CRT intro</td><td><a href="#s18">§18</a> <a href="#s19">§19</a></td></tr>
+      <tr><td>11</td><td>CRT, freshman's dream, Fermat, primality tests, RSA</td><td><a href="#s19">§19</a> <a href="#s20">§20</a> <a href="#s21">§21</a></td></tr>
+      <tr><td>12</td><td>Induction, sums, inequalities, harmonic numbers, divisibility, pie fights, strong induction, prime factorization, 5a + 3b</td><td><a href="#s22">§22</a> <a href="#s23">§23</a></td></tr>
+      <tr><td>13</td><td>Division algorithm by induction, forcing the induction, well-ordering, recursive definitions, Fibonacci, recursive algorithms, Hanoi</td><td><a href="#s23">§23</a> <a href="#s24">§24</a> <a href="#s25">§25</a></td></tr>
+      <tr><td>14</td><td>Product rule, division rule, inclusion–exclusion, complements, permutations, combinations, n! bounds, pigeonhole</td><td><a href="#s26">§26</a> <a href="#s27">§27</a> <a href="#s28">§28</a></td></tr>
+      <tr><td>15</td><td>Pigeonhole applications, compression, P/C review, stars &amp; bars, repeated letters, objects into boxes, combinatorial proofs, committee-chair, Pascal, binomial theorem</td><td><a href="#s27">§27</a> <a href="#s28">§28</a> <a href="#s29">§29</a> <a href="#s30">§30</a></td></tr>
+      <tr><td>16</td><td>Pascal's triangle, binomial theorem examples, Σ C(n, k) = 2ⁿ, probability, poker, complements, unions, Monty Hall</td><td><a href="#s29">§29</a> <a href="#s31">§31</a></td></tr>
+    </table></div>
+  </section>
+
   <div class="part"><p class="eyebrow">Part I</p><h2>Logic</h2></div>
 
   <!-- ================= 1 ================= -->
@@ -324,6 +494,7 @@ img{max-width:100%}
     <h2><span class="n">§1</span>Propositions &amp; connectives</h2>
     <p class="src">Lecture 1 · Rosen §1.1 · HW 1.1–1.3</p>
     <div class="gist"><p>A proposition is a sentence that's either true or false. The connectives (not, and, or, if-then, iff) glue propositions together, and each one is defined by its truth table.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Decide if a sentence is a proposition</li><li>Build a truth table for any formula</li><li>Translate English with “only if,” “unless,” “necessary,” “sufficient”</li><li>Write the converse, contrapositive and inverse</li></ul></div><div><b>Memorize</b><ul><li>Truth tables of ¬, ∧, ∨, ⊕, →, ↔</li><li>p → q is false only when p = T, q = F</li><li>“p only if q” = p → q; “p unless q” = ¬q → p</li><li>Precedence: ¬, ∧, ∨, →, ↔</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn</span>
       <p>A <span class="term">proposition</span> is a statement that is either true or false (not both).</p>
@@ -437,6 +608,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s1" data-sec="s1"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.1: 1, 13, 25, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 2 ================= -->
@@ -444,6 +616,7 @@ img{max-width:100%}
     <h2><span class="n">§2</span>Equivalences &amp; tautologies</h2>
     <p class="src">Lecture 1 · Rosen §1.3 · HW 1.4–1.6</p>
     <div class="gist"><p>Two formulas are equivalent when they always have the same truth value. A short list of equivalences lets you simplify formulas like algebra.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Show two formulas are equivalent, by truth table or by a labeled chain of laws</li><li>Decide if a formula is a tautology, contradiction or contingency</li></ul></div><div><b>Memorize</b><ul><li>p → q ≡ ¬p ∨ q ≡ ¬q → ¬p</li><li>¬(p → q) ≡ p ∧ ¬q</li><li>De Morgan's laws</li><li>Distributive laws</li><li>p ↔ q ≡ (p → q) ∧ (q → p)</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §1.3 Def 1</small></span>
       <p>A compound proposition that is <b>always true</b>, whatever the truth values of its variables, is a <span class="term">tautology</span>. One that is always false is a <span class="term">contradiction</span>. One that is neither is a <span class="term">contingency</span>.</p>
@@ -515,6 +688,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s2" data-sec="s2"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.3: 7, 9, 15, 19, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 3 ================= -->
@@ -522,6 +696,7 @@ img{max-width:100%}
     <h2><span class="n">§3</span>Predicates &amp; quantifiers</h2>
     <p class="src">Lecture 2 · Rosen §1.4 · HW 1.7, 1.9</p>
     <div class="gist"><p>A predicate is a sentence with a blank, like “x > 3.” ∀ means every x works; ∃ means at least one does. To negate, swap ∀ ↔ ∃ and negate what's inside.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Evaluate ∀/∃ statements over a given domain</li><li>Translate the four patterns (every / some / no / some-not)</li><li>Push negations inward</li></ul></div><div><b>Memorize</b><ul><li>¬∀x P ≡ ∃x ¬P and ¬∃x P ≡ ∀x ¬P</li><li>∀ pairs with →, ∃ pairs with ∧</li><li>∀ distributes over ∧; ∃ over ∨ (not the other way)</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn</span>
       <p>A <span class="term">predicate</span> is a statement involving variables which becomes true or false once the values of those variables are specified.</p>
@@ -620,6 +795,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s3" data-sec="s3"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.4: 9, 13, 23, 35, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 4 ================= -->
@@ -627,6 +803,7 @@ img{max-width:100%}
     <h2><span class="n">§4</span>Nested quantifiers</h2>
     <p class="src">Lecture 2 · Rosen §1.5 · HW 1.8–1.9</p>
     <div class="gist"><p>With two quantifiers, order matters. ∀x ∃y lets y depend on x; ∃y ∀x needs a single y that works for every x.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Read and translate nested quantifiers</li><li>Tell ∀x∃y from ∃y∀x and give an example where they differ</li><li>Negate nested statements</li><li>Write “exactly one” in symbols</li></ul></div><div><b>Memorize</b><ul><li>Swapping ∀ and ∃ changes the meaning</li><li>∃y∀x P ⇒ ∀x∃y P (not the converse)</li><li>∃!x P(x) ≡ ∃x[P(x) ∧ ∀y(y ≠ x → ¬P(y))]</li></ul></div></div></div>
 
     <div class="blk ex"><span class="tag">Example <small>L(x, y): “x loves y”</small></span>
       <ul>
@@ -686,6 +863,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s4" data-sec="s4"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.5: 9, 25, 27, 31, 39 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 5 ================= -->
@@ -693,6 +871,7 @@ img{max-width:100%}
     <h2><span class="n">§5</span>Rules of inference</h2>
     <p class="src">Lecture 2 · Rosen §1.6 · HW 1.10–1.11</p>
     <div class="gist"><p>Rules of inference are the legal moves for getting new facts from ones you have. A proof is a chain of legal moves.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Write a numbered argument from premises</li><li>Spot the two fallacies</li></ul></div><div><b>Memorize</b><ul><li>Modus ponens and tollens, hypothetical and disjunctive syllogism (names not tested)</li><li>The four quantifier rules (instantiation and generalization)</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn</span>
       <p>A <span class="term">(propositional) rule of inference</span> is a tautology of the form <span class="m">(q₁ ∧ … ∧ qₙ) → p</span>, expressing that if <span class="m">q₁, …, qₙ</span> are all true then p is true. It's often written with premises stacked above a line and the conclusion after “∴”.</p>
@@ -775,6 +954,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s5" data-sec="s5"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.6: 3, 5, 9, 15, 23 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <div class="part"><p class="eyebrow">Part II</p><h2>Proofs</h2></div>
@@ -784,6 +964,7 @@ img{max-width:100%}
     <h2><span class="n">§6</span>Vocabulary &amp; direct proof</h2>
     <p class="src">Lecture 3 · Rosen §1.7 · HW 2.1</p>
     <div class="gist"><p>A proof is an argument built from definitions. A direct proof assumes the “if” part and works forward to the “then” part.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Write a direct proof straight from the definitions</li><li>Use fresh variables for each number</li></ul></div><div><b>Memorize</b><ul><li>even: n = 2k; odd: n = 2k + 1</li><li>rational: p/q with q ≠ 0; irrational: real and not rational</li></ul></div></div></div>
 
     <div class="tbl"><table>
       <tr><th>Word</th><th>Meaning</th></tr>
@@ -852,6 +1033,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s6" data-sec="s6"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.7: 1, 3, 5, 7 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 7 ================= -->
@@ -859,6 +1041,7 @@ img{max-width:100%}
     <h2><span class="n">§7</span>Contraposition &amp; contradiction</h2>
     <p class="src">Lecture 3 · Rosen §1.7 · HW 2.2–2.5</p>
     <div class="gist"><p>Two indirect strategies: prove the contrapositive (¬q → ¬p), or assume the statement is false and reach something impossible.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Prove by contraposition and by contradiction, saying so in the first line</li><li>Prove √2 is irrational from memory</li></ul></div><div><b>Memorize</b><ul><li>p → q ≡ ¬q → ¬p</li><li>To contradict p → q, assume p ∧ ¬q</li><li>Required opening phrases for each method</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Proof by contraposition</small></span>
       <p>Since <span class="m">p → q ≡ ¬q → ¬p</span>, to prove p implies q we can instead prove ¬q implies ¬p. This is <span class="term">proof by contraposition</span>.</p>
@@ -927,6 +1110,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s7" data-sec="s7"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.7: 9, 13, 17, 19, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 8 ================= -->
@@ -934,6 +1118,7 @@ img{max-width:100%}
     <h2><span class="n">§8</span>Cases, existence, uniqueness, counterexamples</h2>
     <p class="src">Lecture 4 · Rosen §1.8 · HW 2.6–2.9</p>
     <div class="gist"><p>Split into cases that cover everything. To show something exists, find it (or show it must exist). One counterexample kills a “for all.”</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Prove by cases (parity, sign, remainders)</li><li>Give constructive and nonconstructive existence proofs</li><li>Disprove with a counterexample</li><li>Prove uniqueness</li></ul></div><div><b>Memorize</b><ul><li>|x| definition and the triangle inequality</li><li>Uniqueness = existence + (P(x) ∧ P(y) → x = y)</li></ul></div></div></div>
 
     <h3>Proof by cases</h3>
     <div class="blk defn"><span class="tag">Defn</span>
@@ -1010,6 +1195,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s8" data-sec="s8"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §1.8: 3, 5, 9, 15, 19, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 9 ================= -->
@@ -1017,6 +1203,7 @@ img{max-width:100%}
     <h2><span class="n">§9</span>Games &amp; strategy stealing</h2>
     <p class="src">Lecture 4 · HW 2.10–2.11 · (no game problems on Midterm 1)</p>
     <div class="gist"><p>In finite two-player games with no draws, someone has a winning strategy. In Chomp, player 1 wins by “stealing” player 2's strategy.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Explain Zermelo's theorem and the strategy-stealing idea in Chomp</li></ul></div><div><b>Memorize</b><ul><li>Finite game with no draws ⇒ someone has a winning strategy</li></ul></div></div></div>
 
     <div class="blk thm"><span class="tag">Thm <small>Zermelo's theorem on finite games</small></span>
       <p>Suppose two players alternate moves <span class="m">m₁, n₁, m₂, n₂, …, m_k, n_k</span>, each sees all earlier moves, and after k rounds exactly one player is declared the winner (no draws). Then <b>either player I or player II has a winning strategy</b>: a rule that says how to move on each turn, depending on the opponent's moves, that guarantees a win.</p>
@@ -1041,6 +1228,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s9" data-sec="s9"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §5.2: 15 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <div class="part"><p class="eyebrow">Part III</p><h2>Sets, functions &amp; infinity</h2></div>
@@ -1050,6 +1238,7 @@ img{max-width:100%}
     <h2><span class="n">§10</span>Sets</h2>
     <p class="src">Lecture 5 · Rosen §2.1 · HW 3.1–3.2, 3.4</p>
     <div class="gist"><p>A set is a bag of distinct items; order and repeats don't matter. Know ∈ (“is an item in”) versus ⊆ (“every item is also in”).</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Decide ∈ vs ⊆ for sets of sets</li><li>List power sets and Cartesian products</li></ul></div><div><b>Memorize</b><ul><li>A ⊆ B ⟺ ∀x(x ∈ A → x ∈ B)</li><li>A = B ⟺ A ⊆ B and B ⊆ A</li><li>|𝒫(A)| = 2ⁿ; ∅ ⊆ every set</li><li>∅ ≠ {∅}</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.1 Def 1</small></span>
       <p>A <span class="term">set</span> is an unordered collection of distinct objects, called its <span class="term">elements</span> or <span class="term">members</span>. <span class="m">a ∈ A</span> means a is an element of A; <span class="m">a ∉ A</span> means it isn't. Sets get uppercase letters, elements lowercase.</p>
@@ -1158,6 +1347,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s10" data-sec="s10"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §2.1: 1, 5, 11, 13, 21, 23 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 11 ================= -->
@@ -1165,6 +1355,7 @@ img{max-width:100%}
     <h2><span class="n">§11</span>Set operations</h2>
     <p class="src">Lecture 5 · Rosen §2.2 · HW 3.3–3.4</p>
     <div class="gist"><p>Union, intersection, difference and complement are “or,” “and,” “and not” and “not” for sets. Prove two sets are equal by chasing an element.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Compute ∪, ∩, −, complement</li><li>Prove a set identity by element chasing or double inclusion</li></ul></div><div><b>Memorize</b><ul><li>Definitions of ∪, ∩, −, complement</li><li>Set De Morgan</li><li>|A ∪ B| = |A| + |B| − |A ∩ B|</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.2 Defs 1–5</small></span>
       <ul>
@@ -1227,6 +1418,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s11" data-sec="s11"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §2.2: 3, 15, 19, 21, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 12 ================= -->
@@ -1234,6 +1426,7 @@ img{max-width:100%}
     <h2><span class="n">§12</span>Functions</h2>
     <p class="src">Lecture 6 · Rosen §2.3 · HW 3.5–3.10</p>
     <div class="gist"><p>A function gives every input exactly one output. Injective: no two inputs share an output. Surjective: every possible output is hit. Bijective: both.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Prove or disprove injective and surjective</li><li>Find ranges, images, inverses and compositions</li></ul></div><div><b>Memorize</b><ul><li>Injective: f(a) = f(b) → a = b</li><li>Surjective: ∀b ∃a f(a) = b</li><li>Range ≠ codomain</li><li>(f ∘ g)(x) = f(g(x))</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.3 Defs 1–2</small></span>
       <p>A <span class="term">function</span> f from A to B, written <span class="m">f : A → B</span>, assigns <b>exactly one</b> element <span class="m">f(a) ∈ B</span> to each element <span class="m">a ∈ A</span>. Functions are also called <span class="term">mappings</span>.</p>
@@ -1337,6 +1530,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s12" data-sec="s12"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §2.3: 1, 11, 23, 31, 33, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 13 ================= -->
@@ -1344,6 +1538,7 @@ img{max-width:100%}
     <h2><span class="n">§13</span>Cardinality &amp; infinity</h2>
     <p class="src">Lectures 6–7 · Rosen §2.5 · HW 3.10–3.12</p>
     <div class="gist"><p>Two sets are the same size if you can pair them up perfectly. ℕ, ℤ and ℚ are all the same size (countable), but ℝ is strictly bigger.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Show two sets have the same size by building a bijection</li><li>Explain why ℚ is countable and ℝ isn't (diagonal argument)</li></ul></div><div><b>Memorize</b><ul><li>|A| = |B| ⟺ bijection; |A| ≤ |B| ⟺ injection</li><li>Countable = same size as a subset of ℕ</li><li>|X| < |𝒫(X)|</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §2.5 Defs 1–2</small></span>
       <p>Sets A and B have the <span class="term">same cardinality</span>, <span class="m">|A| = |B|</span>, if there is a <b>bijection</b> from A to B.</p>
@@ -1421,6 +1616,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s13" data-sec="s13"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §2.5: 1, 3, 5, 11, 15, 33 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <div class="part"><p class="eyebrow">Part IV</p><h2>Number theory</h2></div>
@@ -1430,6 +1626,7 @@ img{max-width:100%}
     <h2><span class="n">§14</span>Divisibility &amp; modular arithmetic</h2>
     <p class="src">Lecture 7 · Rosen §4.1 · HW 4.1–4.6</p>
     <div class="gist"><p>a | b means b is a multiple of a. a mod m is the remainder. a ≡ b (mod m) means same remainder, and congruences can be added and multiplied like equations.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Find a div d and a mod d, including negative a</li><li>Prove divisibility facts</li><li>Reduce big expressions mod m</li></ul></div><div><b>Memorize</b><ul><li>a | b ⟺ b = ac</li><li>a = dq + r with 0 ≤ r < d</li><li>a ≡ b (mod m) ⟺ m | a − b</li><li>a | b, a | c ⇒ a | mb + nc</li><li>No cancelling unless gcd(c, m) = 1</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §4.1 Def 1</small></span>
       <p>If a and b are integers with <span class="m">a ≠ 0</span>, then <span class="term">a divides b</span>, written <span class="m">a | b</span>, if there is an integer c such that <span class="m">b = ac</span>. Then a is a <span class="term">factor</span> (divisor) of b and b is a <span class="term">multiple</span> of a. <span class="m">a ∤ b</span> means a does not divide b.</p>
@@ -1517,6 +1714,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s14" data-sec="s14"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.1: 5, 11, 13, 17, 27, 33, 43, 47 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 15 ================= -->
@@ -1524,6 +1722,7 @@ img{max-width:100%}
     <h2><span class="n">§15</span>Base-b expansions &amp; fast modular powers</h2>
     <p class="src">Lecture 7 · Rosen §4.2 · HW 4.7–4.9</p>
     <div class="gist"><p>Base b writes numbers using powers of b. Repeated squaring computes huge powers mod m in a handful of steps.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Convert between decimal and base b</li><li>Compute aⁿ mod m by repeated squaring</li></ul></div><div><b>Memorize</b><ul><li>Repeatedly divide by b; read the remainders bottom-up</li><li>Square, reduce, multiply the powers matching n's binary digits</li></ul></div></div></div>
 
     <div class="blk thm"><span class="tag">Thm <small>Rosen §4.2 Thm 1</small></span>
       <p>Let b be an integer greater than 1. Every positive integer n can be written <b>uniquely</b> as</p>
@@ -1581,6 +1780,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s15" data-sec="s15"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.2: 1, 3, 25, 27, 31 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 16 ================= -->
@@ -1588,6 +1788,7 @@ img{max-width:100%}
     <h2><span class="n">§16</span>Primes</h2>
     <p class="src">Lecture 8 · Rosen §4.3 · HW 4.11</p>
     <div class="gist"><p>Primes are the building blocks: every integer above 1 factors into primes in exactly one way, and there are infinitely many primes.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Factor numbers and test primality up to √n</li><li>Reproduce the proof that there are infinitely many primes</li></ul></div><div><b>Memorize</b><ul><li>Prime definition (1 isn't prime)</li><li>Fundamental theorem of arithmetic</li><li>a | b ⟺ every exponent of a ≤ exponent of b</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §4.3 Def 1</small></span>
       <p>An integer <span class="m">p &gt; 1</span> is <span class="term">prime</span> if its only positive factors are 1 and p. An integer greater than 1 that is not prime is <span class="term">composite</span>.</p>
@@ -1638,6 +1839,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s16" data-sec="s16"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.3: 1, 3, 9, 15, 17 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 17 ================= -->
@@ -1645,6 +1847,7 @@ img{max-width:100%}
     <h2><span class="n">§17</span>gcd, lcm &amp; the Euclidean algorithm</h2>
     <p class="src">Lecture 8 · Rosen §4.3 · HW 4.3–4.4, 4.10</p>
     <div class="gist"><p>gcd is the biggest shared divisor and lcm the smallest shared multiple. The Euclidean algorithm finds the gcd fast by repeated division.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Find gcd and lcm by factorization and by Euclid</li></ul></div><div><b>Memorize</b><ul><li>gcd = min exponents, lcm = max exponents</li><li>gcd·lcm = ab</li><li>gcd(a, b) = gcd(b, a mod b)</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>Rosen §4.3 Defs 2–5</small></span>
       <p>Let a, b be integers, not both zero. The <span class="term">greatest common divisor</span> <span class="m">gcd(a, b)</span> is the largest integer d with <span class="m">d | a</span> and <span class="m">d | b</span>.</p>
@@ -1695,6 +1898,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s17" data-sec="s17"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.3: 25, 27, 29, 33, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 18 ================= -->
@@ -1702,6 +1906,7 @@ img{max-width:100%}
     <h2><span class="n">§18</span>Bézout &amp; solving congruences</h2>
     <p class="src">Lecture 10 · Rosen §4.3–4.4 · HW 5.1–5.6</p>
     <div class="gist"><p>Run Euclid backwards to write gcd = sa + tb. That gives inverses mod m, which let you solve ax ≡ b (mod m).</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Write gcd = sa + tb by extended Euclid</li><li>Find inverses mod m or explain why none exists</li><li>Solve ax ≡ b (mod m), listing all solutions</li></ul></div><div><b>Memorize</b><ul><li>Bézout</li><li>Inverse exists ⟺ gcd(a, m) = 1</li><li>Solvable ⟺ gcd(a, m) | b; d solutions spaced m/d apart</li><li>gcd(a, b) = 1 and a | bc ⇒ a | c</li><li>p | ab ⇒ p | a or p | b</li></ul></div></div></div>
 
     <div class="blk thm"><span class="tag">Thm <small>Bézout's theorem (Rosen §4.3 Thm 6)</small></span>
       <p>If a and b are positive integers, there exist integers s and t such that <span class="m">gcd(a, b) = sa + tb</span>. That is, the gcd is an integer <b>linear combination</b> of a and b.</p>
@@ -1827,6 +2032,7 @@ img{max-width:100%}
       <label class="gotit"><input type="checkbox" id="got-s18" data-sec="s18"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.3 #39, 41, 43 and §4.4: 5, 9, 11, 13 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 19 ================= -->
@@ -1834,6 +2040,7 @@ img{max-width:100%}
     <h2><span class="n">§19</span>Chinese remainder theorem</h2>
     <p class="src">Lectures 10–11 · Rosen §4.4 · HW 5.7–5.8</p>
     <div class="gist"><p>If you know a number's remainders for several coprime moduli, you know the number itself, up to their product.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Solve a system of congruences by the CRT construction and by back-substitution</li></ul></div><div><b>Memorize</b><ul><li>CRT statement (pairwise coprime, unique mod M)</li><li>x = Σ aᵢMᵢyᵢ with Mᵢ = M/mᵢ and yᵢ = Mᵢ⁻¹ mod mᵢ</li></ul></div></div></div>
 
     <div class="blk thm"><span class="tag">Thm <small>Chinese Remainder Theorem (Rosen §4.4 Thm 2)</small></span>
       <p>Let <span class="m">m₁, …, mₙ</span> be <b>pairwise relatively prime</b> positive integers greater than 1, and <span class="m">a₁, …, aₙ</span> any integers. Then the system</p>
@@ -1876,6 +2083,7 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
       <label class="gotit"><input type="checkbox" id="got-s19" data-sec="s19"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.4: 21, 23, 31 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 20 ================= -->
@@ -1883,6 +2091,7 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
     <h2><span class="n">§20</span>Fermat's little theorem</h2>
     <p class="src">Lecture 11 · Rosen §4.4 · HW 5.9–5.10</p>
     <div class="gist"><p>Mod a prime p, a<sup>p−1</sup> ≡ 1 (when p ∤ a). So exponents can be shrunk mod p − 1.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Shrink big exponents mod a prime</li><li>Use the Fermat test to show a number is composite</li></ul></div><div><b>Memorize</b><ul><li>p prime, p ∤ a ⇒ a<sup>p−1</sup> ≡ 1; a^p ≡ a always</li><li>Reduce exponents mod p − 1</li><li>Fermat test, pseudoprimes, Carmichael numbers</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>binomial coefficients</small></span>
       <p><span class="m">(x + y)ⁿ = Σₖ C(n, k) xⁿ⁻ᵏyᵏ</span> where <span class="m">C(n, k) = n! / (k!(n − k)!)</span>, the rows of Pascal's triangle.</p>
@@ -1931,6 +2140,7 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
       <label class="gotit"><input type="checkbox" id="got-s20" data-sec="s20"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.4: 33, 35, 39 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 21 ================= -->
@@ -1938,6 +2148,7 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
     <h2><span class="n">§21</span>RSA public-key cryptography</h2>
     <p class="src">Lecture 11 · Rosen §4.6 · HW 5.11–5.12</p>
     <div class="gist"><p>Anyone can encrypt with the public key (n, e). Only someone who knows how n factors can compute d and decrypt.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Set up an RSA key, encrypt and decrypt a small example</li><li>Explain why decryption works</li></ul></div><div><b>Memorize</b><ul><li>n = pq, φ = (p − 1)(q − 1), gcd(e, φ) = 1</li><li>d = e⁻¹ mod φ</li><li>c = mᵉ mod n, m = cᵈ mod n</li></ul></div></div></div>
 
     <div class="blk idea"><span class="tag">Picture it <small>public key = open padlock</small></span>
       <p>Alice hands out open padlocks to everyone (the <b>public</b> encryption function f) but keeps the only key (the <b>secret</b> decryption function g, with g(f(m)) = m). Anyone can snap a message shut, but only Alice can open it. Knowing how to compute f and seeing f(m) should not let an eavesdropper (Eve) recover m. Scary fact from lecture: <b>nobody has proved this is actually hard.</b> It's a very important open problem.</p>
@@ -1981,337 +2192,628 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       <label class="gotit"><input type="checkbox" id="got-s21" data-sec="s21"> Got it: I can do these without peeking</label>
     </div>
 
+    <p class="tb"><b>Textbook practice</b> Rosen §4.6: 25, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
 
-  <div class="part"><p class="eyebrow">Part V · recent lectures</p><h2>Induction &amp; recursion</h2>
-    <p class="part-note">The lecture notes after Oct 6 aren't in your folder, so Parts V and VI follow Rosen Chapters 5–6, which is what the syllabus lists for these weeks. If your lecture notes differ, trust them.</p></div>
+
+  <div class="part"><p class="eyebrow">Part V</p><h2>Induction &amp; recursion</h2></div>
 
   <!-- ================= 22 ================= -->
   <section class="sec" id="s22">
     <h2><span class="n">§22</span>Mathematical induction</h2>
-    <p class="src">Rosen §5.1 · syllabus: Oct 8</p>
+    <p class="src">Lecture 12 · Rosen §5.1 · HW 6.1–6.4</p>
     <div class="gist"><p>To prove something for <b>every</b> n, prove it for the first n, then prove that being true for one n forces it to be true for the next.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Write a correctly labeled induction proof for sums, divisibility and inequalities</li><li>Start the induction at any base case n = a</li><li>Spot a broken induction proof</li></ul></div><div><b>Memorize</b><ul><li>Base case + induction step (P(k) → P(k + 1)); label both and state the IH</li><li>1 + ⋯ + n = n(n + 1)/2</li><li>1 + 2 + ⋯ + 2ⁿ = 2ⁿ⁺¹ − 1</li></ul></div></div></div>
 
     <div class="blk idea"><span class="tag">Picture it <small>dominoes</small></span>
-      <p>A line of dominoes, one for each n. If (1) you knock over the first one and (2) every domino that falls knocks over the next, then <b>every</b> domino falls. You never have to check them one at a time.</p>
+      <p>A line of dominoes, one per n. If you knock over the first one, and every falling domino knocks over the next, then <b>every</b> domino falls: P(1) → P(2) → P(3) → ⋯</p>
     </div>
 
-    <div class="blk defn"><span class="tag">Defn <small>principle of mathematical induction</small></span>
-      <p>To prove P(n) for all positive integers n:</p>
+    <div class="blk defn"><span class="tag">Defn <small>an induction proof has two parts</small></span>
       <ol>
-        <li><b>Basis step:</b> show P(1) is true.</li>
-        <li><b>Inductive step:</b> show that for every k ≥ 1, if P(k) is true then P(k + 1) is true. Assuming P(k) here is called the <span class="term">inductive hypothesis</span> (IH).</li>
+        <li><b>Base case:</b> show P(1) is true.</li>
+        <li><b>Induction step:</b> show that for every positive integer k, P(k) implies P(k + 1). Assuming P(k) is called the <span class="term">induction hypothesis</span> (IH).</li>
       </ol>
-      <p>In logic: <span class="m">[P(1) ∧ ∀k (P(k) → P(k + 1))] → ∀n P(n)</span>. The start can be any integer b instead of 1 (then you get P(n) for all n ≥ b).</p>
+      <p><b>Start anywhere:</b> to prove P(n) for all n ≥ a, the base case is P(a) and the step is “for all k ≥ a, P(k) → P(k + 1).”</p>
+    </div>
+    <div class="blk caution"><span class="tag">Caution <small>lecture and HW 6 both insist on this</small></span>
+      <p><b>Clearly label both parts</b> (“Base case”, “Induction step”) and <b>state the induction hypothesis</b> in words. Start with “By induction.”</p>
     </div>
 
-    <div class="blk idea"><span class="tag">Template <small>write it like this</small></span>
-      <p><b>Basis:</b> “P(1) says … , which is true because …”<br>
-      <b>Inductive step:</b> “Let k ≥ 1 and assume P(k): <i>[write it out]</i>. We show P(k + 1): <i>[write out the goal]</i>.” Start from the k + 1 side, find the P(k) piece inside it, replace it using the IH, and simplify until you reach the goal.<br>
-      <b>Conclusion:</b> “By induction, P(n) holds for all n ≥ 1.”</p>
+    <div class="blk idea"><span class="tag">Template</span>
+      <p><b>By induction.</b><br>
+      <b>Base case (n = 1):</b> check it directly.<br>
+      <b>Induction step:</b> “Assume P(k): <i>[write it out]</i>. We need to show P(k + 1): <i>[write out the goal]</i>.” Start from the k + 1 side, find the P(k) piece inside it, replace it using the IH, and simplify until you reach the goal. □</p>
     </div>
 
-    <div class="blk ex"><span class="tag">Example <small>a sum formula</small></span>
-      <p><b>Claim:</b> 1 + 2 + ⋯ + n = n(n + 1)/2.</p>
-      <p><b>Basis:</b> n = 1: the left side is 1 and the right side is 1·2/2 = 1 ✓.</p>
-      <p><b>Step:</b> assume 1 + ⋯ + k = k(k + 1)/2. Then</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: a sum formula</small></span>
+      <p><b>Thm.</b> 1 + 2 + ⋯ + n = n(n + 1)/2.</p>
+      <p><b>Base case (n = 1):</b> 1 = 1·2/2 ✓.</p>
+      <p><b>Induction step:</b> assume 1 + ⋯ + k = k(k + 1)/2. Then</p>
       <div class="steps">
         <span>1 + ⋯ + k + (k + 1)</span><span></span>
-        <span>= k(k + 1)/2 + (k + 1)</span><span class="why">the first k terms are replaced using the IH</span>
-        <span>= (k + 1)(k/2 + 1)</span><span class="why">factor out (k + 1)</span>
-        <span>= (k + 1)(k + 2)/2</span><span class="why">this is the formula with n = k + 1 ✓</span>
+        <span>= k(k + 1)/2 + (k + 1)</span><span class="why">use the IH on the first k terms</span>
+        <span>= (k + 1)(k/2 + 1) = (k + 1)(k + 2)/2</span><span class="why">factor out (k + 1); this is the n = k + 1 formula ✓</span>
       </div>
-      <p>The key move in sum proofs: <b>the sum up to k + 1 is the sum up to k plus one more term.</b></p>
+      <p><b>Picture proof (lecture):</b> stack 1, 2, …, n dots as a staircase. Two staircases fit together into an n × (n + 1) rectangle, so twice the sum is n(n + 1).</p>
+      <p>Notation: <span class="m">Σᵢ₌ₐᵇ f(i) = f(a) + f(a + 1) + ⋯ + f(b)</span>.</p>
     </div>
-
-    <div class="blk ex"><span class="tag">Example <small>sum of odd numbers</small></span>
-      <p><b>Claim:</b> 1 + 3 + 5 + ⋯ + (2n − 1) = n². (Check: 1 = 1, 1 + 3 = 4, 1 + 3 + 5 = 9.)</p>
-      <p><b>Basis:</b> 1 = 1² ✓. <b>Step:</b> assume the sum up to (2k − 1) is k². Add the next odd number, 2(k + 1) − 1 = 2k + 1: the total is k² + 2k + 1 = (k + 1)² ✓.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: powers of 2</small></span>
+      <p><b>Thm.</b> 1 + 2 + 2² + ⋯ + 2ⁿ = 2ⁿ⁺¹ − 1. <b>Base:</b> 1 + 2 = 2² − 1 ✓. <b>Step:</b> (2ᵏ⁺¹ − 1) + 2ᵏ⁺¹ = 2·2ᵏ⁺¹ − 1 = 2ᵏ⁺² − 1 ✓.</p>
+      <p>(HW 6.1 generalizes this to the geometric series Σ arʲ = (arⁿ⁺¹ − a)/(r − 1).)</p>
     </div>
-
-    <div class="blk ex"><span class="tag">Example <small>a divisibility claim</small></span>
-      <p><b>Claim:</b> 3 | n³ − n for every n ≥ 1.</p>
-      <p><b>Basis:</b> 1 − 1 = 0, and 3 | 0 ✓.</p>
-      <p><b>Step:</b> assume 3 | k³ − k. Expand: (k + 1)³ − (k + 1) = k³ + 3k² + 3k + 1 − k − 1 = <b>(k³ − k)</b> + 3(k² + k). The first part is divisible by 3 by the IH, and the second part has a factor of 3. A sum of multiples of 3 is a multiple of 3 ✓.</p>
-      <p>The key move in divisibility proofs: <b>rearrange the k + 1 expression so the k expression appears inside it.</b></p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: a divisibility claim</small></span>
+      <p><b>Thm.</b> 3 | 4ⁿ − 1 for all n ≥ 1. <b>Base:</b> 3 | 3 ✓. <b>Step:</b> 4ᵏ⁺¹ − 1 = 4·4ᵏ − 1 = <b>3·4ᵏ</b> + <b>(4ᵏ − 1)</b>. The first part is a multiple of 3, and the second is divisible by 3 by the IH, so the sum is too ✓.</p>
+      <p>Key move: <b>rewrite the k + 1 expression so the k expression shows up inside it.</b></p>
     </div>
-
-    <div class="blk ex"><span class="tag">Example <small>an inequality, with a later start</small></span>
-      <p><b>Claim:</b> 2ⁿ &lt; n! for all n ≥ 4. (It's false for n = 1, 2, 3, so the basis is n = 4.)</p>
-      <p><b>Basis:</b> 2⁴ = 16 &lt; 24 = 4! ✓. <b>Step:</b> assume 2ᵏ &lt; k! with k ≥ 4. Then 2ᵏ⁺¹ = 2·2ᵏ &lt; 2·k! &lt; (k + 1)·k! = (k + 1)!, using 2 &lt; k + 1 ✓.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: inequalities</small></span>
+      <p><b>2ⁿ &gt; n for n ≥ 1.</b> Step: 2ᵏ⁺¹ = 2·2ᵏ &gt; 2k = k + k ≥ k + 1 (since k ≥ 1).</p>
+      <p><b>2ⁿ &gt; n² for n ≥ 5</b> (base case n = 5: 32 &gt; 25). Step: 2ᵏ⁺¹ = 2·2ᵏ &gt; 2k², and 2k² ≥ (k + 1)² ⟺ k² − 2k − 1 ≥ 0 ⟺ (k − 1)² ≥ 2, true for k ≥ 5.</p>
+      <p><b>Harmonic numbers</b> Hₙ = 1 + ½ + ⋯ + 1/n: lecture proves H₂ⁿ ≥ 1 + n/2. The step adds 2ᵏ terms, each at least 1/2ᵏ⁺¹, so it adds at least ½.</p>
+      <p>Inequality steps: use the IH once, then show the leftover inequality separately (often “k ≥ something”).</p>
     </div>
-
+    <div class="blk side"><span class="tag">Sidebar <small>pie fights</small></span>
+      <p>Lecture 12: if an odd number n ≥ 3 of people stand at different distances and each throws a pie at their nearest neighbor, someone isn't hit. (Induct by 2: the closest pair throw at each other.)</p>
+    </div>
     <div class="blk caution"><span class="tag">Caution</span>
       <ul>
-        <li>Don't assume P(k + 1). You assume P(k) and <i>prove</i> P(k + 1).</li>
-        <li>You must actually <b>use</b> the inductive hypothesis. If you didn't, it wasn't an induction proof.</li>
-        <li>Don't skip the basis. Without a first domino, nothing falls.</li>
-        <li>Check that the step works for the <b>smallest</b> k. The famous fake proof that “all horses are the same color” breaks exactly at k = 1 → 2.</li>
+        <li>Assume P(k) and <i>prove</i> P(k + 1); never assume P(k + 1).</li>
+        <li>You must actually <b>use</b> the IH.</li>
+        <li>Make sure the step works for the <b>smallest</b> k. HW 6.4's fake proof that “x = y whenever max(x, y) = n” breaks because x − 1 or y − 1 can be 0, which isn't a positive integer, so the IH doesn't apply.</li>
       </ul>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
-        <li><p>Prove 2 + 4 + ⋯ + 2n = n(n + 1) by induction.</p><details class="hint"><summary>Hint</summary><div>In the step, add the next term 2(k + 1) to k(k + 1).</div></details><details class="ans"><summary>Answer</summary><div>Basis: 2 = 1·2. Step: k(k + 1) + 2(k + 1) = (k + 1)(k + 2).</div></details></li>
-        <li><p>Prove 5 | 6ⁿ − 1 for all n ≥ 1.</p><details class="hint"><summary>Hint</summary><div>6ᵏ⁺¹ − 1 = 6(6ᵏ − 1) + 5.</div></details><details class="ans"><summary>Answer</summary><div>Basis: 5 | 5. Step: by the IH 5 | 6ᵏ − 1, so 5 divides 6(6ᵏ − 1) + 5.</div></details></li>
-        <li><p>What's wrong with starting the inductive step with “Assume P(k + 1)”?</p><details class="ans"><summary>Answer</summary><div>That assumes what you're trying to prove. Assume P(k), then prove P(k + 1).</div></details></li>
+        <li><p>Prove 2 + 4 + ⋯ + 2n = n(n + 1) by induction.</p><details class="hint"><summary>Hint</summary><div>In the step, add the next term 2(k + 1) to k(k + 1).</div></details><details class="ans"><summary>Answer</summary><div>Base case: 2 = 1·2. Induction step: k(k + 1) + 2(k + 1) = (k + 1)(k + 2).</div></details></li>
+        <li><p>Prove 5 | 6ⁿ − 1 for all n ≥ 1.</p><details class="hint"><summary>Hint</summary><div>6ᵏ⁺¹ − 1 = 6(6ᵏ − 1) + 5.</div></details><details class="ans"><summary>Answer</summary><div>Base case: 5 | 5. Step: 5 | 6ᵏ − 1 by the IH, so 5 divides 6(6ᵏ − 1) + 5.</div></details></li>
+        <li><p>What must every induction proof clearly contain?</p><details class="ans"><summary>Answer</summary><div>A labeled base case, a labeled induction step, and the induction hypothesis stated in words.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s22" data-sec="s22"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §5.1: 3, 5, 7, 9, 21, 31, 33 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 23 ================= -->
   <section class="sec" id="s23">
-    <h2><span class="n">§23</span>Strong induction &amp; well-ordering</h2>
-    <p class="src">Rosen §5.2 · syllabus: Oct 8</p>
-    <div class="gist"><p>Strong induction lets you assume <b>all</b> the earlier cases, not just the one before. Well-ordering says every nonempty set of natural numbers has a smallest element.</p></div>
+    <h2><span class="n">§23</span>Strong induction, well-ordering, forcing the induction</h2>
+    <p class="src">Lectures 12–13 · Rosen §5.2 · HW 6.5, 6.8, 6.11, 6.12</p>
+    <div class="gist"><p>Strong induction lets you assume <b>all</b> earlier cases, not just the previous one. Well-ordering says every nonempty set of natural numbers has a smallest element.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Use strong induction with the right number of base cases</li><li>Use well-ordering (the smallest-element argument)</li></ul></div><div><b>Memorize</b><ul><li>Strong induction: assume P(1), …, P(k) to prove P(k + 1)</li><li>Well-ordering: every nonempty A ⊆ ℕ has a least element</li><li>Number of base cases = how far back the step reaches</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn <small>strong induction</small></span>
-      <p>To prove P(n) for all n ≥ 1: <b>Basis:</b> P(1). <b>Inductive step:</b> for k ≥ 1, assume P(1), P(2), …, P(k) are <b>all</b> true, and prove P(k + 1).</p>
-      <p>It's just as valid as ordinary induction. Use it when the k + 1 case breaks into pieces that are smaller, but not necessarily equal to k.</p>
+      <p><b>Base case:</b> P(1) (or several base cases). <b>Induction step:</b> for all k, P(1) ∧ ⋯ ∧ P(k) → P(k + 1). You can also start at any a.</p>
+      <p>Use it when the k + 1 case breaks into smaller pieces that aren't necessarily k.</p>
     </div>
     <div class="blk idea"><span class="tag">Picture it <small>a ladder</small></span>
-      <p>Ordinary induction: “if I can reach rung k, I can reach rung k + 1.” Strong induction: “if I can reach <i>every</i> rung up to k, I can reach rung k + 1.” Sometimes you need to step up from a rung further down.</p>
+      <p>Ordinary: “if I can reach rung k, I can reach rung k + 1.” Strong: “if I can reach <i>every</i> rung up to k, I can reach k + 1.” Sometimes you step up from a rung further down.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: prime factorizations exist</small></span>
+      <p><b>Thm.</b> Every n ≥ 2 is a product of primes.</p>
+      <p><b>Base case (n = 2):</b> 2 is prime. <b>Induction step:</b> assume every number from 2 to k is a product of primes. If k + 1 is prime, done. Otherwise k + 1 = a·b with 2 ≤ a, b ≤ k, and by the IH a and b are products of primes, so a·b is too. □</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 12: making amounts from 5s and 3s</small></span>
+      <p><b>Thm.</b> Every n ≥ 8 equals 5a + 3b for some integers a, b ≥ 0.</p>
+      <p><b>Base cases (n = 8, 9, 10):</b> 8 = 5 + 3, 9 = 3 + 3 + 3, 10 = 5 + 5.</p>
+      <p><b>Induction step:</b> assume 8, …, k all work, where k ≥ 10. Then k + 1 − 3 = k − 2 ≥ 8 works by the IH: k − 2 = 5a + 3b. So k + 1 = 5a + 3(b + 1). □</p>
+      <p>The step reaches back 3, so you need 3 base cases. Rule: <b>the number of base cases = how far back the step reaches</b>.</p>
     </div>
 
-    <div class="blk ex"><span class="tag">Example <small>existence of prime factorizations</small></span>
-      <p><b>Claim:</b> every integer n ≥ 2 is a product of primes. (This is the existence half of the Fundamental Theorem of Arithmetic, §16.)</p>
-      <p><b>Basis:</b> 2 is prime, so it's a product of one prime ✓.</p>
-      <p><b>Step:</b> assume every integer from 2 to k is a product of primes. Look at k + 1. If it's prime, done. If not, k + 1 = ab with 2 ≤ a, b ≤ k. By the strong IH, a and b are both products of primes, so ab is too ✓.</p>
-      <p>Ordinary induction wouldn't help here: knowing about k says nothing about k + 1's factors a and b.</p>
+    <div class="blk thm"><span class="tag">Thm <small>well-ordering principle (Lecture 13)</small></span>
+      <p>If A ⊆ ℕ is nonempty, then A has a <b>smallest element</b>.</p>
+      <p class="proof qed">By contraposition: if A has no smallest element, show A is empty, i.e. a ∉ A for every a, by strong induction. Base case: 0 ∉ A (otherwise 0 would be the smallest). Step: assume 0, …, k ∉ A. If k + 1 ∈ A, it would be the smallest element. Contradiction!</p>
+      <p>Proof style it enables: “take the <b>smallest</b> counterexample (or smallest divisor, smallest element …) and show something smaller exists.” HW 6.12: the least divisor d &gt; 1 of n must be prime, since any factor of d would be a smaller divisor of n.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example <small>postage stamps</small></span>
-      <p><b>Claim:</b> every amount n ≥ 12 cents can be made from 4¢ and 5¢ stamps.</p>
-      <p><b>Basis (four cases):</b> 12 = 4+4+4, 13 = 4+4+5, 14 = 4+5+5, 15 = 5+5+5.</p>
-      <p><b>Step:</b> for k ≥ 15, to make k + 1 cents, make (k + 1) − 4 = k − 3 cents (possible by the IH, since 12 ≤ k − 3 ≤ k) and add a 4¢ stamp ✓.</p>
-      <p>Why four basis cases? The step jumps back 4, so it needs four starting values to cover 12, 13, 14, 15 before it takes over.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 13: the division algorithm, finally proved</small></span>
+      <p>For d &gt; 0 and a ≥ 0, unique q, r with 0 ≤ r &lt; d and a = qd + r. Strong induction on a: if 0 ≤ a &lt; d, the only option is q = 0, r = a. If a ≥ d, then a = qd + r ⟺ a − d = (q − 1)d + r, and the IH gives a unique answer for the smaller number a − d.</p>
     </div>
-
-    <div class="blk thm"><span class="tag">Well-ordering property</span>
-      <p>Every nonempty set of nonnegative integers has a <b>least element</b>.</p>
-      <p>It's equivalent to induction, and gives the “smallest counterexample” proof style: suppose the claim fails, take the <i>smallest</i> n where it fails, and show an even smaller failure exists. Contradiction.</p>
-    </div>
-    <div class="blk ex"><span class="tag">Example <small>why the division algorithm is true (promised in Lecture 7)</small></span>
-      <p>Given a and d &gt; 0, look at the set S = {a − dq : q an integer, a − dq ≥ 0}. It's nonempty (take q very negative). By well-ordering, it has a least element r = a − dq, so a = dq + r and r ≥ 0.</p>
-      <p>If r ≥ d, then r − d = a − d(q + 1) would be a smaller element of S. Contradiction. So <b>0 ≤ r &lt; d</b> ✓.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 13: forcing the induction</small></span>
+      <p>Proving Σᵢ₌₁ⁿ 1/i² ≤ 2 directly by induction fails (adding a term could push you past 2). Prove the <b>stronger</b> claim Σ 1/i² ≤ 2 − 1/n instead. Step: (2 − 1/k) + 1/(k + 1)² ≤ 2 − 1/k + 1/(k(k + 1)) = 2 − 1/(k + 1).</p>
+      <p>Lesson: a stronger IH can make the step easier.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
-        <li><p>Why does the postage-stamp proof need four basis cases?</p><details class="ans"><summary>Answer</summary><div>The step reaches back 4 (it uses k − 3), so 12 through 15 must be checked directly.</div></details></li>
-        <li><p>What's the least element of {n ∈ ℕ : n² &gt; 50}?</p><details class="ans"><summary>Answer</summary><div>8 (7² = 49 isn't enough, 8² = 64 is).</div></details></li>
+        <li><p>Prove every n ≥ 4 is 2a + 5b (a, b ≥ 0). How many base cases do you need?</p><details class="hint"><summary>Hint</summary><div>The step uses k − 1 = (k + 1) − 2.</div></details><details class="ans"><summary>Answer</summary><div>Two base cases: 4 = 2·2 and 5 = 5. Step (k ≥ 5): k − 1 ≥ 4 works by the IH, so add a 2.</div></details></li>
+        <li><p>Why does the 5a + 3b (n ≥ 8) proof need 3 base cases?</p><details class="ans"><summary>Answer</summary><div>The step goes back 3 (from k + 1 to k − 2), so 8, 9, 10 must be checked directly.</div></details></li>
+        <li><p>What's the least element of {n ∈ ℕ : n² &gt; 50}?</p><details class="ans"><summary>Answer</summary><div>8.</div></details></li>
+        <li><p>What does “forcing the induction” mean?</p><details class="ans"><summary>Answer</summary><div>Proving a stronger statement because its step is easier, e.g. Σ 1/i² ≤ 2 − 1/n instead of ≤ 2.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s23" data-sec="s23"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §5.2: 3, 5, 7, 29, 37 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 24 ================= -->
   <section class="sec" id="s24">
-    <h2><span class="n">§24</span>Recursive definitions &amp; structural induction</h2>
-    <p class="src">Rosen §5.3 · syllabus: Oct 13</p>
-    <div class="gist"><p>Define something by giving a starting value and a rule that builds each new value from earlier ones. Then prove things about it by induction, which follows the same structure.</p></div>
+    <h2><span class="n">§24</span>Recursive definitions &amp; Fibonacci</h2>
+    <p class="src">Lecture 13 · Rosen §5.3 · HW 6.6–6.8</p>
+    <div class="gist"><p>Define a sequence by giving its starting values and a rule for each new term from earlier terms. Prove things about it by induction, which follows the same structure.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Compute terms of a recursive sequence and guess and prove a formula</li><li>Prove Fibonacci facts by (strong) induction</li></ul></div><div><b>Memorize</b><ul><li>The lecture's Fibonacci: f₀ = f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂</li><li>f₀ + ⋯ + fₙ = fₙ₊₂ − 1</li></ul></div></div></div>
 
-    <div class="blk defn"><span class="tag">Defn <small>recursively defined function</small></span>
-      <p><b>Basis step:</b> give the value at the start (e.g. f(0)). <b>Recursive step:</b> give a rule for f(n + 1) in terms of earlier values.</p>
+    <div class="blk defn"><span class="tag">Defn</span>
+      <p>A <span class="term">recursive definition</span> of a function on ℕ gives some <b>initial values (base cases)</b> and a <b>rule</b> for f(n) in terms of earlier values of f.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example</span>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 13</small></span>
       <ul>
-        <li>f(0) = 3, f(n + 1) = 2f(n) + 3. Unroll it: f(1) = 2·3 + 3 = 9, f(2) = 2·9 + 3 = 21, f(3) = 45, f(4) = 93.</li>
-        <li><b>Factorial:</b> 0! = 1 and (n + 1)! = (n + 1)·n!.</li>
-        <li><b>Fibonacci:</b> f₀ = 0, f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂. That gives 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, … Two basis values are needed because each step looks back two.</li>
+        <li>g₀ = 1, gₙ = 2gₙ₋₁: gives 1, 2, 4, 8, 16, so the guess is gₙ = 2ⁿ (prove it by induction).</li>
+        <li>h₁ = 1, hₙ = n·hₙ₋₁: gives 1, 2, 6, 24, 120, so hₙ = n!.</li>
+        <li><b>Fibonacci (lecture's convention):</b> <b>f₀ = 1, f₁ = 1</b>, fₙ = fₙ₋₁ + fₙ₋₂, giving 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, … Two base cases, because each step looks back two.</li>
       </ul>
     </div>
+    <div class="blk caution"><span class="tag">Caution</span>
+      <p>Rosen uses f₀ = 0, f₁ = 1 (shifted by one). In this class (lecture and HW 6), <b>f₀ = f₁ = 1</b>. Check which convention a problem uses.</p>
+    </div>
     <div class="blk idea"><span class="tag">Picture it</span>
-      <p>A recursive definition is a recipe that refers to earlier batches: “Day 0: 3 cookies. Each day: double yesterday's cookies and add 3.” To know day 4, work up from day 0.</p>
+      <p>A recipe that refers back to earlier batches: “Day 0: 1 rabbit pair. Each day: as many as yesterday plus the day before.” To know day 10, work up from day 0. The Droste effect (a picture containing itself) is the lecture's image.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example <small>strong induction on Fibonacci</small></span>
-      <p><b>Claim:</b> fₙ &lt; 2ⁿ for all n ≥ 1. Basis: f₁ = 1 &lt; 2 and f₂ = 1 &lt; 4. Step: f_{k+1} = f_k + f_{k−1} &lt; 2ᵏ + 2ᵏ⁻¹ &lt; 2ᵏ + 2ᵏ = 2ᵏ⁺¹ ✓. (It uses two earlier cases, so it's strong induction.)</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 13: induction on Fibonacci</small></span>
+      <p><b>Thm.</b> f₀ + f₁ + ⋯ + fₙ = fₙ₊₂ − 1.</p>
+      <p><b>Base case (n = 0):</b> f₀ = 1 = 2 − 1 = f₂ − 1 ✓.</p>
+      <p><b>Induction step:</b> assume f₀ + ⋯ + fₖ = fₖ₊₂ − 1. Then f₀ + ⋯ + fₖ + fₖ₊₁ = (fₖ₊₂ − 1) + fₖ₊₁ = fₖ₊₃ − 1, using the recursion fₖ₊₃ = fₖ₊₂ + fₖ₊₁ ✓.</p>
+      <p><b>Strong induction (lecture):</b> fₙ ≥ φⁿ⁻² for n ≥ 3, where φ = (1 + √5)/2 ≈ 1.618 satisfies φ² = φ + 1. Two base cases (n = 3, 4); the step uses fₖ + fₖ₋₁ ≥ φᵏ⁻² + φᵏ⁻³ = φᵏ⁻³(φ + 1) = φᵏ⁻¹.</p>
     </div>
-
-    <div class="blk defn"><span class="tag">Defn <small>recursively defined sets</small></span>
-      <p><b>Basis:</b> list some starting elements. <b>Recursive step:</b> rules for building new elements from ones already in the set. Nothing else is in the set.</p>
-      <p>Example: 3 ∈ S, and if x, y ∈ S then x + y ∈ S. Then S = {3, 6, 9, …}, the positive multiples of 3.</p>
-      <p>Strings over an alphabet Σ: the empty string λ is in Σ*, and if w ∈ Σ* and x ∈ Σ then wx ∈ Σ* (add one symbol at the end).</p>
+    <div class="blk side"><span class="tag">Sidebar <small>miles to km</small></span>
+      <p>fₙ₊₁/fₙ → φ ≈ 1.618, and 1 mile ≈ 1.609 km. So to convert a Fibonacci number of miles, take the next Fibonacci number: 13 miles ≈ 21 km. For other numbers, split into Fibonacci numbers (HW 6.8): 26 = 21 + 5 miles ≈ 34 + 8 = 42 km.</p>
     </div>
-    <div class="blk thm"><span class="tag">Structural induction</span>
-      <p>To prove every element of a recursively defined set has a property: (1) show the <b>basis elements</b> have it; (2) show each <b>recursive rule</b> preserves it (if the inputs have it, so does the output).</p>
-      <p>Example: every x in S above is divisible by 3. Basis: 3 is. Step: if 3 | x and 3 | y then 3 | x + y ✓.</p>
+    <div class="blk thm"><span class="tag">Recursive sets &amp; structural induction <small>Rosen §5.3</small></span>
+      <p>A set can be defined the same way: basis elements plus rules for building new elements. Example: 3 ∈ S, and if x, y ∈ S then x + y ∈ S; then S is the positive multiples of 3. To prove every element has a property, show the basis elements have it and each rule preserves it.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
+        <li><p>Using the lecture's convention, list f₀ through f₇.</p><details class="ans"><summary>Answer</summary><div>1, 1, 2, 3, 5, 8, 13, 21.</div></details></li>
+        <li><p>Check f₀ + ⋯ + f₄ = f₆ − 1.</p><details class="ans"><summary>Answer</summary><div>1 + 1 + 2 + 3 + 5 = 12 and f₆ − 1 = 13 − 1 = 12 ✓.</div></details></li>
         <li><p>a₀ = 1, aₙ₊₁ = 3aₙ − 1. Find a₁, a₂, a₃.</p><details class="ans"><summary>Answer</summary><div>2, 5, 14.</div></details></li>
         <li><p>Give a recursive definition of 2ⁿ.</p><details class="ans"><summary>Answer</summary><div>2⁰ = 1 and 2ⁿ⁺¹ = 2·2ⁿ.</div></details></li>
-        <li><p>1 ∈ S, and if x ∈ S then x + 2 ∈ S. What is S?</p><details class="ans"><summary>Answer</summary><div>The positive odd numbers.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s24" data-sec="s24"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §5.3: 1, 3, 7, 13, 23, 25, 27 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 25 ================= -->
   <section class="sec" id="s25">
-    <h2><span class="n">§25</span>Recursive algorithms</h2>
-    <p class="src">Rosen §5.4 · syllabus: Oct 13</p>
-    <div class="gist"><p>A recursive algorithm solves a problem by calling itself on a smaller version, until it hits a case small enough to answer directly.</p></div>
-    <div class="blk idea"><span class="tag">Picture it <small>Russian nesting dolls</small></span>
-      <p>Open the doll, find a smaller doll, and repeat until you hit the solid one in the middle (the base case). Every recursive algorithm needs a base case and must shrink the input each call, or it never stops.</p>
+    <h2><span class="n">§25</span>Recursive algorithms &amp; the Tower of Hanoi</h2>
+    <p class="src">Lecture 13 · Rosen §5.4 · HW 6.9</p>
+    <div class="gist"><p>A recursive algorithm solves a problem by calling itself on smaller inputs until it hits a base case. Its correctness and its running time are proved by induction.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Describe a recursive algorithm and prove it correct by induction</li><li>Solve and count Tower of Hanoi moves</li></ul></div><div><b>Memorize</b><ul><li>Recursive Euclid</li><li>Hanoi: Hₙ = 2Hₙ₋₁ + 1 = 2ⁿ − 1</li></ul></div></div></div>
+
+    <div class="blk defn"><span class="tag">Defn</span>
+      <p>A <span class="term">recursive algorithm</span> calls itself on smaller inputs as part of its definition.</p>
+      <p><b>Euclid's algorithm, recursively:</b> gcd(a, b) with a ≥ b: if b = 0, output a. Otherwise write a = qb + r with 0 ≤ r &lt; b and output gcd(b, r). Example: gcd(84, 33) → gcd(33, 18) → gcd(18, 15) → gcd(15, 3) → gcd(3, 0) = 3.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example <small>you already know two</small></span>
-      <div class="calc">factorial(n):  if n = 0: return 1
-               else:   return n · factorial(n − 1)
-
-gcd(a, b):     if b = 0: return a                 ← Euclid's algorithm (§17)
-               else:   return gcd(b, a mod b)
-
-power(b, n, m):                                   ← fast modular powers (§15)
-               if n = 0: return 1
-               if n even: x = power(b, n/2, m);  return x·x mod m
-               else:      return b · power(b, n − 1, m) mod m</div>
-      <p>gcd(84, 33) → gcd(33, 18) → gcd(18, 15) → gcd(15, 3) → gcd(3, 0) = 3.</p>
-      <p><b>Why they're correct:</b> by (strong) induction on the input size. The base case is right, and if the smaller calls return the right answer, then so does this one.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 13: Tower of Hanoi</small></span>
+      <p>n disks of different sizes on one of 3 pegs, largest at the bottom. Move them all to another peg, one disk at a time, <b>never putting a disk on a smaller one</b>.</p>
+      <p><b>Recursive solution:</b> (1) move the top n − 1 disks to the spare peg (recursively); (2) move the biggest disk to the destination; (3) move the n − 1 disks on top of it (recursively).</p>
+      <p><b>Counting moves:</b> H₁ = 1 and Hₙ = 2Hₙ₋₁ + 1. That gives 1, 3, 7, 15, …, so <b>Hₙ = 2ⁿ − 1</b>. Induction step: 2(2ᵏ − 1) + 1 = 2ᵏ⁺¹ − 1 ✓.</p>
+      <p>Why no solution can do better (HW 6.9): before the biggest disk first moves, the other n − 1 disks must all be on the third peg (at least 2ⁿ⁻¹ − 1 moves). After it last moves, they all have to be moved onto it (at least 2ⁿ⁻¹ − 1 more). Plus at least 1 move of the big disk: a total of at least 2ⁿ − 1.</p>
+    </div>
+    <div class="blk idea"><span class="tag">Picture it <small>nesting dolls</small></span>
+      <p>Open a doll, find a smaller doll, repeat until you reach the solid one in the middle (the base case). Every recursive algorithm needs a base case, and each call must shrink the input.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
         <li><p>Trace the recursive gcd(30, 12).</p><details class="ans"><summary>Answer</summary><div>gcd(30, 12) → gcd(12, 6) → gcd(6, 0) = 6.</div></details></li>
+        <li><p>How many moves does the Hanoi algorithm use for 5 disks?</p><details class="ans"><summary>Answer</summary><div>2⁵ − 1 = 31.</div></details></li>
         <li><p>What goes wrong if a recursive algorithm has no base case?</p><details class="ans"><summary>Answer</summary><div>It never stops.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s25" data-sec="s25"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §5.4: 1, 3, 5, 7, 13 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
-  <div class="part"><p class="eyebrow">Part VI · recent lectures</p><h2>Counting</h2></div>
+  <div class="part"><p class="eyebrow">Part VI</p><h2>Counting</h2></div>
 
   <!-- ================= 26 ================= -->
   <section class="sec" id="s26">
-    <h2><span class="n">§26</span>The basic counting rules</h2>
-    <p class="src">Rosen §6.1 · syllabus: Oct 15</p>
-    <div class="gist"><p>Count without listing. Steps done one after another (“and”) multiply; separate alternatives (“or”) add.</p></div>
+    <h2><span class="n">§26</span>Product rule, division rule, inclusion–exclusion, complements</h2>
+    <p class="src">Lecture 14 · Rosen §6.1</p>
+    <div class="gist"><p>Count without listing. Steps done one after another multiply. If you counted each outcome d times, divide by d. “Or” uses inclusion–exclusion. “At least one” is easiest as total minus none.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Count with the product rule, the division rule, inclusion–exclusion and complements</li></ul></div><div><b>Memorize</b><ul><li>Product rule</li><li>Division rule (n/d)</li><li>|A ∪ B| = |A| + |B| − |A ∩ B|</li><li>“At least one” = total − none</li><li>Subsets 2ⁿ; 1-1 functions m(m − 1)⋯(m − n + 1)</li></ul></div></div></div>
 
+    <div class="blk thm"><span class="tag">Thm <small>product rule</small></span>
+      <p>If a procedure breaks into k steps with n₁ ways to do step 1, n₂ ways to do step 2 (for each way of doing step 1), …, nₖ ways to do step k, then there are <b>n₁·n₂⋯nₖ</b> ways in total.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 14</small></span>
+      <ul>
+        <li><b>Weekday hour-long slots</b> starting at 1, 2, 3 or 4 pm: 5 days · 4 times = <b>20</b>.</li>
+        <li><b>California plates (1980–2026):</b> digit, 3 letters, 3 digits: 10·26·26·26·10·10·10 = <b>175,760,000</b>.</li>
+        <li><b>3 new faculty, 12 offices, all different:</b> 12·11·10 (each choice removes an office).</li>
+        <li><b>Orderings of all 26 letters:</b> 26·25·⋯·1 = 26!.</li>
+        <li><b>Subsets of an n-element set:</b> each element is in or out: 2ⁿ.</li>
+        <li><b>One-to-one functions</b> from an n-set to an m-set (m ≥ n): m(m − 1)⋯(m − n + 1).</li>
+      </ul>
+    </div>
+
+    <div class="blk thm"><span class="tag">Thm <small>division rule (overcounting)</small></span>
+      <p>If a procedure can be done in n ways and <b>exactly d of those ways give each outcome</b>, then there are <b>n/d</b> outcomes.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 14</small></span>
+      <ul>
+        <li><b>2-element subsets of {1, …, 9}:</b> pick x (9 ways), then y ≠ x (8 ways). Every subset {x, y} gets made twice, so 9·8/2 = <b>36</b>. (Or count by the smaller element: 8 + 7 + ⋯ + 1 = 36.)</li>
+        <li><b>7-element subsets of {1, …, 9}:</b> 9·8·7·6·5·4·3 ordered picks, each subset counted 7! times, so (9·8⋯3)/7! = 9·8/2 = 36.</li>
+        <li><b>8 people around a round table</b> (same if everyone has the same neighbors on each side): 8!/8, since each seating is counted once per rotation.</li>
+      </ul>
+    </div>
+
+    <div class="blk thm"><span class="tag">Thm <small>inclusion–exclusion</small></span>
+      <p>For finite sets: <b>|A ∪ B| = |A| + |B| − |A ∩ B|</b>. |A| + |B| counts the overlap twice, so subtract it once. Use it when the question says “or.”</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 14</small></span>
+      <ul>
+        <li><b>Bit strings of length 4 that begin with 1 or end with 0:</b> 2³ + 2³ − 2² = <b>12</b>.</li>
+        <li><b>8-character passwords</b> from 0–9, a–z and 10 symbols, with no symbol <i>or</i> no digit: no symbol = 36⁸, no digit = 36⁸, neither = 26⁸, so 36⁸ + 36⁸ − 26⁸.</li>
+        <li><b>Integers in 1..100 divisible by 2 or 3:</b> 50 + 33 − 16 = <b>67</b> (divisible by both means divisible by 6).</li>
+      </ul>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>counting the complement</small></span>
+      <p>If A ⊆ B, then |A| = |B| − |B − A|. Count what you <i>don't</i> want and subtract.</p>
+      <p>Example (Lecture 14): length-10 strings of capital letters that include the letter A: 26¹⁰ − 25¹⁰.</p>
+    </div>
     <div class="blk idea"><span class="tag">Picture it <small>a restaurant menu</small></span>
-      <p>3 appetizers <b>and</b> 4 mains: 3 × 4 = 12 different meals (pick one, then the other). Soup <b>or</b> salad, with 2 soups and 3 salads: 2 + 3 = 5 choices (pick from one group or the other).</p>
-    </div>
-
-    <div class="blk thm"><span class="tag">The four rules</span>
-      <ul>
-        <li><b>Product rule:</b> if a task is a sequence of two steps, with n₁ ways to do the first and n₂ ways to do the second (no matter how the first went), there are <b>n₁·n₂</b> ways.</li>
-        <li><b>Sum rule:</b> if a task can be done in one of n₁ ways <b>or</b> one of n₂ ways, with no overlap, there are <b>n₁ + n₂</b> ways.</li>
-        <li><b>Subtraction rule</b> (inclusion–exclusion): if the two groups overlap, <b>n₁ + n₂ − (overlap)</b>. Same as <span class="m">|A ∪ B| = |A| + |B| − |A ∩ B|</span> from §11.</li>
-        <li><b>Division rule:</b> if a count of n treats every outcome as d different ones, the true count is <b>n / d</b>.</li>
-      </ul>
-    </div>
-
-    <div class="blk ex"><span class="tag">Example <small>product rule</small></span>
-      <ul>
-        <li>License plates with 3 letters then 3 digits: 26·26·26·10·10·10 = <b>17,576,000</b>.</li>
-        <li>Bit strings of length n: 2·2·⋯·2 = <b>2ⁿ</b> (each position is 0 or 1).</li>
-        <li>Subsets of an n-element set: each element is in or out, so <b>2ⁿ</b>. That's why |𝒫(A)| = 2ⁿ (§10).</li>
-        <li>Functions from an m-element set to an n-element set: each of the m inputs picks one of n outputs, so <b>nᵐ</b>. Injective ones: n(n − 1)⋯(n − m + 1), since each input must avoid the outputs already used.</li>
-      </ul>
-    </div>
-    <div class="blk ex"><span class="tag">Example <small>subtraction rule</small></span>
-      <p>How many 8-bit strings start with 1 <b>or</b> end with 00? Start with 1: 2⁷ = 128. End with 00: 2⁶ = 64. Both: 2⁵ = 32 (counted twice). Total: 128 + 64 − 32 = <b>160</b>.</p>
-    </div>
-    <div class="blk ex"><span class="tag">Example <small>complement trick</small></span>
-      <p>4-digit PINs (0000–9999) with <b>at least one</b> 7. Easier to count the opposite: PINs with no 7 at all = 9⁴ = 6561. So the answer is 10⁴ − 9⁴ = <b>3439</b>. When you see “at least one,” count “none” and subtract.</p>
-    </div>
-    <div class="blk ex"><span class="tag">Example <small>division rule</small></span>
-      <p>Seat 4 people around a round table, where rotations count as the same seating. In a row there are 4! = 24 orders, but each circular seating shows up 4 times (once per rotation), so there are 24 / 4 = <b>6</b>.</p>
-    </div>
-    <div class="blk caution"><span class="tag">Caution</span>
-      <p>The sum rule needs the options to be <b>disjoint</b>. If they overlap, subtract the overlap. The product rule needs the number of choices at each step to not depend on earlier choices.</p>
+      <p>An appetizer <b>and</b> a main: multiply. Soup <b>or</b> salad: add (and subtract anything counted in both). Ordered picks when you only care about the group: divide out the orderings.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
         <li><p>How many 3-letter strings (A–Z) are there with repeats allowed? With no repeats?</p><details class="ans"><summary>Answer</summary><div>26³ = 17,576. 26·25·24 = 15,600.</div></details></li>
-        <li><p>5 shirts, 3 pants, and either one of 4 hats or no hat. How many outfits?</p><details class="hint"><summary>Hint</summary><div>The hat choice has 4 + 1 options.</div></details><details class="ans"><summary>Answer</summary><div>5·3·5 = 75.</div></details></li>
-        <li><p>How many 3-digit numbers (100–999) have at least one 0?</p><details class="hint"><summary>Hint</summary><div>Count the ones with no 0, then subtract.</div></details><details class="ans"><summary>Answer</summary><div>900 − 9·9·9 = 900 − 729 = 171.</div></details></li>
+        <li><p>How many integers in 1..100 are divisible by 3 or 5?</p><details class="hint"><summary>Hint</summary><div>Inclusion–exclusion; both means divisible by 15.</div></details><details class="ans"><summary>Answer</summary><div>33 + 20 − 6 = 47.</div></details></li>
+        <li><p>How many 3-digit numbers (100–999) have at least one 0?</p><details class="hint"><summary>Hint</summary><div>Count those with no 0.</div></details><details class="ans"><summary>Answer</summary><div>900 − 9³ = 171.</div></details></li>
+        <li><p>How many 2-element subsets does {1, …, 10} have, by the division rule?</p><details class="ans"><summary>Answer</summary><div>10·9/2 = 45 (each subset is picked in 2 orders).</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s26" data-sec="s26"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §6.1: 1, 3, 11, 21, 23, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 27 ================= -->
   <section class="sec" id="s27">
     <h2><span class="n">§27</span>The pigeonhole principle</h2>
-    <p class="src">Rosen §6.2 · syllabus: Oct 15</p>
-    <div class="gist"><p>If you put more objects than boxes, some box gets at least two. It proves something <b>must</b> happen without saying where.</p></div>
+    <p class="src">Lectures 14–15 · Rosen §6.2</p>
+    <div class="gist"><p>If you put more objects than boxes, some box gets at least two. It proves something <b>must</b> happen without telling you where.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Choose the boxes and the objects and apply pigeonhole in a proof</li><li>Answer “how many to guarantee …” questions</li></ul></div><div><b>Memorize</b><ul><li>k + 1 objects in k boxes ⇒ a box with ≥ 2</li><li>N objects in k boxes ⇒ a box with ≥ ⌈N/k⌉</li></ul></div></div></div>
 
     <div class="blk thm"><span class="tag">Thm</span>
-      <p><b>Pigeonhole principle:</b> if k + 1 or more objects go into k boxes, some box has at least 2 objects.</p>
-      <p><b>Generalized:</b> if N objects go into k boxes, some box has at least <b>⌈N/k⌉</b> objects.</p>
-      <p class="proof qed">By contradiction: if every box had at most 1 object (at most ⌈N/k⌉ − 1 for the general version), the total would be at most k (less than N). Contradiction.</p>
+      <p><b>Pigeonhole principle:</b> if k + 1 or more objects are placed into k sets, some set contains at least two of them.</p>
+      <p class="proof qed">By contradiction: if each set held at most one object, there would be at most k objects.</p>
+      <p><b>Generalized (Rosen):</b> N objects into k boxes means some box has at least ⌈N/k⌉.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example</span>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 15</small></span>
       <ul>
-        <li><b>Birthdays:</b> among 367 people, two share a birthday (only 366 possible days).</li>
-        <li><b>Months:</b> among 100 people, at least ⌈100/12⌉ = <b>9</b> were born in the same month.</li>
-        <li><b>Socks in the dark:</b> black and white socks only. Grab 3 and you're guaranteed a matching pair (3 socks, 2 colors).</li>
-        <li><b>Number theory:</b> among any n + 1 integers, two have the same remainder mod n (n possible remainders). So their difference is divisible by n.</li>
+        <li><b>Any 27 English words:</b> two start with the same letter (26 letters are the boxes).</li>
+        <li><b>If f : A → B with |B| = k and |A| ≥ k + 1, then f isn't one-to-one:</b> the boxes are the elements of B, and a goes in box f(a). Two elements land in the same box, so f(a₁) = f(a₂).</li>
       </ul>
     </div>
-    <div class="blk ex"><span class="tag">Example <small>“how many to guarantee …?”</small></span>
-      <p>How many cards must you draw to be sure of 3 cards of the same suit? With 4 suits you need ⌈N/4⌉ ≥ 3, so N ≥ 9. Check: 8 isn't enough (2 of each suit is possible). <b>Answer 9.</b> The pattern: worst case plus one.</p>
+    <div class="blk ex"><span class="tag">Example <small>Lectures 14–15: clever boxes</small></span>
+      <p><b>Every n has a positive multiple whose decimal digits are only 0s and 1s.</b> Look at 1, 11, 111, …, 11⋯1 (n + 1 numbers). There are only n remainders mod n, so two of them, a &lt; b, share a remainder. Then n | b − a, and b − a looks like 11⋯100⋯0. (E.g. 77·13 = 1001.)</p>
+      <p><b>Among any n + 1 distinct numbers in 1..2n, one divides another.</b> Write each as 2ᵏ·(odd). There are only n odd numbers ≤ 2n, so two share the same odd part. The one with the smaller power of 2 divides the other.</p>
+      <p><b>No perfect compression:</b> no lossless compressor shrinks every n-bit file. There are 2ⁿ files of length n but only 2⁰ + ⋯ + 2ⁿ⁻¹ = 2ⁿ − 1 shorter files, so two files would compress to the same thing.</p>
     </div>
     <div class="blk caution"><span class="tag">Caution</span>
-      <p>Figure out what the “boxes” are. That's usually the whole problem (days, remainders, suits, colors). The principle tells you a box is crowded, never which one.</p>
+      <p>The skill is choosing the <b>boxes</b>: letters, remainders, odd parts, shorter files. Write “boxes = …, objects = …” explicitly. The principle tells you a box is crowded, never which one.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
-        <li><p>How many people do you need to guarantee two share a birth month?</p><details class="ans"><summary>Answer</summary><div>13 (12 months are the boxes).</div></details></li>
-        <li><p>25 students: at least how many were born on the same day of the week?</p><details class="ans"><summary>Answer</summary><div>⌈25/7⌉ = 4.</div></details></li>
-        <li><p>Why must two of any 6 integers have the same remainder mod 5?</p><details class="ans"><summary>Answer</summary><div>There are only 5 possible remainders (boxes) for 6 numbers.</div></details></li>
+        <li><p>How many people guarantee two share a birth month?</p><details class="ans"><summary>Answer</summary><div>13.</div></details></li>
+        <li><p>Why must two of any 6 integers have the same remainder mod 5?</p><details class="ans"><summary>Answer</summary><div>There are only 5 remainders (boxes) for 6 numbers.</div></details></li>
+        <li><p>Show any 5 distinct numbers from 1..8 include one dividing another.</p><details class="hint"><summary>Hint</summary><div>Write each as 2ᵏ·(odd).</div></details><details class="ans"><summary>Answer</summary><div>The odd parts can only be 1, 3, 5, 7 (4 boxes) for 5 numbers, so two share an odd part, and the smaller divides the larger.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s27" data-sec="s27"> Got it: I can do these without peeking</label>
     </div>
-
+    <p class="tb"><b>Textbook practice</b> Rosen §6.2: 1, 3, 5, 7, 11, 15, 17 <span>· odd-numbered answers are in the back of the book</span></p>
   </section>
 
   <!-- ================= 28 ================= -->
   <section class="sec" id="s28">
     <h2><span class="n">§28</span>Permutations &amp; combinations</h2>
-    <p class="src">Rosen §6.3 · syllabus: Oct 15</p>
+    <p class="src">Lectures 14–15 · Rosen §6.3</p>
     <div class="gist"><p>Choosing r things from n: if order matters it's a <b>permutation</b> P(n, r); if order doesn't matter it's a <b>combination</b> C(n, r).</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Decide if order matters and compute P(n, r) or C(n, r)</li><li>Combine choices with the product rule</li></ul></div><div><b>Memorize</b><ul><li>P(n, r) = n!/(n − r)!</li><li>C(n, r) = n!/((n − r)! r!)</li><li>0! = 1</li></ul></div></div></div>
 
-    <div class="blk defn"><span class="tag">Defn</span>
-      <p>An <span class="term">r-permutation</span> is an <b>ordered</b> arrangement of r distinct elements chosen from n:</p>
-      <p class="m">P(n, r) = n(n − 1)(n − 2)⋯(n − r + 1) = n! / (n − r)!</p>
-      <p>An <span class="term">r-combination</span> is an <b>unordered</b> selection (a subset) of r elements from n:</p>
-      <p class="m">C(n, r) = n! / (r!(n − r)!) = P(n, r) / r!</p>
-      <p>C(n, r) is read “n choose r” and is also written <span class="m">(n r)</span> stacked. Note <span class="m">C(n, r) = C(n, n − r)</span>: choosing who's in is the same as choosing who's out.</p>
+    <div class="blk defn"><span class="tag">Defn <small>Lecture 14</small></span>
+      <p>A <span class="term">permutation</span> of a set of distinct objects is an ordered arrangement of them. An <span class="term">r-permutation</span> is an ordered arrangement of exactly r of them.</p>
+      <p>An <span class="term">r-combination</span> is an unordered collection of r elements from the set, i.e. a subset of size r.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm</span>
+      <p>There are <b>n!</b> permutations of an n-set, <b>P(n, r) = n!/(n − r)!</b> r-permutations, and <b>C(n, r) = n!/((n − r)! r!)</b> r-combinations (also written as n over r in parentheses).</p>
+      <p class="proof qed">C(n, r): there are P(n, r) ways to pick r things in order, and each subset is counted r! times (once per ordering of its r elements), so divide by r!.</p>
+    </div>
+    <div class="blk caution"><span class="tag">Caution <small>Lecture 15</small></span>
+      <p>By definition <b>0! = 1</b>. So P(5, 5) = 5!/0! = 5! and C(5, 0) = 5!/(0!5!) = 1.</p>
     </div>
     <div class="blk idea"><span class="tag">Picture it <small>podium vs committee</small></span>
-      <p><b>Podium</b> (gold, silver, bronze): Alice-Bob-Cat is different from Bob-Alice-Cat, so <b>order matters → permutation</b>.<br>
-      <b>Committee</b> of 3: {Alice, Bob, Cat} is one committee in any order, so <b>order doesn't matter → combination</b>.<br>
-      Each committee corresponds to 3! = 6 podiums, which is why C = P / r! (division rule).</p>
+      <p><b>Podium</b> (gold, silver, bronze): order matters, so it's a permutation. <b>Committee:</b> order doesn't matter, so it's a combination. Each committee of 3 gives 3! = 6 podiums, which is why C = P/r!.</p>
     </div>
-    <div class="blk ex"><span class="tag">Example</span>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 15 review problems</small></span>
       <ul>
-        <li><b>Medals among 8 runners:</b> P(8, 3) = 8·7·6 = <b>336</b>.</li>
-        <li><b>A 3-person committee from 8 people:</b> C(8, 3) = 336 / 3! = <b>56</b>.</li>
-        <li><b>Poker hands:</b> C(52, 5) = <b>2,598,960</b>.</li>
-        <li><b>Bit strings of length 10 with exactly four 1s:</b> choose which 4 positions get a 1: C(10, 4) = <b>210</b>.</li>
-        <li><b>A committee of 3 from 9 math and 11 CS majors, with exactly 1 math major:</b> choose the math major, <i>and</i> 2 CS majors: C(9, 1)·C(11, 2) = 9·55 = <b>495</b> (product rule).</li>
+        <li><b>Deal one card each to 4 different players:</b> P(52, 4) = 52·51·50·49 (who gets which card matters).</li>
+        <li><b>5-card hands:</b> C(52, 5) = 52!/(47! 5!) = 2,598,960 (a hand is a set).</li>
+        <li><b>Bit strings of length 10 with exactly four 1s:</b> choose which positions get a 1: C(10, 4) = 210.</li>
+        <li><b>A committee of 3 from 9 math and 11 CS majors, exactly 1 math major:</b> C(9, 1)·C(11, 2) = 9·55 = 495.</li>
       </ul>
     </div>
-    <div class="blk thm"><span class="tag">Connection <small>to Lecture 11</small></span>
-      <p>C(n, k) is the coefficient in <span class="m">(x + y)ⁿ = Σ C(n, k) xⁿ⁻ᵏ yᵏ</span>. Why: expanding n factors of (x + y), a term xⁿ⁻ᵏyᵏ comes from choosing which k of the n factors contribute a y. That's the “Freshman's dream” idea behind Fermat's little theorem (§20).</p>
-    </div>
-    <div class="blk caution"><span class="tag">Caution</span>
-      <p>Ask “if I swap two of my picks, is it a different outcome?” Yes → permutation. No → combination. A “combination lock” is really a permutation, since order matters.</p>
+    <div class="blk side"><span class="tag">Sidebar <small>how big is n!?</small></span>
+      <p>(n/3)ⁿ ≤ n! ≤ nⁿ (the upper bound: each of the n factors is ≤ n). Stirling: n! ≈ √(2πn)(n/e)ⁿ.</p>
     </div>
     <div class="check"><span class="tag">Check yourself</span>
       <ol>
-        <li><p>From 10 people, choose (a) a president, VP and treasurer; (b) a 3-person team. How many ways?</p><details class="hint"><summary>Hint</summary><div>Does swapping two people change the outcome?</div></details><details class="ans"><summary>Answer</summary><div>(a) order matters: P(10, 3) = 720. (b) it doesn't: C(10, 3) = 120.</div></details></li>
-        <li><p>Compute C(6, 2).</p><details class="ans"><summary>Answer</summary><div>6·5/2 = 15.</div></details></li>
+        <li><p>From 10 people: (a) president, VP, treasurer; (b) a 3-person team. How many ways?</p><details class="hint"><summary>Hint</summary><div>Does swapping two people change the outcome?</div></details><details class="ans"><summary>Answer</summary><div>(a) P(10, 3) = 720. (b) C(10, 3) = 120.</div></details></li>
+        <li><p>Compute P(6, 2) and C(6, 2).</p><details class="ans"><summary>Answer</summary><div>30 and 15.</div></details></li>
         <li><p>How many 5-card hands are all hearts?</p><details class="ans"><summary>Answer</summary><div>C(13, 5) = 1287.</div></details></li>
-        <li><p>Why is C(n, r) = C(n, n − r)?</p><details class="ans"><summary>Answer</summary><div>Choosing who's in is the same as choosing who's out.</div></details></li>
+        <li><p>What are 0! and C(7, 0)?</p><details class="ans"><summary>Answer</summary><div>Both are 1.</div></details></li>
       </ol>
       <label class="gotit"><input type="checkbox" id="got-s28" data-sec="s28"> Got it: I can do these without peeking</label>
     </div>
+    <p class="tb"><b>Textbook practice</b> Rosen §6.3: 3, 5, 9, 11, 15, 17, 29, 35 <span>· odd-numbered answers are in the back of the book</span></p>
+  </section>
 
+  <div class="part"><p class="eyebrow">Part VII</p><h2>Combinatorial proofs &amp; probability</h2></div>
+
+  <!-- ================= 29 ================= -->
+  <section class="sec" id="s29">
+    <h2><span class="n">§29</span>Combinatorial proofs, Pascal &amp; the binomial theorem</h2>
+    <p class="src">Lectures 15–16 · Rosen §6.4</p>
+    <div class="gist"><p>To prove two quantities are equal, show they count the same thing in two ways. The numbers C(n, k) build Pascal's triangle and are the coefficients of (x + y)ⁿ.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Write a combinatorial (count-two-ways) proof</li><li>Find any coefficient with the binomial theorem</li></ul></div><div><b>Memorize</b><ul><li>C(n, r) = C(n, n − r)</li><li>Pascal: C(n + 1, k) = C(n, k − 1) + C(n, k)</li><li>k·C(n, k) = n·C(n − 1, k − 1); p | C(p, k)</li><li>Binomial theorem; Σ C(n, k) = 2ⁿ</li></ul></div></div></div>
+
+    <div class="blk defn"><span class="tag">Defn <small>combinatorial (bijective) proof</small></span>
+      <p>Prove A = B by finding one collection of objects and counting it two different ways, one giving A and the other giving B.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>symmetry</small></span>
+      <p><b>C(n, r) = C(n, n − r).</b> Algebra: plug into the formula. Combinatorial proof: choosing the r people who are in is the same as choosing the n − r people who are out.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>committee-chair identity (Lecture 15)</small></span>
+      <p><b>k·C(n, k) = n·C(n − 1, k − 1).</b> Count “a k-person committee with a chair”: pick the committee then the chair, which gives C(n, k)·k. Or pick the chair first (n ways) and then the other k − 1 members from the remaining n − 1, which gives n·C(n − 1, k − 1).</p>
+      <p><b>Corollary:</b> if p is prime and 0 &lt; k &lt; p, then <b>p | C(p, k)</b>. Since k·C(p, k) = p·C(p − 1, k − 1) is divisible by p and p ∤ k, p must divide C(p, k). This is what powers the Freshman's dream and Fermat (§20).</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>Pascal's identity (Lectures 15–16)</small></span>
+      <p><b>C(n + 1, k) = C(n, k − 1) + C(n, k)</b> for n ≥ k ≥ 0.</p>
+      <p class="proof qed">Count the k-person groups from n + 1 people, one of whom is Alice. That's C(n + 1, k). Or split: groups with Alice (choose the other k − 1 from n: C(n, k − 1)) plus groups without Alice (choose all k from n: C(n, k)).</p>
+      <div class="calc">        1
+       1 1
+      1 2 1
+     1 3 3 1
+    1 4 6 4 1           each interior entry = sum of the two above it
+  1 5 10 10 5 1
+ 1 6 15 20 15 6 1</div>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>binomial theorem</small></span>
+      <p><span class="m">(x + y)ⁿ = Σⱼ₌₀ⁿ C(n, j) xⁿ⁻ʲ yʲ</span></p>
+      <p><b>Why (combinatorial proof):</b> multiplying out n copies of (x + y), each term comes from picking x or y in each copy. You get xⁿ⁻ʲyʲ exactly when y is picked j times, and there are C(n, j) ways to choose which copies give the y. E.g. (x + y)³ = x³ + 3x²y + 3xy² + y³.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 16</small></span>
+      <p><b>Coefficient of z⁴w⁶ in (3z + 2w²)⁷.</b> Let x = 3z and y = 2w². We need x⁴y³, since (w²)³ = w⁶. Its coefficient in (x + y)⁷ is C(7, 3), and C(7, 3)·(3z)⁴·(2w²)³ = C(7, 3)·3⁴·2³·z⁴w⁶. Answer: C(7, 3)·3⁴·2³ = 35·81·8 = <b>22,680</b>.</p>
+      <p>Method: name the two terms x and y, work out which power of each gives the term you want, then multiply C(n, j) by the constants raised to those powers.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Cor</span>
+      <p><b>Σₖ₌₀ⁿ C(n, k) = 2ⁿ.</b> Algebra: set x = y = 1 in the binomial theorem. Counting: both sides count all subsets of an n-set, the left side grouped by size.</p>
+    </div>
+    <div class="check"><span class="tag">Check yourself</span>
+      <ol>
+        <li><p>Coefficient of x²y³ in (x + y)⁵? And in (2x − y)⁵?</p><details class="hint"><summary>Hint</summary><div>Name the terms, then raise each constant to its power.</div></details><details class="ans"><summary>Answer</summary><div>C(5, 3) = 10. Then C(5, 3)·2²·(−1)³ = −40.</div></details></li>
+        <li><p>Outline the combinatorial proof of Pascal's identity.</p><details class="ans"><summary>Answer</summary><div>Count k-groups from n + 1 people including Alice: C(n + 1, k) = (groups with Alice) C(n, k − 1) + (groups without) C(n, k).</div></details></li>
+        <li><p>What is Σₖ C(6, k)?</p><details class="ans"><summary>Answer</summary><div>2⁶ = 64.</div></details></li>
+        <li><p>Why does a prime p divide C(p, k) for 0 &lt; k &lt; p?</p><details class="ans"><summary>Answer</summary><div>k·C(p, k) = p·C(p − 1, k − 1) is divisible by p, and p ∤ k, so p | C(p, k).</div></details></li>
+      </ol>
+      <label class="gotit"><input type="checkbox" id="got-s29" data-sec="s29"> Got it: I can do these without peeking</label>
+    </div>
+    <p class="tb"><b>Textbook practice</b> Rosen §6.4: 1, 7, 9, 13, 23, 25, 35 <span>· odd-numbered answers are in the back of the book</span></p>
+  </section>
+
+  <!-- ================= 30 ================= -->
+  <section class="sec" id="s30">
+    <h2><span class="n">§30</span>Repetition, stars &amp; bars, repeated letters</h2>
+    <p class="src">Lecture 15 · Rosen §6.5</p>
+    <div class="gist"><p>Two questions pick the formula: does order matter, and is repetition allowed? Identical items into different bins means stars and bars. Arrangements of repeated letters means divide by the repeats.</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Pick the right formula from the order/repetition table</li><li>Use stars and bars (with slack variables and lower bounds)</li><li>Count arrangements of repeated letters</li></ul></div><div><b>Memorize</b><ul><li>The 2×2 table: P(n, r), nʳ, C(n, r), C(n + r − 1, r)</li><li>n!/(n₁!⋯nₖ!)</li><li>Distinguishable objects into boxes: rⁿ</li></ul></div></div></div>
+
+    <div class="tbl"><table>
+      <tr><th>Picking r of n distinct objects</th><th>Order matters</th><th>Order doesn't matter</th></tr>
+      <tr><td><b>Repetition not allowed</b></td><td class="mw">P(n, r) = n!/(n − r)!</td><td class="mw">C(n, r) = n!/((n − r)! r!)</td></tr>
+      <tr><td><b>Repetition allowed</b></td><td class="mw">nʳ</td><td class="mw">C(n + r − 1, r)  (stars &amp; bars)</td></tr>
+    </table></div>
+    <p class="note">Memorize this table. It's the lecture's summary slide.</p>
+
+    <div class="blk idea"><span class="tag">Picture it <small>stars and bars (Lecture 15)</small></span>
+      <p><b>How many collections of eight bills using $1, $5, $10, $20</b> (bills of the same type are identical)? Write the collection as stars (bills) split by bars into 4 types: <span class="mono">*|****||***</span> means one $1, four $5, zero $10, three $20. Every arrangement of 8 stars and 3 bars is one collection, so choose where the 8 stars go among 11 spots: <b>C(11, 8) = 165</b>.</p>
+      <p>General rule: r identical items into n types uses r stars and n − 1 bars: <b>C(n + r − 1, r)</b> = C(n + r − 1, n − 1).</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 15</small></span>
+      <p><b>Integer solutions to x₁ + x₂ + x₃ ≤ 17, all ≥ 0:</b> add a 4th “leftover” variable x₄ = 17 − (x₁ + x₂ + x₃) ≥ 0. Then it's 17 stars and 3 bars: <b>C(20, 17) = 1140</b>.</p>
+      <p><b>y₁ + y₂ + y₃ = 14 with every yᵢ ≥ 1:</b> substitute zᵢ = yᵢ − 1 ≥ 0, so z₁ + z₂ + z₃ = 11. That's 11 stars and 2 bars: <b>C(13, 11) = 78</b>.</p>
+      <p>Tricks: “≤” means add a slack variable; “at least 1” (or at least c) means subtract it off first.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>arrangements with repeated objects</small></span>
+      <p>n = n₁ + ⋯ + nₖ objects of k types (identical within a type) have <b>n!/(n₁! n₂! ⋯ nₖ!)</b> ordered arrangements.</p>
+      <p>Lecture example: <b>SENSELESSNESS</b> (13 letters: 6 S, 4 E, 2 N, 1 L) has <b>13!/(6!·4!·2!·1!)</b> arrangements. 13! treats every letter as distinct, so divide out the reorderings of identical letters (division rule).</p>
+    </div>
+    <div class="blk thm"><span class="tag">Putting n objects into r boxes</span>
+      <div class="tbl"><table>
+        <tr><th></th><th>Distinguishable boxes</th><th>Indistinguishable boxes</th></tr>
+        <tr><td>Distinguishable objects</td><td class="mw">rⁿ</td><td>Stirling numbers (not needed)</td></tr>
+        <tr><td>Indistinguishable objects</td><td class="mw">C(n + r − 1, n) (stars &amp; bars)</td><td>partition numbers (not needed)</td></tr>
+      </table></div>
+      <p class="note">Lecture: you don't need to know the indistinguishable-box formulas for quizzes or exams.</p>
+    </div>
+    <div class="blk caution"><span class="tag">Caution</span>
+      <p>Before using a formula, ask whether the items are <b>distinct or identical</b> (people are distinct; same-type bills aren't) and whether order matters.</p>
+    </div>
+    <div class="check"><span class="tag">Check yourself</span>
+      <ol>
+        <li><p>10 identical cookies to 3 kids: how many ways?</p><details class="ans"><summary>Answer</summary><div>Stars and bars: C(12, 2) = 66.</div></details></li>
+        <li><p>Same, but each kid gets at least 2?</p><details class="hint"><summary>Hint</summary><div>Hand out 2 each first.</div></details><details class="ans"><summary>Answer</summary><div>4 cookies left: C(6, 2) = 15.</div></details></li>
+        <li><p>Arrangements of the letters in LETTER?</p><details class="ans"><summary>Answer</summary><div>6!/(2!·2!) = 180 (two E's and two T's).</div></details></li>
+        <li><p>Which table cell? (a) 4-digit PINs (b) 3 scoops from 5 flavors, repeats OK, order irrelevant.</p><details class="ans"><summary>Answer</summary><div>(a) order matters, repetition allowed: 10⁴. (b) no order, repetition: C(7, 3) = 35.</div></details></li>
+      </ol>
+      <label class="gotit"><input type="checkbox" id="got-s30" data-sec="s30"> Got it: I can do these without peeking</label>
+    </div>
+    <p class="tb"><b>Textbook practice</b> Rosen §6.5: 1, 3, 9, 11, 15, 17, 33 <span>· odd-numbered answers are in the back of the book</span></p>
+  </section>
+
+  <!-- ================= 31 ================= -->
+  <section class="sec" id="s31">
+    <h2><span class="n">§31</span>Intro to probability</h2>
+    <p class="src">Lecture 16 · Rosen §7.1</p>
+    <div class="gist"><p>When every outcome is equally likely, probability is “counting with a denominator”: p(E) = (good outcomes)/(all outcomes).</p></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Compute equally-likely probabilities by counting</li><li>Use complements and unions</li><li>Do the poker computations</li></ul></div><div><b>Memorize</b><ul><li>p(E) = |E|/|S| (equally likely)</li><li>p(Ē) = 1 − p(E)</li><li>p(E₁ ∪ E₂) = p(E₁) + p(E₂) − p(E₁ ∩ E₂)</li></ul></div></div></div>
+
+    <div class="blk defn"><span class="tag">Defn <small>Lecture 16</small></span>
+      <p>An <span class="term">experiment</span> is a procedure that produces an outcome from a <span class="term">sample space</span> S (the set of possible outcomes). An <span class="term">event</span> E is a subset of S.</p>
+      <p>If the outcomes of S are equally likely, the <span class="term">probability</span> of E is <b>p(E) = |E|/|S|</b>.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 16</small></span>
+      <div class="tbl"><table>
+        <tr><th>Experiment</th><th>Sample space</th><th>Event</th><th>p</th></tr>
+        <tr><td>flip two different coins</td><td>{HH, HT, TH, TT}</td><td>both the same {HH, TT}</td><td>2/4 = 1/2</td></tr>
+        <tr><td>roll two different dice</td><td>36 ordered pairs</td><td>sum is 7 (6 pairs)</td><td>6/36 = 1/6</td></tr>
+        <tr><td>pick a number 1..1000</td><td>{1, …, 1000}</td><td>divisible by 5 (200 numbers)</td><td>200/1000 = 1/5</td></tr>
+      </table></div>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 16: poker (5-card hands, C(52, 5) = 2,598,960 equally likely)</small></span>
+      <ul>
+        <li><b>Flush</b> (all one suit): choose the suit (4 ways), then 5 of its 13 cards: 4·C(13, 5)/C(52, 5) = 5148/2,598,960.</li>
+        <li><b>Full house</b> (3 of one rank, 2 of another): 13·12 ways to pick the two ranks (in order: which is the triple), then C(4, 3)·C(4, 2) suits: 13·12·C(4, 3)·C(4, 2)/C(52, 5).</li>
+        <li><b>Two pair:</b> choose the 2 ranks C(13, 2), their suits C(4, 2)·C(4, 2), then 1 of the 44 cards of another rank: C(13, 2)·C(4, 2)²·44/C(52, 5).</li>
+      </ul>
+      <p>Method: build the hand in steps (product rule), and make sure each hand is built exactly once.</p>
+    </div>
+    <div class="blk thm"><span class="tag">Thm <small>complements and unions</small></span>
+      <p><b>p(Ē) = 1 − p(E)</b>, since |Ē| = |S| − |E|.</p>
+      <p><b>p(E₁ ∪ E₂) = p(E₁) + p(E₂) − p(E₁ ∩ E₂)</b>: inclusion–exclusion, divided by |S|.</p>
+    </div>
+    <div class="blk ex"><span class="tag">Example <small>Lecture 16</small></span>
+      <ul>
+        <li><b>At least two cards share a rank:</b> complement = all different ranks: C(13, 5) rank choices times 4⁵ suit choices. Answer: 1 − C(13, 5)·4⁵/C(52, 5).</li>
+        <li><b>At least one head in 5 coin flips:</b> only one way to get none (all tails): 1 − 1/2⁵.</li>
+        <li><b>A number in 1..100 divisible by 2 or 5:</b> 50/100 + 20/100 − 10/100 = <b>3/5</b>.</li>
+      </ul>
+    </div>
+    <div class="blk side"><span class="tag">Sidebar <small>Monty Hall (Lecture 16)</small></span>
+      <p>3 doors, a car behind one. You pick a door; the host opens one of the other two to show a goat and offers you a switch. <b>Switch!</b> Your first guess is right with probability 1/3, and opening a door doesn't change that, so the other closed door wins with probability 2/3.</p>
+    </div>
+    <div class="blk caution"><span class="tag">Caution</span>
+      <p>p = |E|/|S| needs <b>equally likely</b> outcomes. Treat dice and coins as distinguishable (first die, second die) so that they are. The sums of two dice aren't equally likely.</p>
+    </div>
+    <div class="check"><span class="tag">Check yourself</span>
+      <ol>
+        <li><p>Two dice: probability the sum is 10?</p><details class="ans"><summary>Answer</summary><div>(4,6), (5,5), (6,4): 3/36 = 1/12.</div></details></li>
+        <li><p>At least one 6 in three rolls?</p><details class="hint"><summary>Hint</summary><div>Complement.</div></details><details class="ans"><summary>Answer</summary><div>1 − (5/6)³ = 91/216.</div></details></li>
+        <li><p>A number from 1..60 divisible by 3 or 4?</p><details class="ans"><summary>Answer</summary><div>(20 + 15 − 5)/60 = 1/2.</div></details></li>
+        <li><p>Why can't you treat the 11 possible sums of two dice as equally likely?</p><details class="ans"><summary>Answer</summary><div>They aren't: a sum of 7 happens 6 ways, a sum of 2 only 1 way. Count ordered pairs instead.</div></details></li>
+      </ol>
+      <label class="gotit"><input type="checkbox" id="got-s31" data-sec="s31"> Got it: I can do these without peeking</label>
+    </div>
+    <p class="tb"><b>Textbook practice</b> Rosen §7.1: 1, 3, 5, 7, 9, 13, 15, 23, 37 <span>· odd-numbered answers are in the back of the book</span></p>
+  </section>
+
+
+  <div class="part"><p class="eyebrow">Part VIII</p><h2>Practice midterms</h2>
+    <p class="part-note">Three original 80-minute practice exams in the style of a Math 55 midterm, covering Lectures 10–16. Do them timed and closed notes on paper, then open the solutions. Tick “I missed this” on any problem you got wrong or unsure, and its sections go into the readiness check.</p></div>
+
+  <section class="sec pt" id="pt-a">
+    <h2><span class="n">A</span>Practice Midterm A</h2>
+    <p class="src">80 minutes · closed notes · show your work</p>
+    <ol class="exam">
+      <li><b>(Euclid, Bézout, inverses)</b> Use the Euclidean algorithm to find gcd(97, 35) and write it as 97s + 35t. Then find the inverse of 35 mod 97 and solve 35x ≡ 4 (mod 97). <span class="pill">§17 §18</span></li>
+      <li><b>(Linear congruence)</b> Find all solutions of 14x ≡ 10 (mod 22) with 0 ≤ x &lt; 22. <span class="pill">§18</span></li>
+      <li><b>(CRT)</b> Solve x ≡ 1 (mod 5), x ≡ 2 (mod 7), x ≡ 3 (mod 9). Show M, the Mᵢ, and the yᵢ. <span class="pill">§19</span></li>
+      <li><b>(Fermat)</b> Compute 3¹²³⁴ mod 11. <span class="pill">§20</span></li>
+      <li><b>(Induction)</b> Prove that for all n ≥ 1, 1·2 + 2·3 + ⋯ + n(n + 1) = n(n + 1)(n + 2)/3. <span class="pill">§22</span></li>
+      <li><b>(Counting)</b> (a) How many arrangements of the letters of BANANA? (b) How many 5-card hands contain exactly 2 aces? (c) How many nonnegative integer solutions does x₁ + x₂ + x₃ + x₄ = 10 have? <span class="pill">§28 §30</span></li>
+      <li><b>(Pigeonhole)</b> (a) Show that among any 11 integers, two have a difference divisible by 10. (b) What's the minimum number of students needed to guarantee 4 were born in the same month? <span class="pill">§27</span></li>
+      <li><b>(Probability)</b> Two fair dice are rolled. What's the probability the sum is at least 10? <span class="pill">§31</span></li>
+    </ol>
+    <details class="sol"><summary>Solutions to A</summary>
+      <ol class="exam">
+        <li>97 = 2·35 + 27; 35 = 1·27 + 8; 27 = 3·8 + 3; 8 = 2·3 + 2; 3 = 1·2 + 1. So gcd = 1. Back-substituting: <b>1 = 13·97 − 36·35</b>. Inverse of 35 is −36 ≡ <b>61</b>. Then x ≡ 61·4 = 244 ≡ <b>50</b> (mod 97). Check: 35·50 = 1750 = 18·97 + 4 ✓.
+          <label class="miss"><input type="checkbox" data-miss="A1" data-secs="s17,s18"> I missed this</label></li>
+        <li>gcd(14, 22) = 2 and 2 | 10, so there are 2 solutions mod 22. Divide by 2: 7x ≡ 5 (mod 11). 7⁻¹ ≡ 8 (56 ≡ 1), so x ≡ 40 ≡ 7 (mod 11). <b>x = 7, 18</b>.
+          <label class="miss"><input type="checkbox" data-miss="A2" data-secs="s18"> I missed this</label></li>
+        <li>M = 315. M₁ = 63 ≡ 3 (mod 5) → y₁ = 2. M₂ = 45 ≡ 3 (mod 7) → y₂ = 5. M₃ = 35 ≡ 8 (mod 9) → y₃ = 8. x = 1·63·2 + 2·45·5 + 3·35·8 = 126 + 450 + 840 = 1416 ≡ <b>156 (mod 315)</b>. Check: 156 = 31·5 + 1, 22·7 + 2, 17·9 + 3 ✓.
+          <label class="miss"><input type="checkbox" data-miss="A3" data-secs="s19"> I missed this</label></li>
+        <li>11 is prime and 11 ∤ 3, so 3¹⁰ ≡ 1. 1234 = 123·10 + 4, so 3¹²³⁴ ≡ 3⁴ = 81 ≡ <b>4</b>.
+          <label class="miss"><input type="checkbox" data-miss="A4" data-secs="s20"> I missed this</label></li>
+        <li><b>By induction.</b> <b>Base case (n = 1):</b> 1·2 = 2 = 1·2·3/3 ✓. <b>Induction step:</b> assume 1·2 + ⋯ + k(k + 1) = k(k + 1)(k + 2)/3 (IH). Then adding the next term, k(k + 1)(k + 2)/3 + (k + 1)(k + 2) = (k + 1)(k + 2)(k/3 + 1) = (k + 1)(k + 2)(k + 3)/3, which is the claim for k + 1. □
+          <label class="miss"><input type="checkbox" data-miss="A5" data-secs="s22"> I missed this</label></li>
+        <li>(a) 6!/(3!·2!·1!) = <b>60</b>. (b) C(4, 2)·C(48, 3) = 6·17,296 = <b>103,776</b>. (c) 10 stars, 3 bars: C(13, 3) = <b>286</b>.
+          <label class="miss"><input type="checkbox" data-miss="A6" data-secs="s28,s30"> I missed this</label></li>
+        <li>(a) Boxes = the 10 last digits (remainders mod 10); 11 integers, so two share a remainder, and their difference is divisible by 10. (b) 3·12 + 1 = <b>37</b> (36 students could have exactly 3 per month).
+          <label class="miss"><input type="checkbox" data-miss="A7" data-secs="s27"> I missed this</label></li>
+        <li>(4,6), (5,5), (6,4), (5,6), (6,5), (6,6): 6/36 = <b>1/6</b>.
+          <label class="miss"><input type="checkbox" data-miss="A8" data-secs="s31"> I missed this</label></li>
+      </ol>
+    </details>
+  </section>
+
+  <section class="sec pt" id="pt-b">
+    <h2><span class="n">B</span>Practice Midterm B</h2>
+    <p class="src">80 minutes · closed notes · show your work</p>
+    <ol class="exam">
+      <li><b>(RSA)</b> Alice picks p = 5, q = 17, e = 5. Find n, (p − 1)(q − 1) and d. Encrypt m = 3, then show that decrypting gives 3 back. <span class="pill">§21</span></li>
+      <li><b>(Proof)</b> Prove: if gcd(a, m) = 1 and gcd(b, m) = 1, then gcd(ab, m) = 1. <span class="pill">§16 §18</span></li>
+      <li><b>(Strong induction)</b> Prove every integer n ≥ 12 can be written as 3a + 7b with a, b ≥ 0. <span class="pill">§23</span></li>
+      <li><b>(Induction)</b> Prove 4 | 5ⁿ − 1 for all n ≥ 1. <span class="pill">§22</span></li>
+      <li><b>(Counting)</b> A committee of 5 is chosen from 6 women and 8 men. How many committees have (a) at least one woman? (b) exactly two women? <span class="pill">§26 §28</span></li>
+      <li><b>(Binomial)</b> (a) Find the coefficient of x⁴ in (2x − 1)⁷. (b) Evaluate C(8, 0) + C(8, 1) + ⋯ + C(8, 8). <span class="pill">§29</span></li>
+      <li><b>(Recursion)</b> a₀ = 0, a₁ = 1, aₙ = aₙ₋₁ + 2aₙ₋₂ for n ≥ 2. Compute a₂ through a₅, then prove aₙ = (2ⁿ − (−1)ⁿ)/3 for all n ≥ 0. <span class="pill">§23 §24</span></li>
+      <li><b>(Probability)</b> A 4-digit PIN (0000–9999) is chosen at random. What's the probability that no digit repeats? <span class="pill">§28 §31</span></li>
+    </ol>
+    <details class="sol"><summary>Solutions to B</summary>
+      <ol class="exam">
+        <li>n = 85, (p − 1)(q − 1) = 64. 5d ≡ 1 (mod 64) → <b>d = 13</b> (65 = 64 + 1). c = 3⁵ = 243 ≡ <b>73</b> (mod 85). Decrypt: 73² ≡ 59, 73⁴ ≡ 81, 73⁸ ≡ 16; 13 = 8 + 4 + 1, so 73¹³ ≡ 16·81·73 ≡ <b>3</b> ✓.
+          <label class="miss"><input type="checkbox" data-miss="B1" data-secs="s21,s15"> I missed this</label></li>
+        <li><b>By contradiction.</b> Suppose gcd(ab, m) &gt; 1; then some prime p divides both ab and m. Since p | ab, p | a or p | b. If p | a, then p is a common divisor of a and m bigger than 1, contradicting gcd(a, m) = 1. Same if p | b. Contradiction! □ (Or use Bézout: 1 = sa + tm and 1 = ub + vm; multiply to get 1 = (su)ab + m(⋯).)
+          <label class="miss"><input type="checkbox" data-miss="B2" data-secs="s16,s18,s7"> I missed this</label></li>
+        <li><b>By strong induction.</b> <b>Base cases:</b> 12 = 3·4, 13 = 3·2 + 7, 14 = 7·2. <b>Induction step:</b> let k ≥ 14 and assume every n with 12 ≤ n ≤ k works. Then k + 1 − 3 = k − 2 ≥ 12, so k − 2 = 3a + 7b by the IH, and k + 1 = 3(a + 1) + 7b. □ (Three base cases because the step reaches back 3.)
+          <label class="miss"><input type="checkbox" data-miss="B3" data-secs="s23"> I missed this</label></li>
+        <li><b>By induction.</b> <b>Base case:</b> 4 | 4. <b>Induction step:</b> assume 4 | 5ᵏ − 1. Then 5ᵏ⁺¹ − 1 = 5(5ᵏ − 1) + 4, a sum of multiples of 4. □
+          <label class="miss"><input type="checkbox" data-miss="B4" data-secs="s22"> I missed this</label></li>
+        <li>(a) Complement: C(14, 5) − C(8, 5) = 2002 − 56 = <b>1946</b>. (b) C(6, 2)·C(8, 3) = 15·56 = <b>840</b>.
+          <label class="miss"><input type="checkbox" data-miss="B5" data-secs="s26,s28"> I missed this</label></li>
+        <li>(a) The term with (2x)⁴(−1)³: C(7, 4)·2⁴·(−1)³ = 35·16·(−1) = <b>−560</b>. (b) 2⁸ = <b>256</b>.
+          <label class="miss"><input type="checkbox" data-miss="B6" data-secs="s29"> I missed this</label></li>
+        <li>a₂ = 1, a₃ = 3, a₄ = 5, a₅ = 11. <b>By strong induction.</b> <b>Base cases:</b> n = 0: (1 − 1)/3 = 0 ✓; n = 1: (2 + 1)/3 = 1 ✓. <b>Induction step</b> (k ≥ 1, assume the formula for k and k − 1): a_{k+1} = (2ᵏ − (−1)ᵏ)/3 + 2(2ᵏ⁻¹ − (−1)ᵏ⁻¹)/3 = (2ᵏ⁺¹ − (−1)ᵏ − 2(−1)ᵏ⁻¹)/3. Since −(−1)ᵏ − 2(−1)ᵏ⁻¹ = (−1)ᵏ⁻¹(1 − 2) = −(−1)ᵏ⁻¹ = (−1)ᵏ = −(−1)ᵏ⁺¹, this equals (2ᵏ⁺¹ − (−1)ᵏ⁺¹)/3. □
+          <label class="miss"><input type="checkbox" data-miss="B7" data-secs="s23,s24"> I missed this</label></li>
+        <li>10·9·8·7/10⁴ = 5040/10,000 = <b>0.504</b>.
+          <label class="miss"><input type="checkbox" data-miss="B8" data-secs="s28,s31"> I missed this</label></li>
+      </ol>
+    </details>
+  </section>
+
+  <section class="sec pt" id="pt-c">
+    <h2><span class="n">C</span>Practice Midterm C</h2>
+    <p class="src">80 minutes · closed notes · show your work</p>
+    <ol class="exam">
+      <li><b>(gcd)</b> Find gcd(1001, 105) by the Euclidean algorithm and by prime factorization, and find lcm(1001, 105). <span class="pill">§16 §17</span></li>
+      <li><b>(Fermat)</b> Compute 7¹⁰⁰ mod 11, and use Fermat's little theorem to find the inverse of 7 mod 11. <span class="pill">§18 §20</span></li>
+      <li><b>(Induction)</b> Prove 3ⁿ &gt; n³ for all n ≥ 4. <span class="pill">§22</span></li>
+      <li><b>(Pigeonhole)</b> (a) A drawer has 10 red, 8 blue and 6 green socks. How many must you take (in the dark) to guarantee 3 of the same color? (b) How many numbers must you pick from {1, …, 100} to guarantee two that sum to 101? <span class="pill">§27</span></li>
+      <li><b>(Stars &amp; bars)</b> How many ways can 12 identical cookies go to 4 children (a) with no restriction? (b) if each child gets at least one? <span class="pill">§30</span></li>
+      <li><b>(Combinatorial proof)</b> Prove that C(2n, 2) = 2·C(n, 2) + n² by counting something two ways. <span class="pill">§29</span></li>
+      <li><b>(Probability)</b> A die is rolled 4 times. What's the probability of at least one 6? <span class="pill">§31</span></li>
+      <li><b>(CRT)</b> Solve x ≡ 3 (mod 4), x ≡ 4 (mod 5), x ≡ 1 (mod 3). <span class="pill">§19</span></li>
+      <li><b>(True/false, justify)</b> (a) If a ≡ b (mod m) then a² ≡ b² (mod m). (b) If ac ≡ bc (mod m) and c ≢ 0, then a ≡ b (mod m). (c) Every Carmichael number is prime. (d) For every prime p, p | C(p, 2) when p &gt; 2. <span class="pill">§14 §18 §20 §29</span></li>
+    </ol>
+    <details class="sol"><summary>Solutions to C</summary>
+      <ol class="exam">
+        <li>1001 = 9·105 + 56; 105 = 1·56 + 49; 56 = 1·49 + 7; 49 = 7·7 + 0, so gcd = <b>7</b>. Factorizations 1001 = 7·11·13 and 105 = 3·5·7 agree. lcm = 3·5·7·11·13 = <b>15,015</b>.
+          <label class="miss"><input type="checkbox" data-miss="C1" data-secs="s16,s17"> I missed this</label></li>
+        <li>7¹⁰ ≡ 1, so 7¹⁰⁰ = (7¹⁰)¹⁰ ≡ <b>1</b>. The inverse of 7 is 7⁹ (since 7·7⁹ = 7¹⁰ ≡ 1): 7² ≡ 5, 7⁴ ≡ 3, 7⁸ ≡ 9, so 7⁹ ≡ 9·7 = 63 ≡ <b>8</b>. Check 7·8 = 56 ≡ 1 ✓.
+          <label class="miss"><input type="checkbox" data-miss="C2" data-secs="s18,s20,s15"> I missed this</label></li>
+        <li><b>By induction.</b> <b>Base case (n = 4):</b> 81 &gt; 64 ✓. <b>Induction step</b> (k ≥ 4): assume 3ᵏ &gt; k³. Then 3ᵏ⁺¹ = 3·3ᵏ &gt; 3k³. It remains to show 3k³ ≥ (k + 1)³, i.e. (1 + 1/k)³ ≤ 3. For k ≥ 4, (1 + 1/k)³ ≤ (5/4)³ ≈ 1.95 ≤ 3 ✓. □
+          <label class="miss"><input type="checkbox" data-miss="C3" data-secs="s22"> I missed this</label></li>
+        <li>(a) Worst case is 2 of each color (6 socks), so <b>7</b>. (b) Boxes = the 50 pairs {1, 100}, {2, 99}, …, {50, 51}. With 51 numbers, two land in the same pair, so <b>51</b> (50 isn't enough: take 1, …, 50).
+          <label class="miss"><input type="checkbox" data-miss="C4" data-secs="s27"> I missed this</label></li>
+        <li>(a) 12 stars, 3 bars: C(15, 3) = <b>455</b>. (b) Give each child 1 first, leaving 8: C(11, 3) = <b>165</b>.
+          <label class="miss"><input type="checkbox" data-miss="C5" data-secs="s30"> I missed this</label></li>
+        <li>Count the 2-person groups from n boys and n girls. Directly: C(2n, 2). By type: two boys C(n, 2), two girls C(n, 2), or one of each n·n. These cover every group exactly once, so C(2n, 2) = 2C(n, 2) + n². □
+          <label class="miss"><input type="checkbox" data-miss="C6" data-secs="s29"> I missed this</label></li>
+        <li>1 − (5/6)⁴ = 1 − 625/1296 = <b>671/1296 ≈ 0.518</b>.
+          <label class="miss"><input type="checkbox" data-miss="C7" data-secs="s31"> I missed this</label></li>
+        <li>x ≡ 4 (mod 5) and x ≡ 3 (mod 4): try 4, 9, 14, 19: 19 ≡ 3 (mod 4) ✓. So x ≡ 19 (mod 20). And 19 ≡ 1 (mod 3) ✓. <b>x ≡ 19 (mod 60)</b>.
+          <label class="miss"><input type="checkbox" data-miss="C8" data-secs="s19"> I missed this</label></li>
+        <li>(a) <b>True</b>: multiply the congruence by itself. (b) <b>False</b>: 2·3 ≡ 4·3 (mod 6) but 2 ≢ 4. (c) <b>False</b>: Carmichael numbers are composite by definition (561 = 3·11·17). (d) <b>True</b>: C(p, 2) = p(p − 1)/2, and since p is odd, (p − 1)/2 is an integer (or use p | C(p, k) for 0 &lt; k &lt; p).
+          <label class="miss"><input type="checkbox" data-miss="C9" data-secs="s14,s18,s20,s29"> I missed this</label></li>
+      </ol>
+    </details>
   </section>
 
   <div class="part"><p class="eyebrow">Review</p><h2>Exam-day sheet</h2></div>
@@ -2402,6 +2904,11 @@ power(b, n, m):                                   ← fast modular powers (§15)
         <tr><td>arrange r of n, order matters</td><td>P(n, r) = n!/(n − r)!</td></tr>
         <tr><td>choose r of n, order doesn't matter</td><td>C(n, r) = n!/(r!(n − r)!)</td></tr>
         <tr><td>bit strings of length n / subsets of an n-set</td><td>2ⁿ</td></tr>
+        <tr><td>choose r of n, repetition allowed, order matters</td><td>nʳ</td></tr>
+        <tr><td>choose r of n, repetition allowed, no order (identical items into n bins)</td><td>C(n + r − 1, r): stars &amp; bars</td></tr>
+        <tr><td>arrange letters with repeats</td><td>n!/(n₁!⋯nₖ!)</td></tr>
+        <tr><td>coefficient in (x + y)ⁿ</td><td>C(n, j)·(constants)^(powers)</td></tr>
+        <tr><td>equally likely probability</td><td>|E|/|S|; complement 1 − p; union p₁ + p₂ − p(both)</td></tr>
       </table></div>
     </div>
   </section>
@@ -2455,14 +2962,21 @@ power(b, n, m):                                   ← fast modular powers (§15)
         <li>Sum rule only for non-overlapping options; otherwise subtract the overlap.</li>
         <li>Decide whether order matters before choosing P or C.</li>
         <li>“At least one” is almost always easier as total − none.</li>
+        <li>Lecture Fibonacci is f₀ = f₁ = 1 (Rosen uses f₀ = 0).</li>
+        <li>0! = 1, so C(n, 0) = C(n, n) = 1.</li>
+        <li>Stars and bars needs identical items; people are never identical.</li>
+        <li>Probability = |E|/|S| only for equally likely outcomes: count ordered dice pairs, not sums.</li>
+        <li>Label every induction proof: base case, induction step, induction hypothesis.</li>
       </ul>
     </div>
   </section>
 
 
 
+
+
   <footer>
-    <p>Built from Lectures 1–11, Homeworks 1–5, and Rosen 8th ed. §1.1–1.8, 2.1–2.3, 2.5, 4.1–4.4, 4.6, 5.1–5.4 and 6.1–6.3. Parts V–VI follow the textbook and syllabus because those lecture notes weren't available. Definitions are stated precisely in the form Rosen and the lecture use; section numbers are given so you can check the book's own wording.</p>
+    <p>Built from Lectures 1–16 and the syllabus (bCourses), Homeworks 1–6, the GSI extra-problems sheet, and Rosen 8th ed. Chapters 1, 2, 4, 5, 6 and §7.1. Definitions are stated precisely in the form the lecture and Rosen use; section numbers point to the book. Practice midterms and check questions are original, and every answer was checked by computer.</p>
   </footer>
 </main>
 </div>
@@ -2513,6 +3027,46 @@ power(b, n, m):                                   ← fast modular powers (§15)
   }
   boxes.forEach(function(b){ b.addEventListener('change',function(){ state[b.getAttribute('data-sec')]=b.checked; try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){} paint(); }); });
   paint();
+})();
+</script>
+
+<script>
+(function(){
+  var CORE=[], TOOLS=[];
+  for(var i=18;i<=31;i++) CORE.push('s'+i);
+  for(var j=1;j<=17;j++) TOOLS.push('s'+j);
+  function load(k){ try{ return JSON.parse(localStorage.getItem(k)||'{}')||{}; }catch(e){ return {}; } }
+  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  function title(id){ var h=document.querySelector('#'+id+' > h2'); if(!h) return id; var n=h.querySelector('.n'); return (n?n.textContent+' ':'')+h.textContent.replace(n?n.textContent:'','').trim(); }
+  var missed=load('m55-missed');
+  document.querySelectorAll('input[data-miss]').forEach(function(b){
+    b.checked=!!missed[b.getAttribute('data-miss')];
+    b.addEventListener('change',function(){ missed=load('m55-missed'); missed[b.getAttribute('data-miss')]=b.checked; save('m55-missed',missed); render(); });
+  });
+  document.addEventListener('change',function(e){ if(e.target && e.target.matches && e.target.matches('.gotit input')) setTimeout(render,0); });
+  function group(name,list,got){
+    var done=list.filter(function(id){return got[id];});
+    var todo=list.filter(function(id){return !got[id];});
+    var pct=Math.round(100*done.length/list.length);
+    var h='<h4>'+name+': '+done.length+' of '+list.length+' checked off</h4><div class="bar"><i style="width:'+pct+'%"></i></div>';
+    h+= todo.length ? '<div class="todo">Not yet: '+todo.map(function(id){return '<a href="#'+id+'">'+title(id).replace(/^§\d+\s*/,'§'+id.slice(1)+' ')+'</a>';}).join('')+'</div>' : '<p class="ok">All checked off ✓</p>';
+    return h;
+  }
+  function render(){
+    var got=load('m55-gotit'); missed=load('m55-missed');
+    var el=document.getElementById('ready'); if(!el) return;
+    var h=group('Midterm 2 sections (§18–§31)',CORE,got)+group('Foundations you build on (§1–§17)',TOOLS,got);
+    var bySec={};
+    document.querySelectorAll('input[data-miss]').forEach(function(b){
+      var k=b.getAttribute('data-miss'); if(!missed[k]) return;
+      b.getAttribute('data-secs').split(',').forEach(function(sid){ (bySec[sid]=bySec[sid]||[]).push(k); });
+    });
+    var keys=Object.keys(bySec).sort(function(a,b){return (+a.slice(1))-(+b.slice(1));});
+    h+='<h4>From your practice midterms</h4>';
+    h+= keys.length ? '<div class="todo">Review: '+keys.map(function(sid){return '<a class="miss" href="#'+sid+'">§'+sid.slice(1)+' ('+bySec[sid].join(', ')+')</a>';}).join('')+'</div>' : '<p class="sub-note">No missed problems marked yet. After grading a practice midterm, tick “I missed this” under each problem you got wrong.</p>';
+    el.innerHTML=h;
+  }
+  render();
 })();
 </script>
 </body>
