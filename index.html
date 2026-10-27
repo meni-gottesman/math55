@@ -505,7 +505,7 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
     <div class="pace-box" id="pace-box"></div>
 
       <h4>Day by day</h4>
-    <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do the warm-up → do 2–3 textbook exercises → <b>pass the mastery quiz</b>, which unlocks the next section. <b>Start and end every day with a recall round</b> (~10 min each); that's where sections become mastered and where forgotten ones get caught.</p>
+    <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day,. For every section: read the gist and goals → read the section → do the warm-up → do 2–3 textbook exercises → <b>pass the mastery quiz</b>, which unlocks the next section. <b>Start and end every day with a recall round</b> (~10 min each); that's where sections become mastered and where forgotten ones get caught.</p>
     <div class="tbl"><table class="plan-t">
       <tr><th>Day</th><th>Block</th><th>Do</th></tr>
       <tr><td rowspan="4"><b>Sat Oct 24</b><br><span class="pill">foundations</span></td><td>1.5 h</td><td>§1–§5 Logic (truth tables, equivalences, quantifiers, negation)</td></tr>
@@ -3663,9 +3663,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       if(!snap.exists||(snap.metadata&&snap.metadata.hasPendingWrites)) return;
       const d=snap.data(); if(!d||!d.st||d.rev===LASTREV) return;
       LASTREV=d.rev; ST=merge(d.st,ST); seed(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
-      refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); });
+      refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); }); refocus();
     }, e=>{ SYNC='error'; renderSync(); });
-    refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); }); renderSync();
+    refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); }); renderSync(); refocus();
   }
   const S_=id=>ST.sec[id]||(ST.sec[id]={});
   const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
@@ -3891,8 +3891,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
             if(first){ xp(50,'§'+sid.slice(1)+' passed'); if(P) xp(30,'proof written'); if((s.attempts||1)>1) badge('comeback'); confetti(); }
             if(score===QN) badge('perfect'); if(P) badge('proof');
             save(); refresh();
-            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first&&ORDER[ORDER.indexOf(sid)+1]?'<a href="#'+ORDER[ORDER.indexOf(sid)+1]+'">§'+(ORDER.indexOf(sid)+2)+' is unlocked</a>. ':'')+'Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Continue →</button> <button type="button" class="btn mq-again">Back</button>';
-            res.querySelector('.mq-next').onclick=advance;
+            res.className='mq-res ok'; const nf=computeNext(), nxt=focusLabel(nf);
+            res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> Unlocked. Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Next: '+nxt+' →</button> <button type="button" class="btn mq-again">Back</button>';
+            res.querySelector('.mq-next').onclick=()=>{ if(VIEW!=='focus'){ VIEW='focus'; try{localStorage.setItem('m55-view','focus');}catch(e){} } FOCUS=nf; applyView(true); };
           } else {
             save();
             res.className='mq-res no';
@@ -4360,6 +4361,23 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(scroll) window.scrollTo({top:0,behavior:'auto'});
   }
   function advance(){ FOCUS=computeNext(); applyView(true); }
+  function refocus(){ // synced progress arrived: if the shown section is already passed and idle, move on
+    if(VIEW!=='focus'||!FOCUS||FOCUS.kind!=='sec') return;
+    const id=FOCUS.id; if(!learned(id)||S_(id).review||document.querySelector('#'+id+' .mastery .mq-items')) return;
+    FOCUS=computeNext(); applyView(false);
+  }
+  document.addEventListener('click',e=>{
+    if(VIEW!=='focus') return;
+    const a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    const t=a.getAttribute('href').slice(1), el=t&&document.getElementById(t); if(!el||el.offsetParent!==null) return;
+    e.preventDefault();
+    if(ORDER.includes(t)&&!el.classList.contains('locked')) FOCUS={kind:'sec',id:t,why:S_(t).review?'review':undefined};
+    else if(/^pt-[abc]$/.test(t)) FOCUS={kind:'test',T:t.slice(3).toUpperCase()};
+    else if(t==='recall'||t==='recall-box') FOCUS={kind:'recall'};
+    else if(t==='drill'||t==='drill-box') FOCUS={kind:'done'};
+    else { VIEW='all'; applyView(); el.scrollIntoView(); return; }
+    applyView(true);
+  });
   function mountViewToggle(){
     const b=document.getElementById('viewfocus'); if(b) b.onclick=()=>{ VIEW='focus'; try{localStorage.setItem('m55-view','focus');}catch(e){} FOCUS=computeNext(); applyView(true); };
   }
