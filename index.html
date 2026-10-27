@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Interactive Math 55 course: gated auto-graded mastery quizzes, recall rounds, timed practice midterms, a daily pace plan, XP, streaks and badges.">
+<meta name="description" content="Interactive Math 55 course: one step at a time, with gated quizzes, recall rounds and timed practice midterms.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%80%3C/text%3E%3C/svg%3E">
 <script>window.SYNCED_URL="https://claude.ai/artifact/UXTMSm4YJxrXis5L9d8dNw";</script>
 <title>Math 55 Study Guide</title>
@@ -238,6 +238,23 @@ table.pace tr.missed td:last-child{color:var(--red);font-weight:600}
 .m55-confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation-name:m55fall;animation-timing-function:cubic-bezier(.25,.6,.4,1);animation-fill-mode:forwards}
 @keyframes m55fall{to{top:105%;transform:translateX(40px) rotate(540deg)}}
 @media (prefers-reduced-motion: reduce){.m55-toast{transition:none}}
+body.focus header.mast,body.focus nav.toc,body.focus .filter > :not(.cprog),body.focus .part,body.focus main > section:not(.fshow),body.focus footer{display:none!important}
+body.focus .wrap{display:block;max-width:760px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+body.focus .filter{border-bottom:1px solid var(--rule);margin-bottom:0}
+body.focus .cprog .pg:nth-of-type(2),body.focus .cprog .pnext{display:none}
+body.focus .sec.fshow > .side,body.focus .sec.fshow > .check,body.focus .sec.fshow > .tb,body.focus .sec.fshow > .src,body.focus .sec.fshow > .lockmsg{display:none!important}
+body.focus #mt.fshow > :not(.fkeep){display:none!important}
+body.focus .sec{padding-top:12px}
+.cprog .ftoday{font-weight:400;color:var(--muted);font-size:.8rem}
+.cprog .ftoday b{color:var(--ink)}
+body:not(.focus) .cprog .ftoday{display:none}
+.linkb{font:600 .8rem var(--f-display);background:none;border:none;color:var(--blue);cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+body.focus #viewfocus{display:none}
+.focus-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:18px 0 4px}
+.focus-head > div{display:grid;gap:2px;min-width:0}
+.focus-head .fk{font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.focus-head b{font:800 1.5rem/1.15 var(--f-display);text-wrap:balance}
+.focus-head .fhint{color:var(--muted);font-size:.95rem}
 .syncstate{font-weight:600;font-size:.78rem;padding:2px 8px;border-radius:999px;background:var(--slate-bg);color:var(--slate)}
 .syncstate.synced{background:var(--green-bg);color:var(--green)}
 .syncstate.error{background:var(--red-bg);color:var(--red)}
@@ -421,6 +438,7 @@ img{max-width:100%}
   <div class="filter" role="group" aria-label="Show only">
     <div class="cgame" id="cgame"></div>
     <div class="cprog" id="cprog"></div>
+    <button type="button" class="linkb" id="viewfocus">← Focus view</button>
     <span class="lbl">Show</span>
     <button type="button" id="f-all" data-f="all" aria-pressed="true">Everything</button>
     <button type="button" id="f-defn" data-f="defn" aria-pressed="false">Definitions</button>
@@ -430,6 +448,7 @@ img{max-width:100%}
     <button type="button" id="f-check" data-f="check" aria-pressed="false">Warm-ups</button>
     <p class="hint">Filters work on the sections you've unlocked. “Warm-ups” shows only the ungraded practice questions.</p>
   </div>
+  <div class="focus-head" id="focus-head" hidden></div>
 
   <section class="sec" style="padding-top:8px">
     <div class="blk idea"><span class="tag">How the exams work</span>
@@ -3723,7 +3742,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(top){
       let goal='';
       if(pc&&pc.before) goal='Pace plan starts <b>Sat Oct 24</b>: pass §1–§13';
-      else if(pc){ goal= pc.met? '✓ Today\'s target hit' + (pc.aheadBy>0?' · '+pc.aheadBy+' ahead':'') : 'Today: <b>'+(pc.p.tests&&pc.passed>=pc.p.passed? (pc.testsDone+'/'+pc.p.tests.length+' tests'+(pc.p.mastered?' · '+Math.min(pc.mast,pc.p.mastered)+'/'+pc.p.mastered+' mastered':'')) : (pc.todayNew+'/'+pc.todayNeed+' sections'))+'</b>'+(pc.aheadBy<0&&!pc.p.tests?' · '+(-pc.aheadBy)+' to go':''); }
+      else if(pc){ const left=pc.p.passed-pc.passed; goal= pc.met ? '✓ Today\'s target hit'+(pc.aheadBy>0?' · '+pc.aheadBy+' ahead':'') : left>0 ? (pc.p.d>PACE[2].d ? 'Behind pace: <b>'+left+' section'+(left===1?'':'s')+' to catch up</b>, then the practice tests' : 'Today: <b>'+pc.todayNew+'/'+pc.todayNeed+' sections</b>'+(pc.passed<(pc.i>0?PACE[pc.i-1].passed:0)?' · catching up from yesterday':'')) : 'Today: <b>'+pc.testsDone+'/'+(pc.p.tests||[]).length+' tests</b>'+(pc.p.mastered?' · '+Math.min(pc.mast,pc.p.mastered)+'/'+pc.p.mastered+' mastered':''); }
+      const ft=document.getElementById('ftoday'); if(ft) ft.innerHTML=goal;
       top.innerHTML='<span class="lvl">Lv '+lv.n+' · '+lv.title+'</span><span class="xpbar"><i style="width:'+(lv.max?100:Math.round(100*lv.into/lv.span))+'%"></i></span><span class="xp">'+g.xp+' XP</span><span class="streak'+(st?' on':'')+'">🔥 '+st+'-day streak</span><span class="goal">'+goal+'</span>';
     }
     const pb=document.getElementById('pace-box');
@@ -3859,7 +3879,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
             if(first){ xp(50,'§'+sid.slice(1)+' passed'); if(P) xp(30,'proof written'); if((s.attempts||1)>1) badge('comeback'); confetti(); }
             if(score===QN) badge('perfect'); if(P) badge('proof');
             save(); refresh();
-            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first?'The next section is unlocked. ':'')+'Now prove it sticks: this section shows up in <a href="#recall">recall rounds</a>, and two later correct recalls mark it mastered.<br><button type="button" class="btn mq-again">Back</button>';
+            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first?'The next section is unlocked. ':'')+'Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Continue →</button> <button type="button" class="btn mq-again">Back</button>';
+            res.querySelector('.mq-next').onclick=advance;
           } else {
             save();
             res.className='mq-res no';
@@ -3912,6 +3933,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
         const flagged=Object.keys(touched).filter(k=>!touched[k].ok);
         res.innerHTML='<b>'+right+'/'+objs.length+' correct.</b> '+(flagged.length?'Flagged for review: '+flagged.map(k=>'<a href="#'+k+'">§'+k.slice(1)+'</a>').join(', ')+'. Reread, then retake its quiz or another round.':'Nothing flagged.')+'<br><button type="button" class="btn">New round</button>';
         res.querySelector('button').onclick=()=>{ box._active=false; idle(); };
+        const cn=document.createElement('button'); cn.type='button'; cn.className='btn primary'; cn.textContent='Continue →'; cn.onclick=()=>{ box._active=false; idle(); advance(); }; res.appendChild(document.createTextNode(' ')); res.appendChild(cn);
       };
     }
     box._idle=idle;
@@ -3983,7 +4005,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       function score(){
         let pts=0; probs.forEach(p=>{ if(problemOK(T,p)) pts++; });
         const pct=Math.round(100*pts/probs.length); st.score=pct; save();
-        box.querySelector('.tscore').innerHTML='<b>Score: '+pts+'/'+probs.length+' problems ('+pct+'%)</b>. Proof problems count once their checklist is fully ticked. Every miss sends its sections to review. '+(pct>=85?'Strong. Use the next fix block as flex time.':pct>=70?'Solid. Fix the misses before the next test.':'Under 70%: reread the flagged sections and redo their quizzes before the next test.');
+        const showNext= !probs.some(p=>p.rub) || st.graded;
+        box.querySelector('.tscore').innerHTML='<b>Score: '+pts+'/'+probs.length+' problems ('+pct+'%)</b>. Proof problems count once their checklist is fully ticked. Every miss sends its sections to review. '+(pct>=85?'Strong. Use the next fix block as flex time.':pct>=70?'Solid. Fix the misses before the next test.':'Under 70%: reread the flagged sections and redo their quizzes before the next test.')+(showNext?' <button type="button" class="btn primary tnext">Continue →</button>':'');
+        const tn=box.querySelector('.tnext'); if(tn) tn.onclick=advance;
       }
     }
     view();
@@ -4017,7 +4041,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     const pc=Math.round(100*sc/ORDER.length), pm=Math.round(100*cs/CORE.length);
     const next=ORDER.find(id=>!learned(id));
     const pb=document.getElementById('cprog');
-    if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span><span class="syncstate"></span>';
+    if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span><span class="ftoday" id="ftoday"></span><span class="syncstate"></span>';
     const tp=document.getElementById('progress'); if(tp) tp.textContent=ORDER.filter(learned).length+' of 31 passed · '+ORDER.filter(mastered).length+' mastered';
     applyLocks(); readiness(); if(typeof renderSync==='function') renderSync(); checkBadges(); renderGame();
     const rcb=document.getElementById('recall-box'); if(rcb&&rcb._idle&&!rcb._active) rcb._idle();
@@ -4038,11 +4062,53 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     box.querySelector('.im').onclick=()=>{ try{ const s=JSON.parse(decodeURIComponent(escape(atob(ta.value.trim())))); if(!s||!s.sec) throw 0; ST=s; save(); msg.textContent='Loaded.'; refresh(); $$('.mastery').forEach(mountQuiz); }catch(e){ msg.textContent='That code didn\'t work.'; } };
   }
 
+  // ================= focus view: one thing at a time =================
+  let VIEW='focus'; try{ VIEW=localStorage.getItem('m55-view')||'focus'; }catch(e){}
+  let FOCUS=null;
+  function computeNext(){
+    for(const T of ['A','B','C']){ const st=ST.tests[T]; if(st&&st.start&&!st.submitted) return {kind:'test',T}; if(st&&st.submitted&&!st.graded&&TESTS[T].some(p=>p.rub)) return {kind:'test',T}; }
+    const rv=ORDER.find(id=>S_(id).review); if(rv) return {kind:'sec',id:rv,why:'review'};
+    const nx=ORDER.find(id=>!learned(id)); if(nx) return {kind:'sec',id:nx};
+    for(const T of ['A','B','C']){ const st=ST.tests[T]; if(!(st&&st.submitted)) return {kind:'test',T}; }
+    if(ORDER.some(id=>learned(id)&&!mastered(id))) return {kind:'recall'};
+    return {kind:'done'};
+  }
+  function focusLabel(f){
+    if(f.kind==='sec') return (f.why==='review'?'Fix':'Learn')+' §'+f.id.slice(1)+' '+secTitle(f.id);
+    if(f.kind==='test') return 'Practice Midterm '+f.T;
+    if(f.kind==='recall') return 'Recall round';
+    return 'Memorize sheet, then rest';
+  }
+  function focusHint(f){
+    if(f.kind==='sec') return f.why==='review'?'You missed this one. Reread it, then pass the quiz again.':'Read it, then pass the quiz at the bottom.';
+    if(f.kind==='test') return '80 minutes, closed notes. Grade your proofs when you\'re done.';
+    if(f.kind==='recall') return ORDER.filter(id=>learned(id)&&!mastered(id)).length+' sections left to master. Each needs 2 correct rounds.';
+    return 'Everything is mastered. Write the memorize sheet from memory once, then stop.';
+  }
+  function applyView(scroll){
+    document.body.classList.toggle('focus',VIEW==='focus');
+    const fh=document.getElementById('focus-head');
+    $$('.fshow').forEach(e=>e.classList.remove('fshow')); $$('.fkeep').forEach(e=>e.classList.remove('fkeep'));
+    if(VIEW!=='focus'){ if(fh) fh.hidden=true; return; }
+    if(!FOCUS) FOCUS=computeNext();
+    const f=FOCUS;
+    if(f.kind==='sec'){ const el=document.getElementById(f.id); if(el) el.classList.add('fshow'); }
+    else if(f.kind==='test'){ const el=document.getElementById('pt-'+f.T.toLowerCase()); if(el) el.classList.add('fshow'); }
+    else { const mt=document.getElementById('mt'); if(mt){ mt.classList.add('fshow'); const ids= f.kind==='recall'?['recall','recall-box']:['memorize']; ids.forEach(id=>{ const e=document.getElementById(id); if(e){ e.classList.add('fkeep'); if(id==='memorize'&&e.nextElementSibling) e.nextElementSibling.classList.add('fkeep'); } }); } }
+    if(fh){ fh.hidden=false; fh.innerHTML='<div><span class="fk">Now</span><b>'+focusLabel(f)+'</b><span class="fhint">'+focusHint(f)+'</span></div><button type="button" class="linkb" id="viewall">All notes</button>';
+      fh.querySelector('#viewall').onclick=()=>{ VIEW='all'; try{localStorage.setItem('m55-view','all');}catch(e){} applyView(); }; }
+    if(scroll) window.scrollTo({top:0,behavior:'auto'});
+  }
+  function advance(){ FOCUS=computeNext(); applyView(true); }
+  function mountViewToggle(){
+    const b=document.getElementById('viewfocus'); if(b) b.onclick=()=>{ VIEW='focus'; try{localStorage.setItem('m55-view','focus');}catch(e){} FOCUS=computeNext(); applyView(true); };
+  }
+
   $$('.mastery').forEach(mountQuiz);
   const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
   const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
   refresh();
-  renderSync(); initSync();
+  renderSync(); mountViewToggle(); applyView(false); initSync();
   window.__m55c={evalExpr,numOK,gen,BANK,TESTS,ST:()=>ST};
 
 })();
