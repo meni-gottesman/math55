@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
 /* Layout: notebook-style reading column with a sticky table of contents on the left;
-   block colors follow the lecture slides' color code (blue Defn, orange Thm, red Caution, green example, pink sidebar). */
+   block colors follow the professor' slide code (blue Defn, orange Thm, red Caution, green example, pink sidebar). */
 :root{
   --bg:#f5f6f8; --surface:#ffffff; --ink:#17202b; --muted:#566070; --rule:#dce1e8; --line:#e9edf2;
   --blue:#1f4cc9; --blue-bg:#edf2ff;
@@ -238,11 +238,45 @@ table.pace tr.missed td:last-child{color:var(--red);font-weight:600}
 .m55-confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation-name:m55fall;animation-timing-function:cubic-bezier(.25,.6,.4,1);animation-fill-mode:forwards}
 @keyframes m55fall{to{top:105%;transform:translateX(40px) rotate(540deg)}}
 @media (prefers-reduced-motion: reduce){.m55-toast{transition:none}}
+details.more{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:10px 16px;margin:14px 0}
+details.more > summary{cursor:pointer;font:700 1rem var(--f-display)}
+details.more[open] > summary{margin-bottom:6px}
+details.more h4{font-family:var(--f-display);margin:14px 0 4px}
+details.more.mini{max-width:980px;margin-top:8px;padding:6px 14px;font-size:.92rem}
+details.more.mini > summary{font-size:.85rem;color:var(--muted)}
+.mast{padding-bottom:12px}
+.drill{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;margin:14px 0 6px}
+.fc-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.fc-tabs{display:flex;gap:4px;background:var(--bg);border:1px solid var(--rule);border-radius:999px;padding:3px}
+.fc-tabs button{font:600 .85rem var(--f-display);border:0;background:transparent;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.fc-tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.fc-filter{font:600 .85rem var(--f-display);padding:7px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);max-width:100%;min-width:0}
+.fc-boxes{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--line);margin:12px 0 4px;gap:2px}
+.fc-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font:400 .76rem var(--f-mono);color:var(--muted);margin:4px 0 10px}
+.fc-legend b{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+.fc-legend .fc-due{margin-left:auto;color:var(--ink);font-weight:600}
+.fc-card{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--bg)}
+.fc-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font:400 .76rem var(--f-mono);color:var(--muted);margin:0 0 6px}
+.fc-front{font:700 1.2rem/1.35 var(--f-display);margin:4px 0 10px}
+.fc-back{font-family:var(--f-math);font-size:1.08rem;background:var(--green-bg);border-radius:8px;padding:10px 12px;margin:8px 0}
+.fc-hook{font-size:.92rem;background:var(--slate-bg);border-radius:8px;padding:8px 12px;margin:8px 0}
+.fc-hook span{display:block;font:600 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.fc-try{font:400 .95rem var(--f-body);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink);width:100%;margin-bottom:2px}
+.fc-rate{display:flex;flex-wrap:wrap;gap:8px}
+.fc-rate .btn,.fc-flip{min-height:40px}
+.fc-groups{display:flex;flex-wrap:wrap;gap:6px}
+.fc-blank textarea{font:400 .95rem var(--f-body);padding:9px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.fc-blank h4{font-family:var(--f-display);margin:14px 0 2px}
+.fc-chk span{font-size:.92rem}
+.fc-empty{padding:4px 0}
+.fc-drill{font-size:.8rem;padding:5px 12px;margin-top:2px}
+kbd{font:400 .72rem var(--f-mono);border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 4px;margin-left:4px;color:var(--muted);background:var(--surface)}
+.btn.primary kbd{color:inherit;background:transparent;border-color:currentColor;opacity:.75}
 body.focus header.mast,body.focus nav.toc,body.focus .filter > :not(.cprog),body.focus .part,body.focus main > section:not(.fshow),body.focus footer{display:none!important}
 body.focus .wrap{display:block;max-width:760px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
 body.focus .filter{border-bottom:1px solid var(--rule);margin-bottom:0}
 body.focus .cprog .pg:nth-of-type(2),body.focus .cprog .pnext{display:none}
-body.focus .sec.fshow > .side,body.focus .sec.fshow > .check,body.focus .sec.fshow > .tb,body.focus .sec.fshow > .src,body.focus .sec.fshow > .lockmsg{display:none!important}
+body.focus .sec.fshow > .side,body.focus .sec.fshow > .check,body.focus .sec.fshow > .tb,body.focus .sec.fshow > .src,body.focus .sec.fshow > .lockmsg,body.focus .sec.fshow > details.more{display:none!important}
 body.focus #mt.fshow > :not(.fkeep){display:none!important}
 body.focus .sec{padding-top:12px}
 .cprog .ftoday{font-weight:400;color:var(--muted);font-size:.8rem}
@@ -250,6 +284,7 @@ body.focus .sec{padding-top:12px}
 body:not(.focus) .cprog .ftoday{display:none}
 .linkb{font:600 .8rem var(--f-display);background:none;border:none;color:var(--blue);cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
 body.focus #viewfocus{display:none}
+body.focus .fc-drill{display:none}
 .focus-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:18px 0 4px}
 .focus-head > div{display:grid;gap:2px;min-width:0}
 .focus-head .fk{font:600 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -257,6 +292,7 @@ body.focus #viewfocus{display:none}
 .focus-head .fhint{color:var(--muted);font-size:.95rem}
 .syncstate{font-weight:600;font-size:.78rem;padding:2px 8px;border-radius:999px;background:var(--slate-bg);color:var(--slate)}
 .syncstate.synced{background:var(--green-bg);color:var(--green)}
+.cprog .syncstate.synced{display:none}
 .syncstate.error{background:var(--red-bg);color:var(--red)}
 .sec.locked > :not(h2):not(.src):not(.gist):not(.goals):not(.lockmsg){display:none!important}
 .lockmsg{background:var(--slate-bg);border-radius:10px;padding:10px 14px;font-weight:600}
@@ -311,32 +347,21 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
 .proofgrade{background:var(--orange-bg);border-radius:10px;padding:8px 14px;margin:8px 0}
 :root[data-theme="dark"] .btn.primary{color:#0d1424}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0d1424}}
-[hidden]{display:none!important}
-img{max-width:100%}
 </style>
 </head>
 <body>
 <header class="mast">
   <p class="eyebrow">Math 55 · Discrete Mathematics · UC Berkeley · Fall 2026</p>
-  <h1>Math 55 Study Guide <span class="hand">the full course</span></h1>
-  <p class="lede">All 16 lectures in one place, from logic through probability. Every section has a one-line gist, goals (what to be able to do and what to memorize), definitions, a picture to hang it on, worked examples, a check-yourself with hints, and textbook exercises. Midterm 2 HQ has the plan, a readiness check that catches gaps, and three practice midterms. <b>It's interactive and gated:</b> each section unlocks only after you pass the previous one's auto-graded quiz, sections become mastered only through later recall rounds, and the bar up top tracks it all.</p>
+  <h1>Math 55 Study Guide</h1>
+  <p class="lede">All 16 lectures, logic through probability. Each section unlocks when you pass the one before it.</p>
   <div class="facts">
     <div><b>Textbook</b><span>Rosen, <i>Discrete Mathematics and Its Applications</i>, 8th ed.</span></div>
     <div><b>Midterm 2</b><span>Thu Oct 29, 2:10–3:30 pm, 150 Wheeler</span></div>
     <div><b>Final</b><span>Tue Dec 15, 8–11 am</span></div>
-    <div><b>Grade</b><span>Best of 5H+10Q+20M1+20M2+45F or 5H+10Q+30·max(M1,M2)+55F (%)</span></div>
-    <div><b>Weekly</b><span>HW due Mon 11:59 pm (free extension to Tue); quiz Mon in your own section; 2 lowest of each dropped</span></div>
-    <div><b>Quizzes left</b><span>Nov 9, 16, 23, 30</span></div>
   </div>
-  <div class="legend">
-    <span>Colors follow the lecture slides:</span>
-    <span><span class="k" style="color:var(--blue)">Defn</span> definition</span>
-    <span><span class="k" style="color:var(--orange)">Thm</span> theorem</span>
-    <span><span class="k" style="color:var(--red)">Caution</span> common mistake</span>
-    <span><span class="k" style="color:var(--green)">Example</span> worked example</span>
-    <span><span class="k" style="color:var(--slate)">Picture it</span> intuition</span>
-    <span><span class="k" style="color:var(--pink)">Sidebar</span> history &amp; extras</span>
-  </div>
+  <details class="more mini"><summary>Grading &amp; weekly schedule</summary>
+    <p><b>Grade:</b> best of 5H+10Q+20M1+20M2+45F or 5H+10Q+30·max(M1,M2)+55F (%)<br><b>Weekly:</b> HW due Mon 11:59 pm (free extension to Tue); quiz Mon in your own section; 2 lowest of each dropped<br><b>Quizzes left:</b> Nov 9, 16, 23, 30</p>
+  </details>
 </header>
 
 <div class="wrap">
@@ -345,9 +370,8 @@ img{max-width:100%}
   <div>
   <p>Start</p>
   <ol>
-    <li><a href="#big"><span>◎</span>The course in 2 minutes</a></li>
-    <li><a href="#mt"><span>MT2</span>Midterm 2 HQ &amp; plan</a></li>
-    <li><a href="#coverage"><span>↳</span>Coverage map</a></li>
+    <li><a href="#mt"><span>MT2</span>Midterm 2 HQ</a></li>
+    <li><a href="#drill"><span>✎</span>Memorize trainer</a></li>
   </ol>
   <p>Part I · Logic</p>
   <ol>
@@ -425,6 +449,7 @@ img{max-width:100%}
   <div>
   <p>Review</p>
   <ol>
+    <li><a href="#memorize"><span>M</span>Memorize sheet</a></li>
     <li><a href="#cheat"><span>★</span>Exam-day sheet</a></li>
     <li><a href="#mistakes"><span>!</span>Mistakes to avoid</a></li>
     <li><a href="#playbook"><span>HW</span>Homework playbook (HW 1–6)</a></li>
@@ -446,111 +471,40 @@ img{max-width:100%}
     <button type="button" id="f-caution" data-f="caution" aria-pressed="false">Cautions</button>
     <button type="button" id="f-ex" data-f="ex" aria-pressed="false">Examples</button>
     <button type="button" id="f-check" data-f="check" aria-pressed="false">Warm-ups</button>
-    <p class="hint">Filters work on the sections you've unlocked. “Warm-ups” shows only the ungraded practice questions.</p>
   </div>
   <div class="focus-head" id="focus-head" hidden></div>
 
-  <section class="sec" style="padding-top:8px">
-    <div class="blk idea"><span class="tag">How the exams work</span>
-      <p>From the Lecture 9 review: exams are <b>closed notes, no devices</b>. You do <b>not</b> need to memorize the names of rules of inference or write formal numbered arguments. You <b>do</b> need to: make truth tables, translate English ↔ logic, negate quantified statements, and write proofs. When you prove something by contraposition or by contradiction, <b>you must say so in the first line</b>. Know the definitions of odd, even, rational, irrational and absolute value cold, and be able to write them from memory.</p>
-    </div>
-  </section>
-
-
-  <section class="sec" id="big">
-    <h2><span class="n">◎</span>The whole course in 2 minutes</h2>
-    <p class="src">Read this first. Each part builds on the ones above it.</p>
-    <div class="tbl"><table class="big">
-      <tr><th>Part</th><th>What it's about</th><th>Picture it</th></tr>
-      <tr><td>I · Logic</td><td>How mathematical statements are built (and, or, if-then, for all, there exists) and how to negate them.</td><td>The grammar you need before you can write an essay.</td></tr>
-      <tr><td>II · Proofs</td><td>How to argue that a statement is always true: direct, contraposition, contradiction, cases, examples and counterexamples.</td><td>A lawyer's case: every step must follow from evidence or earlier steps.</td></tr>
-      <tr><td>III · Sets &amp; functions</td><td>The objects math talks about (collections and rules that match inputs to outputs) and how to compare infinite sizes.</td><td>Bags of items, and pairing items up one to one.</td></tr>
-      <tr><td>IV · Number theory</td><td>Divisibility, remainders, primes, gcd, solving equations mod m, and how it all powers RSA encryption.</td><td>Clock arithmetic: numbers that wrap around.</td></tr>
-      <tr><td>V · Induction</td><td>Proving infinitely many cases at once, defining things step by step, recursive algorithms.</td><td>Dominoes: knock over the first one, and each one knocks over the next.</td></tr>
-      <tr><td>VI · Counting</td><td>Counting outcomes without listing them: multiply, divide out overcounts, pigeonhole, permutations, combinations.</td><td>Ordering from a menu: an appetizer <i>and</i> a main multiplies; soup <i>or</i> salad adds.</td></tr>
-      <tr><td>VII · Probability</td><td>Proving identities by counting two ways, the binomial theorem, stars and bars, and probability as “counting with a denominator.”</td><td>Two people counting the same crowd from different spots must get the same number.</td></tr>
-    </table></div>
-    <div class="blk idea"><span class="tag">How the pieces connect</span>
-      <p>Logic is the language every proof is written in. Proofs (Part II) are the method used everywhere after. Number theory leans on sets and proofs, and the induction of Part V is what proves the division algorithm and prime factorization from Part IV. Counting uses sets (a set of size n has 2ⁿ subsets) and the binomial coefficients that showed up in Fermat's little theorem.</p>
-    </div>
-  </section>
-
   <section class="sec" id="mt">
-    <h2><span class="n">MT2</span>Midterm 2 headquarters</h2>
-    <p class="src">Thu Oct 29 · 2:10–3:30 pm (80 min) · in class, 150 Wheeler · review lecture Tue Oct 27</p>
-    <div class="gist"><p>The midterm covers Lectures 10–16 (§18–§31: congruences, CRT, Fermat, RSA, induction, recursion, counting, binomial coefficients, probability). It's built on everything before it, especially proof writing and mod arithmetic, so §1–§17 are the tools you'll need.</p></div>
+    <h2><span class="n">MT2</span>Midterm 2 HQ</h2>
+    <p class="src">Thu Oct 29 · 2:10–3:30 pm · 150 Wheeler · covers Lectures 10–16 (§18–§31) · review lecture Tue Oct 27</p>
 
-    <div class="blk idea"><span class="tag">Exam facts</span>
+    <div class="blk idea"><span class="tag">How the exam works</span>
       <ul>
-        <li>Confirmed on the bCourses syllabus and in Lecture 15: <b>Thursday Oct 29, in class</b>.</li>
-        <li>Lecture 16: “Review materials for midterm 2 will be posted soon.” <b>Check bCourses</b> and do them when they appear (the plan reserves time).</li>
-        <li>Expect the Midterm 1 rules: closed notes, no devices. Write “By induction”, “By contraposition”, “Assume for a contradiction” at the start, and label base cases and induction steps.</li>
-        <li>About a quarter of exam problems come from the homework, often word for word. Redo HW 5 and HW 6 cold.</li>
+        <li>Closed notes, no devices.</li>
+        <li>Name your method in the first line: “By induction”, “By contraposition”, “Assume for a contradiction”. Label base case and induction step.</li>
+        <li>Know cold: truth tables, English ↔ logic, negating quantifiers, and the definitions of odd, even, rational, irrational and |x|. Rule-of-inference names aren't tested.</li>
+        <li>About a quarter of problems come from the homework, often word for word: redo HW 5 and HW 6 cold.</li>
+        <li>Review materials will be posted on bCourses; do them when they appear.</li>
       </ul>
     </div>
 
-    <h3 id="ready-h">Readiness check <span class="pill">live</span></h3>
+    <h3 id="ready-h">Readiness check</h3>
     <div class="ready" id="ready"><p>Loading your progress…</p></div>
-    <p class="sub-note">Nothing here is self-reported. A section <b>passes</b> only when you score 4/5 on its auto-graded quiz (plus its proof task), and that's what unlocks the next one. It's <b>mastered</b> only after you answer it correctly again in two separate recall rounds. A miss in recall, or on a practice midterm, flags it for review.</p>
+    <p class="sub-note">Pass = 4/5 on a section's quiz (plus its proof task); that unlocks the next section. Mastered = right again in two separate recall rounds. A miss in recall or on a practice midterm flags it for review.</p>
 
-    <h3 id="recall">Recall rounds <span class="pill">spaced · interleaved</span></h3>
+    <h3 id="recall">Recall rounds</h3>
     <div class="recall" id="recall-box"></div>
 
-    <h3 id="sync">Move your progress to another device</h3>
-    <div class="sync" id="sync-box"></div>
+    <h3 id="drill">Memorize trainer</h3>
+    <p class="sub-note">Flashcards for the sections you've passed and the one you're on; more appear as you unlock sections. <b>Knew it</b> pushes a card later (10 min → 1 h → 6 h → 1 day); <b>Missed it</b> brings it back soon. Keys: <kbd>space</kbd> flip, <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> rate.</p>
+    <div class="drill" id="drill-box"></div>
 
-    <h3 id="memorize">Memorize sheet (Midterm 2)</h3>
-    <div class="cheat">
-      <div class="two">
-        <div>
-          <h3>Number theory</h3>
-          <ul>
-            <li>a = dq + r, 0 ≤ r &lt; d; a ≡ b (mod m) ⟺ m | a − b</li>
-            <li>gcd(a, b) = gcd(b, a mod b); gcd·lcm = ab</li>
-            <li><b>Bézout:</b> gcd(a, b) = sa + tb</li>
-            <li>gcd(a, b) = 1, a | bc ⇒ a | c; p | ab ⇒ p | a or p | b</li>
-            <li>Inverse mod m exists ⟺ gcd(a, m) = 1</li>
-            <li>ax ≡ b (mod m) solvable ⟺ d = gcd(a, m) | b; d solutions, m/d apart</li>
-            <li>Cancel c only if gcd(c, m) = 1</li>
-            <li><b>CRT:</b> pairwise coprime ⇒ unique mod M; x = Σ aᵢMᵢyᵢ</li>
-            <li><b>Fermat:</b> p ∤ a ⇒ a<sup>p−1</sup> ≡ 1; a<sup>p</sup> ≡ a; reduce exponents mod p − 1</li>
-            <li><b>RSA:</b> n = pq, gcd(e, (p−1)(q−1)) = 1, d = e⁻¹ mod (p−1)(q−1), c = mᵉ, m = cᵈ</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Induction &amp; recursion</h3>
-          <ul>
-            <li>Base case + induction step, both labeled; state the IH</li>
-            <li>Strong induction assumes P(1)…P(k); base cases = how far back the step reaches</li>
-            <li>Well-ordering: nonempty A ⊆ ℕ has a least element</li>
-            <li>Fibonacci (lecture): f₀ = f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂</li>
-            <li>Σ i = n(n+1)/2; Σ 2ⁱ (i = 0..n) = 2ⁿ⁺¹ − 1; Σ fᵢ = fₙ₊₂ − 1</li>
-            <li>Hanoi: Hₙ = 2Hₙ₋₁ + 1 = 2ⁿ − 1</li>
-          </ul>
-          <h3>Counting &amp; probability</h3>
-          <ul>
-            <li>Product rule; division rule n/d; |A ∪ B| = |A| + |B| − |A ∩ B|; complement</li>
-            <li>Pigeonhole: k + 1 in k boxes; generalized ⌈N/k⌉</li>
-            <li>P(n, r) = n!/(n − r)!; C(n, r) = n!/((n − r)! r!); 0! = 1</li>
-            <li>Repetition: nʳ (ordered), C(n + r − 1, r) (stars &amp; bars)</li>
-            <li>Repeated letters: n!/(n₁!⋯nₖ!)</li>
-            <li>C(n, r) = C(n, n − r); Pascal; k·C(n, k) = n·C(n − 1, k − 1)</li>
-            <li>(x + y)ⁿ = Σ C(n, j)xⁿ⁻ʲyʲ; Σ C(n, k) = 2ⁿ</li>
-            <li>p(E) = |E|/|S|; p(Ē) = 1 − p(E); p(E₁∪E₂) = p(E₁) + p(E₂) − p(E₁∩E₂)</li>
-          </ul>
-        </div>
-      </div>
-      <p><b>Test yourself:</b> on blank paper, write this whole sheet from memory, then compare. Anything you missed goes on tomorrow's first flex block.</p>
-    </div>
-
-    <h3 id="pace">Daily pace: finish early <span class="pill">live</span></h3>
+    <details class="more" id="plan"><summary>Study plan &amp; daily pace</summary>
+      <h4 id="pace">Daily pace</h4>
     <p>Every section is passed by <b>Monday night</b> and all three practice midterms are done by <b>Wednesday midday</b>, which leaves Wednesday afternoon free before Thursday's exam. The bar at the top shows today's target and whether you're ahead.</p>
     <div class="pace-box" id="pace-box"></div>
 
-    <h3 id="badges">Badges &amp; levels</h3>
-    <div class="badge-box" id="badge-box"></div>
-
-    <h3 id="plan">Study plan: Sat Oct 24 → Thu Oct 29</h3>
+      <h4>Day by day</h4>
     <p>This assumes you're seeing everything for the first time and covers every section. That's about 6 hours a day. For every section: read the gist and goals → read the section → do the warm-up → do 2–3 textbook exercises → <b>pass the mastery quiz</b>, which unlocks the next section. <b>Start and end every day with a recall round</b> (~10 min each); that's where sections become mastered and where forgotten ones get caught.</p>
     <div class="tbl"><table class="plan-t">
       <tr><th>Day</th><th>Block</th><th>Do</th></tr>
@@ -587,26 +541,28 @@ img{max-width:100%}
       </ul>
     </div>
 
-    <h3 id="coverage">Coverage map: every lecture → where it lives here</h3>
-    <div class="tbl"><table class="cov">
-      <tr><th>Lecture</th><th>Topics</th><th>Sections</th></tr>
-      <tr><td>1</td><td>Propositions, connectives, truth tables, converse/contrapositive, equivalences, De Morgan, tautologies</td><td><a href="#s1">§1</a> <a href="#s2">§2</a></td></tr>
-      <tr><td>2</td><td>Predicates, ∀/∃, negation, translation patterns, nested quantifiers, uniqueness, rules of inference</td><td><a href="#s3">§3</a> <a href="#s4">§4</a> <a href="#s5">§5</a></td></tr>
-      <tr><td>3</td><td>Terminology, direct proof, contraposition, contradiction, √2 irrational</td><td><a href="#s6">§6</a> <a href="#s7">§7</a></td></tr>
-      <tr><td>4</td><td>Cases, absolute value, triangle inequality, existence, counterexamples, uniqueness, Zermelo, Chomp</td><td><a href="#s8">§8</a> <a href="#s9">§9</a></td></tr>
-      <tr><td>5</td><td>Sets, subsets, power set, tuples, Cartesian product, set operations</td><td><a href="#s10">§10</a> <a href="#s11">§11</a></td></tr>
-      <tr><td>6</td><td>Functions, injective/surjective/bijective, inverse, composition, cardinality, Hilbert's hotel, diagonalization</td><td><a href="#s12">§12</a> <a href="#s13">§13</a></td></tr>
-      <tr><td>7</td><td>0.999… = 1, Russell, divisibility, division algorithm, congruences, bases, fast exponentiation</td><td><a href="#s13">§13</a> <a href="#s14">§14</a> <a href="#s15">§15</a></td></tr>
-      <tr><td>8</td><td>Primes, FTA, infinitely many primes, gcd/lcm, Euclidean algorithm</td><td><a href="#s16">§16</a> <a href="#s17">§17</a></td></tr>
-      <tr><td>9</td><td>Midterm 1 review</td><td>§1–§17</td></tr>
-      <tr><td>10</td><td>Extended Euclid, Bézout, p | ab, solving ax ≡ b, inverses, cancellation, CRT intro</td><td><a href="#s18">§18</a> <a href="#s19">§19</a></td></tr>
-      <tr><td>11</td><td>CRT, freshman's dream, Fermat, primality tests, RSA</td><td><a href="#s19">§19</a> <a href="#s20">§20</a> <a href="#s21">§21</a></td></tr>
-      <tr><td>12</td><td>Induction, sums, inequalities, harmonic numbers, divisibility, pie fights, strong induction, prime factorization, 5a + 3b</td><td><a href="#s22">§22</a> <a href="#s23">§23</a></td></tr>
-      <tr><td>13</td><td>Division algorithm by induction, forcing the induction, well-ordering, recursive definitions, Fibonacci, recursive algorithms, Hanoi</td><td><a href="#s23">§23</a> <a href="#s24">§24</a> <a href="#s25">§25</a></td></tr>
-      <tr><td>14</td><td>Product rule, division rule, inclusion–exclusion, complements, permutations, combinations, n! bounds, pigeonhole</td><td><a href="#s26">§26</a> <a href="#s27">§27</a> <a href="#s28">§28</a></td></tr>
-      <tr><td>15</td><td>Pigeonhole applications, compression, P/C review, stars &amp; bars, repeated letters, objects into boxes, combinatorial proofs, committee-chair, Pascal, binomial theorem</td><td><a href="#s27">§27</a> <a href="#s28">§28</a> <a href="#s29">§29</a> <a href="#s30">§30</a></td></tr>
-      <tr><td>16</td><td>Pascal's triangle, binomial theorem examples, Σ C(n, k) = 2ⁿ, probability, poker, complements, unions, Monty Hall</td><td><a href="#s29">§29</a> <a href="#s31">§31</a></td></tr>
+    </details>
+
+    <details class="more" id="badges"><summary>Badges &amp; levels</summary>
+      <div class="badge-box" id="badge-box"></div>
+    </details>
+
+    <details class="more" id="sync"><summary>Move your progress to another device</summary>
+      <div class="sync" id="sync-box"></div>
+    </details>
+
+    <details class="more" id="big"><summary>Course overview</summary>
+    <div class="tbl"><table class="big">
+      <tr><th>Part</th><th>What it's about</th><th>Picture it</th></tr>
+      <tr><td>I · Logic</td><td>How mathematical statements are built (and, or, if-then, for all, there exists) and how to negate them.</td><td>The grammar you need before you can write an essay.</td></tr>
+      <tr><td>II · Proofs</td><td>How to argue that a statement is always true: direct, contraposition, contradiction, cases, examples and counterexamples.</td><td>A lawyer's case: every step must follow from evidence or earlier steps.</td></tr>
+      <tr><td>III · Sets &amp; functions</td><td>The objects math talks about (collections and rules that match inputs to outputs) and how to compare infinite sizes.</td><td>Bags of items, and pairing items up one to one.</td></tr>
+      <tr><td>IV · Number theory</td><td>Divisibility, remainders, primes, gcd, solving equations mod m, and how it all powers RSA encryption.</td><td>Clock arithmetic: numbers that wrap around.</td></tr>
+      <tr><td>V · Induction</td><td>Proving infinitely many cases at once, defining things step by step, recursive algorithms.</td><td>Dominoes: knock over the first one, and each one knocks over the next.</td></tr>
+      <tr><td>VI · Counting</td><td>Counting outcomes without listing them: multiply, divide out overcounts, pigeonhole, permutations, combinations.</td><td>Ordering from a menu: an appetizer <i>and</i> a main multiplies; soup <i>or</i> salad adds.</td></tr>
+      <tr><td>VII · Probability</td><td>Proving identities by counting two ways, the binomial theorem, stars and bars, and probability as “counting with a denominator.”</td><td>Two people counting the same crowd from different spots must get the same number.</td></tr>
     </table></div>
+    </details>
   </section>
 
   <div class="part"><p class="eyebrow">Part I</p><h2>Logic</h2></div>
@@ -1093,7 +1049,7 @@ img{max-width:100%}
       <tr><td><b>Theorem</b></td><td>A proposition we can prove is true; usually signals importance. (“Thm”)</td></tr>
       <tr><td><b>Lemma</b></td><td>A proven helper result used to prove a bigger theorem.</td></tr>
       <tr><td><b>Corollary</b></td><td>Something that follows easily from a theorem just proved. (“Cor”)</td></tr>
-      <tr><td><b>Proposition</b></td><td>Also (confusingly) used for a less important theorem. The lecture doesn't use it this way.</td></tr>
+      <tr><td><b>Proposition</b></td><td>Also (confusingly) used for a less important theorem. the professor won't use it this way.</td></tr>
       <tr><td><b>Conjecture</b></td><td>Believed true but not yet proved (e.g. the Twin Prime Conjecture).</td></tr>
       <tr><td><b>Proof</b></td><td>The argument for why it's true; often ends with □ (the “Halmos” tombstone).</td></tr>
       <tr><td>Axiom</td><td>A statement assumed true without proof (Rosen).</td></tr>
@@ -2850,6 +2806,53 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
 
   <div class="part"><p class="eyebrow">Review</p><h2>Exam-day sheet</h2></div>
 
+  <section class="sec cheat-sec" id="memorize">
+    <h2><span class="n">M</span>Memorize sheet (Midterm 2)</h2>
+    <div class="cheat">
+      <div class="two">
+        <div>
+          <h3>Number theory</h3>
+          <ul>
+            <li>a = dq + r, 0 ≤ r &lt; d; a ≡ b (mod m) ⟺ m | a − b</li>
+            <li>gcd(a, b) = gcd(b, a mod b); gcd·lcm = ab</li>
+            <li><b>Bézout:</b> gcd(a, b) = sa + tb</li>
+            <li>gcd(a, b) = 1, a | bc ⇒ a | c; p | ab ⇒ p | a or p | b</li>
+            <li>Inverse mod m exists ⟺ gcd(a, m) = 1</li>
+            <li>ax ≡ b (mod m) solvable ⟺ d = gcd(a, m) | b; d solutions, m/d apart</li>
+            <li>Cancel c only if gcd(c, m) = 1</li>
+            <li><b>CRT:</b> pairwise coprime ⇒ unique mod M; x = Σ aᵢMᵢyᵢ</li>
+            <li><b>Fermat:</b> p ∤ a ⇒ a<sup>p−1</sup> ≡ 1; a<sup>p</sup> ≡ a; reduce exponents mod p − 1</li>
+            <li><b>RSA:</b> n = pq, gcd(e, (p−1)(q−1)) = 1, d = e⁻¹ mod (p−1)(q−1), c = mᵉ, m = cᵈ</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Induction &amp; recursion</h3>
+          <ul>
+            <li>Base case + induction step, both labeled; state the IH</li>
+            <li>Strong induction assumes P(1)…P(k); base cases = how far back the step reaches</li>
+            <li>Well-ordering: nonempty A ⊆ ℕ has a least element</li>
+            <li>Fibonacci (lecture): f₀ = f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂</li>
+            <li>Σ i = n(n+1)/2; Σ 2ⁱ (i = 0..n) = 2ⁿ⁺¹ − 1; Σ fᵢ = fₙ₊₂ − 1</li>
+            <li>Hanoi: Hₙ = 2Hₙ₋₁ + 1 = 2ⁿ − 1</li>
+          </ul>
+          <h3>Counting &amp; probability</h3>
+          <ul>
+            <li>Product rule; division rule n/d; |A ∪ B| = |A| + |B| − |A ∩ B|; complement</li>
+            <li>Pigeonhole: k + 1 in k boxes; generalized ⌈N/k⌉</li>
+            <li>P(n, r) = n!/(n − r)!; C(n, r) = n!/((n − r)! r!); 0! = 1</li>
+            <li>Repetition: nʳ (ordered), C(n + r − 1, r) (stars &amp; bars)</li>
+            <li>Repeated letters: n!/(n₁!⋯nₖ!)</li>
+            <li>C(n, r) = C(n, n − r); Pascal; k·C(n, k) = n·C(n − 1, k − 1)</li>
+            <li>(x + y)ⁿ = Σ C(n, j)xⁿ⁻ʲyʲ; Σ C(n, k) = 2ⁿ</li>
+            <li>p(E) = |E|/|S|; p(Ē) = 1 − p(E); p(E₁∪E₂) = p(E₁) + p(E₂) − p(E₁∩E₂)</li>
+          </ul>
+        </div>
+      </div>
+      <p><b>Test yourself:</b> write this sheet from memory on blank paper, then compare. The <a href="#drill">memorize trainer</a>'s “Write from memory” mode does this and turns misses into flashcards.</p>
+    </div>
+
+  </section>
+
   <section class="sec cheat-sec" id="cheat">
     <h2><span class="n">★</span>Everything on one screen</h2>
     <p class="src">Condensed from §1–21</p>
@@ -3594,21 +3597,27 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const CORE=ORDER.slice(17); // s18..s31
   const KEY='m55-course-v1';
   const PASS=4, QN=5, PROOF_MIN=80;
-  function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s&&s.sec) return s; }catch(e){} return {sec:{},tests:{},rounds:0}; }
+  function load(){ try{ const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s&&s.sec){ s.fc=s.fc||{}; return s; } }catch(e){} return {sec:{},tests:{},fc:{},rounds:0}; }
   let ST=load();
   // ---- sync: the source of truth is a private per-person document in the viewer's Claude account ----
   let REMOTE=null, SYNC='local', WRITING=false, PENDING=false, LASTREV=null, PUSHT=null;
   const PREV={};
   const strip=o=>{ const c=Object.assign({},o); delete c.t; return JSON.stringify(c); };
+  const GROUPS=['sec','tests','fc'];
+  function seed(){ // remember records as they are now, without re-timestamping them (used after load and merges)
+    GROUPS.forEach(g=>{ Object.keys(ST[g]||{}).forEach(k=>{ if(ST[g][k].t==null) ST[g][k].t=Date.now(); PREV[g+k]=strip(ST[g][k]); }); });
+  }
+  seed();
   function stamp(){ // mark changed records with a timestamp so devices merge record by record
-    ['sec','tests'].forEach(g=>{ Object.keys(ST[g]||{}).forEach(k=>{ const j=strip(ST[g][k]); if(PREV[g+k]!==undefined&&PREV[g+k]!==j) ST[g][k].t=Date.now(); else if(PREV[g+k]===undefined&&ST[g][k].t==null) ST[g][k].t=Date.now(); PREV[g+k]=j; }); });
+    GROUPS.forEach(g=>{ Object.keys(ST[g]||{}).forEach(k=>{ const j=strip(ST[g][k]); if(PREV[g+k]!==undefined&&PREV[g+k]!==j) ST[g][k].t=Date.now(); else if(PREV[g+k]===undefined&&ST[g][k].t==null) ST[g][k].t=Date.now(); PREV[g+k]=j; }); });
   }
   function merge(a,b){ // newer record wins, per section / per test
-    const out={sec:{},tests:{},rounds:Math.max(a.rounds||0,b.rounds||0)};
-    ['sec','tests'].forEach(g=>{ const ks=new Set([...Object.keys(a[g]||{}),...Object.keys(b[g]||{})]);
-      ks.forEach(k=>{ const x=(a[g]||{})[k], y=(b[g]||{})[k]; out[g][k]= !x? y : !y? x : ((y.t||0)>(x.t||0)? y : x); }); });
+    const out={sec:{},tests:{},fc:{},rounds:Math.max(a.rounds||0,b.rounds||0)};
+    GROUPS.forEach(g=>{ const ks=new Set([...Object.keys(a[g]||{}),...Object.keys(b[g]||{})]);
+      ks.forEach(k=>{ const x=(a[g]||{})[k], y=(b[g]||{})[k]; const w= !x? y : !y? x : ((x.t||0)>(y.t||0)? x : y); out[g][k]=w;
+        if(g==='sec'&&x&&y){ if(x.learned||y.learned) w.learned=true; if(x.best!=null||y.best!=null) w.best=Math.max(x.best||0,y.best||0); if(x.attempts||y.attempts) w.attempts=Math.max(x.attempts||0,y.attempts||0); } }); });
     const ga=a.g||{}, gb=b.g||{};
-    out.g={xp:Math.max(ga.xp||0,gb.xp||0), days:[...new Set([...(ga.days||[]),...(gb.days||[])])], badges:Object.assign({},ga.badges||{},gb.badges||{}), combo:Math.max(ga.combo||0,gb.combo||0), best:Math.max(ga.best||0,gb.best||0)};
+    out.g={xp:Math.max(ga.xp||0,gb.xp||0), days:[...new Set([...(ga.days||[]),...(gb.days||[])])], badges:Object.assign({},ga.badges||{},gb.badges||{}), combo:Math.max(ga.combo||0,gb.combo||0), best:Math.max(ga.best||0,gb.best||0), cards:Math.max(ga.cards||0,gb.cards||0)};
     return out;
   }
   function save(){
@@ -3620,6 +3629,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(!REMOTE) return;
     if(WRITING){ PENDING=true; return; }
     WRITING=true; PENDING=false;
+    try{ const snap=await REMOTE.get(); const d=snap.exists?snap.data():null; if(d&&d.st&&d.st.sec&&d.rev!==LASTREV){ ST=merge(d.st,ST); seed(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} } }catch(e){}
     const rev=Math.random().toString(36).slice(2); LASTREV=rev;
     const body={v:1, rev, at:Date.now(), st:JSON.parse(JSON.stringify(ST,(k,v)=>k==='_t'?undefined:v))};
     try{ await REMOTE.set(body); SYNC='synced'; }
@@ -3646,13 +3656,13 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     try{
       const snap=await ref.get();
       if(snap.exists){ const d=snap.data(); if(d&&d.st&&d.st.sec){ LASTREV=d.rev; ST=merge(d.st,ST); } }
-      REMOTE=ref; stamp(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
+      REMOTE=ref; seed(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
       await push();
     }catch(e){ SYNC='error'; renderSync(); return; }
     ref.onSnapshot(snap=>{
-      if(!snap.exists||snap.metadata.hasPendingWrites) return;
+      if(!snap.exists||(snap.metadata&&snap.metadata.hasPendingWrites)) return;
       const d=snap.data(); if(!d||!d.st||d.rev===LASTREV) return;
-      LASTREV=d.rev; ST=merge(d.st,ST); stamp(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
+      LASTREV=d.rev; ST=merge(d.st,ST); seed(); try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){}
       refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); });
     }, e=>{ SYNC='error'; renderSync(); });
     refresh(); $$('.mastery').forEach(m=>{ if(!m.querySelector('.mq-items')) mountQuiz(m); }); renderSync();
@@ -3695,6 +3705,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     ['ace','85% club','Score 85%+ on a practice midterm'],
     ['ontime','Right on pace','Hit a day\'s pace target'],
     ['streak3','Three-peat','A 3-day study streak'],
+    ['cards100','Card shark','Review 100 flashcards'],
+    ['vault','Formula vault','Every Midterm 2 card (§18–§31) in box 4 or 5'],
   ];
   const todayStr=()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
   const G=()=>{ ST.g=ST.g||{xp:0,days:[],badges:{},combo:0,best:0}; return ST.g; };
@@ -3744,7 +3756,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       if(pc&&pc.before) goal='Pace plan starts <b>Sat Oct 24</b>: pass §1–§13';
       else if(pc){ const left=pc.p.passed-pc.passed; goal= pc.met ? '✓ Today\'s target hit'+(pc.aheadBy>0?' · '+pc.aheadBy+' ahead':'') : left>0 ? (pc.p.d>PACE[2].d ? 'Behind pace: <b>'+left+' section'+(left===1?'':'s')+' to catch up</b>, then the practice tests' : 'Today: <b>'+pc.todayNew+'/'+pc.todayNeed+' sections</b>'+(pc.passed<(pc.i>0?PACE[pc.i-1].passed:0)?' · catching up from yesterday':'')) : 'Today: <b>'+pc.testsDone+'/'+(pc.p.tests||[]).length+' tests</b>'+(pc.p.mastered?' · '+Math.min(pc.mast,pc.p.mastered)+'/'+pc.p.mastered+' mastered':''); }
       const ft=document.getElementById('ftoday'); if(ft) ft.innerHTML=goal;
-      top.innerHTML='<span class="lvl">Lv '+lv.n+' · '+lv.title+'</span><span class="xpbar"><i style="width:'+(lv.max?100:Math.round(100*lv.into/lv.span))+'%"></i></span><span class="xp">'+g.xp+' XP</span><span class="streak'+(st?' on':'')+'">🔥 '+st+'-day streak</span><span class="goal">'+goal+'</span>';
+      top.innerHTML='<span class="lvl">Lv '+lv.n+' · '+lv.title+'</span><span class="xp">'+g.xp+' XP</span>'+(st?'<span class="streak on">🔥 '+st+'-day streak</span>':'')+'<span class="goal">'+goal+'</span>';
     }
     const pb=document.getElementById('pace-box');
     if(pb){
@@ -3879,7 +3891,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
             if(first){ xp(50,'§'+sid.slice(1)+' passed'); if(P) xp(30,'proof written'); if((s.attempts||1)>1) badge('comeback'); confetti(); }
             if(score===QN) badge('perfect'); if(P) badge('proof');
             save(); refresh();
-            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first?'The next section is unlocked. ':'')+'Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Continue →</button> <button type="button" class="btn mq-again">Back</button>';
+            res.className='mq-res ok'; res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> '+(first&&ORDER[ORDER.indexOf(sid)+1]?'<a href="#'+ORDER[ORDER.indexOf(sid)+1]+'">§'+(ORDER.indexOf(sid)+2)+' is unlocked</a>. ':'')+'Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Continue →</button> <button type="button" class="btn mq-again">Back</button>';
             res.querySelector('.mq-next').onclick=advance;
           } else {
             save();
@@ -4034,6 +4046,18 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       const a=$q('nav.toc a[href="#'+sid+'"]'); if(a){ a.dataset.st=status(sid); }
     });
     $$('.pt-wrap').forEach(w=>{ if(!w.dataset.locked || w.dataset.locked==='1') mountTest(w); });
+    applyVisibility();
+  }
+  function applyVisibility(){
+    const next=ORDER.find(id=>!learned(id)), all=!next, sub=T=>!!(ST.tests[T]&&ST.tests[T].submitted);
+    const show={}; ORDER.forEach(id=>{ show[id]=learned(id)||id===next; });
+    show['pt-a']=all; show['pt-b']=all&&sub('A'); show['pt-c']=all&&sub('B');
+    $$('main > section.cheat-sec').forEach(sec=>{ show[sec.id]=all; });
+    Object.keys(show).forEach(id=>{ const el=document.getElementById(id); if(el) el.hidden=!show[id];
+      const a=$q('nav.toc a[href="#'+id+'"]'); if(a) a.parentElement.hidden=!show[id]; });
+    // part headings and TOC group labels disappear when nothing under them is shown
+    $$('main > .part').forEach(pt=>{ let el=pt.nextElementSibling, any=false; while(el&&!el.classList.contains('part')){ if(el.matches('section')&&!el.hidden) any=true; el=el.nextElementSibling; } pt.hidden=!any; });
+    $$('nav.toc ol').forEach(ol=>{ const any=$$('li',ol).some(li=>!li.hidden); ol.hidden=!any; const lab=ol.previousElementSibling; if(lab&&lab.tagName==='P') lab.hidden=!any; });
   }
   function refresh(){
     let sc=0, cs=0;
@@ -4044,6 +4068,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(pb) pb.innerHTML='<div class="pg"><span>Course <b>'+pc+'%</b></span><div class="bar"><i style="width:'+pc+'%"></i></div></div><div class="pg"><span>Midterm 2 <b>'+pm+'%</b></span><div class="bar"><i style="width:'+pm+'%"></i></div></div><span class="pnext">'+(next?'Next: <a href="#'+next+'">§'+next.slice(1)+' '+secTitle(next)+'</a>':'All sections passed ✓')+'</span><span class="ftoday" id="ftoday"></span><span class="syncstate"></span>';
     const tp=document.getElementById('progress'); if(tp) tp.textContent=ORDER.filter(learned).length+' of 31 passed · '+ORDER.filter(mastered).length+' mastered';
     applyLocks(); readiness(); if(typeof renderSync==='function') renderSync(); checkBadges(); renderGame();
+    const drb=document.getElementById('drill-box'); if(drb&&drb._sync) drb._sync();
     const rcb=document.getElementById('recall-box'); if(rcb&&rcb._idle&&!rcb._active) rcb._idle();
   }
   function readiness(){
@@ -4051,7 +4076,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     const grp=(title,ids,cls)=>'<h4>'+title+' ('+ids.length+')</h4>'+(ids.length?'<div class="todo">'+ids.map(id=>'<a class="'+(cls||'')+'" href="#'+id+'">§'+id.slice(1)+' '+secTitle(id)+'</a>').join('')+'</div>':'<p class="ok">None ✓</p>');
     const notPassed=ORDER.filter(id=>!learned(id)), review=ORDER.filter(id=>S_(id).review), notMast=ORDER.filter(id=>learned(id)&&!mastered(id)&&!S_(id).review), mast=ORDER.filter(id=>mastered(id)&&!S_(id).review);
     const tests=['A','B','C'].map(T=>{ const st=ST.tests[T]; return 'Practice '+T+': '+(st&&st.submitted?'<b>'+(st.score!=null?st.score+'%':'submitted')+'</b>':'not taken'); }).join(' · ');
-    el.innerHTML=grp('Needs review (missed in recall or on a practice test)',review,'miss')+grp('Not passed yet',notPassed)+grp('Passed, not yet mastered (do recall rounds)',notMast)+'<h4>Mastered ('+mast.length+'/31)</h4><div class="bar"><i style="width:'+Math.round(100*mast.length/31)+'%"></i></div><p class="sub-note">'+tests+'</p>';
+    const ahead=notPassed.length?'<h4>Up next</h4><div class="todo"><a href="#'+notPassed[0]+'">§'+notPassed[0].slice(1)+' '+secTitle(notPassed[0])+'</a></div><p class="sub-note">'+notPassed.length+' of 31 sections still to pass.</p>':'<h4>All 31 sections passed ✓</h4>';
+    el.innerHTML=grp('Needs review (missed in recall or on a practice test)',review,'miss')+ahead+grp('Passed, not yet mastered (do recall rounds)',notMast)+'<h4>Mastered ('+mast.length+'/31)</h4><div class="bar"><i style="width:'+Math.round(100*mast.length/31)+'%"></i></div><p class="sub-note">'+tests+'</p>';
   }
 
   // ---- export / import ----
@@ -4060,6 +4086,240 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     const ta=box.querySelector('textarea'), msg=box.querySelector('.msg');
     box.querySelector('.ex').onclick=()=>{ ta.value=btoa(unescape(encodeURIComponent(JSON.stringify(ST)))); ta.select(); try{ navigator.clipboard.writeText(ta.value).then(()=>msg.textContent='Copied.',()=>msg.textContent='Select and copy the code.'); }catch(e){ msg.textContent='Select and copy the code.'; } };
     box.querySelector('.im').onclick=()=>{ try{ const s=JSON.parse(decodeURIComponent(escape(atob(ta.value.trim())))); if(!s||!s.sec) throw 0; ST=s; save(); msg.textContent='Loaded.'; refresh(); $$('.mastery').forEach(mountQuiz); }catch(e){ msg.textContent='That code didn\'t work.'; } };
+  }
+
+  // ================= memorize trainer: flashcards (spaced) + write-from-memory =================
+  // [id, section, front, back, memory hook]
+  const CARDS=[
+    ['c1a','s1','When is p → q false?','Only when p is T and q is F. Every other row is T.','A promise is broken only if the condition happens and the result doesn\'t.'],
+    ['c1b','s1','“p only if q” in symbols','p → q','“Only if” introduces the <i>necessary</i> condition, so q goes on the right.'],
+    ['c1c','s1','“p unless q” in symbols','¬q → p (equivalently p ∨ q)','“Unless” = “if not”.'],
+    ['c1d','s1','“p is sufficient for q” / “q is necessary for p”','Both are p → q.','<b>S</b>ufficient <b>S</b>tarts the arrow; <b>N</b>ecessary is at the e<b>N</b>d.'],
+    ['c1e','s1','Precedence of the connectives, tightest first','¬, ∧, ∨, →, ↔','Like −x, ×, + in arithmetic: “not” binds tightest, “iff” loosest.'],
+    ['c1f','s1','When is p ⊕ q true? When is p ↔ q true?','p ⊕ q: exactly one is true. p ↔ q: both have the same value. (They are negations of each other.)',''],
+    ['c1g','s1','Converse, contrapositive, inverse of p → q','Converse q → p · Contrapositive ¬q → ¬p (≡ original) · Inverse ¬p → ¬q (≡ converse)','The contrapositive flips <i>and</i> negates, so it keeps the meaning.'],
+    ['c2a','s2','p → q ≡ ? (two other forms)','¬p ∨ q ≡ ¬q → ¬p',''],
+    ['c2b','s2','¬(p → q) ≡ ?','p ∧ ¬q','The only way to break the promise: condition true, result false.'],
+    ['c2c','s2','De Morgan\'s laws','¬(p ∧ q) ≡ ¬p ∨ ¬q · ¬(p ∨ q) ≡ ¬p ∧ ¬q','Negate each piece and flip the connective.'],
+    ['c2d','s2','Distributive laws','p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r) · p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)','Both directions work in logic (unlike + over × in arithmetic).'],
+    ['c2e','s2','p ↔ q ≡ ?','(p → q) ∧ (q → p)',''],
+    ['c2f','s2','Tautology · contradiction · contingency','Always true · always false · neither (true in some rows, false in others)',''],
+    ['c3a','s3','Negate ∀x P(x) and ∃x P(x)','¬∀x P(x) ≡ ∃x ¬P(x) · ¬∃x P(x) ≡ ∀x ¬P(x)','Push the ¬ inside and flip the quantifier.'],
+    ['c3b','s3','“Every S is P” and “Some S is P” in logic','∀x (S(x) → P(x)) · ∃x (S(x) ∧ P(x))','∀ goes with →, ∃ goes with ∧. (∃x(S → P) is true whenever anything is not an S.)'],
+    ['c3c','s3','Which quantifier distributes over ∧, and which over ∨?','∀x(P ∧ Q) ≡ ∀xP ∧ ∀xQ · ∃x(P ∨ Q) ≡ ∃xP ∨ ∃xQ. Not ∀ over ∨, not ∃ over ∧.','“All” pairs with “and”; “exists” pairs with “or”.'],
+    ['c4a','s4','∃y∀x P(x,y) vs ∀x∃y P(x,y): which implies which?','∃y∀x ⇒ ∀x∃y, not the converse. In ℤ: ∀x∃y (y > x) is true, ∃y∀x (y > x) is false.','One y that works for everyone is stronger than a y per x.'],
+    ['c4b','s4','Negate ∀x∃y P(x, y)','∃x∀y ¬P(x, y)','Flip every quantifier, left to right, then negate P.'],
+    ['c4c','s4','∃!x P(x) written with ∀ and ∃','∃x [P(x) ∧ ∀y (P(y) → y = x)]','Exists, and anything else that works is the same one.'],
+    ['c5a','s5','Modus ponens · modus tollens','p, p → q ⊢ q · ¬q, p → q ⊢ ¬p','Names aren\'t tested, but the moves are.'],
+    ['c5b','s5','Hypothetical · disjunctive syllogism','p → q, q → r ⊢ p → r · p ∨ q, ¬p ⊢ q',''],
+    ['c5c','s5','The four quantifier rules','Universal instantiation (∀ → any c) · universal generalization (arbitrary c → ∀) · existential instantiation (∃ → some specific new c) · existential generalization (one c → ∃)',''],
+    ['c6a','s6','Definitions of even and odd','n even ⟺ n = 2k for some integer k · n odd ⟺ n = 2k + 1 for some integer k','Always say “for some integer k”.'],
+    ['c6b','s6','Definitions of rational and irrational','r rational ⟺ r = p/q with p, q integers, q ≠ 0 · irrational = real and not rational',''],
+    ['c6c','s6','Shape of a direct proof of p → q','Assume p. Use definitions and earlier results to reach q.',''],
+    ['c7a','s7','How must a proof by contraposition of p → q begin?','“We prove the contrapositive.” Assume ¬q, show ¬p. Say the method in the first line.',''],
+    ['c7b','s7','To prove p → q by contradiction, assume…','p ∧ ¬q, then derive a contradiction. Open with “Assume for a contradiction that…”','¬(p → q) ≡ p ∧ ¬q (card from §2).'],
+    ['c7c','s7','Skeleton of “√2 is irrational”','Assume √2 = a/b in lowest terms → a² = 2b² → a even, a = 2c → b² = 2c² → b even: contradicts lowest terms.',''],
+    ['c8a','s8','Definition of |x|','|x| = x if x ≥ 0, and −x if x < 0','Proofs with |x| usually split into these two cases.'],
+    ['c8b','s8','Triangle inequality','|x + y| ≤ |x| + |y|',''],
+    ['c8c','s8','The two parts of a uniqueness proof','Existence: find an x with P(x). Uniqueness: if P(x) and P(y), then x = y.',''],
+    ['c8d','s8','How do you disprove a ∀ statement?','Give one counterexample (and check it).',''],
+    ['c9a','s9','Zermelo\'s theorem','A finite two-player game of perfect information with no draws: one player has a winning strategy.',''],
+    ['c9b','s9','Strategy stealing in Chomp','First player wins: if taking only the corner square lost, player 1 could have made the second player\'s winning reply first.',''],
+    ['c10a','s10','A ⊆ B means…','∀x (x ∈ A → x ∈ B)',''],
+    ['c10b','s10','How do you prove A = B for sets?','Show A ⊆ B and B ⊆ A (an arbitrary element, both directions).',''],
+    ['c10c','s10','|𝒫(A)| when |A| = n','2ⁿ','Each element is in or out: 2 choices, n times.'],
+    ['c10d','s10','∅ vs {∅}','∅ has 0 elements; {∅} has 1 (the empty set). ∅ ⊆ every set; ∅ ∈ {∅}.',''],
+    ['c10e','s10','A × B and its size','Ordered pairs (a, b) with a ∈ A, b ∈ B; |A × B| = |A|·|B|',''],
+    ['c11a','s11','A − B and Ā','A − B = {x : x ∈ A and x ∉ B} · Ā = U − A',''],
+    ['c11b','s11','De Morgan for sets','(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ · (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ','Same as logic: ∪ ↔ ∨, ∩ ↔ ∧, complement ↔ ¬.'],
+    ['c11c','s11','|A ∪ B| = ?','|A| + |B| − |A ∩ B|','Subtract what you counted twice.'],
+    ['c12a','s12','Injective (one-to-one) definition','f(a) = f(b) → a = b, for all a, b','No two inputs share an output.'],
+    ['c12b','s12','Surjective (onto) definition','∀b ∈ B ∃a ∈ A with f(a) = b, so range = codomain','Every target gets hit.'],
+    ['c12c','s12','(f ∘ g)(x) = ?','f(g(x)): apply g first','Read right to left.'],
+    ['c12d','s12','When does f have an inverse?','Exactly when f is a bijection (injective and surjective).',''],
+    ['c13a','s13','|A| = |B| and |A| ≤ |B| mean…','|A| = |B| ⟺ there is a bijection A → B · |A| ≤ |B| ⟺ there is an injection A → B',''],
+    ['c13b','s13','Countable means… Which of ℤ, ℚ, ℝ are countable?','Finite or the same size as ℕ. ℤ and ℚ are countable; ℝ is not (diagonalization).',''],
+    ['c13c','s13','Cantor\'s theorem','|X| < |𝒫(X)| for every set X',''],
+    ['c14a','s14','a | b means…','b = ac for some integer c',''],
+    ['c14b','s14','Division algorithm','a = dq + r with 0 ≤ r < d (d > 0); q = a div d, r = a mod d. E.g. −11 mod 3 = 1, since −11 = 3(−4) + 1.','The remainder is never negative.'],
+    ['c14c','s14','a ≡ b (mod m) means…','m | a − b (same remainder mod m)',''],
+    ['c14d','s14','If a | b and a | c, then…','a | mb + nc for all integers m, n',''],
+    ['c14e','s14','When can you cancel c from ac ≡ bc (mod m)?','Only if gcd(c, m) = 1.','2·1 ≡ 2·4 (mod 6) but 1 ≢ 4.'],
+    ['c15a','s15','Convert n to base b','Repeatedly divide by b; read the remainders from the last one to the first.',''],
+    ['c15b','s15','Fast modular exponentiation for aⁿ mod m','Write n in binary; square a repeatedly (reducing mod m); multiply the powers whose bit is 1.',''],
+    ['c16a','s16','Definition of prime','An integer p > 1 whose only positive divisors are 1 and p. 1 is not prime.',''],
+    ['c16b','s16','Fundamental theorem of arithmetic','Every integer n > 1 is a product of primes, uniquely up to order.',''],
+    ['c16c','s16','To test n for primality, try dividing by…','Primes ≤ √n',''],
+    ['c16d','s16','Euclid\'s proof of infinitely many primes','Given primes p₁, …, pₙ, the number p₁⋯pₙ + 1 has a prime factor not on the list.',''],
+    ['c17a','s17','gcd and lcm from prime factorizations','gcd: min of each exponent · lcm: max of each exponent',''],
+    ['c17b','s17','gcd(a, b) · lcm(a, b) = ?','ab','min + max = the two exponents added.'],
+    ['c17c','s17','The Euclidean algorithm step','gcd(a, b) = gcd(b, a mod b), until the remainder is 0',''],
+    ['c18a','s18','Bézout\'s theorem','gcd(a, b) = sa + tb for some integers s, t (found by back-substituting Euclid).',''],
+    ['c18b','s18','When does a have an inverse mod m, and how do you find it?','Exactly when gcd(a, m) = 1. Write 1 = sa + tm; then s is the inverse.',''],
+    ['c18c','s18','When is ax ≡ b (mod m) solvable, and how many solutions?','When d = gcd(a, m) divides b. Then there are d solutions mod m, spaced m/d apart.',''],
+    ['c18d','s18','Euclid\'s lemma (two forms)','gcd(a, b) = 1 and a | bc ⇒ a | c · p prime, p | ab ⇒ p | a or p | b',''],
+    ['c19a','s19','Chinese remainder theorem (statement)','If m₁, …, mₙ are pairwise coprime, x ≡ aᵢ (mod mᵢ) has a unique solution mod M = m₁⋯mₙ.',''],
+    ['c19b','s19','CRT formula','x = Σ aᵢMᵢyᵢ, where Mᵢ = M/mᵢ and yᵢ = Mᵢ⁻¹ mod mᵢ','Each term is aᵢ mod its own mᵢ and 0 mod all the others.'],
+    ['c19c','s19','CRT by back-substitution','Write x = a₁ + m₁k, substitute into the next congruence, solve for k, repeat.',''],
+    ['c20a','s20','Fermat\'s little theorem','p prime, p ∤ a ⇒ a<sup>p−1</sup> ≡ 1 (mod p). For every a: a<sup>p</sup> ≡ a (mod p).',''],
+    ['c20b','s20','How do you reduce a huge exponent mod p?','Reduce the exponent mod p − 1 (when p ∤ a). E.g. 3¹⁰⁰ mod 7: 100 mod 6 = 4, so 3⁴ = 81 ≡ 4.',''],
+    ['c20c','s20','Freshman\'s dream','(a + b)<sup>p</sup> ≡ a<sup>p</sup> + b<sup>p</sup> (mod p) for p prime','The middle C(p, k) are all divisible by p.'],
+    ['c20d','s20','Pseudoprime · Carmichael number','Composite n with bⁿ⁻¹ ≡ 1 (mod n) for a base b · composite n that does this for every b coprime to n (smallest: 561)',''],
+    ['c21a','s21','RSA key setup','n = pq; choose e with gcd(e, (p−1)(q−1)) = 1; d = e⁻¹ mod (p−1)(q−1). Public (n, e), private d.',''],
+    ['c21b','s21','RSA encrypt and decrypt','c = mᵉ mod n · m = cᵈ mod n','<b>e</b>ncrypt with <b>e</b>, <b>d</b>ecrypt with <b>d</b>.'],
+    ['c21c','s21','Why is RSA hard to break?','Finding d needs (p−1)(q−1), which needs factoring n, and factoring is believed hard.',''],
+    ['c22a','s22','Template for proof by induction','“By induction on n.” Base case: P(1). Inductive step: assume P(k) (the IH) and prove P(k + 1). Label both.',''],
+    ['c22b','s22','1 + 2 + ⋯ + n = ?','n(n + 1)/2','Gauss: pair 1 with n, 2 with n − 1, …'],
+    ['c22c','s22','1 + 2 + 4 + ⋯ + 2ⁿ = ?','2ⁿ⁺¹ − 1','In binary it\'s 111…1 (n + 1 ones).'],
+    ['c23a','s23','Strong induction','Assume P(1), …, P(k) (all earlier cases) and prove P(k + 1).',''],
+    ['c23b','s23','Well-ordering principle','Every nonempty subset of ℕ has a least element.',''],
+    ['c23c','s23','How many base cases does strong induction need?','As many as the step reaches back. E.g. postage 3a + 5b for n ≥ 8: the step uses P(k − 3), so check 8, 9, 10.',''],
+    ['c24a','s24','The lecture\'s Fibonacci definition','f₀ = f₁ = 1, fₙ = fₙ₋₁ + fₙ₋₂ (1, 1, 2, 3, 5, 8, 13, …)','Watch the indexing: Rosen starts f₀ = 0.'],
+    ['c24b','s24','f₀ + f₁ + ⋯ + fₙ = ?','fₙ₊₂ − 1 (with f₀ = f₁ = 1)',''],
+    ['c24c','s24','The two parts of a recursive definition','Basis step (starting values) and recursive step (building new from old).',''],
+    ['c25a','s25','Towers of Hanoi recurrence and closed form','Hₙ = 2Hₙ₋₁ + 1, H₁ = 1, so Hₙ = 2ⁿ − 1','Move n − 1 off, move the big one, move n − 1 back on.'],
+    ['c25b','s25','Recursive Euclid','gcd(a, 0) = a; gcd(a, b) = gcd(b, a mod b)',''],
+    ['c26a','s26','Product rule vs sum rule','Steps done in sequence (this AND that): multiply. Disjoint alternatives (this OR that): add.',''],
+    ['c26b','s26','Division rule','If every outcome is counted exactly d times among n, the answer is n/d. E.g. n people at a round table: n!/n = (n − 1)!',''],
+    ['c26c','s26','Count “at least one”','Total − none','Complement trick.'],
+    ['c26d','s26','Functions from an n-set to an m-set: all, and one-to-one','All: mⁿ · one-to-one: m(m − 1)⋯(m − n + 1)',''],
+    ['c27a','s27','Pigeonhole principle','k + 1 objects in k boxes ⇒ some box has ≥ 2',''],
+    ['c27b','s27','Generalized pigeonhole','N objects in k boxes ⇒ some box has ≥ ⌈N/k⌉. To force r in one box you need k(r − 1) + 1 objects.',''],
+    ['c28a','s28','P(n, r) = ?','n!/(n − r)!: ordered, no repetition','<b>P</b>ermutation: <b>P</b>osition matters.'],
+    ['c28b','s28','C(n, r) = ?','n!/((n − r)! r!): unordered, no repetition','<b>C</b>ombination: <b>C</b>ommittee.'],
+    ['c28c','s28','0! = ? and C(n, 0) = ?','0! = 1 and C(n, 0) = 1',''],
+    ['c29a','s29','Symmetry and Pascal\'s identity','C(n, r) = C(n, n − r) · C(n + 1, k) = C(n, k − 1) + C(n, k)','Pascal: does the new person join or not?'],
+    ['c29b','s29','Committee-chair identity','k·C(n, k) = n·C(n − 1, k − 1)','Pick the committee then the chair, or the chair then the rest.'],
+    ['c29c','s29','Binomial theorem','(x + y)ⁿ = Σⱼ C(n, j) xⁿ⁻ʲ yʲ',''],
+    ['c29d','s29','Σₖ C(n, k) = ? and Σₖ (−1)ᵏ C(n, k) = ?','2ⁿ (set x = y = 1) and 0 for n ≥ 1 (x = 1, y = −1)',''],
+    ['c29e','s29','What is a combinatorial proof?','Count one set in two ways; the two expressions must be equal.',''],
+    ['c30a','s30','The 2×2 counting table (choose r from n)','Ordered, no repeats: P(n, r) · ordered, repeats: nʳ · unordered, no repeats: C(n, r) · unordered, repeats: C(n + r − 1, r)',''],
+    ['c30b','s30','Solutions of x₁ + ⋯ + xₖ = n with each xᵢ ≥ 0 (and with xᵢ ≥ 1)','C(n + k − 1, k − 1) · with xᵢ ≥ 1: C(n − 1, k − 1)','n stars, k − 1 bars.'],
+    ['c30c','s30','Arrangements of a word with repeated letters','n!/(n₁! n₂! ⋯ nₖ!). MISSISSIPPI: 11!/(4! 4! 2!)',''],
+    ['c30d','s30','n distinguishable objects into r distinguishable boxes','rⁿ','Each object picks a box.'],
+    ['c31a','s31','p(E) for equally likely outcomes','|E| / |S|','Probability is counting with a denominator.'],
+    ['c31b','s31','Complement and union rules','p(Ē) = 1 − p(E) · p(E₁ ∪ E₂) = p(E₁) + p(E₂) − p(E₁ ∩ E₂)',''],
+    ['c31c','s31','Exactly k heads in n fair coin flips','C(n, k) / 2ⁿ',''],
+    ['c31d','s31','Monty Hall: stay or switch?','Switch: you win with probability 2/3 (staying wins 1/3).','Your first pick is right 1/3 of the time; switching wins the other 2/3.'],
+  ];
+  const FC_GROUPS=[['Logic & proofs',1,9],['Sets & functions',10,13],['Number theory',14,21],['Induction & recursion',22,25],['Counting & probability',26,31]];
+  const BOXMIN=[0,1,10,60,360,1440]; // minutes until a card comes back, by box 1–5
+  const secNum=id=>+id.slice(1);
+  const F_=id=>{ ST.fc=ST.fc||{}; return ST.fc[id]||(ST.fc[id]={b:0,due:0,n:0}); };
+  const nextSec=()=>ORDER.find(id=>!learned(id));
+  const reachable=id=>learned(id)||id===nextSec();
+  function deck(filter){
+    const mine=CARDS.filter(c=>reachable(c[1]));
+    if(filter==='mt2') return mine.filter(c=>secNum(c[1])>=18);
+    if(filter&&filter[0]==='s') return mine.filter(c=>c[1]===filter);
+    if(filter&&filter[0]==='g'){ const g=FC_GROUPS[+filter.slice(1)]; return mine.filter(c=>secNum(c[1])>=g[1]&&secNum(c[1])<=g[2]); }
+    return mine;
+  }
+  function rate(c,how){ // how: 0 missed, 1 shaky, 2 knew it
+    const f=F_(c[0]); f.n=(f.n||0)+1;
+    f.b= how===0?1 : how===1?Math.max(1,Math.min(f.b||1,3)) : Math.min(5,Math.max(1,f.b||0)+1);
+    f.due=Date.now()+BOXMIN[f.b]*60000;
+    const g=G(); g.cards=(g.cards||0)+1; if(g.cards===100) badge('cards100');
+    if(how===2) xp(3,'flashcard'); else active();
+    if(CARDS.filter(x=>secNum(x[1])>=18).every(x=>((ST.fc[x[0]]||{}).b||0)>=4)) badge('vault');
+    save();
+  }
+  function mountDrill(box){
+    let filter='all', mode='cards', queue=[], cur=null, flipped=false, ahead=false;
+    try{ filter=localStorage.getItem('m55-fc-filter')||'all'; }catch(e){}
+    function counts(d){ const now=Date.now(); const by=[0,0,0,0,0,0]; let due=0; d.forEach(c=>{ const f=(ST.fc||{})[c[0]]; const b=f?f.b||0:0; by[b]++; if(!f||!f.b||f.due<=now) due++; }); return {by,due}; }
+    function options(){
+      return [['all','All my sections'],['mt2','Midterm 2 (§18–§31)']].concat(FC_GROUPS.map((g,i)=>['g'+i,g[0]])).concat(ORDER.map(id=>[id,'§'+id.slice(1)+' '+secTitle(id)])).filter(([v])=>v==='all'||deck(v).length);
+    }
+    function filterSel(){
+      const opts=options(); if(!opts.some(([v])=>v===filter)) filter='all';
+      return '<select class="fc-filter" aria-label="Which cards">'+opts.map(([v,l])=>'<option value="'+v+'"'+(v===filter?' selected':'')+'>'+l+'</option>').join('')+'</select>';
+    }
+    function head(){
+      const d=deck(filter), k=counts(d);
+      const seg=[['New',k.by[0],'var(--line)'],['Box 1',k.by[1],'var(--red)'],['Box 2',k.by[2],'var(--orange)'],['Box 3',k.by[3],'var(--blue)'],['Box 4',k.by[4],'var(--slate)'],['Box 5',k.by[5],'var(--green)']];
+      return '<div class="fc-top"><div class="fc-tabs" role="tablist"><button type="button" role="tab" data-m="cards" aria-selected="'+(mode==='cards')+'">Flashcards</button><button type="button" role="tab" data-m="blank" aria-selected="'+(mode==='blank')+'">Write from memory</button></div>'+filterSel()+'</div>'+
+        '<div class="fc-boxes" title="Where your cards are">'+seg.filter(s=>s[1]).map(s=>'<i style="flex:'+s[1]+';background:'+s[2]+'"></i>').join('')+'</div>'+
+        '<p class="fc-legend">'+seg.map(s=>'<span><b style="background:'+s[2]+'"></b>'+s[0]+' '+s[1]+'</span>').join('')+'<span class="fc-due">'+k.due+' due now · '+d.length+' cards</span></p>';
+    }
+    function wire(){
+      $$('.fc-tabs button',box).forEach(b=>b.onclick=()=>{ mode=b.dataset.m; cur=null; render(); });
+      const sel=$q('.fc-filter',box); if(sel) sel.onchange=()=>{ filter=sel.value; try{ localStorage.setItem('m55-fc-filter',filter); }catch(e){} cur=null; queue=[]; ahead=false; render(); };
+    }
+    function build(){
+      const now=Date.now(), d=deck(filter);
+      let due=d.filter(c=>{ const f=(ST.fc||{})[c[0]]; return !f||!f.b||f.due<=now; });
+      if(!due.length&&ahead) due=d.slice().sort((a,b)=>(F_(a[0]).b-F_(b[0]).b)||(F_(a[0]).due-F_(b[0]).due)).slice(0,15);
+      // missed and shaky cards first, then new cards in course order
+      queue=due.sort((a,b)=>{ const fa=(ST.fc||{})[a[0]], fb=(ST.fc||{})[b[0]]; const ra=fa&&fa.b?fa.b:9, rb=fb&&fb.b?fb.b:9; return ra-rb||ORDER.indexOf(a[1])-ORDER.indexOf(b[1]); });
+    }
+    function cardsView(){
+      if(!cur){ build(); cur=queue.shift()||null; flipped=false; }
+      if(!cur){
+        const d=deck(filter); const next=d.map(c=>(ST.fc||{})[c[0]]).filter(f=>f&&f.b).map(f=>f.due).sort((a,b)=>a-b)[0];
+        const mins=next?Math.max(1,Math.round((next-Date.now())/60000)):0;
+        return '<div class="fc-empty"><p class="ok"><b>Nothing due in this deck.</b></p><p>'+(d.length?'Next card comes back in about '+(mins>=60?Math.round(mins/60)+' h':mins+' min')+'. Cards you know move up a box and come back later (10 min → 1 h → 6 h → 1 day); cards you miss come back right away.':'No cards in this deck yet.')+'</p>'+(d.length?'<button type="button" class="btn fc-ahead">Study ahead anyway (15 cards)</button>':'')+'</div>';
+      }
+      const f=(ST.fc||{})[cur[0]]; const b=f&&f.b?'box '+f.b:'new';
+      return '<div class="fc-card'+(flipped?' flipped':'')+'"><p class="fc-meta"><span>§'+cur[1].slice(1)+' '+secTitle(cur[1])+'</span><span>'+b+' · '+(queue.length+1)+' left</span></p>'+
+        '<div class="fc-front">'+cur[2]+'</div>'+
+        (flipped?'<div class="fc-back">'+cur[3]+'</div>'+(cur[4]?'<p class="fc-hook"><span>Memory hook</span>'+cur[4]+'</p>':'')+
+          '<div class="fc-rate"><button type="button" class="btn fc-r" data-h="0">Missed it <kbd>1</kbd></button><button type="button" class="btn fc-r" data-h="1">Shaky <kbd>2</kbd></button><button type="button" class="btn primary fc-r" data-h="2">Knew it <kbd>3</kbd></button></div>'
+        :'<textarea class="fc-try" rows="2" placeholder="Say it out loud or type it here first. Recalling before you look is what makes it stick."></textarea><button type="button" class="btn primary fc-flip">Show answer <kbd>space</kbd></button>')+
+        '</div>';
+    }
+    function blankView(){
+      const gi=filter[0]==='g'?+filter.slice(1):null;
+      const groups=(gi!=null?[gi]:FC_GROUPS.map((g,i)=>i)).filter(i=>deck('g'+i).length);
+      return '<p>Pick a topic, write down <b>everything</b> you have to know for it on blank paper or in the box, then compare. Anything you didn\'t get goes straight into your flashcard pile as due.</p><div class="fc-groups">'+groups.map(i=>'<button type="button" class="btn fc-g" data-g="'+i+'">'+FC_GROUPS[i][0]+' <span class="pcount">'+deck('g'+i).length+'</span></button>').join('')+'</div><div class="fc-blank"></div>';
+    }
+    function blankRun(i){
+      const el=$q('.fc-blank',box), d=deck('g'+i);
+      el.innerHTML='<h4>'+FC_GROUPS[i][0]+': write it all down</h4><p class="sub-note">Prompts: '+[...new Set(d.map(c=>'§'+c[1].slice(1)))].join(', ')+' · '+d.length+' facts to recall</p><textarea rows="8" placeholder="Definitions, formulas, theorem statements, proof openings…"></textarea><button type="button" class="btn primary fc-cmp">Compare with the list</button>';
+      $q('.fc-cmp',el).onclick=()=>{
+        $q('textarea',el).readOnly=true; $q('.fc-cmp',el).remove();
+        const list=document.createElement('div'); list.innerHTML='<p class="mlabel">Tick only what you actually wrote down (close enough counts)</p>'+d.map(c=>'<label class="rub fc-chk"><input type="checkbox" data-c="'+c[0]+'"><span><b>'+c[2]+'</b><br>'+c[3]+'</span></label>').join('')+'<button type="button" class="btn primary fc-done">Done: send what I missed to flashcards</button>';
+        el.appendChild(list);
+        $q('.fc-done',list).onclick=()=>{
+          const miss=$$('input',list).filter(x=>!x.checked).map(x=>x.dataset.c), got=d.length-miss.length;
+          miss.forEach(id=>{ const f=F_(id); f.b=1; f.due=0; });
+          xp(got*2,'recalled from memory'); save(); refresh();
+          list.innerHTML='<div class="mq-res '+(miss.length?'no':'ok')+'"><b>'+got+'/'+d.length+' recalled.</b> '+(miss.length?miss.length+' card'+(miss.length===1?'':'s')+' added to your due pile. Switch to Flashcards to drill them.':'Every fact recalled ✓')+'</div>';
+        };
+      };
+      el.scrollIntoView({block:'nearest'});
+    }
+    function render(){
+      box.innerHTML=head()+'<div class="fc-body">'+(mode==='cards'?cardsView():blankView())+'</div>';
+      wire();
+      if(mode==='cards'){
+        const fl=$q('.fc-flip',box); if(fl) fl.onclick=()=>{ flipped=true; render(); $q('.fc-r[data-h="2"]',box).focus({preventScroll:true}); };
+        $$('.fc-r',box).forEach(b=>b.onclick=()=>{ const h=+b.dataset.h; rate(cur,h); if(h===0) queue.splice(Math.min(3,queue.length),0,cur); cur=queue.shift()||null; flipped=false; if(!cur) build(), cur=queue.shift()||null; render(); });
+        const ah=$q('.fc-ahead',box); if(ah) ah.onclick=()=>{ ahead=true; cur=null; render(); };
+      } else $$('.fc-g',box).forEach(b=>b.onclick=()=>blankRun(+b.dataset.g));
+    }
+    const onScreen=()=>{ const r=box.getBoundingClientRect(); return r.bottom>80&&r.top<innerHeight-80; };
+    document.addEventListener('keydown',e=>{
+      if(mode!=='cards'||!cur||e.metaKey&&e.key!=='Enter'||e.altKey||!onScreen()) return;
+      const tg=e.target.tagName; if(tg==='SELECT'||((tg==='INPUT'||tg==='TEXTAREA')&&!box.contains(e.target))) return;
+      if(e.target.tagName==='TEXTAREA'){ if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)&&!flipped){ e.preventDefault(); flipped=true; render(); $q('.fc-r[data-h="2"]',box).focus({preventScroll:true}); } return; }
+      if(!flipped&&(e.key===' '||e.key==='Enter')){ e.preventDefault(); flipped=true; render(); $q('.fc-r[data-h="2"]',box).focus({preventScroll:true}); }
+      else if(flipped&&['1','2','3'].includes(e.key)){ e.preventDefault(); const b=$q('.fc-r[data-h="'+(+e.key-1)+'"]',box); if(b){ b.click(); const nb=$q('.fc-flip',box)||$q('.fc-ahead',box); if(nb) nb.focus({preventScroll:true}); } }
+    });
+    let lastKey='';
+    box._sync=()=>{ const k=ORDER.filter(reachable).join(); if(k===lastKey) return; lastKey=k;
+      const typing=$q('.fc-try',box)&&$q('.fc-try',box).value.trim(); const busy=flipped||typing||$q('.fc-blank textarea',box);
+      if(!busy){ cur=null; queue=[]; render(); } };
+    box._open=sec=>{ filter=sec; mode='cards'; cur=null; queue=[]; ahead=false; render(); box.scrollIntoView({behavior:'smooth',block:'start'}); const f=$q('.fc-flip',box)||$q('.fc-ahead',box); if(f) f.focus({preventScroll:true}); };
+    render();
+  }
+  function addDrillButtons(dr){
+    ORDER.forEach(sid=>{
+      const n=CARDS.filter(c=>c[1]===sid).length; if(!n) return;
+      const mem=$$('#'+sid+' > .goals .gl > div').find(d=>/Memorize/.test(d.textContent)); if(!mem) return;
+      const b=document.createElement('button'); b.type='button'; b.className='btn fc-drill'; b.textContent='Drill these as flashcards ('+n+')';
+      b.onclick=()=>dr._open(sid); mem.appendChild(b);
+    });
   }
 
   // ================= focus view: one thing at a time =================
@@ -4077,13 +4337,13 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(f.kind==='sec') return (f.why==='review'?'Fix':'Learn')+' §'+f.id.slice(1)+' '+secTitle(f.id);
     if(f.kind==='test') return 'Practice Midterm '+f.T;
     if(f.kind==='recall') return 'Recall round';
-    return 'Memorize sheet, then rest';
+    return 'Memorize trainer';
   }
   function focusHint(f){
     if(f.kind==='sec') return f.why==='review'?'You missed this one. Reread it, then pass the quiz again.':'Read it, then pass the quiz at the bottom.';
     if(f.kind==='test') return '80 minutes, closed notes. Grade your proofs when you\'re done.';
     if(f.kind==='recall') return ORDER.filter(id=>learned(id)&&!mastered(id)).length+' sections left to master. Each needs 2 correct rounds.';
-    return 'Everything is mastered. Write the memorize sheet from memory once, then stop.';
+    return 'Everything is mastered. Clear the due flashcards, then rest.';
   }
   function applyView(scroll){
     document.body.classList.toggle('focus',VIEW==='focus');
@@ -4094,7 +4354,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     const f=FOCUS;
     if(f.kind==='sec'){ const el=document.getElementById(f.id); if(el) el.classList.add('fshow'); }
     else if(f.kind==='test'){ const el=document.getElementById('pt-'+f.T.toLowerCase()); if(el) el.classList.add('fshow'); }
-    else { const mt=document.getElementById('mt'); if(mt){ mt.classList.add('fshow'); const ids= f.kind==='recall'?['recall','recall-box']:['memorize']; ids.forEach(id=>{ const e=document.getElementById(id); if(e){ e.classList.add('fkeep'); if(id==='memorize'&&e.nextElementSibling) e.nextElementSibling.classList.add('fkeep'); } }); } }
+    else { const mt=document.getElementById('mt'); if(mt){ mt.classList.add('fshow'); const ids= f.kind==='recall'?['recall','recall-box']:['drill','drill-box']; ids.forEach(id=>{ const e=document.getElementById(id); if(e) e.classList.add('fkeep'); }); } }
     if(fh){ fh.hidden=false; fh.innerHTML='<div><span class="fk">Now</span><b>'+focusLabel(f)+'</b><span class="fhint">'+focusHint(f)+'</span></div><button type="button" class="linkb" id="viewall">All notes</button>';
       fh.querySelector('#viewall').onclick=()=>{ VIEW='all'; try{localStorage.setItem('m55-view','all');}catch(e){} applyView(); }; }
     if(scroll) window.scrollTo({top:0,behavior:'auto'});
@@ -4105,6 +4365,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   }
 
   $$('.mastery').forEach(mountQuiz);
+  const dr=document.getElementById('drill-box'); if(dr){ mountDrill(dr); addDrillButtons(dr); }
   const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
   const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
   refresh();
