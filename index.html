@@ -272,7 +272,7 @@ details.more.mini > summary{font-size:.85rem;color:var(--muted)}
 .fc-drill{font-size:.8rem;padding:5px 12px;margin-top:2px}
 kbd{font:400 .72rem var(--f-mono);border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 4px;margin-left:4px;color:var(--muted);background:var(--surface)}
 .btn.primary kbd{color:inherit;background:transparent;border-color:currentColor;opacity:.75}
-body.focus header.mast,body.focus nav.toc,body.focus .filter > :not(.cprog),body.focus .part,body.focus main > section:not(.fshow),body.focus footer{display:none!important}
+body.focus header.mast,body.focus nav.toc,body.focus .filter > :not(.cprog):not(.snav):not(.smsg),body.focus .part,body.focus main > section:not(.fshow),body.focus footer{display:none!important}
 body.focus .wrap{display:block;max-width:760px;padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
 body.focus .filter{border-bottom:1px solid var(--rule);margin-bottom:0}
 body.focus .cprog .pg:nth-of-type(2),body.focus .cprog .pnext{display:none}
@@ -285,7 +285,15 @@ body:not(.focus) .cprog .ftoday{display:none}
 .linkb{font:600 .8rem var(--f-display);background:none;border:none;color:var(--blue);cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
 body.focus #viewfocus{display:none}
 body.focus .fc-drill{display:none}
-.focus-head{padding:14px 0 4px}
+.focus-head{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--red-bg);color:var(--red);font:600 .9rem/1.4 var(--f-display)}
+.snav{flex-basis:100%;display:flex;gap:8px;align-items:center}
+.filter .snb{width:44px;height:44px;flex:none;padding:0;border-radius:12px;font:700 1.5rem/1 var(--f-display);display:grid;place-items:center}
+.filter .snb:disabled{opacity:.3;cursor:default}
+.filter .snb.locked{opacity:.55}
+.ssel{flex:1;min-width:0;position:relative;display:block}
+.ssel select{width:100%;height:44px;-webkit-appearance:none;appearance:none;border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink);font:700 16px var(--f-display);padding:0 34px 0 12px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer}
+.ssel::after{content:'▾';position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted)}
+.smsg{flex-basis:100%;margin:2px 0 0;font:600 .85rem var(--f-display);color:var(--orange)}
 .focus-head .fbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;min-height:34px}
 .focus-head .fbar .fback[hidden]{display:block!important;visibility:hidden}
 .focus-head .fopen span{font-weight:400;opacity:.75;margin-left:4px}
@@ -489,7 +497,6 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
   <div class="filter" role="group" aria-label="Show only">
     <div class="cgame" id="cgame"></div>
     <div class="cprog" id="cprog"></div>
-    <button type="button" class="linkb" id="viewfocus">← Focus view</button>
     <span class="lbl">Show</span>
     <button type="button" id="f-all" data-f="all" aria-pressed="true">Everything</button>
     <button type="button" id="f-defn" data-f="defn" aria-pressed="false">Definitions</button>
@@ -3917,9 +3924,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
             if(first){ xp(50,'§'+sid.slice(1)+' passed'); if(P) xp(30,'proof written'); if((s.attempts||1)>1) badge('comeback'); confetti(); }
             if(score===QN) badge('perfect'); if(P) badge('proof');
             save(); refresh();
-            res.className='mq-res ok'; const nf=computeNext(), nxt=focusLabel(nf);
-            res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b> Unlocked. Two later correct recalls will master it.<br><button type="button" class="btn primary mq-next">Next: '+nxt+' →</button> <button type="button" class="btn mq-again">Back</button>';
-            res.querySelector('.mq-next').onclick=()=>{ if(VIEW!=='focus'){ VIEW='focus'; try{localStorage.setItem('m55-view','focus');}catch(e){} } go(nf); };
+            res.className='mq-res ok'; const nf=nextStep({kind:'sec',id:sid});
+            res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b>'+(nf?' Unlocked: '+stepName(nf)+'.<br><button type="button" class="btn primary mq-next">Next →</button>':'');
+            if(nf) res.querySelector('.mq-next').onclick=()=>go(nf);
           } else {
             save();
             res.className='mq-res no';
@@ -4097,6 +4104,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     applyLocks(); readiness(); if(typeof renderSync==='function') renderSync(); checkBadges(); renderGame();
     const drb=document.getElementById('drill-box'); if(drb&&drb._sync) drb._sync();
     const rcb=document.getElementById('recall-box'); if(rcb&&rcb._idle&&!rcb._active) rcb._idle();
+    try{ renderNav(); }catch(e){}
   }
   function readiness(){
     const el=document.getElementById('ready'); if(!el) return;
@@ -4349,96 +4357,85 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     });
   }
 
-  // ================= focus view: one thing at a time =================
-  let VIEW='focus'; try{ VIEW=localStorage.getItem('m55-view')||'focus'; }catch(e){}
+  // ================= one section at a time =================
+  const VIEW='focus';
+  const STEPS=[...ORDER.map(id=>({kind:'sec',id})),{kind:'test',T:'A'},{kind:'test',T:'B'},{kind:'test',T:'C'},{kind:'recall'},{kind:'done'}];
   let FOCUS=null;
+  const sameF=(a,b)=>!!a&&!!b&&a.kind===b.kind&&a.id===b.id&&a.T===b.T;
+  const stepIdx=f=>STEPS.findIndex(s=>sameF(s,f));
+  const nextStep=f=>STEPS[stepIdx(f)+1]||null;
+  function testOpen(T){ return T==='A'? ORDER.every(learned) : T==='B'? !!(ST.tests.A&&ST.tests.A.submitted) : !!(ST.tests.B&&ST.tests.B.submitted); }
+  function stepOpen(f){ if(f.kind==='sec') return status(f.id)!=='locked'; if(f.kind==='test') return testOpen(f.T); return ORDER.some(learned); }
+  function stepName(f){ return f.kind==='sec'? '§'+f.id.slice(1)+' '+secTitle(f.id) : f.kind==='test'? 'Practice Midterm '+f.T : f.kind==='recall'? 'Recall round' : 'Flashcards'; }
+  function stepMark(f){
+    if(!stepOpen(f)) return '🔒 ';
+    if(f.kind==='sec'){ const st=status(f.id); return st==='review'?'❗ ':st==='mastered'?'★ ':st==='learned'?'✓ ':''; }
+    if(f.kind==='test'){ const s=ST.tests[f.T]; return s&&s.submitted?'✓ ':''; }
+    return '';
+  }
+  const focusLabel=stepName;
   function computeNext(){
     for(const T of ['A','B','C']){ const st=ST.tests[T]; if(st&&st.start&&!st.submitted) return {kind:'test',T}; if(st&&st.submitted&&!st.graded&&TESTS[T].some(p=>p.rub)) return {kind:'test',T}; }
-    const rv=ORDER.find(id=>S_(id).review); if(rv) return {kind:'sec',id:rv,why:'review'};
+    const rv=ORDER.find(id=>S_(id).review); if(rv) return {kind:'sec',id:rv};
     const nx=ORDER.find(id=>!learned(id)); if(nx) return {kind:'sec',id:nx};
     for(const T of ['A','B','C']){ const st=ST.tests[T]; if(!(st&&st.submitted)) return {kind:'test',T}; }
     if(ORDER.some(id=>learned(id)&&!mastered(id))) return {kind:'recall'};
     return {kind:'done'};
   }
-  function focusLabel(f){
-    if(f.kind==='sec') return (f.why==='review'?'Fix':learned(f.id)?'Review':'Learn')+' §'+f.id.slice(1)+' '+secTitle(f.id);
-    if(f.kind==='test') return 'Practice Midterm '+f.T;
-    if(f.kind==='recall') return 'Recall round';
-    return 'Memorize trainer';
+  function go(f){ if(!f) return; FOCUS=f; applyView(true); }
+  function advance(){ go(computeNext()); }
+  function say(msg){ const m=document.getElementById('smsg'); if(!m) return; m.textContent=msg; m.hidden=!msg; }
+  function renderNav(){
+    const sel=document.getElementById('sstep'); if(!sel||!FOCUS) return;
+    const i=stepIdx(FOCUS);
+    sel.innerHTML=STEPS.map((s,j)=>'<option value="'+j+'"'+(stepOpen(s)?'':' disabled')+(j===i?' selected':'')+'>'+stepMark(s)+stepName(s)+'</option>').join('');
+    const pv=document.getElementById('sprev'), nx=document.getElementById('snext');
+    pv.disabled= i<=0; const n=STEPS[i+1]; nx.disabled= !n; nx.classList.toggle('locked', !!n&&!stepOpen(n));
   }
-  function focusHint(f){
-    if(f.kind==='sec') return learned(f.id)&&f.why!=='review'?'Already passed. Retake the quiz any time for practice.':f.why==='review'?'You missed this one. Reread it, then pass the quiz again.':'Read it, then pass the quiz at the bottom.';
-    if(f.kind==='test') return '80 minutes, closed notes. Grade your proofs when you\'re done.';
-    if(f.kind==='recall') return ORDER.filter(id=>learned(id)&&!mastered(id)).length+' sections left to master. Each needs 2 correct rounds.';
-    return 'Everything is mastered. Clear the due flashcards, then rest.';
-  }
-  let HIST=[];
-  const sameF=(a,b)=>!!a&&!!b&&a.kind===b.kind&&a.id===b.id&&a.T===b.T;
-  function go(f){ if(FOCUS&&!sameF(FOCUS,f)) HIST.push(FOCUS); if(HIST.length>50) HIST.shift(); FOCUS=f; closePanel(); applyView(true); }
-  function goBack(){ if(!HIST.length) return; FOCUS=HIST.pop(); closePanel(); applyView(true); }
-  function testOpen(T){ return T==='A'? ORDER.every(learned) : T==='B'? !!(ST.tests.A&&ST.tests.A.submitted) : !!(ST.tests.B&&ST.tests.B.submitted); }
   function applyView(scroll){
-    document.body.classList.toggle('focus',VIEW==='focus');
-    const fh=document.getElementById('focus-head');
+    document.body.classList.add('focus');
     $$('.fshow').forEach(e=>e.classList.remove('fshow')); $$('.fkeep').forEach(e=>e.classList.remove('fkeep'));
-    if(VIEW!=='focus'){ if(fh) fh.hidden=true; closePanel(); return; }
-    if(!FOCUS) FOCUS=computeNext();
+    if(!FOCUS||!stepOpen(FOCUS)) FOCUS=computeNext();
     const f=FOCUS;
     if(f.kind==='sec'){ const el=document.getElementById(f.id); if(el) el.classList.add('fshow'); }
     else if(f.kind==='test'){ const el=document.getElementById('pt-'+f.T.toLowerCase()); if(el) el.classList.add('fshow'); }
-    else { const mt=document.getElementById('mt'); if(mt){ mt.classList.add('fshow'); const ids= f.kind==='recall'?['recall','recall-box']:['drill','drill-box']; ids.forEach(id=>{ const e=document.getElementById(id); if(e) e.classList.add('fkeep'); }); } }
-    if(fh){ fh.hidden=false;
-      const n=ORDER.filter(id=>status(id)!=='locked').length;
-      fh.innerHTML='<div class="fbar"><button type="button" class="linkb fback"'+(HIST.length?'':' hidden')+'>← Back</button><button type="button" class="btn fopen" aria-haspopup="dialog">☰ Unlocked <span>'+n+'/31</span></button></div>'+
-        '<div class="fnow"><span class="fk">Now</span><b>'+focusLabel(f)+'</b><span class="fhint">'+focusHint(f)+'</span></div>';
-      fh.querySelector('.fback').onclick=goBack; fh.querySelector('.fopen').onclick=()=>{ const u=document.getElementById('unl'); if(u&&!u.hidden) closePanel(); else openPanel(); }; }
+    else { const mt=document.getElementById('mt'); if(mt){ mt.classList.add('fshow'); (f.kind==='recall'?['recall','recall-box']:['drill','drill-box']).forEach(id=>{ const e=document.getElementById(id); if(e) e.classList.add('fkeep'); }); } }
+    const fh=document.getElementById('focus-head');
+    if(fh){ const rv=f.kind==='sec'&&S_(f.id).review; fh.hidden=!rv; fh.textContent= rv?'❗ You missed this one on a recall or practice test. Reread it, then pass the quiz again.':''; }
+    say(''); renderNav();
     if(scroll) window.scrollTo({top:0,behavior:'auto'});
   }
-  // ---- side panel: everything unlocked so far ----
-  function closePanel(){ const p=document.getElementById('unl'); if(p&&!p.hidden){ p.hidden=true; document.body.classList.remove('unl-open'); } }
-  function openPanel(){
-    let p=document.getElementById('unl');
-    if(!p){ p=document.createElement('div'); p.id='unl'; p.className='unl'; p.hidden=true; document.body.appendChild(p);
-      p.addEventListener('click',e=>{ if(e.target===p) closePanel(); });
-      let sx=null, sy=0; // swipe left to close
-      p.addEventListener('touchstart',e=>{ const t=e.touches[0]; sx=t.clientX; sy=t.clientY; },{passive:true});
-      p.addEventListener('touchend',e=>{ if(sx==null) return; const t=e.changedTouches[0], dx=t.clientX-sx, dy=Math.abs(t.clientY-sy); sx=null; if(dx<-60&&-dx>dy) closePanel(); },{passive:true});
-      document.addEventListener('keydown',e=>{ if(e.key==='Escape') closePanel(); }); }
-    const mark={mastered:'★',learned:'✓',review:'!',open:'→'};
-    const item=(f,txt,st,sub)=>{ const cur=sameF(f,FOCUS); return '<button type="button" class="ui'+(cur?' cur':'')+(st?' '+st:'')+'" data-f=\''+JSON.stringify(f)+'\'><i>'+(st?mark[st]||'':'')+'</i><span>'+txt+(sub?'<small>'+sub+'</small>':'')+'</span></button>'; };
-    let h='<aside class="unl-p" role="dialog" aria-label="Unlocked"><div class="unl-h"><button type="button" class="unl-x" aria-label="Close">✕</button><b>Unlocked</b></div>';
-    h+='<p class="unl-k">★ mastered · ✓ passed · ! needs a fix · → up next</p><div class="unl-l">';
-    ORDER.forEach(id=>{ const st=status(id); if(st==='locked') return; h+=item({kind:'sec',id,why:st==='review'?'review':undefined},'§'+id.slice(1)+' '+secTitle(id),st); });
-    const tests=['A','B','C'].filter(testOpen), anyL=ORDER.some(learned);
-    if(tests.length||anyL) h+='<h4>Practice</h4>';
-    tests.forEach(T=>{ const s=ST.tests[T]; h+=item({kind:'test',T},'Practice Midterm '+T,'',s&&s.submitted?(s.score!=null?s.score+'%':'submitted'):'80 min'); });
-    if(anyL){ h+=item({kind:'recall'},'Recall round','',ORDER.filter(id=>learned(id)&&!mastered(id)).length+' to master'); h+=item({kind:'done'},'Flashcards','',''); }
-    h+='</div><div class="unl-f"><button type="button" class="btn primary unl-close">Close</button><button type="button" class="linkb unl-all">Show all notes</button></div></aside>';
-    p.innerHTML=h; p.hidden=false; document.body.classList.add('unl-open');
-    p.querySelector('.unl-x').onclick=closePanel; p.querySelector('.unl-close').onclick=closePanel;
-    p.querySelector('.unl-all').onclick=()=>{ closePanel(); VIEW='all'; try{localStorage.setItem('m55-view','all');}catch(e){} applyView(); };
-    $$('.ui',p).forEach(b=>b.onclick=()=>go(JSON.parse(b.dataset.f)));
-    const c=p.querySelector('.ui.cur'); if(c) c.scrollIntoView({block:'center'});
-  }
-  function advance(){ go(computeNext()); }
   function refocus(){ // synced progress arrived: if the shown section is already passed and idle, move on
-    if(VIEW!=='focus'||!FOCUS||FOCUS.kind!=='sec') return;
+    if(!FOCUS||FOCUS.kind!=='sec') return;
     const id=FOCUS.id; if(!learned(id)||S_(id).review||document.querySelector('#'+id+' .mastery .mq-items')) return;
     FOCUS=computeNext(); applyView(false);
   }
-  document.addEventListener('click',e=>{
-    if(VIEW!=='focus') return;
+  document.addEventListener('click',e=>{ // in-page links jump to the step that holds the target
     const a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
     const t=a.getAttribute('href').slice(1), el=t&&document.getElementById(t); if(!el||el.offsetParent!==null) return;
     e.preventDefault();
-    if(ORDER.includes(t)&&!el.classList.contains('locked')) go({kind:'sec',id:t,why:S_(t).review?'review':undefined});
-    else if(/^pt-[abc]$/.test(t)) go({kind:'test',T:t.slice(3).toUpperCase()});
-    else if(t==='recall'||t==='recall-box') go({kind:'recall'});
-    else if(t==='drill'||t==='drill-box') go({kind:'done'});
-    else { VIEW='all'; applyView(); el.scrollIntoView(); }
+    const sec=el.closest('main > section'); if(!sec) return;
+    let f=null;
+    if(ORDER.includes(sec.id)) f={kind:'sec',id:sec.id};
+    else if(/^pt-[abc]$/.test(sec.id)) f={kind:'test',T:sec.id.slice(3).toUpperCase()};
+    else if(sec.id==='mt') f= (el.closest('#drill-box')||t==='drill')?{kind:'done'}:{kind:'recall'};
+    if(!f) return;
+    if(stepOpen(f)) go(f); else say('🔒 '+stepName(f)+' is still locked.');
   });
   function mountViewToggle(){
-    const b=document.getElementById('viewfocus'); if(b) b.onclick=()=>{ VIEW='focus'; try{localStorage.setItem('m55-view','focus');}catch(e){} FOCUS=computeNext(); applyView(true); };
+    const bar=$q('main > .filter'); if(!bar||document.getElementById('snav')) return;
+    const nav=document.createElement('div'); nav.className='snav'; nav.id='snav';
+    nav.innerHTML='<button type="button" class="snb" id="sprev" aria-label="Previous section"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><label class="ssel"><select id="sstep" aria-label="Go to a section"></select></label><button type="button" class="snb" id="snext" aria-label="Next section"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>';
+    const msg=document.createElement('p'); msg.className='smsg'; msg.id='smsg'; msg.hidden=true;
+    bar.prepend(msg); bar.prepend(nav);
+    document.getElementById('sstep').onchange=e=>go(STEPS[+e.target.value]);
+    document.getElementById('sprev').onclick=()=>go(STEPS[stepIdx(FOCUS)-1]);
+    document.getElementById('snext').onclick=()=>{
+      const n=STEPS[stepIdx(FOCUS)+1]; if(!n) return;
+      if(stepOpen(n)) return go(n);
+      say('🔒 Pass this quiz to unlock '+stepName(n)+'.');
+      const q=FOCUS.kind==='sec'&&document.querySelector('#'+FOCUS.id+' .mastery'); if(q) q.scrollIntoView({behavior:'smooth',block:'start'});
+    };
   }
 
   $$('.mastery').forEach(mountQuiz);
