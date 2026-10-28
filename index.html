@@ -264,6 +264,27 @@ details.more.mini > summary{font-size:.85rem;color:var(--muted)}
 .fc-try{font:400 .95rem var(--f-body);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink);width:100%;margin-bottom:2px}
 .fc-rate{display:flex;flex-wrap:wrap;gap:8px}
 .fc-rate .btn,.fc-flip,.sc-flip{min-height:40px}
+.pg-g{color:var(--blue)} .pg-c{color:var(--orange)}
+ol.recipe{margin:6px 0;padding-left:1.3em} ol.recipe li{margin:4px 0}
+.pats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:14px 0}
+.pat{border:1px solid var(--rule);border-radius:12px;padding:12px 14px;background:var(--surface)}
+.pat p{margin:0}
+.pat .en{font:700 1.05rem var(--f-display)}
+.pat .lg{font:1.15rem var(--f-math);margin:8px 0;padding:6px 10px;border-radius:8px;background:var(--blue-bg);overflow-x:auto;white-space:nowrap}
+.pat .rd{font-size:.97rem}
+.pat .nt{margin-top:6px;font-size:.87rem;color:var(--muted)}
+.opp{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px 10px;align-items:center;margin:6px 0 10px}
+.opp span{font:600 .95rem var(--f-display);background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:8px 10px}
+.opp i{font:600 10.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-style:normal}
+.tpract{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 16px;margin:18px 0 6px}
+.tp-q{font:700 1.15rem/1.35 var(--f-display);margin:4px 0 2px}
+.tp-key{font-size:.85rem;color:var(--muted);margin:0 0 10px}
+.tp-opts{display:grid;gap:8px}
+.tp-opt{text-align:left;font:1.05rem var(--f-math);padding:10px 12px;min-height:44px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--ink);cursor:pointer}
+.tp-opt:disabled{cursor:default}
+.tp-opt.right{border-color:var(--green);background:var(--green-bg)}
+.tp-opt.wrong{border-color:var(--red);background:var(--red-bg)}
+.tpract .mq-res{margin-top:10px}
 .scards{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 16px;margin:18px 0 6px}
 .scards .mq-head{margin-bottom:10px}
 .scards .fc-rate .btn{flex:1 1 90px}
@@ -810,7 +831,7 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
     <h2><span class="n">§3</span>Predicates &amp; quantifiers</h2>
     <p class="src">Lecture 2 · Rosen §1.4 · HW 1.7, 1.9</p>
     <div class="gist"><p>A predicate is a sentence with a blank, like “x > 3.” ∀ means every x works; ∃ means at least one does. To negate, swap ∀ ↔ ∃ and negate what's inside.</p></div>
-    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Evaluate ∀/∃ statements over a given domain</li><li>Translate the four patterns (every / some / no / some-not)</li><li>Push negations inward</li></ul></div><div><b>Memorize</b><ul><li>¬∀x P ≡ ∃x ¬P and ¬∃x P ≡ ∀x ¬P</li><li>∀ pairs with →, ∃ pairs with ∧</li><li>∀ distributes over ∧; ∃ over ∨ (not the other way)</li></ul></div></div></div>
+    <div class="goals"><span class="tag">Goals</span><div class="gl"><div><b>Walk away able to</b><ul><li>Evaluate ∀/∃ statements over a given domain</li><li>Translate the four patterns (every / some / no / some-not)</li><li>Push negations inward</li></ul></div><div><b>Memorize</b><ul><li>¬∀x P ≡ ∃x ¬P and ¬∃x P ≡ ∀x ¬P</li><li>The four patterns: every ∀(P → Q), some ∃(P ∧ Q), no ∀(P → ¬Q), some-not ∃(P ∧ ¬Q)</li><li>∀ distributes over ∧; ∃ over ∨ (not the other way)</li></ul></div></div></div>
 
     <div class="blk defn"><span class="tag">Defn</span>
       <p>A <span class="term">predicate</span> is a statement involving variables which becomes true or false once the values of those variables are specified.</p>
@@ -854,20 +875,67 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
     </div>
 
     <h3>Translating English: the four patterns</h3>
-    <div class="tbl"><table>
-      <tr><th>English</th><th>Logic</th></tr>
-      <tr><td>Every P is a Q</td><td class="mw">∀x (P(x) → Q(x))</td></tr>
-      <tr><td>Some P is a Q</td><td class="mw">∃x (P(x) ∧ Q(x))</td></tr>
-      <tr><td>No P is a Q</td><td class="mw">∀x (¬P(x) ∨ ¬Q(x)) &nbsp;≡ ∀x (P(x) → ¬Q(x)) ≡ ¬∃x (P(x) ∧ Q(x))</td></tr>
-      <tr><td>Some P is not a Q</td><td class="mw">∃x (P(x) ∧ ¬Q(x))</td></tr>
-    </table></div>
-    <p><b>Rule of thumb: ∀ goes with →, ∃ goes with ∧.</b></p>
-
-    <div class="blk caution"><span class="tag">Caution <small>two tempting wrong translations</small></span>
-      <p>Domain: all Berkeley students. E(x): x is in Math 55. B(x): x owns the textbook.</p>
-      <p>“Every Math 55 student owns the book” is <b>not</b> <span class="m">∀x (E(x) ∧ B(x))</span>. That says every Berkeley student is in Math 55 <i>and</i> owns the book; it's false as soon as one student isn't enrolled. Correct: <span class="m">∀x (E(x) → B(x))</span>.</p>
-      <p>“Some Math 55 student owns the book” is <b>not</b> <span class="m">∃x (E(x) → B(x))</span>. That's true as soon as one student isn't enrolled, because F → anything is true. Correct: <span class="m">∃x (E(x) ∧ B(x))</span>.</p>
+    <div class="blk idea"><span class="tag">The idea</span>
+      <p>Each of these sentences has two pieces: a <b class="pg-g">group</b> and a <b class="pg-c">claim</b> about that group.</p>
+      <p>“Every <b class="pg-g">dog</b> is <b class="pg-c">friendly</b>.” Domain: all animals. <span class="m">D(x)</span>: x is a dog. <span class="m">F(x)</span>: x is friendly.</p>
+      <p>x runs over <i>every animal</i>, cats and fish included. So the logic has to say “I only care about the dogs.” That's what the → or ∧ is for.</p>
     </div>
+
+    <div class="blk thm"><span class="tag">The recipe: 3 questions</span>
+      <ol class="recipe">
+        <li><b>Every or some?</b> “every / all / no” → <span class="m">∀x</span>. “some / there is / at least one” → <span class="m">∃x</span>.</li>
+        <li><b>Which glue?</b> ∀ takes <b>→</b> (“<i>if</i> it's in the group, <i>then</i> …”). ∃ takes <b>∧</b> (“it's in the group <i>and</i> …”).</li>
+        <li><b>Is there a “no” or “not”?</b> Put ¬ on the claim.</li>
+      </ol>
+      <p>The group always goes first: <span class="m">D(x)</span> on the left, the claim on the right.</p>
+    </div>
+
+    <div class="pats">
+      <div class="pat"><p class="en">Every dog is friendly</p><p class="lg">∀x (D(x) → F(x))</p><p class="rd">Check every animal: <i>if</i> it's a dog, <i>then</i> it's friendly.</p><p class="nt">Cats don't matter. For a cat “if dog” is false, so the → is automatically true.</p></div>
+      <div class="pat"><p class="en">Some dog is friendly</p><p class="lg">∃x (D(x) ∧ F(x))</p><p class="rd">There's an animal that is a dog <i>and</i> is friendly.</p><p class="nt">You need one animal that ticks both boxes.</p></div>
+      <div class="pat"><p class="en">No dog is friendly</p><p class="lg">∀x (D(x) → ¬F(x))</p><p class="rd">Check every animal: <i>if</i> it's a dog, <i>then</i> it's <b>not</b> friendly.</p><p class="nt">Same thing: <span class="m">¬∃x (D(x) ∧ F(x))</span>, “there is no friendly dog.”</p></div>
+      <div class="pat"><p class="en">Some dog is not friendly</p><p class="lg">∃x (D(x) ∧ ¬F(x))</p><p class="rd">There's an animal that is a dog <i>and</i> is <b>not</b> friendly.</p><p class="nt">One grumpy dog is enough.</p></div>
+    </div>
+
+    <div class="blk ex"><span class="tag">Example <small>using the recipe</small></span>
+      <p>Translate “No student cheated.” Domain: all people. <span class="m">S(x)</span>: x is a student. <span class="m">C(x)</span>: x cheated.</p>
+      <div class="steps">
+        <span>group = students, claim = cheated</span><span class="why">find the two pieces</span>
+        <span>∀x</span><span class="why">“no” is an every-type word</span>
+        <span>∀x (S(x) → C(x))</span><span class="why">∀ takes →, group on the left</span>
+        <span>∀x (S(x) → ¬C(x))</span><span class="why">“no” puts ¬ on the claim</span>
+      </div>
+      <p>Read it back: “Check every person: if they're a student, they didn't cheat.” ✓</p>
+    </div>
+
+    <div class="blk caution"><span class="tag">Why not swap the glue?</span>
+      <p><b>∀ is a security guard</b> checking every animal in the building. The rule is only for dogs, so the guard asks “<i>if</i> you're a dog, are you friendly?” and waves the cats through. That's →.</p>
+      <p><b>∃ is a scavenger hunt</b>: find one animal that is a dog <i>and</i> friendly. Both boxes on the same animal. That's ∧.</p>
+      <p>Swap them and it breaks:</p>
+      <ul>
+        <li><span class="m">∀x (D(x) ∧ F(x))</span> says “every animal is a friendly dog.” One cat makes it false. <b>Too strong.</b></li>
+        <li><span class="m">∃x (D(x) → F(x))</span> is true as soon as one cat exists, because for a cat “if dog …” is false, which makes the → true. <b>Too weak</b>: it says nothing about dogs.</li>
+      </ul>
+    </div>
+
+    <div class="blk idea"><span class="tag">They come in opposite pairs</span>
+      <div class="opp">
+        <span>Every dog is friendly</span><i>opposite</i><span>Some dog is <b>not</b> friendly</span>
+        <span>Some dog is friendly</span><i>opposite</i><span><b>No</b> dog is friendly</span>
+      </div>
+      <p>So “<b>not every</b> dog is friendly” means “some dog is not friendly,” and “it's <b>not</b> true that some dog is friendly” means “no dog is friendly.” This is the ¬∀ ≡ ∃¬ rule from above: <span class="m">¬∀x (D(x) → F(x)) ≡ ∃x (D(x) ∧ ¬F(x))</span>.</p>
+    </div>
+
+    <div class="tbl"><table>
+      <tr><th>Pattern</th><th>Also written as</th><th>Logic</th></tr>
+      <tr><td>Every</td><td>all, each, any, “dogs are friendly”</td><td class="mw">∀x (D → F)</td></tr>
+      <tr><td>Some</td><td>there is, at least one, a few</td><td class="mw">∃x (D ∧ F)</td></tr>
+      <tr><td>No</td><td>none, not a single, there is no</td><td class="mw">∀x (D → ¬F)</td></tr>
+      <tr><td>Some-not</td><td>not every, not all, at least one … isn't</td><td class="mw">∃x (D ∧ ¬F)</td></tr>
+      <tr><td><b>Trap: only</b></td><td>“<b>Only</b> dogs bark” = if it barks, it's a dog</td><td class="mw">∀x (B → D)</td></tr>
+    </table></div>
+
+    <div class="tpract"></div>
 
     <h3>When do quantifiers distribute?</h3>
     <div class="two">
@@ -4143,7 +4211,11 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     ['c2e','s2','p ↔ q ≡ ?','(p → q) ∧ (q → p)',''],
     ['c2f','s2','Tautology · contradiction · contingency','Always true · always false · neither (true in some rows, false in others)',''],
     ['c3a','s3','Negate ∀x P(x) and ∃x P(x)','¬∀x P(x) ≡ ∃x ¬P(x) · ¬∃x P(x) ≡ ∀x ¬P(x)','Push the ¬ inside and flip the quantifier.'],
-    ['c3b','s3','“Every S is P” and “Some S is P” in logic','∀x (S(x) → P(x)) · ∃x (S(x) ∧ P(x))','∀ goes with →, ∃ goes with ∧. (∃x(S → P) is true whenever anything is not an S.)'],
+    ['c3d','s3','Every P is a Q','∀x (P(x) → Q(x))','Security guard: check everyone. If P, then Q.'],
+    ['c3e','s3','Some P is a Q','∃x (P(x) ∧ Q(x))','Scavenger hunt: find one that is P and Q.'],
+    ['c3f','s3','No P is a Q','∀x (P(x) → ¬Q(x)) ≡ ¬∃x (P(x) ∧ Q(x))','Every P fails Q. There is no P that is a Q.'],
+    ['c3g','s3','Some P is not a Q (= not every P is a Q)','∃x (P(x) ∧ ¬Q(x))','The opposite of “every P is a Q.”'],
+    ['c3h','s3','“Only P’s are Q’s” in logic','∀x (Q(x) → P(x))','“Only” flips the arrow: if it’s a Q, it must be a P.'],
     ['c3c','s3','Which quantifier distributes over ∧, and which over ∨?','∀x(P ∧ Q) ≡ ∀xP ∧ ∀xQ · ∃x(P ∨ Q) ≡ ∃xP ∨ ∃xQ. Not ∀ over ∨, not ∃ over ∧.','“All” pairs with “and”; “exists” pairs with “or”.'],
     ['c4a','s4','∃y∀x P(x,y) vs ∀x∃y P(x,y): which implies which?','∃y∀x ⇒ ∀x∃y, not the converse. In ℤ: ∀x∃y (y > x) is true, ∃y∀x (y > x) is false.','One y that works for everyone is stronger than a y per x.'],
     ['c4b','s4','Negate ∀x∃y P(x, y)','∃x∀y ¬P(x, y)','Flip every quantifier, left to right, then negate P.'],
@@ -4351,6 +4423,34 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     box._open=sec=>{ filter=sec; mode='cards'; cur=null; queue=[]; ahead=false; render(); box.scrollIntoView({behavior:'smooth',block:'start'}); const f=$q('.fc-flip',box)||$q('.fc-ahead',box); if(f) f.focus({preventScroll:true}); };
     render();
   }
+  // ---- translation practice (§3): tap the right formula, instant feedback ----
+  const TP=[
+    ['Every cat is lazy.','C(x): x is a cat · L(x): x is lazy',['∀x (C(x) → L(x))','∀x (C(x) ∧ L(x))','∃x (C(x) ∧ L(x))','∃x (C(x) → L(x))'],'“Every” → ∀, and ∀ takes →. ∀x (C ∧ L) would say every animal is a lazy cat.'],
+    ['Some student passed.','S(x): x is a student · P(x): x passed',['∃x (S(x) ∧ P(x))','∃x (S(x) → P(x))','∀x (S(x) → P(x))','∀x (S(x) ∧ P(x))'],'“Some” → ∃, and ∃ takes ∧. ∃x (S → P) is true just because some non-student exists.'],
+    ['No bird can swim.','B(x): x is a bird · W(x): x can swim',['∀x (B(x) → ¬W(x))','¬∀x (B(x) → W(x))','∃x (B(x) ∧ ¬W(x))','∀x (¬B(x) → W(x))'],'“No” → ∀ with →, then ¬ on the claim. ¬∀x (B → W) only says “not every bird can swim,” which is much weaker.'],
+    ['Some fruit is not sweet.','F(x): x is a fruit · S(x): x is sweet',['∃x (F(x) ∧ ¬S(x))','∃x (F(x) → ¬S(x))','∀x (F(x) → ¬S(x))','¬∃x (F(x) ∧ S(x))'],'“Some” → ∃ with ∧, and “not” puts ¬ on the claim. ∀x (F → ¬S) would be “no fruit is sweet.”'],
+    ['Not every student passed.','S(x): x is a student · P(x): x passed',['∃x (S(x) ∧ ¬P(x))','∀x (S(x) → ¬P(x))','¬∃x (S(x) ∧ P(x))','∃x (S(x) → ¬P(x))'],'“Not every” = “some … not.” ∀x (S → ¬P) says nobody passed, which is too strong.'],
+    ['There is no friendly dog.','D(x): x is a dog · F(x): x is friendly',['¬∃x (D(x) ∧ F(x))','∃x (D(x) ∧ ¬F(x))','¬∀x (D(x) → F(x))','∀x (D(x) ∧ ¬F(x))'],'“There is no friendly dog” = “no dog is friendly” = ¬∃x (D ∧ F), which is the same as ∀x (D → ¬F).'],
+    ['All squares are rectangles.','Q(x): x is a square · R(x): x is a rectangle',['∀x (Q(x) → R(x))','∀x (R(x) → Q(x))','∀x (Q(x) ∧ R(x))','∃x (Q(x) ∧ R(x))'],'The group (squares) goes on the left of the →. ∀x (R → Q) would say every rectangle is a square, which is backwards.'],
+    ['Only dogs bark.','D(x): x is a dog · K(x): x barks',['∀x (K(x) → D(x))','∀x (D(x) → K(x))','∃x (K(x) ∧ D(x))','∀x (K(x) ∧ D(x))'],'“Only dogs bark” = “if it barks, it\'s a dog.” “Only” flips the arrow. ∀x (D → K) says every dog barks, which is a different claim.']
+  ];
+  function mountTP(el){
+    let order, i, score, picked;
+    const shuf=a=>{ a=a.slice(); for(let k=a.length-1;k>0;k--){ const j=Math.floor(Math.random()*(k+1)); [a[k],a[j]]=[a[j],a[k]]; } return a; };
+    function reset(){ order=shuf(TP).map(t=>({t,opts:shuf(t[2].map((o,j)=>[o,j===0]))})); i=0; score=0; picked=null; }
+    function render(){
+      let h='<div class="mq-head"><span class="tag">Practice</span><span class="pill">pick the translation · '+TP.length+' sentences</span></div>';
+      if(i>=order.length){ h+='<div class="mq-res '+(score>=TP.length-1?'ok':'no')+'"><b>'+score+'/'+TP.length+' right.</b> '+(score>=TP.length-1?'You\'ve got the four patterns.':'Reread the recipe and the pattern cards above, then go again.')+'<br><button type="button" class="btn tp-again">Go again</button></div>'; el.innerHTML=h; el.querySelector('.tp-again').onclick=()=>{ reset(); render(); }; return; }
+      const it=order[i], t=it.t;
+      h+='<p class="fc-meta"><span>'+(i+1)+' of '+TP.length+'</span><span>'+score+' right</span></p><p class="tp-q">“'+t[0]+'”</p><p class="tp-key">'+t[1]+' · domain: everything</p><div class="tp-opts">'+
+        it.opts.map(([o,ok],j)=>'<button type="button" class="tp-opt'+(picked!=null?(ok?' right':(j===picked?' wrong':'')):'')+'" data-j="'+j+'"'+(picked!=null?' disabled':'')+'>'+o+'</button>').join('')+'</div>';
+      if(picked!=null){ const ok=it.opts[picked][1]; h+='<div class="mq-res '+(ok?'ok':'no')+'"><b>'+(ok?'Right.':'Not quite.')+'</b> '+t[3]+'<br><button type="button" class="btn primary tp-next">'+(i+1<order.length?'Next →':'See score')+'</button></div>'; }
+      el.innerHTML=h;
+      el.querySelectorAll('.tp-opt').forEach(b=>b.onclick=()=>{ picked=+b.dataset.j; const ok=it.opts[picked][1]; if(ok){ score++; xp(3,'translation'); } else active(); render(); });
+      const nx=el.querySelector('.tp-next'); if(nx) nx.onclick=()=>{ i++; picked=null; render(); };
+    }
+    reset(); render();
+  }
   // ---- flashcards inside each section (same spaced-repetition boxes as the trainer) ----
   function mountSecCards(sid){
     const sec=document.getElementById(sid), q=sec&&sec.querySelector(':scope > .mastery'); const cards=CARDS.filter(c=>c[1]===sid);
@@ -4471,6 +4571,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
 
   $$('.mastery').forEach(mountQuiz);
   ORDER.forEach(mountSecCards);
+  $$('.tpract').forEach(mountTP);
   const dr=document.getElementById('drill-box'); if(dr){ mountDrill(dr); addDrillButtons(dr); }
   const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
   const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
