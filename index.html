@@ -263,7 +263,10 @@ details.more.mini > summary{font-size:.85rem;color:var(--muted)}
 .fc-hook span{display:block;font:600 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .fc-try{font:400 .95rem var(--f-body);padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink);width:100%;margin-bottom:2px}
 .fc-rate{display:flex;flex-wrap:wrap;gap:8px}
-.fc-rate .btn,.fc-flip{min-height:40px}
+.fc-rate .btn,.fc-flip,.sc-flip{min-height:40px}
+.scards{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 16px;margin:18px 0 6px}
+.scards .mq-head{margin-bottom:10px}
+.scards .fc-rate .btn{flex:1 1 90px}
 .fc-groups{display:flex;flex-wrap:wrap;gap:6px}
 .fc-blank textarea{font:400 .95rem var(--f-body);padding:9px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
 .fc-blank h4{font-family:var(--f-display);margin:14px 0 2px}
@@ -4348,6 +4351,34 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     box._open=sec=>{ filter=sec; mode='cards'; cur=null; queue=[]; ahead=false; render(); box.scrollIntoView({behavior:'smooth',block:'start'}); const f=$q('.fc-flip',box)||$q('.fc-ahead',box); if(f) f.focus({preventScroll:true}); };
     render();
   }
+  // ---- flashcards inside each section (same spaced-repetition boxes as the trainer) ----
+  function mountSecCards(sid){
+    const sec=document.getElementById(sid), q=sec&&sec.querySelector(':scope > .mastery'); const cards=CARDS.filter(c=>c[1]===sid);
+    if(!q||!cards.length) return;
+    const box=document.createElement('div'); box.className='scards'; q.before(box);
+    let queue, cur, flipped, firstTry, seen;
+    function reset(){ queue=cards.slice(); cur=queue.shift(); flipped=false; firstTry=0; seen=new Set(); }
+    function render(){
+      let h='<div class="mq-head"><span class="tag">Flashcards</span><span class="pill">'+cards.length+' cards · what to memorize</span></div>';
+      if(!cur){
+        h+='<div class="mq-res ok"><b>Done: '+firstTry+'/'+cards.length+' known on the first try.</b> Cards you missed came back until you got them.<br><button type="button" class="btn sc-again">Go again</button></div>';
+      } else {
+        const left=queue.length+1;
+        h+='<div class="fc-card'+(flipped?' flipped':'')+'"><p class="fc-meta"><span>Card '+(cards.length-Math.min(cards.length,left)+1)+' of '+cards.length+'</span><span>'+left+' left</span></p><div class="fc-front">'+cur[2]+'</div>'+
+          (flipped? '<div class="fc-back">'+cur[3]+'</div>'+(cur[4]?'<p class="fc-hook"><span>Memory hook</span>'+cur[4]+'</p>':'')+
+            '<div class="fc-rate"><button type="button" class="btn fc-r" data-h="0">Missed it</button><button type="button" class="btn fc-r" data-h="1">Shaky</button><button type="button" class="btn primary fc-r" data-h="2">Knew it</button></div>'
+          : '<p class="sub-note">Say the answer out loud first, then check.</p><button type="button" class="btn primary sc-flip">Show answer</button>')+'</div>';
+      }
+      box.innerHTML=h;
+      const fl=box.querySelector('.sc-flip'); if(fl) fl.onclick=()=>{ flipped=true; render(); };
+      box.querySelectorAll('.fc-r').forEach(b=>b.onclick=()=>{ const how=+b.dataset.h; rate(cur,how);
+        if(!seen.has(cur[0])&&how===2) firstTry++; seen.add(cur[0]);
+        if(how===0) queue.push(cur);
+        cur=queue.shift()||null; flipped=false; render(); });
+      const ag=box.querySelector('.sc-again'); if(ag) ag.onclick=()=>{ reset(); render(); };
+    }
+    reset(); render();
+  }
   function addDrillButtons(dr){
     ORDER.forEach(sid=>{
       const n=CARDS.filter(c=>c[1]===sid).length; if(!n) return;
@@ -4439,6 +4470,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   }
 
   $$('.mastery').forEach(mountQuiz);
+  ORDER.forEach(mountSecCards);
   const dr=document.getElementById('drill-box'); if(dr){ mountDrill(dr); addDrillButtons(dr); }
   const rc=document.getElementById('recall-box'); if(rc) mountRecall(rc);
   const sy=document.getElementById('sync-box'); if(sy) mountSync(sy);
