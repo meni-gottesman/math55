@@ -574,7 +574,7 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
 
     <h3 id="ready-h">Readiness check</h3>
     <div class="ready" id="ready"><p>Loading your progress…</p></div>
-    <p class="sub-note">To pass a section: practice at 95%+, every flashcard known on the first try, 3 exam-level problems all right, then a perfect 5/5 quiz (plus its proof task). That unlocks the next section. Mastered = right again in two separate recall rounds. A miss in recall or on a practice midterm flags it for review.</p>
+    <p class="sub-note">To pass a section: every flashcard known on the first try, practice at 95%+, 3 exam-level problems all right, then a perfect 5/5 quiz (plus its proof task). That unlocks the next section. Mastered = right again in two separate recall rounds. A miss in recall or on a practice midterm flags it for review.</p>
 
     <h3 id="recall">Recall rounds</h3>
     <div class="recall" id="recall-box"></div>
@@ -6595,8 +6595,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       let h='<div class="mq-head"><span class="tag">Practice</span><span class="pill">'+N+' questions · pass '+Math.ceil(0.95*N)+'/'+N+'</span></div>';
       if(i>=order.length){ const need=Math.ceil(0.95*N), good=score>=need, sid=sec.id;
         if(good&&!S_(sid).pr){ S_(sid).pr=true; xp(25,'practice passed'); save(); refresh(); }
-        h+='<div class="mq-res '+(good?'ok':'no')+'"><b>'+score+'/'+N+' right.</b> '+(good?'✓ Practice passed.':'You need '+need+'/'+N+'. Reread How-to for the ones you missed, then go again (new order).')+'<br>'+(good?'<button type="button" class="btn primary tp-on">Next: Memorize →</button> ':'')+'<button type="button" class="btn tp-again">Go again</button></div>';
-        el.innerHTML=h; el.querySelector('.tp-again').onclick=()=>{ reset(); render(); }; const on=el.querySelector('.tp-on'); if(on) on.onclick=()=>setPhase(sid,'memorize',true); return; }
+        h+='<div class="mq-res '+(good?'ok':'no')+'"><b>'+score+'/'+N+' right.</b> '+(good?'✓ Practice passed.':'You need '+need+'/'+N+'. Reread How-to for the ones you missed, then go again (new order).')+'<br>'+(good?'<button type="button" class="btn primary tp-on">Next: '+(EXAM[sid]&&EXAM[sid].length?'Exam':'Quiz')+' →</button> ':'')+'<button type="button" class="btn tp-again">Go again</button></div>';
+        el.innerHTML=h; el.querySelector('.tp-again').onclick=()=>{ reset(); render(); }; const on=el.querySelector('.tp-on'); if(on) on.onclick=()=>setPhase(sid,EXAM[sid]&&EXAM[sid].length?'exam':'quiz',true); return; }
       const it=order[i], t=it.t;
       h+='<p class="fc-meta"><span>'+(i+1)+' of '+N+'</span><span>'+score+' right</span></p><p class="tp-q">'+t.q+'</p>'+(t.ctx?'<p class="tp-key">'+t.ctx+'</p>':'')+'<div class="tp-opts">'+
         it.opts.map(([o,ok],j)=>'<button type="button" class="tp-opt'+(picked!=null?(ok?' right':(j===picked?' wrong':'')):'')+'" data-j="'+j+'"'+(picked!=null?' disabled':'')+'>'+o+'</button>').join('')+'</div>';
@@ -6648,7 +6648,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     idle();
   }
   // ---- each section is split into steps, shown one at a time ----
-  const PHASES=[['learn','Learn'],['how','How-to'],['practice','Practice'],['memorize','Memorize'],['exam','Exam'],['quiz','Quiz']];
+  const PHASES=[['learn','Learn'],['how','How-to'],['memorize','Memorize'],['practice','Practice'],['exam','Exam'],['quiz','Quiz']];
   const PH={};
   function phaseOf(el,afterLock){
     if(el.tagName==='H2') return 'all';
@@ -6660,7 +6660,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   }
   const exOK=sid=>!!(S_(sid).ex||!(EXAM[sid]&&EXAM[sid].length));
   function quizLocked(sid){ const s=S_(sid); return !s.learned && !(s.pr&&s.fcd&&exOK(sid)); }
-  function defaultPhase(sid){ const s=S_(sid); if(s.learned||s.review) return 'learn'; if(s.pr&&s.fcd&&exOK(sid)) return 'quiz'; if(s.pr&&s.fcd) return 'exam'; if(s.pr) return 'memorize'; return 'learn'; }
+  function defaultPhase(sid){ const s=S_(sid); if(s.learned||s.review) return 'learn'; if(s.pr&&s.fcd&&exOK(sid)) return 'quiz'; if(s.pr&&s.fcd) return 'exam'; if(s.fcd) return 'practice'; return 'learn'; }
   function mountPhases(sid){
     const sec=document.getElementById(sid); if(!sec||sec.querySelector(':scope > .sph')) return;
     let after=false;
@@ -6681,8 +6681,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     bar.querySelectorAll('button').forEach(b=>{ const k=b.dataset.k; b.classList.toggle('on',k===cur); b.classList.toggle('done',!!done[k]); b.classList.toggle('lock',k==='quiz'&&quizLocked(sid)); b.setAttribute('aria-current',k===cur?'step':'false'); });
     const lk=quizLocked(sid); sec.classList.toggle('qlock',lk);
     const ql=sec.querySelector(':scope > .phlock');
-    const todo=!s.pr?'practice':!s.fcd?'memorize':'exam';
-    if(ql) ql.innerHTML= lk? '<p><b>🔒 Quiz locked.</b> First:</p><ul><li>'+(s.pr?'✓':'○')+' Practice: 95% or more</li><li>'+(s.fcd?'✓':'○')+' Memorize: every flashcard on the first try</li>'+(EXAM[sid]&&EXAM[sid].length?'<li>'+(s.ex?'✓':'○')+' Exam: 3 exam-level problems, all right</li>':'')+'</ul><button type="button" class="btn primary">Go to '+PHASES.find(p=>p[0]===todo)[1]+' →</button>' : '';
+    const todo=!s.fcd?'memorize':!s.pr?'practice':'exam';
+    if(ql) ql.innerHTML= lk? '<p><b>🔒 Quiz locked.</b> First:</p><ul><li>'+(s.fcd?'✓':'○')+' Memorize: every flashcard on the first try</li><li>'+(s.pr?'✓':'○')+' Practice: 95% or more</li>'+(EXAM[sid]&&EXAM[sid].length?'<li>'+(s.ex?'✓':'○')+' Exam: 3 exam-level problems, all right</li>':'')+'</ul><button type="button" class="btn primary">Go to '+PHASES.find(p=>p[0]===todo)[1]+' →</button>' : '';
     const qb=ql&&ql.querySelector('button'); if(qb) qb.onclick=()=>setPhase(sid,todo,true);
   }
   function setPhase(sid,k,scroll){ PH[sid]=k; renderPhases(sid); if(scroll){ const sec=document.getElementById(sid); const top=sec.getBoundingClientRect().top+window.scrollY-($q('main > .filter')||{offsetHeight:0}).offsetHeight-8; window.scrollTo({top:Math.max(0,top),behavior:'auto'}); } }
@@ -6698,7 +6698,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       if(!cur){
         const all=firstTry===cards.length;
         if(all&&!S_(sid).fcd){ S_(sid).fcd=true; xp(20,'all cards known'); save(); refresh(); }
-        h+='<div class="mq-res '+(all?'ok':'no')+'"><b>'+firstTry+'/'+cards.length+' known on the first try.</b> '+(all?'✓ Memorized.':'You need every card on the first try. Go again.')+'<br>'+(all?'<button type="button" class="btn primary sc-on">Next: '+(EXAM[sid]&&EXAM[sid].length?'Exam':'Quiz')+' →</button> ':'')+'<button type="button" class="btn sc-again">Go again</button></div>';
+        h+='<div class="mq-res '+(all?'ok':'no')+'"><b>'+firstTry+'/'+cards.length+' known on the first try.</b> '+(all?'✓ Memorized.':'You need every card on the first try. Go again.')+'<br>'+(all?'<button type="button" class="btn primary sc-on">Next: Practice →</button> ':'')+'<button type="button" class="btn sc-again">Go again</button></div>';
       } else {
         const left=queue.length+1;
         h+='<div class="fc-card'+(flipped?' flipped':'')+'"><p class="fc-meta"><span>Card '+(cards.length-Math.min(cards.length,left)+1)+' of '+cards.length+'</span><span>'+left+' left</span></p><div class="fc-front">'+cur[2]+'</div>'+
@@ -6713,7 +6713,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
         if(how===0) queue.push(cur);
         cur=queue.shift()||null; flipped=false; render(); });
       const ag=box.querySelector('.sc-again'); if(ag) ag.onclick=()=>{ reset(); render(); };
-      const on=box.querySelector('.sc-on'); if(on) on.onclick=()=>setPhase(sid,EXAM[sid]&&EXAM[sid].length?'exam':'quiz',true);
+      const on=box.querySelector('.sc-on'); if(on) on.onclick=()=>setPhase(sid,'practice',true);
     }
     reset(); render();
   }
