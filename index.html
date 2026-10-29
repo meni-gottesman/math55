@@ -3338,6 +3338,13 @@ x = 2·70·1 + 5·30·4 + 3·21·1 = 140 + 600 + 63 = 803 ≡ 173 (mod 210)</div
       </ol>
     </div>
 
+    <div class="blk thm"><span class="tag">On the review sheet <small>Lecture 11</small></span>
+      <p><b>Freshman’s dream.</b> If p is prime, then <span class="m">(a + b)ᵖ ≡ aᵖ + bᵖ (mod p)</span> for all integers a, b.</p>
+      <p><i>Why:</i> expand with the binomial theorem. Every middle coefficient <span class="m">C(p, k)</span> with 0 &lt; k &lt; p equals <span class="m">p!/(k!(p − k)!)</span>; the p on top is prime and nothing below cancels it, so <span class="m">p | C(p, k)</span>. Only the two end terms survive mod p. (Example: <span class="m">(a + b)³ = a³ + 3a²b + 3ab² + b³ ≡ a³ + b³ (mod 3)</span>.) This is the step in the induction proof of Fermat’s little theorem: <span class="m">(a + 1)ᵖ ≡ aᵖ + 1 ≡ a + 1</span>.</p>
+      <p><b>Powering is one-to-one.</b> If p is prime and <span class="m">gcd(e, p − 1) = 1</span>, then <span class="m">f(m) = mᵉ mod p</span> is a 1-1 function on <span class="m">{0, 1, …, p − 1}</span>.</p>
+      <p><i>Why:</i> by Bézout pick d with <span class="m">ed ≡ 1 (mod p − 1)</span>, so <span class="m">ed = 1 + k(p − 1)</span>. Then <span class="m">(mᵉ)ᵈ = m·(mᵖ⁻¹)ᵏ ≡ m (mod p)</span> by Fermat (and it is trivially true when p | m). So raising to the d undoes raising to the e: if <span class="m">mᵉ ≡ nᵉ</span> then <span class="m">m ≡ mᵉᵈ ≡ nᵉᵈ ≡ n</span>. Example: p = 7, e = 5 (gcd(5, 6) = 1): the fifth powers of 0..6 mod 7 are 0, 1, 4, 5, 2, 3, 6, all different. With e = 2 (gcd(2, 6) = 2) it fails: 1² ≡ 6² ≡ 1.</p>
+    </div>
+
     <h3>Lock it down</h3>
 
 <div class="blk thm"><span class="tag">How to do it: shrink a big power aⁿ mod a prime p</span>
@@ -6463,6 +6470,8 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     ["x31_5", "s31", "Keywords that call for the complement", "“At least one,” “at least two the same,” “not all”: compute the complement (none, all different) and use p(E) = 1 − p(Ē).", "At least one 6 in 3 rolls: 1 − (5/6)³"],
     ["x31_6", "s31", "Overlap for “divisible by a or b”", "Overlap = divisible by lcm(a, b): count ⌊N/a⌋ + ⌊N/b⌋ − ⌊N/lcm(a, b)⌋, then divide by N.", "4 or 6: overlap is 12, not 24"],
     ["x31_7", "s31", "Same convention rule", "If S is counted as ordered, E must be ordered too; if S is unordered, E is unordered. Mixing them can give a “probability” above 1.", "Ordered draw: |S| = 52·51, both aces 4·3"],
+    ["xr20a","s20","Freshman’s dream (p prime)","(a + b)ᵖ ≡ aᵖ + bᵖ (mod p), because p divides C(p, k) for 0 < k < p.","Only the two end terms of the binomial expansion survive mod p."],
+    ["xr20b","s20","When is m ↦ mᵉ mod p one-to-one on {0, …, p − 1}?","When p is prime and gcd(e, p − 1) = 1. Take d with ed ≡ 1 (mod p − 1); then (mᵉ)ᵈ ≡ m (mod p) undoes it.","The same trick that makes RSA decryption work."],
   ];
   const FC_GROUPS=[['Logic & proofs',1,9],['Sets & functions',10,13],['Number theory',14,21],['Induction & recursion',22,25],['Counting & probability',26,31]];
   const BOXMIN=[0,1,10,60,360,1440]; // minutes until a card comes back, by box 1–5
