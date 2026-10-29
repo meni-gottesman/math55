@@ -345,6 +345,9 @@ body.focus .fc-drill{display:none}
 .ssel select{width:100%;height:44px;-webkit-appearance:none;appearance:none;border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink);font:700 16px var(--f-display);padding:0 34px 0 12px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer}
 .ssel::after{content:'▾';position:absolute;right:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--muted)}
 .smsg{flex-basis:100%;margin:2px 0 0;font:600 .85rem var(--f-display);color:var(--orange)}
+.smsg.ask{color:var(--ink);font-weight:500;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:10px 12px;margin:6px 0 2px;display:grid;gap:8px}
+.smsg.ask .ask-b{display:flex;gap:8px;flex-wrap:wrap}
+.smsg.ask .btn{min-height:40px;padding:0 16px}
 .focus-head .fbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;min-height:34px}
 .focus-head .fbar .fback[hidden]{display:block!important;visibility:hidden}
 .focus-head .fopen span{font-weight:400;opacity:.75;margin-left:4px}
@@ -574,7 +577,7 @@ pre.mine{white-space:pre-wrap;font:400 .9rem var(--f-body);background:var(--bg);
 
     <h3 id="ready-h">Readiness check</h3>
     <div class="ready" id="ready"><p>Loading your progress…</p></div>
-    <p class="sub-note">To pass a section: every flashcard known on the first try, practice at 95%+, 3 exam-level problems all right, then a perfect 5/5 quiz (plus its proof task). That unlocks the next section. Mastered = right again in two separate recall rounds. A miss in recall or on a practice midterm flags it for review.</p>
+    <p class="sub-note">Nothing is locked. Before moving on, aim for: every flashcard known on the first try, practice at 95%+, 3 exam-level problems all right, and a perfect 5/5 quiz (plus its proof task). You'll be asked if you feel ready before each new section. Mastered = right again in two separate recall rounds. A miss in recall or on a practice midterm flags it for review.</p>
 
     <h3 id="recall">Recall rounds</h3>
     <div class="recall" id="recall-box"></div>
@@ -5656,7 +5659,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const $$=(sel,root)=>Array.from((root||document).querySelectorAll(sel));
   const secTitle=id=>{const h=$q('#'+id+' > h2'); if(!h) return id; const n=h.querySelector('.n'); return h.textContent.replace(n?n.textContent:'','').trim();};
   const learned=id=>!!S_(id).learned, mastered=id=>!!S_(id).mastered;
-  function status(id){ const i=ORDER.indexOf(id); if(i>0&&!learned(ORDER[i-1])&&!learned(id)) return 'locked'; const s=S_(id); if(s.review) return 'review'; if(s.mastered) return 'mastered'; if(s.learned) return 'learned'; return 'open'; }
+  function status(id){ const i=ORDER.indexOf(id); const s=S_(id); if(s.review) return 'review'; if(s.mastered) return 'mastered'; if(s.learned) return 'learned'; return 'open'; }
   // ================= pace + game layer =================
   const PACE=[
     {d:'2026-10-24', passed:13, label:'Pass §1–§13 (logic, proofs, sets, functions, infinity)'},
@@ -5849,7 +5852,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
       const s=S_(sid);
       box.innerHTML='<div class="mq-head"><span class="tag">Mastery quiz</span><span class="pill">'+QN+' auto-graded questions · pass '+PASS+'/'+QN+(pr?' + the proof task':'')+' · new questions every attempt</span></div>'+
         (s.learned?'<p class="mq-state ok">✓ Passed'+(s.best!=null?' ('+s.best+'/'+QN+')':'')+'. '+(s.mastered?'Mastered through recall.':(s.review?'<b>Flagged for review</b> after a miss: retake or do a recall round.':'Next: get it right again in a <a href="#recall">recall round</a> to master it.'))+'</p>':
-        '<p class="mq-state">Answers stay hidden until you submit. New questions every attempt. A perfect 5/5 unlocks the next section.</p>')+
+        '<p class="mq-state">Answers stay hidden until you submit. New questions every attempt. Aim for a perfect 5/5.</p>')+
         '<button type="button" class="btn primary mq-start">'+(s.learned?'Retake for practice':'Start quiz')+'</button>';
       box.querySelector('.mq-start').onclick=start;
     }
@@ -5875,7 +5878,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
             if(score===QN) badge('perfect'); if(P) badge('proof');
             save(); refresh();
             res.className='mq-res ok'; const nf=nextStep({kind:'sec',id:sid});
-            res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b>'+(nf?' Unlocked: '+stepName(nf)+'.<br><button type="button" class="btn primary mq-next">Next →</button>':'');
+            res.innerHTML='<b>Passed: '+score+'/'+QN+(P?' + proof':'')+'.</b>'+(nf?' Next up: '+stepName(nf)+'.<br><button type="button" class="btn primary mq-next">Next →</button>':'');
             if(nf) res.querySelector('.mq-next').onclick=()=>go(nf);
           } else {
             save();
@@ -5941,7 +5944,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   function mountTest(box){
     const T=box.dataset.test, probs=TESTS[T]; const t=()=>ST.tests[T]||(ST.tests[T]={});
     clearTimeout(TIMERS[T]);
-    function unlocked(){ if(T==='A') return ORDER.every(learned); if(T==='B') return !!(ST.tests.A&&ST.tests.A.submitted); return !!(ST.tests.B&&ST.tests.B.submitted); }
+    function unlocked(){ return true; }
     function view(){
       const st=t();
       box.dataset.locked=unlocked()?'0':'1';
@@ -6021,7 +6024,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   function applyLocks(){
     ORDER.forEach((sid,i)=>{
       const sec=document.getElementById(sid); if(!sec) return;
-      const lockedNow= i>0 && !learned(ORDER[i-1]) && !learned(sid);
+      const lockedNow=false;
       sec.classList.toggle('locked',lockedNow);
       let m=sec.querySelector(':scope > .lockmsg');
       if(lockedNow&&!m){ m=document.createElement('p'); m.className='lockmsg'; const g=sec.querySelector(':scope > .goals')||sec.querySelector(':scope > .gist'); g.after(m); }
@@ -6034,9 +6037,9 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   }
   function applyVisibility(){
     const next=ORDER.find(id=>!learned(id)), all=!next, sub=T=>!!(ST.tests[T]&&ST.tests[T].submitted);
-    const show={}; ORDER.forEach(id=>{ show[id]=learned(id)||id===next; });
-    show['pt-a']=all; show['pt-b']=all&&sub('A'); show['pt-c']=all&&sub('B');
-    $$('main > section.cheat-sec').forEach(sec=>{ show[sec.id]=all; });
+    const show={}; ORDER.forEach(id=>{ show[id]=true; }); // nothing is locked
+    show['pt-a']=true; show['pt-b']=true; show['pt-c']=true;
+    $$('main > section.cheat-sec').forEach(sec=>{ show[sec.id]=true; });
     Object.keys(show).forEach(id=>{ const el=document.getElementById(id); if(el) el.hidden=!show[id];
       const a=$q('nav.toc a[href="#'+id+'"]'); if(a) a.parentElement.hidden=!show[id]; });
     // part headings and TOC group labels disappear when nothing under them is shown
@@ -6466,7 +6469,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const secNum=id=>+id.slice(1);
   const F_=id=>{ ST.fc=ST.fc||{}; return ST.fc[id]||(ST.fc[id]={b:0,due:0,n:0}); };
   const nextSec=()=>ORDER.find(id=>!learned(id));
-  const reachable=id=>learned(id)||id===nextSec();
+  const reachable=id=>true; // nothing is locked
   function deck(filter){
     const mine=CARDS.filter(c=>reachable(c[1]));
     if(filter==='mt2') return mine.filter(c=>secNum(c[1])>=18);
@@ -6659,7 +6662,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     return afterLock?'how':'learn';
   }
   const exOK=sid=>!!(S_(sid).ex||!(EXAM[sid]&&EXAM[sid].length));
-  function quizLocked(sid){ const s=S_(sid); return !s.learned && !(s.pr&&s.fcd&&exOK(sid)); }
+  function quizLocked(sid){ return false; }
   function defaultPhase(sid){ const s=S_(sid); if(s.learned||s.review) return 'learn'; if(s.pr&&s.fcd&&exOK(sid)) return 'quiz'; if(s.pr&&s.fcd) return 'exam'; if(s.fcd) return 'practice'; return 'learn'; }
   function mountPhases(sid){
     const sec=document.getElementById(sid); if(!sec||sec.querySelector(':scope > .sph')) return;
@@ -6734,7 +6737,7 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
   const stepIdx=f=>STEPS.findIndex(s=>sameF(s,f));
   const nextStep=f=>STEPS[stepIdx(f)+1]||null;
   function testOpen(T){ return T==='A'? ORDER.every(learned) : T==='B'? !!(ST.tests.A&&ST.tests.A.submitted) : !!(ST.tests.B&&ST.tests.B.submitted); }
-  function stepOpen(f){ if(f.kind==='sec') return status(f.id)!=='locked'; if(f.kind==='test') return testOpen(f.T); return ORDER.some(learned); }
+  function stepOpen(f){ return true; }
   function stepName(f){ return f.kind==='sec'? '§'+f.id.slice(1)+' '+secTitle(f.id) : f.kind==='test'? 'Practice Midterm '+f.T : f.kind==='recall'? 'Recall round' : 'Flashcards'; }
   function stepMark(f){
     if(!stepOpen(f)) return '🔒 ';
@@ -6751,9 +6754,23 @@ Decrypt c = 31:  31² = 961 ≡ 4,   31⁴ ≡ 4² = 16   (mod 33)
     if(ORDER.some(id=>learned(id)&&!mastered(id))) return {kind:'recall'};
     return {kind:'done'};
   }
-  function go(f){ if(!f) return; if(f.kind==='sec') delete PH[f.id]; FOCUS=f; applyView(true); }
+  function go(f,ok){
+    if(!f) return;
+    if(!ok&&FOCUS&&FOCUS.kind==='sec'&&!sameF(f,FOCUS)&&stepIdx(f)>stepIdx(FOCUS)){ askMove(f); return; }
+    if(f.kind==='sec') delete PH[f.id]; FOCUS=f; applyView(true);
+  }
+  function askMove(f){ // moving forward: ask first, and say what is still undone here
+    const sid=FOCUS.id, s=S_(sid), todo=[];
+    if(!s.fcd) todo.push('Memorize'); if(!s.pr) todo.push('Practice'); if(EXAM[sid]&&EXAM[sid].length&&!s.ex) todo.push('Exam'); if(!s.learned) todo.push('Quiz');
+    const m=document.getElementById('smsg'); if(!m) return go(f,true);
+    m.className='smsg ask'; m.hidden=false;
+    m.innerHTML='<span>Do you feel ready to move on to <b>'+stepName(f)+'</b>?'+(todo.length?' Not done in §'+sid.slice(1)+': '+todo.join(', ')+'.':' You finished every step here ✓')+'</span><span class="ask-b"><button type="button" class="btn primary ask-y">Yes, move on</button><button type="button" class="btn ask-n">Not yet</button></span>';
+    m.querySelector('.ask-y').onclick=()=>{ m.className='smsg'; go(f,true); };
+    m.querySelector('.ask-n').onclick=()=>{ m.className='smsg'; say(''); renderNav(); };
+    renderNav();
+  }
   function advance(){ go(computeNext()); }
-  function say(msg){ const m=document.getElementById('smsg'); if(!m) return; m.textContent=msg; m.hidden=!msg; }
+  function say(msg){ const m=document.getElementById('smsg'); if(!m) return; m.className='smsg'; m.textContent=msg; m.hidden=!msg; }
   function renderNav(){
     const sel=document.getElementById('sstep'); if(!sel||!FOCUS) return;
     const i=stepIdx(FOCUS);
