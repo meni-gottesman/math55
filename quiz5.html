@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 55 quiz notes: probability (Lectures 18–19) plus a counting refresher.">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3EP%3C/text%3E%3C/svg%3E">
+<title>Probability Quiz Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 48px)}
+header h1{font-size:1.6rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 8px;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.toc::-webkit-scrollbar{display:none}
+nav.toc a{flex:none;font-size:.82rem;font-weight:600;color:var(--ink);text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:6px 12px}
+section{margin-top:28px}
+h2{font-size:1.2rem;line-height:1.3;margin:0 0 10px;display:flex;gap:8px;align-items:baseline}
+h2 .n{color:var(--accent);font-variant-numeric:tabular-nums}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.25em}
+li{margin:4px 0}
+.f{font-family:"STIX Two Text","Cambria Math",Georgia,serif;font-size:1.05em}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:"STIX Two Text","Cambria Math",Georgia,serif;font-size:1.08rem;line-height:1.5;overflow-x:auto}
+.ex,.warn{border-radius:12px;padding:12px 14px;margin:10px 0;border-left:4px solid}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.ex b.t,.warn b.t{display:block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.ex b.t{color:var(--ex)} .warn b.t{color:var(--warn)}
+.ex p,.warn p{margin:4px 0}
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.92rem;margin-top:16px}
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.8rem;color:var(--muted);font-weight:600}
+td:first-child{font-weight:600}
+footer{margin-top:36px;color:var(--muted);font-size:.85rem}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Probability quiz notes</h1>
+  <p>Math 55 · Lectures 18–19, plus a counting refresher from Lectures 14–16</p>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#basics">Basics</a><a href="#cond">Conditional</a><a href="#total">Total prob.</a><a href="#bayes">Bayes</a><a href="#indep">Independence</a><a href="#bern">Bernoulli</a><a href="#classic">Classics</a><a href="#count">Counting</a><a href="#traps">Traps</a>
+</nav>
+
+<section id="basics">
+  <h2><span class="n">1</span>Probability basics</h2>
+  <ul>
+    <li><b>Sample space S</b>: every possible outcome. <b>Event E</b>: a set of outcomes, E ⊆ S.</li>
+    <li><b>Distribution</b>: each outcome s gets p(s) ≥ 0, and they all add to 1.</li>
+  </ul>
+  <div class="key">p(E) = sum of p(s) over s in E</div>
+  <ul>
+    <li><b>Uniform</b> (all n outcomes equally likely): <span class="f">p(E) = |E| / |S|</span>. Probability is counting with a denominator.</li>
+    <li>Not every die is fair. A die with p(6) = ½ and every other face 1/10 has p(even) = 1/10 + 1/10 + 1/2 = <b>7/10</b>.</li>
+  </ul>
+  <div class="key">p(not E) = 1 − p(E)<br>p(E ∪ F) = p(E) + p(F) − p(E ∩ F)</div>
+  <p><b>Union bound</b>: <span class="f">p(E₁ ∪ … ∪ Eₙ) ≤ p(E₁) + … + p(Eₙ)</span>. Always true, even when the events overlap.</p>
+</section>
+
+<section id="cond">
+  <h2><span class="n">2</span>Conditional probability</h2>
+  <div class="key">p(E | F) = p(E ∩ F) / p(F)</div>
+  <p>Read it as “E given F.” Knowing F happened shrinks the world down to F.</p>
+  <div class="ex"><b class="t">Example</b>
+    <p>Flip two fair coins. p(both heads | at least one head)?</p>
+    <p>F = {HH, HT, TH} and E ∩ F = {HH}, so the answer is <b>1/3</b>, not 1/2.</p>
+  </div>
+  <p>Rearranged: <span class="f">p(E ∩ F) = p(E | F) · p(F)</span>.</p>
+</section>
+
+<section id="total">
+  <h2><span class="n">3</span>Law of total probability</h2>
+  <p>Split S into disjoint cases F₁, …, Fₙ that cover everything:</p>
+  <div class="key">p(E) = p(E | F₁)p(F₁) + … + p(E | Fₙ)p(Fₙ)</div>
+  <p>Two cases: <span class="f">p(E) = p(E | F)p(F) + p(E | not F)p(not F)</span>.</p>
+  <div class="ex"><b class="t">Example · the survey trick</b>
+    <p>Flip a coin. Heads means answer “yes”; tails means answer honestly. 60% say yes.</p>
+    <p>0.6 = 1·½ + x·½, so x = p(yes | honest) = <b>20%</b>.</p>
+  </div>
+</section>
+
+<section id="bayes">
+  <h2><span class="n">4</span>Bayes’ theorem</h2>
+  <p>Flips a conditional around:</p>
+  <div class="key">p(F | E) = p(E | F)p(F) / [ p(E | F)p(F) + p(E | not F)p(not F) ]</div>
+  <p>The bottom is just p(E), by the law of total probability.</p>
+  <div class="ex"><b class="t">Example · disease test</b>
+    <p>1% of people are sick. The test catches 90% of sick people and wrongly flags 10% of healthy people.</p>
+    <p>p(sick | positive) = (0.9·0.01) / (0.9·0.01 + 0.1·0.99) = 0.009 / 0.108 ≈ <b>8.3%</b>.</p>
+    <p>Check with 1000 people: 10 are sick and 9 of them test positive; 990 are healthy and 99 of them test positive. So 9 of the 108 positives are actually sick.</p>
+  </div>
+  <div class="warn"><b class="t">Trap</b><p>p(A | B) ≠ p(B | A). A rare condition stays fairly unlikely even after a positive test.</p></div>
+</section>
+
+<section id="indep">
+  <h2><span class="n">5</span>Independence</h2>
+  <div class="key">E, F independent ⇔ p(E ∩ F) = p(E) · p(F)</div>
+  <p>If p(F) &gt; 0, that’s the same as p(E | F) = p(E): knowing F doesn’t change E.</p>
+  <div class="ex"><b class="t">Example</b>
+    <p>A random 4-bit string. E = first bit is 1; F = even number of 1s.</p>
+    <p>p(E) = ½, p(F) = ½, and p(E ∩ F) = 4/16 = ¼ = ½ · ½, so they’re <b>independent</b>.</p>
+  </div>
+  <p><b>Pairwise vs mutual</b></p>
+  <ul>
+    <li><b>Pairwise</b> independent: every pair satisfies the product rule.</li>
+    <li><b>Mutually</b> independent: the product rule holds for every group of the events, including all of them at once.</li>
+    <li>Pairwise does <b>not</b> imply mutual.</li>
+  </ul>
+  <div class="ex"><b class="t">Example · from lecture</b>
+    <p>Three people each pick a number from 1 to 100. A = Alice &amp; Bob match, B = Alice &amp; Charlotte match, C = Bob &amp; Charlotte match.</p>
+    <p>Each event has probability 1/100, and each pair together has 1/100², so they’re pairwise independent.</p>
+    <p>But A and B together force C, so p(A ∩ B ∩ C) = 1/100² ≠ 1/100³. They’re not mutually independent.</p>
+  </div>
+</section>
+
+<section id="bern">
+  <h2><span class="n">6</span>Bernoulli trials</h2>
+  <p>n independent tries, each succeeding with probability p:</p>
+  <div class="key">p(exactly k successes) = C(n, k) · pᵏ · (1 − p)ⁿ⁻ᵏ</div>
+  <ul>
+    <li>C(n, k) picks which tries succeed.</li>
+    <li>pᵏ(1 − p)ⁿ⁻ᵏ is the probability of one particular pattern.</li>
+  </ul>
+  <div class="ex"><b class="t">Example</b>
+    <p>A coin with p(H) = ¼ is flipped 4 times.</p>
+    <p>p(exactly 2 heads) = C(4, 2)(¼)²(¾)² = 6 · 1/16 · 9/16 = <b>27/128</b>.</p>
+    <p>p(at least one head) = 1 − (¾)⁴ = <b>175/256</b>. Use the complement.</p>
+  </div>
+</section>
+
+<section id="classic">
+  <h2><span class="n">7</span>Classics from lecture</h2>
+  <p><b>Monty Hall</b>: switching wins with probability <b>2/3</b>.</p>
+  <p class="f">p(win) = p(win | first pick a goat)·⅔ + p(win | first pick the car)·⅓ = 1·⅔ + 0</p>
+  <p><b>Birthday problem</b>: p(some two of n people share a birthday)</p>
+  <div class="key">1 − (365 · 364 ⋯ (365 − n + 1)) / 365ⁿ</div>
+  <p>For n = 23 that’s about <b>50.7%</b>. Rule of thumb: about C(n, 2)/d when picking n items from d possibilities, by the union bound over pairs.</p>
+  <p><b>The probabilistic method</b>: to show something exists, build it at random and show the chance it works is above 0. Usually you do this with the union bound.</p>
+  <div class="ex"><b class="t">Example · from lecture</b>
+    <p>10 clubs with 5 people each. Put every student on red or blue at random.</p>
+    <p>One club is all one color with probability 2/2⁵ = 1/16. By the union bound, p(some club is one color) ≤ 10/16 &lt; 1.</p>
+    <p>So some assignment has no club all one color.</p>
+  </div>
+</section>
+
+<section id="count">
+  <h2><span class="n">8</span>Counting refresher</h2>
+  <div class="tbl"><table>
+    <tr><th></th><th>Order matters</th><th>Order doesn’t matter</th></tr>
+    <tr><td>No repetition</td><td class="f">P(n, r) = n!/(n − r)!</td><td class="f">C(n, r)</td></tr>
+    <tr><td>Repetition allowed</td><td class="f">nʳ</td><td class="f">C(n + r − 1, r) (stars and bars)</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Repeated letters</b>: n!/(n₁! n₂! ⋯), e.g. LETTER = 6!/(2!·2!).</li>
+    <li><b>Product rule</b>: multiply the counts for successive steps.</li>
+    <li><b>Sum rule</b>: add the counts for disjoint cases.</li>
+    <li><b>Inclusion–exclusion</b>: |A ∪ B| = |A| + |B| − |A ∩ B|.</li>
+    <li><b>Division rule</b>: if every outcome is counted d times, divide by d.</li>
+    <li><b>Pigeonhole</b>: k + 1 objects in k boxes means some box gets 2. Say what the pigeons and the boxes are.</li>
+    <li><b>Binomial theorem</b>: (x + y)ⁿ = Σ C(n, k) xⁿ⁻ᵏ yᵏ.</li>
+    <li><b>Combinatorial proof</b>: count the same collection two ways.</li>
+  </ul>
+</section>
+
+<section id="traps">
+  <h2><span class="n">9</span>Quick traps</h2>
+  <ol>
+    <li>Conditioning shrinks the denominator to p(F), not |S|.</li>
+    <li>Disjoint events (each with positive probability) are <b>not</b> independent: if one happens, the other can’t.</li>
+    <li>“At least one” → use the complement.</li>
+    <li>Don’t assume independence unless the problem gives it or you check the product rule.</li>
+    <li>Leave answers as C(…), powers or fractions unless told otherwise.</li>
+  </ol>
+  <div class="note">Quizzes are closed notes. Expected value and variance come in the next lecture, so they shouldn’t be on this quiz.</div>
+</section>
+
+<footer><a href="./">← Full Math 55 study guide</a></footer>
+</div>
+</body>
+</html>
