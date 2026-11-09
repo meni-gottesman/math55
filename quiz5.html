@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Math 55 quiz notes: probability (Lectures 18–19) plus a counting refresher.">
+<meta name="description" content="Math 55 quiz notes from scratch: counting (Lectures 14–16) and probability (Lectures 16, 18, 19).">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3EP%3C/text%3E%3C/svg%3E">
-<title>Probability Quiz Notes</title>
+<title>Counting &amp; Probability Notes</title>
 <style>
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
@@ -42,21 +42,25 @@ header p{margin:0;color:var(--muted);font-size:.95rem}
 nav.toc{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 8px;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 nav.toc::-webkit-scrollbar{display:none}
 nav.toc a{flex:none;font-size:.82rem;font-weight:600;color:var(--ink);text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:6px 12px}
+nav.toc a.part{background:var(--accent-bg);border-color:transparent;color:var(--accent)}
+.part-h{margin:40px 0 0;padding-top:4px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
 section{margin-top:28px}
 h2{font-size:1.2rem;line-height:1.3;margin:0 0 10px;display:flex;gap:8px;align-items:baseline}
 h2 .n{color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:1rem;margin:16px 0 4px}
 p{margin:8px 0}
 ul,ol{margin:8px 0;padding-left:1.25em}
 li{margin:4px 0}
 .f{font-family:"STIX Two Text","Cambria Math",Georgia,serif;font-size:1.05em}
 .key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:"STIX Two Text","Cambria Math",Georgia,serif;font-size:1.08rem;line-height:1.5;overflow-x:auto}
-.ex,.warn{border-radius:12px;padding:12px 14px;margin:10px 0;border-left:4px solid}
+.ex,.warn,.idea{border-radius:12px;padding:12px 14px;margin:10px 0;border-left:4px solid}
 .ex{background:var(--ex-bg);border-color:var(--ex)}
 .warn{background:var(--warn-bg);border-color:var(--warn)}
-.ex b.t,.warn b.t{display:block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
-.ex b.t{color:var(--ex)} .warn b.t{color:var(--warn)}
-.ex p,.warn p{margin:4px 0}
-.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.92rem;margin-top:16px}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex b.t,.warn b.t,.idea b.t{display:block;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.ex b.t{color:var(--ex)} .warn b.t{color:var(--warn)} .idea b.t{color:var(--accent)}
+.ex p,.warn p,.idea p{margin:4px 0}
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.92rem;margin-top:12px}
 .tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
 table{border-collapse:collapse;width:100%;min-width:420px;font-size:.92rem}
 th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -70,144 +74,349 @@ a{color:var(--accent)}
 <body>
 <div class="wrap">
 <header>
-  <h1>Probability quiz notes</h1>
-  <p>Math 55 · Lectures 18–19, plus a counting refresher from Lectures 14–16</p>
+  <h1>Counting &amp; probability, from scratch</h1>
+  <p>Math 55 quiz notes · Lectures 14, 15, 16, 18, 19</p>
 </header>
 
+<div class="note">The quiz’s coverage wasn’t announced. Every quiz so far has covered the lectures since the previous quiz (Quiz 3 covered Lectures 7, 8, 10, 11), so this one should be Lectures 14–16 (counting) and 18–19 (probability). Lecture 17 was the midterm review.</div>
+
 <nav class="toc" aria-label="Sections">
-  <a href="#basics">Basics</a><a href="#cond">Conditional</a><a href="#total">Total prob.</a><a href="#bayes">Bayes</a><a href="#indep">Independence</a><a href="#bern">Bernoulli</a><a href="#classic">Classics</a><a href="#count">Counting</a><a href="#traps">Traps</a>
+  <a class="part" href="#partA">Counting</a><a href="#prod">Product</a><a href="#sum">Sum</a><a href="#div">Division</a><a href="#ie">Incl–excl</a><a href="#comp">Complement</a><a href="#pc">P &amp; C</a><a href="#php">Pigeonhole</a><a href="#sb">Stars &amp; bars</a><a href="#rep">Repeats</a><a href="#cp">Comb. proofs</a><a href="#bin">Binomial</a>
+  <a class="part" href="#partB">Probability</a><a href="#basic">Basics</a><a href="#poker">Poker</a><a href="#cu">Compl. &amp; union</a><a href="#cond">Conditional</a><a href="#total">Total prob.</a><a href="#indep">Independence</a><a href="#bern">Bernoulli</a><a href="#bday">Birthdays</a><a href="#pm">Prob. method</a><a href="#bayes">Bayes</a><a class="part" href="#sheet">Formula sheet</a>
 </nav>
 
-<section id="basics">
-  <h2><span class="n">1</span>Probability basics</h2>
+<!-- ======================= COUNTING ======================= -->
+<div class="part-h" id="partA">Part 1 · Counting (Lectures 14–16)</div>
+
+<section id="prod">
+  <h2><span class="n">1</span>Product rule</h2>
+  <div class="idea"><b class="t">Idea</b><p>If you make a choice in steps, multiply the number of options at each step.</p></div>
+  <div class="key">Step 1 has n₁ ways, and for each of those, step 2 has n₂ ways ⟹ n₁·n₂ ways total.<br>k steps ⟹ n₁·n₂ ⋯ nₖ</div>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>Time slots</b> Mon–Fri at 1, 2, 3 or 4 pm: 5 days · 4 times = <b>20</b>.</p>
+    <p><b>License plate</b> digit, 3 letters, 3 digits: 10·26·26·26·10·10·10 = <b>175,760,000</b>.</p>
+    <p><b>3 people, 12 offices, all different:</b> 12·11·10. Each person has one fewer choice.</p>
+    <p><b>Strings of all 26 letters, none repeated:</b> 26·25⋯1 = <b>26!</b></p>
+    <p><b>Subsets of an n-element set:</b> each element is in or out, 2 choices each ⟹ <b>2ⁿ</b>.</p>
+    <p><b>One-to-one functions</b> from a set of size n to a set of size m (m ≥ n): m(m − 1)(m − 2)⋯(m − n + 1). Each new value must differ from the earlier ones.</p>
+  </div>
+</section>
+
+<section id="sum">
+  <h2><span class="n">2</span>Sum rule</h2>
+  <div class="idea"><b class="t">Idea</b><p>If the possibilities split into cases that <b>don’t overlap</b>, add the counts.</p></div>
+  <div class="key">|A ∪ B| = |A| + |B| when A and B are disjoint</div>
+  <div class="ex"><b class="t">Example</b><p>A password is 6 or 8 digits long. Count: 10⁶ + 10⁸. No password has both lengths, so the cases don’t overlap.</p></div>
+  <div class="warn"><b class="t">Trap</b><p>If the cases <b>do</b> overlap, plain adding counts the overlap twice. Use inclusion–exclusion (§4).</p></div>
+</section>
+
+<section id="div">
+  <h2><span class="n">3</span>Division rule (overcounting)</h2>
+  <div class="idea"><b class="t">Idea</b><p>Sometimes your method produces each outcome several times. If every outcome comes up exactly d times, divide by d.</p></div>
+  <div class="key">answer = (ways the procedure can run) / d</div>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>2-element subsets of {1,…,9}:</b> pick x (9 ways), then y (8 ways) = 72. But {x, y} and {y, x} are the same subset, so each is counted twice: 72/2 = <b>36</b>.</p>
+    <p><b>7-element subsets of {1,…,9}:</b> picking in order gives 9·8·7·6·5·4·3. Each subset appears in 7! orders, so divide by 7! ⟹ <b>36</b>.</p>
+    <p><b>8 people around a round table</b> (same arrangement if everyone has the same neighbors): 8! seatings, but each arrangement appears in 8 rotations ⟹ 8!/8 = <b>7! = 5040</b>.</p>
+  </div>
+</section>
+
+<section id="ie">
+  <h2><span class="n">4</span>Inclusion–exclusion (two sets)</h2>
+  <div class="idea"><b class="t">Idea</b><p>For “A <b>or</b> B”: adding |A| + |B| counts the things in both twice, so subtract them once.</p></div>
+  <div class="key">|A ∪ B| = |A| + |B| − |A ∩ B|</div>
+  <p>|A| means the number of elements of A.</p>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>4-bit strings that start with 1 or end with 0:</b> start with 1 = 2³ = 8; end with 0 = 2³ = 8; both = 2² = 4. Total 8 + 8 − 4 = <b>12</b>.</p>
+    <p><b>Integers 1–100 divisible by 2 or 3:</b> 50 + 33 − 16 = <b>67</b>. “Divisible by 2 and 3” means divisible by 6, and there are ⌊100/6⌋ = 16 of those.</p>
+    <p><b>8-character passwords</b> from 10 digits, 26 letters and 10 special characters (46 symbols) with no special character <b>or</b> no digit: 36⁸ + 36⁸ − 26⁸ (the overlap has only letters).</p>
+  </div>
+</section>
+
+<section id="comp">
+  <h2><span class="n">5</span>Counting the complement</h2>
+  <div class="idea"><b class="t">Idea</b><p>When “has the property” is messy (especially <b>at least one</b>), count what <b>doesn’t</b> have it and subtract from the total.</p></div>
+  <div class="key">#(with property) = #(total) − #(without property)</div>
+  <div class="ex"><b class="t">Example from lecture</b><p>Length-10 strings of uppercase letters containing at least one A: 26¹⁰ total, 25¹⁰ with no A ⟹ <b>26¹⁰ − 25¹⁰</b>.</p></div>
+</section>
+
+<section id="pc">
+  <h2><span class="n">6</span>Permutations and combinations</h2>
   <ul>
-    <li><b>Sample space S</b>: every possible outcome. <b>Event E</b>: a set of outcomes, E ⊆ S.</li>
-    <li><b>Distribution</b>: each outcome s gets p(s) ≥ 0, and they all add to 1.</li>
+    <li>A <b>permutation</b> is an <b>ordered</b> arrangement of all the objects. An <b>r-permutation</b> is an ordered arrangement of r of them.</li>
+    <li>An <b>r-combination</b> is an <b>unordered</b> choice of r objects, i.e. a subset of size r.</li>
   </ul>
-  <div class="key">p(E) = sum of p(s) over s in E</div>
+  <div class="key">n objects have n! permutations<br>P(n, r) = n!/(n − r)! = n(n − 1)⋯(n − r + 1)<br>C(n, r) = (n choose r) = n!/(r!(n − r)!)</div>
+  <p><b>Why C(n, r) = P(n, r)/r!:</b> picking r things in order gives P(n, r). Each set of r things appears in r! orders, so by the division rule divide by r!.</p>
+  <p><b>Convention:</b> 0! = 1, so C(n, 0) = C(n, n) = 1.</p>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>Deal one card each to 4 named players:</b> order matters (who gets which) ⟹ P(52, 4) = 52·51·50·49.</p>
+    <p><b>5-card hands:</b> order doesn’t matter ⟹ C(52, 5) = <b>2,598,960</b>.</p>
+  </div>
+  <div class="warn"><b class="t">How to decide</b><p>Ask: if I swap two chosen items, is it a different outcome? Yes ⟹ order matters (P). No ⟹ it doesn’t (C).</p></div>
+</section>
+
+<section id="php">
+  <h2><span class="n">7</span>Pigeonhole principle</h2>
+  <div class="key">If k + 1 or more objects go into k boxes, some box gets at least 2.</div>
+  <p><b>Why:</b> if every box held at most 1, there would be at most k objects. That’s a contradiction.</p>
+  <h3>How to write a pigeonhole proof</h3>
+  <ol>
+    <li>Say what the <b>pigeons</b> (objects) are and how many.</li>
+    <li>Say what the <b>holes</b> (boxes) are, and that there are fewer of them.</li>
+    <li>Say the rule that puts each pigeon in a hole.</li>
+    <li>Conclude two pigeons share a hole, then say what that means for the problem.</li>
+  </ol>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>Any 27 English words:</b> two start with the same letter. Pigeons = 27 words, holes = 26 starting letters.</p>
+    <p><b>f : A → B with |A| &gt; |B| is not one-to-one.</b> Pigeons = elements of A, holes = elements of B, and a goes in hole f(a). Two elements land in the same hole, so f(a₁) = f(a₂) with a₁ ≠ a₂.</p>
+    <p><b>Any n + 1 numbers from {1,…,2n}: one divides another.</b> Write each as 2ᵏ · (odd number) and put it in the hole for its odd part. There are only n odd numbers in 1…2n, so two chosen numbers share an odd part b: 2ⁱb and 2ʲb. The smaller divides the larger.</p>
+    <p><b>Every n has a positive multiple written with only 0s and 1s.</b> Take 1, 11, 111, …, (n + 1 ones). Their remainders mod n give n + 1 pigeons in n holes, so two have the same remainder. Their difference (bigger minus smaller) is divisible by n and looks like 11…100…0.</p>
+    <p><b>No compression algorithm shrinks every n-bit file.</b> There are 2ⁿ files of length n, but only 2⁰ + 2¹ + ⋯ + 2ⁿ⁻¹ = 2ⁿ − 1 shorter files. So two files compress to the same thing, and the compression can’t be undone.</p>
+  </div>
+</section>
+
+<section id="sb">
+  <h2><span class="n">8</span>Stars and bars (choosing with repetition)</h2>
+  <div class="idea"><b class="t">Idea</b><p>Choosing r <b>identical</b> things from n <b>types</b> is the same as arranging r stars and n − 1 bars in a row. The bars split the stars into n groups.</p></div>
+  <div class="key">ways = C(r + n − 1, r) = C(r + n − 1, n − 1)</div>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>8 bills from 4 types</b> ($1, $5, $10, $20; same-type bills identical): 8 stars + 3 bars = 11 symbols, choose where the 8 stars go ⟹ C(11, 8) = C(11, 3) = <b>165</b>.</p>
+    <p>For example, ★★|★★★★||★★ means two $1s, four $5s, no $10s and two $20s.</p>
+    <p><b>Solutions of x₁ + x₂ + x₃ = 17 with every xᵢ ≥ 0:</b> 17 stars, 2 bars ⟹ C(19, 2) = <b>171</b>.</p>
+    <p><b>y₁ + y₂ + y₃ = 14 with every yᵢ ≥ 1:</b> set zᵢ = yᵢ − 1 ≥ 0. Then z₁ + z₂ + z₃ = 11 ⟹ C(13, 2) = <b>78</b>.</p>
+  </div>
+  <div class="warn"><b class="t">Lower bounds</b><p>If xᵢ ≥ c, give xᵢ its c up front: subtract c from the total, then use stars and bars on what’s left.</p></div>
+  <h3>Which formula? (choosing r from n)</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Order matters</th><th>Order doesn’t matter</th></tr>
+    <tr><td>No repetition</td><td class="f">P(n, r) = n!/(n − r)!</td><td class="f">C(n, r)</td></tr>
+    <tr><td>Repetition allowed</td><td class="f">nʳ</td><td class="f">C(n + r − 1, r)</td></tr>
+  </table></div>
+</section>
+
+<section id="rep">
+  <h2><span class="n">9</span>Arrangements with repeated letters</h2>
+  <div class="idea"><b class="t">Idea</b><p>Arrange as if every letter were different (n!), then divide out the swaps of identical letters, which don’t change the word.</p></div>
+  <div class="key">n objects with n₁ of type 1, …, nₖ of type k ⟹ n! / (n₁! n₂! ⋯ nₖ!)</div>
+  <div class="ex"><b class="t">Example from lecture</b><p><b>SENSELESSNESS</b>: 13 letters with 6 S, 4 E, 2 N, 1 L ⟹ 13!/(6!·4!·2!·1!) = <b>180,180</b>.</p></div>
+</section>
+
+<section id="cp">
+  <h2><span class="n">10</span>Combinatorial (bijective) proofs</h2>
+  <div class="idea"><b class="t">Idea</b><p>To prove two expressions are equal, show they <b>count the same collection</b> in two different ways.</p></div>
+  <h3>Template</h3>
+  <ol>
+    <li>Name a specific collection, e.g. “committees of size k from n people”.</li>
+    <li>Count 1: explain why the count is the left side.</li>
+    <li>Count 2: explain why the count is the right side.</li>
+    <li>Same collection, so the two sides are equal.</li>
+  </ol>
+  <div class="ex"><b class="t">The identities from lecture</b>
+    <p><b>C(n, r) = C(n, n − r):</b> choosing the r you take is the same as choosing the n − r you leave out.</p>
+    <p><b>Committee–chair: k·C(n, k) = n·C(n − 1, k − 1).</b> Count committees of k people with one chair. Way 1: pick the committee (C(n, k)), then the chair from it (k). Way 2: pick the chair first (n), then the other k − 1 members from the remaining n − 1.</p>
+    <p><b>Pascal’s identity: C(n + 1, k) = C(n, k − 1) + C(n, k).</b> Choose k people from n + 1, one of whom is Alice. Either Alice is chosen (pick k − 1 more from the other n) or she isn’t (pick all k from the other n).</p>
+    <p><b>C(n, 0) + C(n, 1) + ⋯ + C(n, n) = 2ⁿ.</b> Both sides count all subsets of an n-element set: by size on the left, by in/out for each element on the right.</p>
+  </div>
+  <p>Pascal’s identity builds <b>Pascal’s triangle</b>: each inside number is the sum of the two above it. Row n lists C(n, 0), …, C(n, n): 1 · 1 1 · 1 2 1 · 1 3 3 1 · 1 4 6 4 1 · …</p>
+  <p><b>A consequence used for Fermat:</b> if p is prime and 0 &lt; k &lt; p, then p divides C(p, k). From the committee–chair identity, p·C(p − 1, k − 1) = k·C(p, k). So p divides k·C(p, k), but p doesn’t divide k.</p>
+</section>
+
+<section id="bin">
+  <h2><span class="n">11</span>Binomial theorem</h2>
+  <div class="key">(x + y)ⁿ = Σ<sub>j=0</sub><sup>n</sup> C(n, j) xⁿ⁻ʲ yʲ</div>
+  <p><b>Why:</b> (x + y)ⁿ = (x + y)(x + y)⋯(x + y). Each term comes from picking x or y from every factor. You get xⁿ⁻ʲyʲ exactly when y is picked from j of the n factors, and there are C(n, j) ways to choose which.</p>
+  <div class="ex"><b class="t">Example · finding a coefficient</b>
+    <p>Coefficient of x³y² in (2x − y)⁵. Treat it as (A + B)⁵ with A = 2x, B = −y.</p>
+    <p>You need B² (for y²), which goes with A³: C(5, 2)·(2x)³·(−y)² = 10·8·1·x³y² ⟹ <b>80</b>.</p>
+  </div>
+  <div class="warn"><b class="t">Trap</b><p>Raise the <b>whole</b> term to the power, including its number and sign: (2x)³ = 8x³ and (−y)² = +y².</p></div>
+  <p>Setting x = y = 1 gives 2ⁿ = Σ C(n, j), the identity from §10 again.</p>
+</section>
+
+<!-- ======================= PROBABILITY ======================= -->
+<div class="part-h" id="partB">Part 2 · Probability (Lectures 16, 18, 19)</div>
+
+<section id="basic">
+  <h2><span class="n">12</span>The basic setup</h2>
   <ul>
-    <li><b>Uniform</b> (all n outcomes equally likely): <span class="f">p(E) = |E| / |S|</span>. Probability is counting with a denominator.</li>
-    <li>Not every die is fair. A die with p(6) = ½ and every other face 1/10 has p(even) = 1/10 + 1/10 + 1/2 = <b>7/10</b>.</li>
+    <li><b>Experiment:</b> something with a random result, like flipping two coins.</li>
+    <li><b>Sample space S:</b> the set of all possible outcomes, like {HH, HT, TH, TT}.</li>
+    <li><b>Event E:</b> any subset of S, like “both the same” = {HH, TT}.</li>
   </ul>
+  <h3>Equally likely outcomes (Lecture 16)</h3>
+  <div class="key">p(E) = |E| / |S|</div>
+  <p>Probability is “counting with a denominator”: count the outcomes you want, divide by all outcomes.</p>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>Two dice, sum is 7:</b> 6 of the 36 outcomes ((1,6), (2,5), …, (6,1)) ⟹ 6/36 = <b>1/6</b>.</p>
+    <p><b>Random number 1–1000 divisible by 5:</b> 200/1000 = <b>1/5</b>.</p>
+  </div>
+  <h3>General distributions (Lecture 18)</h3>
+  <p>Outcomes don’t have to be equally likely. A <b>probability distribution</b> gives each outcome s a number p(s) with 0 ≤ p(s) ≤ 1 and all of them adding to 1. Then:</p>
+  <div class="key">p(E) = sum of p(s) over all s in E</div>
+  <p>The <b>uniform distribution</b> on n outcomes is p(s) = 1/n for each, which gives back |E|/|S|.</p>
+  <div class="ex"><b class="t">Example · a loaded die</b><p>Say p(6) = 1/2 and the other five faces have 1/10 each, so the total is 1. Then p(even) = p(2) + p(4) + p(6) = 1/10 + 1/10 + 1/2 = <b>7/10</b>.</p></div>
+</section>
+
+<section id="poker">
+  <h2><span class="n">13</span>Poker hands (counting → probability)</h2>
+  <p>All C(52, 5) = 2,598,960 hands are equally likely. Build the hand <b>step by step</b> and multiply.</p>
+  <div class="ex"><b class="t">From lecture</b>
+    <p><b>All 5 the same suit:</b> pick the suit (4), then 5 of its 13 cards (C(13, 5)) ⟹ p = 4·C(13, 5) / C(52, 5).</p>
+    <p><b>Full house</b> (3 of one rank, 2 of another): rank for the triple (13), rank for the pair (12), which 3 suits (C(4, 3)), which 2 suits (C(4, 2)) ⟹ 13·12·C(4, 3)·C(4, 2) = 3744 hands.</p>
+    <p><b>Two pair:</b> choose the 2 ranks together, C(13, 2) (not 13·12, since the two pairs are interchangeable), then 2 suits each (C(4, 2)²), then the fifth card from the other 44 ⟹ C(13, 2)·C(4, 2)²·44.</p>
+  </div>
+  <div class="warn"><b class="t">Trap</b><p>13·12 is right when the two ranks play <b>different roles</b> (the triple vs the pair in a full house). When the roles are the same (two pairs), use C(13, 2) or you count each hand twice.</p></div>
+</section>
+
+<section id="cu">
+  <h2><span class="n">14</span>Complements, unions and the union bound</h2>
   <div class="key">p(not E) = 1 − p(E)<br>p(E ∪ F) = p(E) + p(F) − p(E ∩ F)</div>
-  <p><b>Union bound</b>: <span class="f">p(E₁ ∪ … ∪ Eₙ) ≤ p(E₁) + … + p(Eₙ)</span>. Always true, even when the events overlap.</p>
+  <p>These are the complement and inclusion–exclusion rules with a denominator. They hold for any distribution.</p>
+  <div class="ex"><b class="t">Examples from lecture</b>
+    <p><b>5 coins, at least one head:</b> only “all tails” fails, which is 1 of the 2⁵ outcomes ⟹ 1 − 1/32 = <b>31/32</b>.</p>
+    <p><b>5-card hand with at least two cards of the same rank:</b> the complement is 5 different ranks (C(13, 5)), each in any suit (4⁵) ⟹ 1 − C(13, 5)·4⁵ / C(52, 5) ≈ 0.49.</p>
+    <p><b>1–100, divisible by 2 or 5:</b> (50 + 20 − 10)/100 = <b>3/5</b>.</p>
+    <p><b>40% rain, 30% snow, 10% both:</b> p(rain or snow) = 40 + 30 − 10 = <b>60%</b>.</p>
+  </div>
+  <h3>Union bound</h3>
+  <div class="key">p(E₁ ∪ E₂ ∪ ⋯ ∪ Eₙ) ≤ p(E₁) + p(E₂) + ⋯ + p(Eₙ)</div>
+  <p>Always true, because you can only over-count the overlaps. It’s useful when the exact union is hard to compute (see §20).</p>
 </section>
 
 <section id="cond">
-  <h2><span class="n">2</span>Conditional probability</h2>
-  <div class="key">p(E | F) = p(E ∩ F) / p(F)</div>
-  <p>Read it as “E given F.” Knowing F happened shrinks the world down to F.</p>
-  <div class="ex"><b class="t">Example</b>
-    <p>Flip two fair coins. p(both heads | at least one head)?</p>
-    <p>F = {HH, HT, TH} and E ∩ F = {HH}, so the answer is <b>1/3</b>, not 1/2.</p>
+  <h2><span class="n">15</span>Conditional probability</h2>
+  <div class="key">p(E | F) = p(E ∩ F) / p(F) &nbsp; (needs p(F) &gt; 0)</div>
+  <p>Read it as “the probability of E <b>given</b> F happened.” Once you know F happened, F becomes the whole world, and you ask what fraction of it is also E.</p>
+  <div class="ex"><b class="t">Examples from lecture (two fair coins)</b>
+    <p><b>p(second is H | first is H):</b> F = {HH, HT}, E ∩ F = {HH} ⟹ (1/4)/(1/2) = <b>1/2</b>.</p>
+    <p><b>p(both H | at least one H):</b> F = {HH, HT, TH}, E ∩ F = {HH} ⟹ (1/4)/(3/4) = <b>1/3</b>.</p>
   </div>
-  <p>Rearranged: <span class="f">p(E ∩ F) = p(E | F) · p(F)</span>.</p>
+  <div class="warn"><b class="t">Trap</b><p>The two questions sound alike but have different answers, because they condition on different F.</p></div>
+  <p><b>Multiplication rule</b> (the same formula, rearranged): <span class="f">p(E ∩ F) = p(E | F) · p(F)</span>.</p>
 </section>
 
 <section id="total">
-  <h2><span class="n">3</span>Law of total probability</h2>
-  <p>Split S into disjoint cases F₁, …, Fₙ that cover everything:</p>
-  <div class="key">p(E) = p(E | F₁)p(F₁) + … + p(E | Fₙ)p(Fₙ)</div>
-  <p>Two cases: <span class="f">p(E) = p(E | F)p(F) + p(E | not F)p(not F)</span>.</p>
-  <div class="ex"><b class="t">Example · the survey trick</b>
-    <p>Flip a coin. Heads means answer “yes”; tails means answer honestly. 60% say yes.</p>
-    <p>0.6 = 1·½ + x·½, so x = p(yes | honest) = <b>20%</b>.</p>
+  <h2><span class="n">16</span>Law of total probability</h2>
+  <div class="idea"><b class="t">Idea</b><p>Split into cases, work out E inside each case, and weight each case by how likely it is.</p></div>
+  <div class="key">If F₁, …, Fₙ are disjoint and cover S (with each p(Fᵢ) &gt; 0):<br>p(E) = p(E | F₁)p(F₁) + ⋯ + p(E | Fₙ)p(Fₙ)</div>
+  <p>The common two-case form: <span class="f">p(E) = p(E | F)p(F) + p(E | not F)p(not F)</span>.</p>
+  <div class="ex"><b class="t">Monty Hall (lecture)</b>
+    <p>3 doors, 1 car. You pick a door. The host opens a different door showing a goat. Should you switch?</p>
+    <p>Always switch. Let G = your first pick was a goat (probability 2/3). If G, switching wins for sure; if not G, switching loses for sure.</p>
+    <p>p(win) = p(win | G)·⅔ + p(win | not G)·⅓ = 1·⅔ + 0·⅓ = <b>2/3</b>.</p>
   </div>
-</section>
-
-<section id="bayes">
-  <h2><span class="n">4</span>Bayes’ theorem</h2>
-  <p>Flips a conditional around:</p>
-  <div class="key">p(F | E) = p(E | F)p(F) / [ p(E | F)p(F) + p(E | not F)p(not F) ]</div>
-  <p>The bottom is just p(E), by the law of total probability.</p>
-  <div class="ex"><b class="t">Example · disease test</b>
-    <p>1% of people are sick. The test catches 90% of sick people and wrongly flags 10% of healthy people.</p>
-    <p>p(sick | positive) = (0.9·0.01) / (0.9·0.01 + 0.1·0.99) = 0.009 / 0.108 ≈ <b>8.3%</b>.</p>
-    <p>Check with 1000 people: 10 are sick and 9 of them test positive; 990 are healthy and 99 of them test positive. So 9 of the 108 positives are actually sick.</p>
+  <div class="ex"><b class="t">Honest answers to sensitive surveys (lecture)</b>
+    <p>Each person flips a coin: heads means say “yes”; tails means answer honestly. 60% say yes. What fraction of honest answers are yes?</p>
+    <p>p(yes) = p(yes | heads)·½ + p(yes | tails)·½ ⟹ 0.6 = 1·½ + x·½ ⟹ x = <b>20%</b>.</p>
   </div>
-  <div class="warn"><b class="t">Trap</b><p>p(A | B) ≠ p(B | A). A rare condition stays fairly unlikely even after a positive test.</p></div>
 </section>
 
 <section id="indep">
-  <h2><span class="n">5</span>Independence</h2>
-  <div class="key">E, F independent ⇔ p(E ∩ F) = p(E) · p(F)</div>
-  <p>If p(F) &gt; 0, that’s the same as p(E | F) = p(E): knowing F doesn’t change E.</p>
-  <div class="ex"><b class="t">Example</b>
-    <p>A random 4-bit string. E = first bit is 1; F = even number of 1s.</p>
-    <p>p(E) = ½, p(F) = ½, and p(E ∩ F) = 4/16 = ¼ = ½ · ½, so they’re <b>independent</b>.</p>
+  <h2><span class="n">17</span>Independence</h2>
+  <div class="key">E and F are independent ⟺ p(E ∩ F) = p(E) · p(F)</div>
+  <p>If p(F) &gt; 0 this is the same as <span class="f">p(E | F) = p(E)</span>: learning F tells you nothing about E.</p>
+  <h3>How to check</h3>
+  <ol><li>Compute p(E), p(F) and p(E ∩ F).</li><li>Check whether p(E ∩ F) equals p(E)·p(F).</li></ol>
+  <div class="ex"><b class="t">Example from lecture</b>
+    <p>A random 4-bit string, all 16 equally likely. E = first bit is 1; F = an even number of 1s.</p>
+    <p>p(E) = 8/16 = ½ and p(F) = 8/16 = ½. E ∩ F = strings starting with 1 that have an even number of 1s: 1001, 1010, 1100, 1111 ⟹ 4/16 = ¼.</p>
+    <p>¼ = ½ · ½ ⟹ <b>independent</b>.</p>
   </div>
-  <p><b>Pairwise vs mutual</b></p>
+  <div class="warn"><b class="t">Trap</b><p>Never assume events are independent unless the problem says so or you check. The lecture called this a very common real-world error.</p></div>
+  <h3>Pairwise vs mutual independence</h3>
   <ul>
-    <li><b>Pairwise</b> independent: every pair satisfies the product rule.</li>
-    <li><b>Mutually</b> independent: the product rule holds for every group of the events, including all of them at once.</li>
-    <li>Pairwise does <b>not</b> imply mutual.</li>
+    <li><b>Pairwise:</b> every <b>pair</b> Eᵢ, Eⱼ is independent.</li>
+    <li><b>Mutual:</b> the product rule holds for <b>every group</b> of the events, including all of them: p(Eᵢ₁ ∩ ⋯ ∩ Eᵢₘ) = p(Eᵢ₁)⋯p(Eᵢₘ).</li>
   </ul>
-  <div class="ex"><b class="t">Example · from lecture</b>
-    <p>Three people each pick a number from 1 to 100. A = Alice &amp; Bob match, B = Alice &amp; Charlotte match, C = Bob &amp; Charlotte match.</p>
-    <p>Each event has probability 1/100, and each pair together has 1/100², so they’re pairwise independent.</p>
-    <p>But A and B together force C, so p(A ∩ B ∩ C) = 1/100² ≠ 1/100³. They’re not mutually independent.</p>
+  <div class="ex"><b class="t">Lecture example: pairwise but not mutual</b>
+    <p>Alice, Bob and Charlotte each pick a random number from 1–100. E₁ = Alice and Bob match; E₂ = Alice and Charlotte match; E₃ = Bob and Charlotte match.</p>
+    <p>Each has probability 1/100. Any two together (all three numbers equal) have 1/100² = (1/100)(1/100), so they’re pairwise independent.</p>
+    <p>But if E₁ and E₂ happen, E₃ must happen. So p(E₁ ∩ E₂ ∩ E₃) = 1/100², not 1/100³ ⟹ <b>not mutually independent</b>.</p>
   </div>
 </section>
 
 <section id="bern">
-  <h2><span class="n">6</span>Bernoulli trials</h2>
-  <p>n independent tries, each succeeding with probability p:</p>
-  <div class="key">p(exactly k successes) = C(n, k) · pᵏ · (1 − p)ⁿ⁻ᵏ</div>
-  <ul>
-    <li>C(n, k) picks which tries succeed.</li>
-    <li>pᵏ(1 − p)ⁿ⁻ᵏ is the probability of one particular pattern.</li>
-  </ul>
+  <h2><span class="n">18</span>Bernoulli trials (repeated independent tries)</h2>
+  <p>Repeat a try n times, independently. Each try succeeds with probability p and fails with probability 1 − p. Examples: counting heads in n coin flips (p = ½), or counting 1s in n die rolls (p = 1/6).</p>
+  <div class="key">p(exactly k successes in n tries) = C(n, k) · pᵏ · (1 − p)ⁿ⁻ᵏ</div>
+  <p><b>Why:</b> one particular pattern of k successes and n − k failures has probability pᵏ(1 − p)ⁿ⁻ᵏ, since independent probabilities multiply. There are C(n, k) choices for which tries succeed.</p>
   <div class="ex"><b class="t">Example</b>
     <p>A coin with p(H) = ¼ is flipped 4 times.</p>
-    <p>p(exactly 2 heads) = C(4, 2)(¼)²(¾)² = 6 · 1/16 · 9/16 = <b>27/128</b>.</p>
-    <p>p(at least one head) = 1 − (¾)⁴ = <b>175/256</b>. Use the complement.</p>
+    <p>Exactly 2 heads: C(4, 2)(¼)²(¾)² = 6 · 1/16 · 9/16 = <b>27/128</b>.</p>
+    <p>At least one head: 1 − (¾)⁴ = <b>175/256</b>.</p>
   </div>
 </section>
 
-<section id="classic">
-  <h2><span class="n">7</span>Classics from lecture</h2>
-  <p><b>Monty Hall</b>: switching wins with probability <b>2/3</b>.</p>
-  <p class="f">p(win) = p(win | first pick a goat)·⅔ + p(win | first pick the car)·⅓ = 1·⅔ + 0</p>
-  <p><b>Birthday problem</b>: p(some two of n people share a birthday)</p>
-  <div class="key">1 − (365 · 364 ⋯ (365 − n + 1)) / 365ⁿ</div>
-  <p>For n = 23 that’s about <b>50.7%</b>. Rule of thumb: about C(n, 2)/d when picking n items from d possibilities, by the union bound over pairs.</p>
-  <p><b>The probabilistic method</b>: to show something exists, build it at random and show the chance it works is above 0. Usually you do this with the union bound.</p>
-  <div class="ex"><b class="t">Example · from lecture</b>
-    <p>10 clubs with 5 people each. Put every student on red or blue at random.</p>
-    <p>One club is all one color with probability 2/2⁵ = 1/16. By the union bound, p(some club is one color) ≤ 10/16 &lt; 1.</p>
-    <p>So some assignment has no club all one color.</p>
+<section id="bday">
+  <h2><span class="n">19</span>The birthday paradox</h2>
+  <p>23 people, each with a uniformly random birthday out of 365. What’s the chance two share one? Use the complement (“all different”) and build the list person by person:</p>
+  <div class="key">p(some two share) = 1 − (365 · 364 ⋯ (365 − n + 1)) / 365ⁿ</div>
+  <p>For n = 23 that’s about <b>50.7%</b>, surprisingly large.</p>
+  <p><b>Rule of thumb from lecture:</b> picking n items at random from d possibilities, the chance two match is roughly C(n, 2)/d. There are C(n, 2) pairs, each matching with probability 1/d, and the union bound adds them up.</p>
+  <p>Lecture’s application: with 64-bit secrets (d = 2⁶⁴), just 2³² of them already give about a 39% chance that two match. That’s why short keys and hashes are unsafe.</p>
+</section>
+
+<section id="pm">
+  <h2><span class="n">20</span>The probabilistic method</h2>
+  <div class="idea"><b class="t">Idea</b><p>To prove that something with a property <b>exists</b>, build one at random and show the probability it has the property is <b>greater than 0</b>. The usual tool is the union bound: show p(something goes wrong) &lt; 1.</p></div>
+  <div class="ex"><b class="t">Lecture example · clubs</b>
+    <p>A school has 10 clubs of exactly 5 students each, and students can be in many clubs. Show you can split the students into red and blue so that <b>no club is all one color</b>.</p>
+    <p>Put each student on a team by a fair coin flip. One club is all red or all blue with probability 2/2⁵ = 1/16.</p>
+    <p>Union bound: p(some club is one color) ≤ 10 · 1/16 = 10/16 &lt; 1.</p>
+    <p>So p(no club is one color) ≥ 6/16 &gt; 0, which means some split works.</p>
+  </div>
+  <div class="ex"><b class="t">Lecture example · infinitely many primes (sketch)</b>
+    <p>Suppose there were only m primes. Then there are only 2ᵐ <b>squarefree</b> numbers (each prime appears 0 or 1 times).</p>
+    <p>Pick x uniformly from 1 to n for large n. p(x squarefree) ≤ 2ᵐ/n, which is tiny.</p>
+    <p>By the union bound over “k² divides x”, p(x not squarefree) ≤ 1/4 + 1/9 + 1/16 + ⋯ &lt; 1, so p(x squarefree) is bounded below by a positive constant. For n large enough these contradict each other.</p>
   </div>
 </section>
 
-<section id="count">
-  <h2><span class="n">8</span>Counting refresher</h2>
+<section id="bayes">
+  <h2><span class="n">21</span>Bayes’ theorem</h2>
+  <div class="idea"><b class="t">Idea</b><p>You usually know p(evidence | cause) but want p(cause | evidence). Bayes flips the condition around.</p></div>
+  <div class="key">p(F | E) = p(E | F)·p(F) / p(E)<br>= p(E | F)p(F) / [ p(E | F)p(F) + p(E | not F)p(not F) ]</div>
+  <p><b>Why:</b> by the definition, p(F | E)·p(E) = p(E ∩ F) = p(E | F)·p(F). Divide by p(E), then expand p(E) with the law of total probability.</p>
+  <div class="ex"><b class="t">Lecture example · cancer test</b>
+    <p>1% of people have it. The test is positive for 90% of people who have it and negative for 90% of people who don’t (so 10% false positives).</p>
+    <p>p(cancer | positive) = (0.9 · 0.01) / (0.9 · 0.01 + 0.1 · 0.99) = 0.009/0.108 = <b>1/12 ≈ 8.3%</b>.</p>
+    <p>Sanity check with 1000 people: 10 have it and 9 of them test positive. 990 don’t, and 99 of them test positive. Only 9 of the 108 positives are real.</p>
+  </div>
+  <div class="ex"><b class="t">Lecture example · librarian or farmer?</b>
+    <p>Someone says they love to read. p(loves reading | librarian) = 99%, p(loves reading | farmer) = 40%, and there are about 30 farmers per librarian.</p>
+    <p>p(librarian | loves reading) = 0.99·1 / (0.99·1 + 0.4·30) ≈ <b>7.6%</b>. A farmer is still far more likely.</p>
+  </div>
+  <div class="warn"><b class="t">Trap</b><p>p(A | B) ≠ p(B | A). How common something is to begin with (the 1%, or the 30 : 1 ratio) matters a lot.</p></div>
+</section>
+
+<!-- ======================= SHEET ======================= -->
+<div class="part-h" id="sheet">Formula sheet · memorize</div>
+<section>
   <div class="tbl"><table>
-    <tr><th></th><th>Order matters</th><th>Order doesn’t matter</th></tr>
-    <tr><td>No repetition</td><td class="f">P(n, r) = n!/(n − r)!</td><td class="f">C(n, r)</td></tr>
-    <tr><td>Repetition allowed</td><td class="f">nʳ</td><td class="f">C(n + r − 1, r) (stars and bars)</td></tr>
+    <tr><th>What</th><th>Formula</th></tr>
+    <tr><td>Product rule</td><td class="f">n₁ · n₂ ⋯ nₖ</td></tr>
+    <tr><td>Inclusion–exclusion</td><td class="f">|A ∪ B| = |A| + |B| − |A ∩ B|</td></tr>
+    <tr><td>Complement</td><td class="f">#total − #without</td></tr>
+    <tr><td>r-permutations</td><td class="f">P(n, r) = n!/(n − r)!</td></tr>
+    <tr><td>r-combinations</td><td class="f">C(n, r) = n!/(r!(n − r)!)</td></tr>
+    <tr><td>With repetition, unordered</td><td class="f">C(n + r − 1, r)</td></tr>
+    <tr><td>With repetition, ordered</td><td class="f">nʳ</td></tr>
+    <tr><td>Repeated letters</td><td class="f">n!/(n₁!⋯nₖ!)</td></tr>
+    <tr><td>Pigeonhole</td><td>k + 1 objects, k boxes ⟹ some box has ≥ 2</td></tr>
+    <tr><td>Pascal</td><td class="f">C(n + 1, k) = C(n, k − 1) + C(n, k)</td></tr>
+    <tr><td>Binomial theorem</td><td class="f">(x + y)ⁿ = Σ C(n, j) xⁿ⁻ʲ yʲ</td></tr>
+    <tr><td>Equally likely</td><td class="f">p(E) = |E|/|S|</td></tr>
+    <tr><td>Complement</td><td class="f">p(not E) = 1 − p(E)</td></tr>
+    <tr><td>Union</td><td class="f">p(E ∪ F) = p(E) + p(F) − p(E ∩ F)</td></tr>
+    <tr><td>Union bound</td><td class="f">p(∪Eᵢ) ≤ Σ p(Eᵢ)</td></tr>
+    <tr><td>Conditional</td><td class="f">p(E | F) = p(E ∩ F)/p(F)</td></tr>
+    <tr><td>Total probability</td><td class="f">p(E) = Σ p(E | Fᵢ)p(Fᵢ)</td></tr>
+    <tr><td>Independent</td><td class="f">p(E ∩ F) = p(E)p(F)</td></tr>
+    <tr><td>Bernoulli</td><td class="f">C(n, k)pᵏ(1 − p)ⁿ⁻ᵏ</td></tr>
+    <tr><td>Bayes</td><td class="f">p(F | E) = p(E | F)p(F)/p(E)</td></tr>
   </table></div>
-  <ul>
-    <li><b>Repeated letters</b>: n!/(n₁! n₂! ⋯), e.g. LETTER = 6!/(2!·2!).</li>
-    <li><b>Product rule</b>: multiply the counts for successive steps.</li>
-    <li><b>Sum rule</b>: add the counts for disjoint cases.</li>
-    <li><b>Inclusion–exclusion</b>: |A ∪ B| = |A| + |B| − |A ∩ B|.</li>
-    <li><b>Division rule</b>: if every outcome is counted d times, divide by d.</li>
-    <li><b>Pigeonhole</b>: k + 1 objects in k boxes means some box gets 2. Say what the pigeons and the boxes are.</li>
-    <li><b>Binomial theorem</b>: (x + y)ⁿ = Σ C(n, k) xⁿ⁻ᵏ yᵏ.</li>
-    <li><b>Combinatorial proof</b>: count the same collection two ways.</li>
-  </ul>
-</section>
-
-<section id="traps">
-  <h2><span class="n">9</span>Quick traps</h2>
-  <ol>
-    <li>Conditioning shrinks the denominator to p(F), not |S|.</li>
-    <li>Disjoint events (each with positive probability) are <b>not</b> independent: if one happens, the other can’t.</li>
-    <li>“At least one” → use the complement.</li>
-    <li>Don’t assume independence unless the problem gives it or you check the product rule.</li>
-    <li>Leave answers as C(…), powers or fractions unless told otherwise.</li>
-  </ol>
-  <div class="note">Quizzes are closed notes. Expected value and variance come in the next lecture, so they shouldn’t be on this quiz.</div>
+  <div class="note"><b>Not on the quiz:</b> Stirling numbers and partition numbers (the lecture said so), the n! estimates, and expected value and variance (next lecture). Quizzes are closed notes, and you can leave answers as C(…), factorials and powers.</div>
 </section>
 
 <footer><a href="./">← Full Math 55 study guide</a></footer>
