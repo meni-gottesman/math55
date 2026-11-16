@@ -72,9 +72,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system
   <div class="top">
     <h1>Quiz flashcards</h1>
     <select id="deck" aria-label="Which cards">
-      <option value="all">All cards</option>
-      <option value="c">Counting</option>
-      <option value="p">Probability</option>
+      <optgroup label="Quiz 6 · this week">
+        <option value="q6">Quiz 6 · all</option>
+        <option value="e">Expected value &amp; variance</option>
+        <option value="r">Recurrence relations</option>
+        <option value="b">Bayes review</option>
+      </optgroup>
+      <optgroup label="Quiz 5">
+        <option value="c">Counting</option>
+        <option value="p">Probability</option>
+      </optgroup>
+      <option value="all">Every card</option>
     </select>
   </div>
   <div class="prog"><div class="bar"><i id="bar"></i></div><p><span id="count"></span><span id="left"></span></p></div>
@@ -245,16 +253,99 @@ const C=[
 ["p","Bayes’ theorem","How does Bayes’ theorem “update” a probability with evidence, and what was the lecture’s point about how much a test can change it?",
 "<p>Start with a <b>prior</b> guess p(F), like 1% have cancer. New evidence E, like a positive test, gives the <b>updated</b> p(F | E) by Bayes.</p><p>In the cancer example, a test that’s wrong 1/10 of the time raises the probability by at most about a factor of 10 (1% ⟹ 8.3%). It can’t make a rare thing likely on its own.</p><p class='ex'>Real use: spam filters estimate p(spam | contains a word) from p(word | spam), which they learn from emails already labeled as spam or not.</p>"],
 ["p","Bayes’ theorem","What is the big mistake Bayes’ theorem protects you from?",
-"<p>Confusing <b>p(A | B)</b> with <b>p(B | A)</b>. “The test catches 90% of cancers” is p(positive | cancer), not p(cancer | positive).</p><p>The missing piece is always the <b>base rate</b>, p(A) to begin with: 1% have cancer, or 30 farmers per librarian. When the base rate is small, even good evidence leaves the probability fairly low.</p>"]
+"<p>Confusing <b>p(A | B)</b> with <b>p(B | A)</b>. “The test catches 90% of cancers” is p(positive | cancer), not p(cancer | positive).</p><p>The missing piece is always the <b>base rate</b>, p(A) to begin with: 1% have cancer, or 30 farmers per librarian. When the base rate is small, even good evidence leaves the probability fairly low.</p>"],
+// ================= QUIZ 6: EXPECTED VALUE & VARIANCE (Lecture 20, Rosen 7.4) =================
+["e","Random variables","What is a random variable?",
+"<span class='lb'>Meaning</span><p>A <b>random variable</b> X is a function that gives every outcome s in the sample space a <b>number</b> X(s). Despite the name, it isn’t random and isn’t a variable. It’s a rule: “for this outcome, record this number.”</p><p>p(X = r) means the probability of the event “X equals r”, i.e. of all outcomes s with X(s) = r.</p><span class='lb'>Example</span><p class='ex'>Flip two fair coins, X = number of heads. X(HH) = 2, X(HT) = X(TH) = 1, X(TT) = 0. So p(X = 2) = 1/4, p(X = 1) = 1/2, p(X = 0) = 1/4.</p>"],
+["e","Random variables","Roll two fair dice; Y = first number minus second number. What is p(Y = −5)? p(Y = 0)?",
+"<p><b>p(Y = −5) = 1/36.</b> Only (1, 6) gives 1 − 6 = −5.</p><p><b>p(Y = 0) = 6/36 = 1/6.</b> Y = 0 when both dice match: (1,1), (2,2), …, (6,6).</p><p class='ex'>To find p(Y = r), list the outcomes that give that value and add their probabilities. Here every outcome has probability 1/36.</p>"],
+["e","Expected value","What is the expected value E(X), and what does it mean?",
+"<span class='f'>E(X) = Σ over outcomes s of X(s) · p(s) = Σ over values r of r · p(X = r)</span><span class='lb'>Meaning</span><p>The <b>weighted average</b> of X: each value counts in proportion to how likely it is. If you repeated the experiment many times, the average of X would be close to E(X).</p><p class='trap'>E(X) doesn’t have to be a value X can take. One fair die has E(X) = 3.5.</p>"],
+["e","Expected value","Two fair coins, X = number of heads. Find E(X).",
+"<span class='f'>E(X) = 0 · ¼ + 1 · ½ + 2 · ¼ = 1</span><span class='lb'>How</span><ol><li>List the values: 0, 1, 2.</li><li>Their probabilities: ¼, ½, ¼ (TT; HT or TH; HH).</li><li>Multiply each value by its probability and add.</li></ol>"],
+["e","Expected value","What is E(X) for one roll of a fair die?",
+"<span class='f'>E(X) = (1 + 2 + 3 + 4 + 5 + 6) · 1/6 = 21/6 = 7/2</span><p>Each face has probability 1/6, so the expected value is the plain average of 1–6.</p>"],
+["e","Linearity","State linearity of expectation.",
+"<span class='f'>E(aX + b) = a·E(X) + b<br>E(X₁ + X₂ + ⋯ + Xₙ) = E(X₁) + E(X₂) + ⋯ + E(Xₙ)</span><span class='lb'>Why</span><p>E is a sum Σ p(s)·(stuff), and sums split apart: Σ p(s)(X₁(s) + X₂(s)) = Σ p(s)X₁(s) + Σ p(s)X₂(s).</p><p class='trap'>The X’s do <b>not</b> need to be independent. This is what makes linearity so powerful.</p>"],
+["e","Linearity","Use linearity to show E(first die − second die) = 0.",
+"<ol><li>Let Y₁ = first die, Y₂ = second die, so Y = Y₁ − Y₂.</li><li>Linearity: E(Y) = E(Y₁) − E(Y₂).</li><li>Both dice are fair, so E(Y₁) = E(Y₂) = 7/2.</li><li>E(Y) = 7/2 − 7/2 = <b>0</b>.</li></ol><p class='ex'>Much easier than listing all 11 values of Y and their probabilities.</p>"],
+["e","Indicator variables","What is an indicator random variable, and what is its expected value?",
+"<p>Xₖ = 1 if some event Aₖ happens, and 0 if it doesn’t.</p><span class='f'>E(Xₖ) = 1 · p(Aₖ) + 0 · (1 − p(Aₖ)) = p(Aₖ)</span><span class='lb'>The big trick</span><p>To find the expected <b>number</b> of things that happen, write the count as a sum of indicators X = X₁ + ⋯ + Xₙ. Then by linearity:</p><span class='f'>E(X) = p(A₁) + p(A₂) + ⋯ + p(Aₙ)</span><p class='ex'>Two coins: X = X₁ + X₂, where Xᵢ = 1 if coin i is heads. E(X) = ½ + ½ = 1, the same as before with no table needed.</p>"],
+["e","Indicator variables","n independent trials, each succeeding with probability p. What is the expected number of successes? Why?",
+"<span class='f'>E(X) = np</span><ol><li>Let Xₖ = 1 if trial k succeeds, 0 if not. Then X = X₁ + ⋯ + Xₙ.</li><li>E(Xₖ) = p · 1 + (1 − p) · 0 = p.</li><li>Linearity: E(X) = p + p + ⋯ + p = np.</li></ol><p class='ex'>Flip 100 coins that each land heads with probability 0.3: you expect 100 · 0.3 = <b>30</b> heads.</p>"],
+["e","Indicator variables","100 people with different scores appear in a random order. Expected number of “new records” (a score higher than everyone before)?",
+"<span class='f'>E(X) = 1 + 1/2 + 1/3 + ⋯ + 1/100 ≈ 5.19</span><ol><li>Let Xₖ = 1 if person k sets a record (beats everyone before).</li><li>That happens when the largest of the first k scores comes <b>last</b> among them. In a random order, each of the k is equally likely to be last ⟹ p = 1/k.</li><li>Linearity: E(X) = Σ 1/k.</li></ol><p class='ex'>This sum (the harmonic number Hₙ) grows like ln n, which is why new records get rare.</p>"],
+["e","Expected value","Why doesn’t “double your bet after every loss” (the martingale) guarantee a profit at roulette?",
+"<p>Each bet wins with probability 0.48 and loses with 0.52, so a $1 bet has expected gain 0.48 − 0.52 = <b>−$0.04</b>. Linearity: a strategy made of many such bets still has negative expected value.</p><p>Doubling wins $1 most of the time, but there’s a small chance of losing many times in a row (0.52ⁿ). Then the bets grow like 2ⁿ, you can’t cover them, and you lose everything.</p><p class='ex'>Lots of small wins plus a rare disaster still averages out negative.</p>"],
+["e","Independence","When are random variables X and Y independent?",
+"<span class='f'>p(X = r₁ and Y = r₂) = p(X = r₁) · p(Y = r₂) for all r₁, r₂</span><p>That is, every event “X = r₁” is independent of every event “Y = r₂”: knowing X tells you nothing about Y.</p><p class='ex'><b>Independent:</b> X = first die, Y = second die. Each pair has p = 1/36 = (1/6)(1/6).</p>"],
+["e","Independence","Two fair coins, X = number of heads, Y = number of tails. Show X and Y are not independent.",
+"<p>Find one pair of values where the product rule fails:</p><ul><li>p(X = 1) = ½ and p(Y = 1) = ½.</li><li>p(X = 1 and Y = 1) = p(HT or TH) = ½.</li><li>½ ≠ ½ · ½ = ¼.</li></ul><p>So X and Y are <b>not independent</b>. Of course: Y = 2 − X, so knowing X tells you Y exactly.</p><p class='trap'>To show independence, check <b>every</b> pair of values. To show dependence, <b>one</b> failing pair is enough.</p>"],
+["e","Products","When is E(XY) = E(X)·E(Y)?",
+"<span class='f'>X, Y independent ⟹ E(XY) = E(X)·E(Y)</span><p>The proof splits p(X = r₁ and Y = r₂) into p(X = r₁)p(Y = r₂), which needs independence.</p><p class='trap'>Without independence it can fail. Coins: X = heads, Y = tails. E(X) = E(Y) = 1, but XY is 0, 1, 0 for HH, HT/TH, TT, so E(XY) = ½ ≠ 1.</p><p class='ex'>Compare: E(X + Y) = E(X) + E(Y) <b>always</b>. Only the product needs independence.</p>"],
+["e","Variance","What are variance and standard deviation, and what do they measure?",
+"<span class='f'>V(X) = Σ (X(s) − E(X))² p(s)<br>σ(X) = √V(X)</span><p><b>Meaning:</b> how far X typically is from its average. Take each value’s distance from E(X), square it (so negatives don’t cancel), and average.</p><p>Small variance means X stays close to E(X). Big variance means it spreads out. σ is in the same units as X.</p>"],
+["e","Variance","Two fair coins, X = number of heads. Find V(X).",
+"<span class='f'>V(X) = ¼(0 − 1)² + ½(1 − 1)² + ¼(2 − 1)² = ¼ + 0 + ¼ = ½</span><ol><li>E(X) = 1.</li><li>For each value: (value − 1)² times its probability.</li><li>Add.</li></ol><p class='ex'>σ(X) = √½ ≈ 0.71.</p>"],
+["e","Variance","What is the shortcut formula for variance, and why does it hold?",
+"<span class='f'>V(X) = E(X²) − E(X)²</span><span class='lb'>Why</span><p>Expand (X − μ)² = X² − 2μX + μ² with μ = E(X), and use linearity: E(X²) − 2μE(X) + μ² = E(X²) − 2μ² + μ² = E(X²) − μ².</p><span class='lb'>Example: one fair die</span><p class='ex'>E(X²) = (1 + 4 + 9 + 16 + 25 + 36)/6 = 91/6, and E(X)² = (7/2)² = 49/4. V = 91/6 − 49/4 = <b>35/12</b>.</p><p class='trap'>E(X²) is the average of the squares, not the square of the average.</p>"],
+["e","Variance","State Bienaymé’s formula.",
+"<span class='f'>X₁, …, Xₙ independent ⟹ V(X₁ + ⋯ + Xₙ) = V(X₁) + ⋯ + V(Xₙ)</span><span class='lb'>Why (n = 2)</span><p>V(X₁ + X₂) = E((X₁ + X₂)²) − (E(X₁) + E(X₂))². Expanding, everything cancels except V(X₁) + V(X₂) + 2(E(X₁X₂) − E(X₁)E(X₂)). Independence makes that last part 0.</p><p class='ex'>Sum of two fair dice: V = 35/12 + 35/12 = 35/6.</p><p class='trap'>Unlike expected value, variances only add when the variables are independent.</p>"],
+["e","Variance","What is the variance of the number of successes in n independent Bernoulli trials?",
+"<span class='f'>V(X) = np(1 − p)</span><ol><li>X = X₁ + ⋯ + Xₙ, with Xₖ the indicator of success k.</li><li>Xₖ² = Xₖ (since 0² = 0 and 1² = 1), so E(Xₖ²) = p and V(Xₖ) = p − p² = p(1 − p).</li><li>The trials are independent, so Bienaymé adds them: np(1 − p).</li></ol><p class='ex'>100 coins with p = 0.3: E = 30 and V = 100 · 0.3 · 0.7 = 21.</p>"],
+["e","Chebyshev","State Chebyshev’s inequality and say what it’s for.",
+"<span class='f'>p(|X − E(X)| ≥ r) ≤ V(X) / r²  (for any r &gt; 0)</span><p><b>Use:</b> it bounds the chance that X lands <b>far</b> from its average, using only the variance. Small variance ⟹ X is unlikely to stray far.</p><p class='trap'>It’s an upper bound, often a loose one. For one die, p(|X − 3.5| ≥ 3) is really 0, but Chebyshev only says ≤ (35/12)/9 ≈ 0.32.</p>"],
+["e","Chebyshev","Why is Chebyshev’s inequality true?",
+"<ol><li>Let A = outcomes where |X − E(X)| ≥ r.</li><li>V(X) = Σ (X(s) − E(X))² p(s). Drop the outcomes not in A; every term is ≥ 0, so the sum only shrinks.</li><li>On A, each (X(s) − E(X))² ≥ r², so V(X) ≥ r² · p(A).</li><li>Divide by r²: p(A) ≤ V(X)/r².</li></ol>"],
+["e","Chebyshev","Flip a fair coin n times; X = number of tails. Use Chebyshev to bound p(|X − n/2| ≥ √n).",
+"<span class='f'>p(|X − n/2| ≥ √n) ≤ (n/4) / (√n)² = 1/4</span><ol><li>X counts successes in n Bernoulli trials with p = ½.</li><li>E(X) = n/2 and V(X) = n · ½ · ½ = n/4.</li><li>Chebyshev with r = √n.</li></ol><p class='ex'>So at least 75% of the time, the number of tails is within √n of n/2.</p>"],
+// ================= QUIZ 6: RECURRENCE RELATIONS (Rosen 8.1–8.2) =================
+["r","Recurrences","What is a recurrence relation, and what are initial conditions?",
+"<p>A <b>recurrence relation</b> gives each term aₙ in terms of earlier terms, like aₙ = aₙ₋₁ + aₙ₋₂.</p><p>The <b>initial conditions</b> give the first few terms (like a₀ and a₁) so everything after them is determined.</p><p>A <b>solution</b> is a sequence that satisfies the recurrence. Usually you want a closed formula for aₙ.</p><p class='ex'>Fibonacci: fₙ = fₙ₋₁ + fₙ₋₂. Lecture uses f₀ = f₁ = 1; Rosen uses f₀ = 0, f₁ = 1.</p>"],
+["r","Modeling","Find a recurrence for aₙ = the number of bit strings of length n with no two consecutive 0s.",
+"<span class='f'>aₙ = aₙ₋₁ + aₙ₋₂, with a₁ = 2, a₂ = 3</span><span class='lb'>Split by the last bit</span><ul><li><b>Ends in 1:</b> anything good of length n − 1, then a 1 ⟹ aₙ₋₁.</li><li><b>Ends in 0:</b> the bit before must be 1 (no “00”), so anything good of length n − 2, then “10” ⟹ aₙ₋₂.</li></ul><p class='ex'>a₁ = 2 (0, 1), a₂ = 3 (01, 10, 11), then 5, 8, 13, … (Fibonacci-like).</p>"],
+["r","Modeling","How do you set up a recurrence for a counting problem?",
+"<ol><li>Let aₙ = the number of objects of size n.</li><li>Split them by what happens at the <b>end</b> (or start): the last bit, the last move, the last step.</li><li>Each case should be a smaller version of the same problem, counted by aₙ₋₁, aₙ₋₂, and so on.</li><li>Add the cases (sum rule), then work out the first few terms by hand for the initial conditions.</li></ol><p class='ex'>Tower of Hanoi: move n − 1 disks, move the big one, move n − 1 again ⟹ Hₙ = 2Hₙ₋₁ + 1, H₁ = 1. Compound interest: Pₙ = 1.05 · Pₙ₋₁ ⟹ Pₙ = 1.05ⁿ P₀.</p>"],
+["r","Linear homogeneous","What is a linear homogeneous recurrence relation of degree k with constant coefficients?",
+"<span class='f'>aₙ = c₁aₙ₋₁ + c₂aₙ₋₂ + ⋯ + cₖaₙ₋ₖ  (c₁, …, cₖ fixed numbers, cₖ ≠ 0)</span><ul><li><b>Linear:</b> earlier terms appear to the first power only, added together.</li><li><b>Homogeneous:</b> no extra term that depends only on n.</li><li><b>Constant coefficients:</b> the cᵢ don’t depend on n.</li><li><b>Degree k:</b> reaches back k terms.</li></ul><p class='ex'><b>Not</b> this type: aₙ = aₙ₋₁ + aₙ₋₂² (not linear), Hₙ = 2Hₙ₋₁ + 1 (not homogeneous), Bₙ = nBₙ₋₁ (coefficient depends on n).</p>"],
+["r","Characteristic equation","What is the characteristic equation, and where does it come from?",
+"<p>Guess a solution aₙ = rⁿ. Plug it into aₙ = c₁aₙ₋₁ + ⋯ + cₖaₙ₋ₖ and divide by rⁿ⁻ᵏ:</p><span class='f'>rᵏ − c₁rᵏ⁻¹ − c₂rᵏ⁻² − ⋯ − cₖ = 0</span><p>Its roots are the <b>characteristic roots</b>. Each root r gives a solution rⁿ.</p><p class='ex'>Degree 2: aₙ = c₁aₙ₋₁ + c₂aₙ₋₂ ⟹ r² − c₁r − c₂ = 0. Move every term to the left side, keeping the signs straight.</p>"],
+["r","Distinct roots","How do you solve aₙ = c₁aₙ₋₁ + c₂aₙ₋₂ when the characteristic equation has two different roots r₁, r₂?",
+"<span class='f'>aₙ = α₁r₁ⁿ + α₂r₂ⁿ</span><ol><li>Write r² − c₁r − c₂ = 0 and find the roots r₁ ≠ r₂.</li><li>General solution: α₁r₁ⁿ + α₂r₂ⁿ.</li><li>Plug in n = 0 and n = 1 using the initial conditions to get two equations.</li><li>Solve for α₁ and α₂.</li><li>Check a₂ against the recurrence.</li></ol><p class='ex'>Why it works: each rⁿ solves the recurrence, and any combination of solutions is also a solution (it’s linear).</p>"],
+["r","Distinct roots","Solve aₙ = 5aₙ₋₁ − 6aₙ₋₂ with a₀ = 1, a₁ = 4.",
+"<span class='f'>aₙ = 2 · 3ⁿ − 2ⁿ</span><ol><li>Characteristic equation r² − 5r + 6 = 0 ⟹ (r − 2)(r − 3) = 0 ⟹ r = 2, 3.</li><li>aₙ = α · 2ⁿ + β · 3ⁿ.</li><li>n = 0: α + β = 1. n = 1: 2α + 3β = 4.</li><li>Subtract twice the first equation: β = 2, so α = −1.</li><li>Check: a₂ = 5 · 4 − 6 · 1 = 14, and 2 · 9 − 4 = 14 ✓.</li></ol>"],
+["r","Distinct roots","Rosen’s example: solve aₙ = aₙ₋₁ + 2aₙ₋₂ with a₀ = 2, a₁ = 7.",
+"<span class='f'>aₙ = 3 · 2ⁿ − (−1)ⁿ</span><ol><li>r² − r − 2 = 0 ⟹ (r − 2)(r + 1) = 0 ⟹ r = 2, −1.</li><li>aₙ = α · 2ⁿ + β(−1)ⁿ.</li><li>α + β = 2 and 2α − β = 7 ⟹ α = 3, β = −1.</li></ol><p class='trap'>Negative roots are fine: keep (−1)ⁿ as it is, so it alternates sign.</p>"],
+["r","Distinct roots","What are the characteristic roots for Fibonacci, and what kind of formula do they give?",
+"<p>fₙ = fₙ₋₁ + fₙ₋₂ ⟹ r² − r − 1 = 0 ⟹ r = (1 ± √5)/2.</p><span class='f'>fₙ = α₁((1 + √5)/2)ⁿ + α₂((1 − √5)/2)ⁿ</span><p>With Rosen’s f₀ = 0, f₁ = 1: α₁ = 1/√5 and α₂ = −1/√5. That gives a whole-number sequence from a formula with √5 in it.</p><p class='ex'>(1 + √5)/2 ≈ 1.618 is the golden ratio φ, which is why Fibonacci grows like φⁿ.</p>"],
+["r","Repeated root","How do you solve a degree-2 recurrence when the characteristic equation has only one (repeated) root r₀?",
+"<span class='f'>aₙ = α₁r₀ⁿ + α₂ n r₀ⁿ</span><p>With a repeated root, r₀ⁿ alone gives only one solution. The second one is n · r₀ⁿ. Then use the two initial conditions as before.</p><p class='trap'>Using α₁r₀ⁿ + α₂r₀ⁿ doesn’t work: that’s just one constant times r₀ⁿ, and it can’t match two initial conditions.</p>"],
+["r","Repeated root","Solve aₙ = 4aₙ₋₁ − 4aₙ₋₂ with a₀ = 1, a₁ = 6.",
+"<span class='f'>aₙ = (1 + 2n) · 2ⁿ</span><ol><li>r² − 4r + 4 = 0 ⟹ (r − 2)² = 0 ⟹ the only root is r = 2.</li><li>aₙ = α · 2ⁿ + β · n · 2ⁿ.</li><li>n = 0: α = 1. n = 1: 2α + 2β = 6 ⟹ β = 2.</li><li>Check: a₂ = 4 · 6 − 4 · 1 = 20, and (1 + 4) · 4 = 20 ✓.</li></ol>"],
+["r","General case","What is the general solution for higher degree, including repeated roots?",
+"<p>Each root r with multiplicity m contributes</p><span class='f'>(α₀ + α₁n + ⋯ + αₘ₋₁nᵐ⁻¹) rⁿ</span><p>Add these up over all the roots. You get k unknown constants in total (k = the degree), found from the k initial conditions.</p><p class='ex'>Roots 2, 2, 2, 5, 5, 9 ⟹ (α + βn + γn²)2ⁿ + (δ + εn)5ⁿ + ζ · 9ⁿ.</p>"],
+["r","Nonhomogeneous","How do you solve a linear nonhomogeneous recurrence aₙ = c₁aₙ₋₁ + ⋯ + cₖaₙ₋ₖ + F(n)?",
+"<span class='f'>every solution = (one particular solution) + (general solution of the homogeneous part)</span><ol><li>Solve the <b>homogeneous part</b> (drop F(n)) with characteristic roots ⟹ a⁽ʰ⁾ₙ.</li><li>Guess a <b>particular solution</b> shaped like F(n): a constant if F is constant, cn + d if F is linear, and so on. Plug it in and solve for the unknowns.</li><li>Add them, then use the initial conditions to find the constants (do this last).</li></ol>"],
+["r","Nonhomogeneous","Solve the Tower of Hanoi recurrence Hₙ = 2Hₙ₋₁ + 1 with H₁ = 1.",
+"<span class='f'>Hₙ = 2ⁿ − 1</span><ol><li>Homogeneous part Hₙ = 2Hₙ₋₁ ⟹ α · 2ⁿ.</li><li>F(n) = 1 is constant, so guess a constant c: c = 2c + 1 ⟹ c = −1.</li><li>General solution: Hₙ = α · 2ⁿ − 1.</li><li>H₁ = 1: 2α − 1 = 1 ⟹ α = 1.</li></ol><p class='ex'>Check: 1, 3, 7, 15, 31, … ✓</p>"],
+// ================= QUIZ 6: BAYES REVIEW (HW 9 uses it) =================
+["b","Bayes review","Bayes’ theorem with more than two causes: how do you find p(Fⱼ | E)?",
+"<span class='f'>p(Fⱼ | E) = p(E | Fⱼ)p(Fⱼ) / [ p(E | F₁)p(F₁) + ⋯ + p(E | Fₙ)p(Fₙ) ]</span><p>F₁, …, Fₙ are disjoint causes that cover everything. The bottom is p(E), from the law of total probability.</p><span class='lb'>Recipe</span><ol><li>For each cause, multiply p(cause) · p(evidence | cause).</li><li>Add those products to get p(E).</li><li>The answer for a cause is its product divided by the total.</li></ol><p class='ex'>The most likely cause is the one with the biggest product, not the biggest p(E | Fⱼ).</p>"],
+["b","Bayes review","What is the “table of products” way to do any Bayes problem quickly?",
+"<p>Make one row per cause:</p><span class='f'>cause | p(cause) | p(evidence | cause) | product</span><p>Add up the product column; that’s p(evidence). Then each p(cause | evidence) = its product / that total.</p><p class='ex'>Cancer test: cancer 0.01 × 0.9 = 0.009; no cancer 0.99 × 0.1 = 0.099. Total 0.108. p(cancer | positive) = 0.009/0.108 ≈ 8.3%.</p>"],
+["b","Bayes review","What is the difference between p(E | F) and p(F | E)? Give the classic mistake.",
+"<p>p(E | F): the chance of the evidence <b>assuming</b> the cause. p(F | E): the chance of the cause <b>given</b> that you saw the evidence. They are usually very different.</p><p class='trap'>“The test catches 90% of cancers” is p(positive | cancer) = 0.9. It does not mean p(cancer | positive) = 0.9; that was only 8.3%, because the base rate p(cancer) = 1% was small.</p>"]
 ];
 
 const KEY='m55-quiz5-cards-v2';
 let st={known:{},deck:'all'}; try{ st=Object.assign(st,JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} };
 const card=document.getElementById('card'), deckSel=document.getElementById('deck');
+if(!st.q6){ st.deck='q6'; st.q6=1; save(); }
 deckSel.value=st.deck;
 let queue=[], cur=null, shown=false;
-const ids=()=>C.map((c,i)=>i).filter(i=>st.deck==='all'||C[i][0]===st.deck);
+const GROUPS={q6:['e','r','b']};
+const ids=()=>C.map((c,i)=>i).filter(i=>st.deck==='all'||(GROUPS[st.deck]||[st.deck]).includes(C[i][0]));
 function build(){ queue=ids().filter(i=>!st.known[i]); cur=queue.shift(); shown=false; render(); }
 function render(){
   const all=ids(), done=all.filter(i=>st.known[i]).length;
