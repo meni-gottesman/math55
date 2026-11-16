@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 55 Quiz 6 notes from scratch: expected value, variance, Chebyshev (Lecture 20, Rosen 7.4) and recurrence relations (Rosen 8.1–8.2).">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3EE%3C/text%3E%3C/svg%3E">
+<title>Quiz 6 Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Expected value, variance &amp; recurrences</h1>
+  <p>Math 55 · Quiz 6 notes, from scratch · <a href="cards.html">Flashcards →</a> · <a href="quiz5.html">Quiz 5 notes</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to section">
+  <select id="jump" aria-label="Jump to section">
+    <option value="top">Start here</option>
+    <optgroup label="Part 1 · Expected value & variance">
+      <option value="rv">1 · Random variables</option>
+      <option value="ev">2 · Expected value</option>
+      <option value="lin">3 · Linearity of expectation</option>
+      <option value="ind">4 · The indicator trick</option>
+      <option value="rec">5 · Records &amp; chasing losses</option>
+      <option value="irv">6 · Independent random variables</option>
+      <option value="var">7 · Variance</option>
+      <option value="bie">8 · Variance of sums (Bienaymé)</option>
+      <option value="cheb">9 · Chebyshev’s inequality</option>
+    </optgroup>
+    <optgroup label="Part 2 · Recurrence relations">
+      <option value="rr">10 · What a recurrence is</option>
+      <option value="model">11 · Setting one up</option>
+      <option value="lh">12 · Linear homogeneous</option>
+      <option value="dist">13 · Distinct roots</option>
+      <option value="repr">14 · Repeated roots</option>
+      <option value="gen">15 · Degree 3 and up</option>
+      <option value="nh">16 · Nonhomogeneous</option>
+    </optgroup>
+    <optgroup label="Part 3 · Review">
+      <option value="bayes">17 · Bayes refresher</option>
+      <option value="sheet">Formula sheet</option>
+    </optgroup>
+  </select>
+  <a href="#sheet">Formulas</a>
+</nav>
+
+<div class="note">
+  <p><b>What’s on this quiz.</b> Each quiz has covered the lectures since the one before, so Quiz 6 should be <b>Lecture 20</b> (expected value and variance) plus <b>Thursday’s recurrence-relations lecture</b>. Thursday’s notes aren’t posted yet, so Part 2 follows the textbook sections on the schedule (Rosen 8.1–8.2). Chebyshev comes from Rosen 7.4, which the schedule lists for Lecture 20.</p>
+  <p><b>How to use this page:</b> read a section, then open its <b>Check yourself</b> boxes and try them before peeking.</p>
+  <ol class="plan">
+    <li>Sections 2–4 matter most: expected value plus linearity solves most problems.</li>
+    <li>Then 7–8 (variance) and 9 (Chebyshev).</li>
+    <li>Then 12–14: solving recurrences is a recipe, so drill it.</li>
+  </ol>
+</div>
+
+<!-- ======================= PART 1 ======================= -->
+<div class="part-h" id="part1">Part 1 · Expected value &amp; variance</div>
+<p>Lecture 20 and Rosen 7.4. You already know probability of events; now we attach <b>numbers</b> to outcomes and average them.</p>
+
+<section id="rv">
+  <h2><span class="n">1</span>Random variables</h2>
+  <div class="idea"><span class="t">Big idea</span><p>A random variable is just a rule that turns each outcome into a number, so you can ask about averages and spreads.</p></div>
+  <div class="key">X : S → ℝ<small>A function from the sample space <var>S</var> (all outcomes) to real numbers. It assigns the number <var>X</var>(<var>s</var>) to each outcome <var>s</var>.</small></div>
+  <p>The name is misleading: <var>X</var> is <b>not random</b> and <b>not a variable</b>. It’s a fixed function. The randomness is in which outcome happens.</p>
+  <p>Notation: <span class="m">p(X = r)</span> means the probability of the <b>event</b> “<var>X</var> equals <var>r</var>”, i.e. the set of all outcomes <var>s</var> with <span class="m">X(s) = r</span>. To compute it, <b>list those outcomes and add their probabilities</b>.</p>
+
+  <div class="ex"><span class="t">Example · two fair coins</span>
+    <p><var>X</var> = number of heads. The four outcomes are equally likely (1/4 each).</p>
+    <div class="tbl"><table>
+      <tr><th>Outcome</th><th>HH</th><th>HT</th><th>TH</th><th>TT</th></tr>
+      <tr><td>X</td><td>2</td><td>1</td><td>1</td><td>0</td></tr>
+    </table></div>
+    <p>So <span class="m">p(X = 2) = 1/4</span>, <span class="m">p(X = 1) = 2/4 = 1/2</span> (two outcomes), <span class="m">p(X = 0) = 1/4</span>.</p>
+  </div>
+
+  <div class="ex"><span class="t">Example · two fair dice</span>
+    <p><var>Y</var> = (first die) − (second die). There are 36 equally likely ordered outcomes.</p>
+    <ol class="steps">
+      <li><span class="m">p(Y = −5)</span>: only (1, 6) gives −5, so it’s <b>1/36</b>.</li>
+      <li><span class="m">p(Y = 0)</span>: the dice match: (1,1), (2,2), …, (6,6). That’s 6 outcomes, so <b>6/36 = 1/6</b>.</li>
+    </ol>
+  </div>
+
+  <details class="check"><summary>Same dice. What is p(Y = 3)?<span class="tap">tap</span></summary>
+    <div class="a"><p><b>3/36 = 1/12.</b> First − second = 3 happens for (4,1), (5,2), (6,3).</p></div></details>
+</section>
+
+<section id="ev">
+  <h2><span class="n">2</span>Expected value</h2>
+  <div class="idea"><span class="t">Big idea</span><p>E(X) is the <b>weighted average</b> of X: each value counts in proportion to how likely it is. Repeat the experiment many times and the average of X settles near E(X).</p></div>
+  <div class="key">E(X) = Σ<sub>s∈S</sub> p(s) · X(s)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Σ<sub>r</sub> r · p(X = r)<small>Top line: add over <b>outcomes</b>. Bottom line: group outcomes by the <b>value</b> they give. Both give the same number; use whichever is easier.</small></div>
+
+  <h3>How to compute it directly</h3>
+  <ol class="how">
+    <li>List every possible value <var>r</var> of <var>X</var>.</li>
+    <li>Find <span class="m">p(X = r)</span> for each. These must add to 1, a good check.</li>
+    <li>Multiply each value by its probability and add.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · two coins, X = number of heads</span>
+    <p><span class="m">E(X) = 0·¼ + 1·½ + 2·¼ = 0 + ½ + ½ = <b>1</b></span>.</p>
+    <p>Makes sense: two coins, each heads half the time, so one head on average.</p>
+  </div>
+  <div class="ex"><span class="t">Example · one fair die</span>
+    <p><span class="m">E(X) = (1 + 2 + 3 + 4 + 5 + 6)/6 = 21/6 = <b>7/2</b></span>.</p>
+    <p>Note that E(X) = 3.5 is a value X can <b>never</b> take. An expected value is an average, not a likely outcome.</p>
+  </div>
+  <div class="ex"><span class="t">Example · dice difference, the long way</span>
+    <p>For <span class="m">Y</span> = first − second, the values run from −5 to 5 with probabilities 1/36, 2/36, 3/36, 4/36, 5/36, 6/36, 5/36, …, 1/36. Each value <var>r</var> pairs with −<var>r</var> at the same probability, so they cancel and <span class="m">E(Y) = <b>0</b></span>. The next section gets this in one line.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Don’t just average the possible <b>values</b>. For two coins, the values 0, 1, 2 average to 1 here by luck, but in general you must weight by probability. A biased coin with p(H) = 0.9 has E(heads in 2 flips) = 1.8, not 1.</p></div>
+
+  <details class="check"><summary>You win $10 with probability 1/5 and lose $2 otherwise. What is your expected winnings?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">10·(1/5) + (−2)·(4/5) = 2 − 1.6 = <b>$0.40</b></span>.</p></div></details>
+</section>
+
+<section id="lin">
+  <h2><span class="n">3</span>Linearity of expectation</h2>
+  <div class="idea"><span class="t">Big idea</span><p>The expected value of a sum is the sum of the expected values. <b>Always.</b> No independence needed. This is the single most useful fact on the quiz.</p></div>
+  <div class="key">E(X<sub>1</sub> + ⋯ + X<sub>n</sub>) = E(X<sub>1</sub>) + ⋯ + E(X<sub>n</sub>)<br>E(aX + b) = a·E(X) + b<small>For any random variables on the same sample space and any constants <var>a</var>, <var>b</var>.</small></div>
+
+  <h3>Why it’s true</h3>
+  <p>Write each expectation as a sum over outcomes and split the sum:</p>
+  <div class="key">E(X<sub>1</sub>+X<sub>2</sub>) = Σ p(s)(X<sub>1</sub>(s)+X<sub>2</sub>(s))<br>= Σ p(s)X<sub>1</sub>(s) + Σ p(s)X<sub>2</sub>(s) = E(X<sub>1</sub>) + E(X<sub>2</sub>)</div>
+  <p>Nothing in that algebra cared whether X<sub>1</sub> and X<sub>2</sub> are related, which is why independence isn’t needed. Same idea for <span class="m">E(aX + b)</span>: pull out <var>a</var>, and <span class="m">Σ p(s)·b = b</span> because the probabilities add to 1.</p>
+
+  <div class="ex"><span class="t">Example · dice difference in one line</span>
+    <ol class="steps">
+      <li>Let Y<sub>1</sub> = first die and Y<sub>2</sub> = second die, so Y = Y<sub>1</sub> − Y<sub>2</sub>.</li>
+      <li>Each die has expected value 7/2.</li>
+      <li><span class="m">E(Y) = E(Y<sub>1</sub>) − E(Y<sub>2</sub>) = 7/2 − 7/2 = <b>0</b></span>.</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example · sum of three dice</span>
+    <p><span class="m">E = 7/2 + 7/2 + 7/2 = <b>21/2</b></span>. Listing all 216 outcomes would take forever; linearity takes one line.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Linearity works for <b>sums</b>, not products. <span class="m">E(XY) = E(X)E(Y)</span> needs independence (section 6).</p></div>
+</section>
+
+<section id="ind">
+  <h2><span class="n">4</span>The indicator trick (counting with linearity)</h2>
+  <div class="idea"><span class="t">Big idea</span><p>To find the expected <b>number</b> of something, break the count into 0/1 pieces. The expected count is the <b>sum of the probabilities</b> of each piece happening.</p></div>
+  <div class="key">X<sub>k</sub> = 1 if event k happens, 0 if not &nbsp;⟹&nbsp; E(X<sub>k</sub>) = p(event k)<small>Called an <b>indicator</b> random variable. Its expectation is 1·p + 0·(1 − p) = p.</small></div>
+
+  <h3>The recipe</h3>
+  <ol class="how">
+    <li>Name what you’re counting: “X = number of ____.”</li>
+    <li>Write <span class="m">X = X<sub>1</sub> + ⋯ + X<sub>n</sub></span>, one indicator per thing that could happen.</li>
+    <li>Find <span class="m">p</span>(each thing happens). Often they’re all equal.</li>
+    <li>Add: <span class="m">E(X) = p<sub>1</sub> + ⋯ + p<sub>n</sub></span>. Done, with no need to find the distribution of X.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · two coins again</span>
+    <p>X<sub>1</sub> = 1 if coin 1 is heads; X<sub>2</sub> = 1 if coin 2 is heads. Then X = X<sub>1</sub> + X<sub>2</sub> and <span class="m">E(X) = ½ + ½ = <b>1</b></span>, matching section 2.</p>
+  </div>
+
+  <div class="ex"><span class="t">Example · Bernoulli trials (the big one)</span>
+    <p><var>n</var> independent trials, each a success with probability <var>p</var>. Let X = number of successes.</p>
+    <ol class="steps">
+      <li>X<sub>k</sub> = 1 if trial <var>k</var> succeeds, so X = X<sub>1</sub> + ⋯ + X<sub>n</sub>.</li>
+      <li><span class="m">E(X<sub>k</sub>) = p·1 + (1 − p)·0 = p</span>.</li>
+      <li><span class="m">E(X) = p + p + ⋯ + p = <b>np</b></span>.</li>
+    </ol>
+    <p>100 coins with a 3/10 chance of heads: <span class="m">E = 100 · 0.3 = <b>30</b></span> heads.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>The pieces are allowed to depend on each other. Don’t stop to check independence; linearity doesn’t need it.</p></div>
+
+  <details class="check"><summary>Roll a fair die 12 times. Expected number of sixes?<span class="tap">tap</span></summary>
+    <div class="a"><p>Bernoulli trials with n = 12, p = 1/6: <span class="m">E = 12 · 1/6 = <b>2</b></span>.</p></div></details>
+  <details class="check"><summary>Flip a coin with p(H) = 0.2 ten times. Expected number of heads?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">np = 10 · 0.2 = <b>2</b></span>.</p></div></details>
+</section>
+
+<section id="rec">
+  <h2><span class="n">5</span>Two lecture examples: records &amp; chasing losses</h2>
+
+  <h3>Why new records are rare</h3>
+  <p>100 people with different scores appear in a uniformly random order. A “record” is a score higher than every score before it. Let X = number of records. What is E(X)?</p>
+  <div class="ex"><span class="t">Solution</span>
+    <ol class="steps">
+      <li>X<sub>k</sub> = 1 if the <var>k</var>-th score is a record. X = X<sub>1</sub> + ⋯ + X<sub>100</sub>.</li>
+      <li>The <var>k</var>-th score is a record exactly when it’s the <b>largest of the first k</b>. By symmetry, each of those k scores is equally likely to be the largest, so <span class="m">p = 1/k</span>.</li>
+      <li><span class="m">E(X) = 1 + 1/2 + 1/3 + ⋯ + 1/100 = H<sub>100</sub> ≈ <b>5.19</b></span>.</li>
+    </ol>
+    <p>H<sub>n</sub> (the <b>harmonic number</b>) grows like ln n, so records get rarer and rarer: about 5 in 100 people.</p>
+  </div>
+  <details class="check"><summary>Expected number of records among 4 people?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">1 + 1/2 + 1/3 + 1/4 = <b>25/12</b> ≈ 2.08</span>.</p></div></details>
+
+  <h3>Chasing losses (the “martingale” — don’t do this)</h3>
+  <p>Roulette: win your bet with probability 0.48, lose it with probability 0.52. Bob bets $1; each time he loses he doubles the bet. When he finally wins, he’s up exactly $1, since <span class="m">2<sup>k</sup> − (1 + 2 + ⋯ + 2<sup>k−1</sup>) = 2<sup>k</sup> − (2<sup>k</sup> − 1) = 1</span>.</p>
+  <div class="ex"><span class="t">Why it fails</span>
+    <ul>
+      <li>Every single bet has expected value <span class="m">0.48 − 0.52 = <b>−$0.04</b></span> per dollar. By linearity, a sum of losing bets is a losing strategy.</li>
+      <li>The rare disaster is huge: losing 10 in a row (probability 0.52<sup>10</sup> ≈ 0.0014) costs <span class="m">1 + 2 + ⋯ + 512 = $1023</span>. Repeat the strategy enough times and that streak becomes likely.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="irv">
+  <h2><span class="n">6</span>Independent random variables</h2>
+  <div class="idea"><span class="t">Big idea</span><p>X and Y are independent if knowing the value of one tells you <b>nothing</b> about the other.</p></div>
+  <div class="key">p(X = r<sub>1</sub> and Y = r<sub>2</sub>) = p(X = r<sub>1</sub>) · p(Y = r<sub>2</sub>)<small>…for <b>every</b> pair of values r<sub>1</sub>, r<sub>2</sub>. One failing pair is enough to show they’re <b>not</b> independent.</small></div>
+
+  <div class="ex"><span class="t">Independent · two dice</span>
+    <p>X = first die, Y = second die. For any values, <span class="m">p(X = r<sub>1</sub>, Y = r<sub>2</sub>) = 1/36 = (1/6)(1/6)</span>. ✓</p>
+  </div>
+  <div class="ex"><span class="t">Not independent · heads vs. tails</span>
+    <p>Flip two coins. X = number of heads, Y = number of tails (so X + Y = 2 always).</p>
+    <ol class="steps">
+      <li><span class="m">p(X = 1) = 1/2</span> and <span class="m">p(Y = 1) = 1/2</span>.</li>
+      <li><span class="m">p(X = 1 and Y = 1) = p({HT, TH}) = 1/2</span>.</li>
+      <li>But <span class="m">(1/2)(1/2) = 1/4 ≠ 1/2</span>, so <b>not independent</b>. Makes sense: knowing X tells you Y exactly.</li>
+    </ol>
+  </div>
+
+  <h3>Products of independent variables</h3>
+  <div class="key">X, Y independent &nbsp;⟹&nbsp; E(XY) = E(X)·E(Y)</div>
+  <p><b>Why:</b> <span class="m">E(XY) = Σ r<sub>1</sub>r<sub>2</sub> · p(X = r<sub>1</sub>, Y = r<sub>2</sub>)</span>. Independence lets you split the probability into <span class="m">p(X = r<sub>1</sub>)p(Y = r<sub>2</sub>)</span>, and then the double sum factors into <span class="m">(Σ r<sub>1</sub>p(X = r<sub>1</sub>))(Σ r<sub>2</sub>p(Y = r<sub>2</sub>)) = E(X)E(Y)</span>. That splitting step is the only place independence is used.</p>
+
+  <div class="warn"><span class="t">Trap · it fails without independence</span>
+    <p>Heads vs. tails again. XY = 0 for HH and TT, and XY = 1·1 = 1 for HT and TH.</p>
+    <p><span class="m">E(XY) = ½</span>, but <span class="m">E(X)E(Y) = 1·1 = 1</span>. Not equal.</p>
+  </div>
+</section>
+
+<section id="var">
+  <h2><span class="n">7</span>Variance &amp; standard deviation</h2>
+  <div class="idea"><span class="t">Big idea</span><p>E(X) tells you the center. <b>Variance</b> tells you how spread out X is around that center: the average squared distance from E(X).</p></div>
+  <div class="key">V(X) = Σ<sub>s</sub> (X(s) − E(X))² · p(s)<br>σ(X) = √V(X)<small>σ is the <b>standard deviation</b>, in the same units as X. Variance is never negative, and it’s 0 only if X is constant.</small></div>
+
+  <div class="ex"><span class="t">Example · two coins, X = heads (definition)</span>
+    <p>E(X) = 1. Squared distances: TT → (0−1)² = 1, HT/TH → 0, HH → (2−1)² = 1.</p>
+    <p><span class="m">V(X) = ¼·1 + ½·0 + ¼·1 = <b>½</b></span>.</p>
+  </div>
+
+  <h3>The shortcut formula (use this one)</h3>
+  <div class="key">V(X) = E(X²) − E(X)²<small>“Mean of the square minus square of the mean.” Proof: expand (X − E(X))², use linearity, and the middle term −2E(X)·E(X) combines with +E(X)² to leave −E(X)².</small></div>
+  <ol class="how">
+    <li>Compute <span class="m">E(X)</span>.</li>
+    <li>Compute <span class="m">E(X²) = Σ r² p(X = r)</span>: square the <b>values</b>, keep the same probabilities.</li>
+    <li>Subtract: <span class="m">E(X²) − E(X)²</span>.</li>
+  </ol>
+  <div class="ex"><span class="t">Example · one fair die</span>
+    <ol class="steps">
+      <li><span class="m">E(X) = 7/2</span>.</li>
+      <li><span class="m">E(X²) = (1 + 4 + 9 + 16 + 25 + 36)/6 = 91/6</span>.</li>
+      <li><span class="m">V(X) = 91/6 − 49/4 = 182/12 − 147/12 = <b>35/12</b></span> ≈ 2.92.</li>
+    </ol>
+  </div>
+
+  <h3>Scaling and shifting</h3>
+  <div class="key">V(aX + b) = a² · V(X)<small>Shifting by b doesn’t change the spread. Scaling by a multiplies distances by a, so squared distances by a² (Rosen 7.4).</small></div>
+
+  <div class="warn"><span class="t">Trap</span><p><span class="m">E(X²)</span> is <b>not</b> <span class="m">E(X)²</span>. For a die, 91/6 ≈ 15.17 vs. 49/4 = 12.25. Their difference is exactly the variance.</p></div>
+
+  <details class="check"><summary>X is 0 or 10, each with probability ½. Find V(X) and σ(X).<span class="tap">tap</span></summary>
+    <div class="a"><p>E(X) = 5, E(X²) = ½·0 + ½·100 = 50. <span class="m">V = 50 − 25 = <b>25</b>, σ = <b>5</b></span>. Every value sits exactly 5 from the mean, which matches σ.</p></div></details>
+</section>
+
+<section id="bie">
+  <h2><span class="n">8</span>Variance of a sum (Bienaymé’s formula)</h2>
+  <div class="idea"><span class="t">Big idea</span><p>For <b>independent</b> variables, variances add, just like expectations. Without independence, they generally don’t.</p></div>
+  <div class="key">X<sub>1</sub>, …, X<sub>n</sub> independent &nbsp;⟹<br>V(X<sub>1</sub> + ⋯ + X<sub>n</sub>) = V(X<sub>1</sub>) + ⋯ + V(X<sub>n</sub>)</div>
+
+  <h3>Why (two variables, as in lecture)</h3>
+  <ol class="steps">
+    <li><span class="m">V(X<sub>1</sub>+X<sub>2</sub>) = E((X<sub>1</sub>+X<sub>2</sub>)²) − (E(X<sub>1</sub>) + E(X<sub>2</sub>))²</span>.</li>
+    <li>Expand both squares. The first gives <span class="m">E(X<sub>1</sub>²) + 2E(X<sub>1</sub>X<sub>2</sub>) + E(X<sub>2</sub>²)</span>; the second gives <span class="m">E(X<sub>1</sub>)² + 2E(X<sub>1</sub>)E(X<sub>2</sub>) + E(X<sub>2</sub>)²</span>.</li>
+    <li>Independence makes <span class="m">E(X<sub>1</sub>X<sub>2</sub>) = E(X<sub>1</sub>)E(X<sub>2</sub>)</span>, so the cross terms cancel.</li>
+    <li>What’s left is <span class="m">(E(X<sub>1</sub>²) − E(X<sub>1</sub>)²) + (E(X<sub>2</sub>²) − E(X<sub>2</sub>)²) = V(X<sub>1</sub>) + V(X<sub>2</sub>)</span>.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · sum of two dice</span>
+    <p>The dice are independent, each with variance 35/12. <span class="m">V = 35/12 + 35/12 = <b>35/6</b></span>.</p>
+  </div>
+
+  <div class="ex"><span class="t">Example · Bernoulli trials (the big one, again)</span>
+    <ol class="steps">
+      <li>Indicators again: X = X<sub>1</sub> + ⋯ + X<sub>n</sub>, with X<sub>k</sub> = 1 on success.</li>
+      <li>X<sub>k</sub> is 0 or 1, so X<sub>k</sub>² = X<sub>k</sub> and <span class="m">E(X<sub>k</sub>²) = p</span>.</li>
+      <li><span class="m">V(X<sub>k</sub>) = p − p² = p(1 − p)</span>.</li>
+      <li>The trials are independent, so add: <span class="m">V(X) = <b>np(1 − p)</b></span>.</li>
+    </ol>
+    <p>100 coins with p = 0.3: <span class="m">V = 100 · 0.3 · 0.7 = <b>21</b></span>, so σ ≈ 4.58. Expect about 30 ± 4.6 heads.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Heads + tails of two coins is always 2, so V(X + Y) = 0, but V(X) + V(Y) = ½ + ½ = 1. They aren’t independent, so the formula doesn’t apply.</p></div>
+
+  <details class="check"><summary>10 flips with p(H) = 0.2. Variance of the number of heads?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">np(1−p) = 10 · 0.2 · 0.8 = <b>1.6</b></span>.</p></div></details>
+</section>
+
+<section id="cheb">
+  <h2><span class="n">9</span>Chebyshev’s inequality</h2>
+  <div class="idea"><span class="t">Big idea</span><p>If the variance is small, X can’t often be far from its mean. Chebyshev turns that into a number, using <b>only</b> E(X) and V(X).</p></div>
+  <div class="key">p( |X − E(X)| ≥ r ) ≤ V(X) / r²<small>For any random variable X and any r &gt; 0. “The chance of landing at least r away from the mean is at most variance over r².”</small></div>
+
+  <h3>Why it’s true</h3>
+  <p>Let A be the set of outcomes where <span class="m">|X(s) − E(X)| ≥ r</span>. Then</p>
+  <div class="key">V(X) = Σ<sub>all s</sub> (X(s) − E(X))² p(s)<br>≥ Σ<sub>s∈A</sub> (X(s) − E(X))² p(s)<br>≥ Σ<sub>s∈A</sub> r² p(s) = r² · p(A)</div>
+  <p>Dropping outcomes outside A can only shrink the sum (every term is ≥ 0), and inside A each squared distance is at least r². Divide by r² to get the inequality.</p>
+
+  <h3>How to use it</h3>
+  <ol class="how">
+    <li>Find <span class="m">E(X)</span> and <span class="m">V(X)</span>, usually with sections 4 and 8.</li>
+    <li>Rewrite the question as “at least <var>r</var> away from the mean” to identify <var>r</var>.</li>
+    <li>Compute <span class="m">V(X)/r²</span>. That’s an upper bound, not the exact probability.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · 100 fair coins</span>
+    <p>X = heads: E = 50, V = 100 · ½ · ½ = 25. Probability of being 10 or more away from 50?</p>
+    <p><span class="m">p(|X − 50| ≥ 10) ≤ 25/10² = <b>1/4</b></span>. (The true value is about 0.057; Chebyshev is safe but loose.)</p>
+  </div>
+  <div class="ex"><span class="t">Example · n fair coins (Rosen)</span>
+    <p>E = n/2, V = n/4. Take r = √n: <span class="m">p(|X − n/2| ≥ √n) ≤ (n/4)/n = <b>1/4</b></span>, for every n.</p>
+  </div>
+  <div class="ex"><span class="t">Example · one die</span>
+    <p>E = 7/2, V = 35/12. Rolling a 1 or a 6 means being 2.5 away. <span class="m">p ≤ (35/12)/(2.5)² = <b>7/15</b></span> ≈ 0.47. True value: 2/6 = 1/3. ✓ The bound holds.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Square <var>r</var> in the denominator, and use <b>V</b>, not σ. And the answer is “≤”: never claim the bound is the exact probability.</p></div>
+</section>
+
+<!-- ======================= PART 2 ======================= -->
+<div class="part-h" id="part2">Part 2 · Recurrence relations</div>
+<p>Thursday’s lecture (Rosen 8.1–8.2). Two skills: <b>set up</b> a recurrence from a word problem, and <b>solve</b> one with the characteristic equation.</p>
+
+<section id="rr">
+  <h2><span class="n">10</span>What a recurrence relation is</h2>
+  <div class="idea"><span class="t">Big idea</span><p>A recurrence defines each term of a sequence from earlier terms. Add enough starting values and the whole sequence is determined.</p></div>
+  <ul>
+    <li><b>Recurrence relation:</b> a rule giving a<sub>n</sub> in terms of a<sub>0</sub>, …, a<sub>n−1</sub>. Example: <span class="m">a<sub>n</sub> = a<sub>n−1</sub> + 3</span>.</li>
+    <li><b>Initial conditions:</b> the first few terms, given outright. Example: <span class="m">a<sub>0</sub> = 2</span>.</li>
+    <li><b>Solution:</b> any sequence that satisfies the rule. A <b>closed form</b> is a direct formula for a<sub>n</sub>, like <span class="m">a<sub>n</sub> = 2 + 3n</span>.</li>
+  </ul>
+  <p>To check a proposed closed form, plug it into the rule and the initial conditions. Or just compute the first few terms both ways and compare.</p>
+  <div class="ex"><span class="t">Example · iterate to guess a formula</span>
+    <p><span class="m">a<sub>n</sub> = a<sub>n−1</sub> + 3</span>, a<sub>0</sub> = 2: terms 2, 5, 8, 11, … Each step adds 3, so <span class="m">a<sub>n</sub> = 2 + 3n</span>.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>A degree-k recurrence (a<sub>n</sub> uses the previous k terms) needs <b>k</b> initial conditions. One is not enough for a<sub>n</sub> = a<sub>n−1</sub> + a<sub>n−2</sub>.</p></div>
+</section>
+
+<section id="model">
+  <h2><span class="n">11</span>Setting up a recurrence (modeling)</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Ask: “How does a size-n object break into smaller ones?” Usually you split by the <b>last step</b> (or first step) and count each case using smaller sizes.</p></div>
+
+  <div class="ex"><span class="t">Example · compound interest</span>
+    <p>$1000 earns 5% a year. P<sub>n</sub> = amount after n years.</p>
+    <p><span class="m">P<sub>n</sub> = P<sub>n−1</sub> + 0.05P<sub>n−1</sub> = 1.05P<sub>n−1</sub></span>, P<sub>0</sub> = 1000. Iterating gives <span class="m">P<sub>n</sub> = 1000 · 1.05<sup>n</sup></span> (≈ $1628.89 after 10 years).</p>
+  </div>
+
+  <div class="ex"><span class="t">Example · Tower of Hanoi</span>
+    <p>Move n disks from peg 1 to peg 3, never putting a larger disk on a smaller one. H<sub>n</sub> = minimum moves.</p>
+    <ol class="steps">
+      <li>Move the top n − 1 disks out of the way: H<sub>n−1</sub> moves.</li>
+      <li>Move the biggest disk: 1 move.</li>
+      <li>Move the n − 1 disks back on top of it: H<sub>n−1</sub> moves.</li>
+    </ol>
+    <p><span class="m">H<sub>n</sub> = 2H<sub>n−1</sub> + 1</span>, H<sub>1</sub> = 1. Terms: 1, 3, 7, 15, 31 … which looks like <span class="m">2<sup>n</sup> − 1</span> (proved in section 16).</p>
+  </div>
+
+  <div class="ex"><span class="t">Example · bit strings with no two consecutive 0s</span>
+    <p>a<sub>n</sub> = number of length-n bit strings with no “00”. Split by the <b>last bit</b>:</p>
+    <ol class="steps">
+      <li><b>Ends in 1:</b> the first n − 1 bits can be any valid string. That’s a<sub>n−1</sub> strings.</li>
+      <li><b>Ends in 0:</b> the bit before it must be 1 (otherwise “00”), so the string ends “10” and the first n − 2 bits are any valid string. That’s a<sub>n−2</sub> strings.</li>
+      <li>The cases don’t overlap, so add them (sum rule): <span class="m">a<sub>n</sub> = a<sub>n−1</sub> + a<sub>n−2</sub></span>.</li>
+      <li>Initial conditions by hand: a<sub>1</sub> = 2 (0, 1) and a<sub>2</sub> = 3 (01, 10, 11).</li>
+    </ol>
+    <p>Then a<sub>3</sub> = 5, a<sub>4</sub> = 8, a<sub>5</sub> = 13: Fibonacci numbers.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Check that your cases are <b>disjoint</b> and <b>cover everything</b>, and compute the initial conditions by actually listing small cases.</p></div>
+
+  <details class="check"><summary>Write a recurrence for the number of length-n bit strings that contain no “11”.<span class="tap">tap</span></summary>
+    <div class="a"><p>Same argument with 0 and 1 swapped: <span class="m">b<sub>n</sub> = b<sub>n−1</sub> + b<sub>n−2</sub></span>, b<sub>1</sub> = 2, b<sub>2</sub> = 3. Ends in 0 → any valid string of length n−1; ends in 1 → must end “01”.</p></div></details>
+</section>
+
+<section id="lh">
+  <h2><span class="n">12</span>Linear homogeneous recurrences &amp; the characteristic equation</h2>
+  <div class="idea"><span class="t">Big idea</span><p>For a certain nice kind of recurrence, guessing <span class="m">a<sub>n</sub> = r<sup>n</sup></span> turns the whole problem into solving a polynomial.</p></div>
+  <div class="key">a<sub>n</sub> = c<sub>1</sub>a<sub>n−1</sub> + c<sub>2</sub>a<sub>n−2</sub> + ⋯ + c<sub>k</sub>a<sub>n−k</sub><small><b>Linear:</b> each earlier term appears to the first power, multiplied by a number. <b>Homogeneous:</b> no extra term that isn’t a multiple of some a<sub>j</sub>. <b>Constant coefficients:</b> the c’s are fixed numbers, not depending on n. <b>Degree k</b> (with c<sub>k</sub> ≠ 0).</small></div>
+
+  <div class="tbl"><table>
+    <tr><th>Recurrence</th><th>Linear homogeneous, constant coeff.?</th></tr>
+    <tr><td><span class="m">a<sub>n</sub> = a<sub>n−1</sub> + a<sub>n−2</sub></span></td><td>Yes, degree 2</td></tr>
+    <tr><td><span class="m">a<sub>n</sub> = a<sub>n−5</sub></span></td><td>Yes, degree 5</td></tr>
+    <tr><td><span class="m">a<sub>n</sub> = a<sub>n−1</sub> + a<sub>n−2</sub><sup>2</sup></span></td><td>No: not linear (squared term)</td></tr>
+    <tr><td><span class="m">H<sub>n</sub> = 2H<sub>n−1</sub> + 1</span></td><td>No: not homogeneous (the +1)</td></tr>
+    <tr><td><span class="m">B<sub>n</sub> = nB<sub>n−1</sub></span></td><td>No: coefficient n isn’t constant</td></tr>
+  </table></div>
+
+  <h3>Where the characteristic equation comes from</h3>
+  <ol class="steps">
+    <li>Guess <span class="m">a<sub>n</sub> = r<sup>n</sup></span> in <span class="m">a<sub>n</sub> = c<sub>1</sub>a<sub>n−1</sub> + c<sub>2</sub>a<sub>n−2</sub></span>.</li>
+    <li>You get <span class="m">r<sup>n</sup> = c<sub>1</sub>r<sup>n−1</sup> + c<sub>2</sub>r<sup>n−2</sup></span>.</li>
+    <li>Divide by <span class="m">r<sup>n−2</sup></span>: <span class="m">r² = c<sub>1</sub>r + c<sub>2</sub></span>.</li>
+  </ol>
+  <div class="key">r² − c<sub>1</sub>r − c<sub>2</sub> = 0<small>The <b>characteristic equation</b>. Its solutions are the <b>characteristic roots</b>. Each root r gives a solution r<sup>n</sup>.</small></div>
+  <p>Fast way to write it: replace a<sub>n</sub> by r<sup>k</sup>, a<sub>n−1</sub> by r<sup>k−1</sup>, …, a<sub>n−k</sub> by 1, then move everything to one side.</p>
+  <div class="warn"><span class="t">Trap · signs</span><p>For <span class="m">a<sub>n</sub> = 5a<sub>n−1</sub> − 6a<sub>n−2</sub></span> the equation is <span class="m">r² − 5r + 6 = 0</span>. Both signs flip when you move the terms over.</p></div>
+</section>
+
+<section id="dist">
+  <h2><span class="n">13</span>Solving: two distinct roots</h2>
+  <div class="key">roots r<sub>1</sub> ≠ r<sub>2</sub> &nbsp;⟹&nbsp; a<sub>n</sub> = α<sub>1</sub>r<sub>1</sub><sup>n</sup> + α<sub>2</sub>r<sub>2</sub><sup>n</sup><small>Every solution has this form. The constants α<sub>1</sub>, α<sub>2</sub> are pinned down by the two initial conditions.</small></div>
+
+  <h3>The recipe (memorize this)</h3>
+  <ol class="how">
+    <li>Write the characteristic equation and find its roots.</li>
+    <li>Write the general form <span class="m">a<sub>n</sub> = α<sub>1</sub>r<sub>1</sub><sup>n</sup> + α<sub>2</sub>r<sub>2</sub><sup>n</sup></span>.</li>
+    <li>Plug in n = 0 and n = 1 (or whichever initial conditions you’re given) to get two equations.</li>
+    <li>Solve for α<sub>1</sub>, α<sub>2</sub>.</li>
+    <li><b>Check</b> by computing a<sub>2</sub> from the recurrence and from your formula.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · a<sub>n</sub> = 5a<sub>n−1</sub> − 6a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 4</span>
+    <ol class="steps">
+      <li><span class="m">r² − 5r + 6 = (r − 2)(r − 3) = 0</span>, so r = 2, 3.</li>
+      <li><span class="m">a<sub>n</sub> = α<sub>1</sub>2<sup>n</sup> + α<sub>2</sub>3<sup>n</sup></span>.</li>
+      <li>n = 0: <span class="m">α<sub>1</sub> + α<sub>2</sub> = 1</span>. n = 1: <span class="m">2α<sub>1</sub> + 3α<sub>2</sub> = 4</span>.</li>
+      <li>Subtract twice the first from the second: α<sub>2</sub> = 2, then α<sub>1</sub> = −1.</li>
+      <li><span class="m">a<sub>n</sub> = <b>2·3<sup>n</sup> − 2<sup>n</sup></b></span>. Check: recurrence gives a<sub>2</sub> = 20 − 6 = 14; formula gives 18 − 4 = 14. ✓</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = a<sub>n−1</sub> + 2a<sub>n−2</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 7</span>
+    <ol class="steps">
+      <li><span class="m">r² − r − 2 = (r − 2)(r + 1) = 0</span>, so r = 2, −1.</li>
+      <li>α<sub>1</sub> + α<sub>2</sub> = 2 and 2α<sub>1</sub> − α<sub>2</sub> = 7. Adding: 3α<sub>1</sub> = 9, so α<sub>1</sub> = 3, α<sub>2</sub> = −1.</li>
+      <li><span class="m">a<sub>n</sub> = <b>3·2<sup>n</sup> − (−1)<sup>n</sup></b></span>. Check a<sub>2</sub>: 7 + 4 = 11 and 12 − 1 = 11. ✓</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example · Fibonacci</span>
+    <p><span class="m">f<sub>n</sub> = f<sub>n−1</sub> + f<sub>n−2</sub></span>, f<sub>0</sub> = 0, f<sub>1</sub> = 1. Roots of r² − r − 1 = 0 are <span class="m">(1 ± √5)/2</span>. Solving for the α’s gives</p>
+    <div class="key">f<sub>n</sub> = (1/√5)·((1+√5)/2)<sup>n</sup> − (1/√5)·((1−√5)/2)<sup>n</sup></div>
+    <p>Irrational roots are fine; the recipe is identical.</p>
+  </div>
+
+  <details class="check"><summary>Solve a<sub>n</sub> = 7a<sub>n−1</sub> − 10a<sub>n−2</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 7.<span class="tap">tap</span></summary>
+    <div class="a"><p>r² − 7r + 10 = (r − 2)(r − 5), roots 2 and 5. α<sub>1</sub> + α<sub>2</sub> = 2, 2α<sub>1</sub> + 5α<sub>2</sub> = 7 → α<sub>1</sub> = α<sub>2</sub> = 1.</p><p><span class="m">a<sub>n</sub> = <b>2<sup>n</sup> + 5<sup>n</sup></b></span>. Check a<sub>2</sub>: 49 − 20 = 29 = 4 + 25. ✓</p></div></details>
+</section>
+
+<section id="repr">
+  <h2><span class="n">14</span>Solving: a repeated root</h2>
+  <div class="idea"><span class="t">Big idea</span><p>If both roots are the same number r<sub>0</sub>, then α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>r<sub>0</sub><sup>n</sup> is really just one term, which can’t fit two initial conditions. The fix: the second solution is <span class="m">n·r<sub>0</sub><sup>n</sup></span>.</p></div>
+  <div class="key">double root r<sub>0</sub> &nbsp;⟹&nbsp; a<sub>n</sub> = α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>·n·r<sub>0</sub><sup>n</sup> = (α<sub>1</sub> + α<sub>2</sub>n) r<sub>0</sub><sup>n</sup></div>
+  <p>You spot a repeated root when the quadratic is a perfect square, like <span class="m">r² − 4r + 4 = (r − 2)²</span>.</p>
+
+  <div class="ex"><span class="t">Example · a<sub>n</sub> = 4a<sub>n−1</sub> − 4a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 6</span>
+    <ol class="steps">
+      <li><span class="m">r² − 4r + 4 = (r − 2)² = 0</span>: double root r<sub>0</sub> = 2.</li>
+      <li><span class="m">a<sub>n</sub> = (α<sub>1</sub> + α<sub>2</sub>n)2<sup>n</sup></span>.</li>
+      <li>n = 0: α<sub>1</sub> = 1. n = 1: (1 + α<sub>2</sub>)·2 = 6, so α<sub>2</sub> = 2.</li>
+      <li><span class="m">a<sub>n</sub> = <b>(1 + 2n)2<sup>n</sup></b></span>. Check a<sub>2</sub>: 24 − 4 = 20 and 5·4 = 20. ✓</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = 6a<sub>n−1</sub> − 9a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 6</span>
+    <p>(r − 3)² = 0. α<sub>1</sub> = 1 and (1 + α<sub>2</sub>)·3 = 6, so α<sub>2</sub> = 1. <span class="m">a<sub>n</sub> = <b>(1 + n)3<sup>n</sup></b></span>.</p>
+  </div>
+
+  <div class="warn"><span class="t">Trap</span><p>Writing <span class="m">α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>r<sub>0</sub><sup>n</sup></span> for a repeated root. The equations will be inconsistent. You need the extra <b>n</b>.</p></div>
+
+  <details class="check"><summary>Solve a<sub>n</sub> = −6a<sub>n−1</sub> − 9a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 0.<span class="tap">tap</span></summary>
+    <div class="a"><p>r² + 6r + 9 = (r + 3)², double root −3. a<sub>n</sub> = (α<sub>1</sub> + α<sub>2</sub>n)(−3)<sup>n</sup>. α<sub>1</sub> = 1; (1 + α<sub>2</sub>)(−3) = 0 → α<sub>2</sub> = −1.</p><p><span class="m">a<sub>n</sub> = <b>(1 − n)(−3)<sup>n</sup></b></span>. Check a<sub>2</sub>: −6·0 − 9·1 = −9 and (−1)(9) = −9. ✓</p></div></details>
+</section>
+
+<section id="gen">
+  <h2><span class="n">15</span>Degree 3 and up; general multiplicities</h2>
+  <p>Same recipe, bigger polynomial. A degree-k recurrence has a degree-k characteristic equation and needs k initial conditions.</p>
+  <div class="key">root r with multiplicity m contributes<br>(α<sub>0</sub> + α<sub>1</sub>n + ⋯ + α<sub>m−1</sub>n<sup>m−1</sup>) r<sup>n</sup><small>Distinct roots: m = 1, a plain αr<sup>n</sup>. Double root: (α<sub>0</sub> + α<sub>1</sub>n)r<sup>n</sup>. Triple root: up to n². Add up the contributions of all roots.</small></div>
+  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = 6a<sub>n−1</sub> − 11a<sub>n−2</sub> + 6a<sub>n−3</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 5, a<sub>2</sub> = 15</span>
+    <ol class="steps">
+      <li><span class="m">r³ − 6r² + 11r − 6 = (r − 1)(r − 2)(r − 3)</span>. Tip: test small integers like r = 1 first.</li>
+      <li><span class="m">a<sub>n</sub> = α<sub>1</sub> + α<sub>2</sub>2<sup>n</sup> + α<sub>3</sub>3<sup>n</sup></span>.</li>
+      <li>Three equations from n = 0, 1, 2 give α<sub>1</sub> = 1, α<sub>2</sub> = −1, α<sub>3</sub> = 2.</li>
+      <li><span class="m">a<sub>n</sub> = <b>1 − 2<sup>n</sup> + 2·3<sup>n</sup></b></span>. Check a<sub>3</sub>: 90 − 55 + 12 = 47 and 1 − 8 + 54 = 47. ✓</li>
+    </ol>
+  </div>
+  <details class="check"><summary>The characteristic roots are 2, 2, 2 and 5. What’s the general form?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">a<sub>n</sub> = (α<sub>0</sub> + α<sub>1</sub>n + α<sub>2</sub>n²)2<sup>n</sup> + α<sub>3</sub>5<sup>n</sup></span>: four constants for a degree-4 recurrence.</p></div></details>
+</section>
+
+<section id="nh">
+  <h2><span class="n">16</span>Nonhomogeneous recurrences</h2>
+  <div class="idea"><span class="t">Big idea</span><p>When there’s an extra term F(n) (like the +1 in Hanoi), find <b>one</b> solution that handles F(n), then add the general solution of the recurrence without F(n).</p></div>
+  <div class="key">a<sub>n</sub> = c<sub>1</sub>a<sub>n−1</sub> + ⋯ + c<sub>k</sub>a<sub>n−k</sub> + F(n)<br>all solutions = a<sub>n</sub><sup>(p)</sup> + a<sub>n</sub><sup>(h)</sup><small>(p) = one <b>particular</b> solution. (h) = general solution of the <b>associated homogeneous</b> recurrence (drop F(n)), found with sections 13–15.</small></div>
+
+  <h3>The recipe</h3>
+  <ol class="how">
+    <li>Solve the homogeneous part (drop F(n)) to get a<sub>n</sub><sup>(h)</sup> with unknown α’s.</li>
+    <li>Guess a particular solution shaped like F(n), with unknown coefficients (table below). Plug it in and solve for them.</li>
+    <li>Add the two, <b>then</b> use the initial conditions to find the α’s.</li>
+  </ol>
+  <div class="tbl"><table>
+    <tr><th>F(n)</th><th>Try</th></tr>
+    <tr><td>constant</td><td><span class="m">A</span></td></tr>
+    <tr><td>polynomial of degree d, like 2n</td><td><span class="m">polynomial of degree d, like An + B</span></td></tr>
+    <tr><td><span class="m">s<sup>n</sup></span>, s not a root</td><td><span class="m">A·s<sup>n</sup></span></td></tr>
+    <tr><td><span class="m">s<sup>n</sup></span>, s a root of multiplicity m</td><td><span class="m">A·n<sup>m</sup>s<sup>n</sup></span></td></tr>
+  </table></div>
+
+  <div class="ex"><span class="t">Example · Tower of Hanoi, H<sub>n</sub> = 2H<sub>n−1</sub> + 1, H<sub>1</sub> = 1</span>
+    <ol class="steps">
+      <li>Homogeneous: H<sub>n</sub> = 2H<sub>n−1</sub> → <span class="m">α·2<sup>n</sup></span>.</li>
+      <li>F(n) = 1 is constant, so try A: <span class="m">A = 2A + 1</span> → A = −1.</li>
+      <li>General: <span class="m">H<sub>n</sub> = α·2<sup>n</sup> − 1</span>. H<sub>1</sub> = 1 gives 2α − 1 = 1, α = 1.</li>
+      <li><span class="m">H<sub>n</sub> = <b>2<sup>n</sup> − 1</b></span>, matching 1, 3, 7, 15, … ✓</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = 3a<sub>n−1</sub> + 2n, a<sub>1</sub> = 3</span>
+    <ol class="steps">
+      <li>Homogeneous: <span class="m">α·3<sup>n</sup></span>.</li>
+      <li>F(n) = 2n is degree 1, so try cn + d: <span class="m">cn + d = 3(c(n−1) + d) + 2n</span>. Match the n terms: c = 3c + 2 → c = −1. Match constants: d = −3c + 3d → d = −3/2.</li>
+      <li>General: <span class="m">a<sub>n</sub> = α·3<sup>n</sup> − n − 3/2</span>. a<sub>1</sub> = 3 gives 3α − 5/2 = 3, α = 11/6.</li>
+      <li><span class="m">a<sub>n</sub> = <b>(11/6)·3<sup>n</sup> − n − 3/2</b></span>. Check a<sub>2</sub>: 9 + 4 = 13 and 16.5 − 3.5 = 13. ✓</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Use the initial conditions <b>after</b> adding the particular solution, never on the homogeneous part alone.</p></div>
+  <details class="check"><summary>Solve a<sub>n</sub> = 2a<sub>n−1</sub> + 3, a<sub>0</sub> = 1.<span class="tap">tap</span></summary>
+    <div class="a"><p>Particular: A = 2A + 3 → A = −3. General: α·2<sup>n</sup> − 3. a<sub>0</sub> = 1 → α = 4.</p><p><span class="m">a<sub>n</sub> = <b>4·2<sup>n</sup> − 3</b></span>. Check: 1, 5, 13, 29 ✓.</p></div></details>
+</section>
+
+<!-- ======================= PART 3 ======================= -->
+<div class="part-h" id="part3">Part 3 · Review</div>
+
+<section id="bayes">
+  <h2><span class="n">17</span>Bayes refresher</h2>
+  <p>From Lecture 19, and HW 9 leans on it, so it could reappear.</p>
+  <div class="key">p(F | E) = p(E | F)p(F) / [ p(E | F)p(F) + p(E | F̄)p(F̄) ]<small>Numerator: the way E happens <b>through F</b>. Denominator: all the ways E happens (total probability).</small></div>
+  <div class="ex"><span class="t">Example · medical test</span>
+    <p>1% of people have a disease. The test catches 99% of cases but also flags 2% of healthy people. You test positive. Chance you’re sick?</p>
+    <ol class="steps">
+      <li>Sick and positive: 0.01 · 0.99 = 0.0099.</li>
+      <li>Healthy and positive: 0.99 · 0.02 = 0.0198.</li>
+      <li><span class="m">p(sick | +) = 0.0099 / (0.0099 + 0.0198) = <b>1/3</b></span>.</li>
+    </ol>
+    <p>Only 1/3, because healthy people vastly outnumber sick ones.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p><span class="m">p(E | F)</span> and <span class="m">p(F | E)</span> are different: 0.99 vs. 1/3 above.</p></div>
+</section>
+
+<section id="sheet">
+  <h2><span class="n">★</span>Formula sheet</h2>
+  <div class="tbl"><table class="sheet">
+    <tr><td>Expected value</td><td><span class="m">E(X) = Σ r·p(X = r)</span></td></tr>
+    <tr><td>Linearity (always)</td><td><span class="m">E(X + Y) = E(X) + E(Y)</span>, <span class="m">E(aX + b) = aE(X) + b</span></td></tr>
+    <tr><td>Indicator</td><td><span class="m">E(X<sub>k</sub>) = p(event k)</span></td></tr>
+    <tr><td>Bernoulli (n, p)</td><td><span class="m">E = np</span>, <span class="m">V = np(1 − p)</span></td></tr>
+    <tr><td>One fair die</td><td><span class="m">E = 7/2</span>, <span class="m">V = 35/12</span></td></tr>
+    <tr><td>Independent X, Y</td><td><span class="m">p(X=r<sub>1</sub>, Y=r<sub>2</sub>) = p(X=r<sub>1</sub>)p(Y=r<sub>2</sub>)</span> for all r<sub>1</sub>, r<sub>2</sub></td></tr>
+    <tr><td>Product (independent only)</td><td><span class="m">E(XY) = E(X)E(Y)</span></td></tr>
+    <tr><td>Variance</td><td><span class="m">V(X) = E(X²) − E(X)²</span>, <span class="m">σ = √V</span></td></tr>
+    <tr><td>Scaling</td><td><span class="m">V(aX + b) = a²V(X)</span></td></tr>
+    <tr><td>Bienaymé (independent only)</td><td><span class="m">V(X + Y) = V(X) + V(Y)</span></td></tr>
+    <tr><td>Chebyshev</td><td><span class="m">p(|X − E(X)| ≥ r) ≤ V(X)/r²</span></td></tr>
+    <tr><td>Records among n</td><td><span class="m">E = H<sub>n</sub> = 1 + ½ + ⋯ + 1/n</span></td></tr>
+    <tr><td>Characteristic eq.</td><td><span class="m">a<sub>n</sub> = c<sub>1</sub>a<sub>n−1</sub> + c<sub>2</sub>a<sub>n−2</sub> → r² − c<sub>1</sub>r − c<sub>2</sub> = 0</span></td></tr>
+    <tr><td>Distinct roots</td><td><span class="m">α<sub>1</sub>r<sub>1</sub><sup>n</sup> + α<sub>2</sub>r<sub>2</sub><sup>n</sup></span></td></tr>
+    <tr><td>Double root</td><td><span class="m">(α<sub>1</sub> + α<sub>2</sub>n)r<sub>0</sub><sup>n</sup></span></td></tr>
+    <tr><td>Multiplicity m</td><td><span class="m">(α<sub>0</sub> + ⋯ + α<sub>m−1</sub>n<sup>m−1</sup>)r<sup>n</sup></span></td></tr>
+    <tr><td>Nonhomogeneous</td><td><span class="m">particular + homogeneous</span>, then initial conditions</td></tr>
+    <tr><td>Hanoi</td><td><span class="m">H<sub>n</sub> = 2H<sub>n−1</sub> + 1 → 2<sup>n</sup> − 1</span></td></tr>
+    <tr><td>Bayes</td><td><span class="m">p(F|E) = p(E|F)p(F) / p(E)</span></td></tr>
+  </table></div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every number on this page was checked by computing it. Quiz coverage is inferred from the pattern of earlier quizzes. Homework 9’s problems are deliberately left out.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>
