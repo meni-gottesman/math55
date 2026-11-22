@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 55 Quiz 7 notes from scratch: repeated roots, inclusion–exclusion (Lecture 22, Rosen 8.5–8.6) and relations (Lecture 23, Rosen 9.1).">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%AA%3C/text%3E%3C/svg%3E">
+<title>Quiz 7 Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.tbl.compact table{font-size:.85rem}
+.tbl.compact th,.tbl.compact td{padding:8px 5px;text-align:center}
+.tbl.compact th:first-child,.tbl.compact td:first-child{text-align:left;padding-left:10px}
+.tbl.compact th{letter-spacing:0;text-transform:none;font-size:.75rem}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Inclusion–exclusion &amp; relations</h1>
+  <p>Math 55 · Quiz 7 notes, from scratch · <a href="cards.html">Flashcards →</a> · <a href="quiz6.html">Quiz 6 notes</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to section">
+  <select id="jump" aria-label="Jump to section">
+    <option value="top">Start here</option>
+    <optgroup label="Part 1 · Recurrences, finished">
+      <option value="rep">1 · Repeated roots (Lecture 22)</option>
+    </optgroup>
+    <optgroup label="Part 2 · Inclusion–exclusion">
+      <option value="two">2 · Two sets</option>
+      <option value="three">3 · Three sets</option>
+      <option value="div">4 · Divisibility counts</option>
+      <option value="none">5 · Counting “none of”</option>
+      <option value="venn">6 · Venn diagrams for 4+ sets</option>
+      <option value="gen">7 · The general formula &amp; proof</option>
+      <option value="bound">8 · Stars and bars with upper bounds</option>
+      <option value="dice">9 · Dice sums</option>
+      <option value="der">10 · Derangements</option>
+      <option value="hat">11 · Hat-check expected value</option>
+      <option value="onto">12 · Onto functions</option>
+    </optgroup>
+    <optgroup label="Part 3 · Relations">
+      <option value="rel">13 · What a relation is</option>
+      <option value="ex">14 · Standard examples</option>
+      <option value="on">15 · Relations on one set</option>
+      <option value="refl">16 · Reflexive</option>
+      <option value="sym">17 · Symmetric &amp; antisymmetric</option>
+      <option value="trans">18 · Transitive</option>
+      <option value="table">19 · Property table &amp; tricky cases</option>
+      <option value="count">20 · Counting relations</option>
+      <option value="comp">21 · Composition</option>
+      <option value="pow">22 · Powers Rⁿ</option>
+    </optgroup>
+    <optgroup label="Review">
+      <option value="sheet">Formula sheet</option>
+    </optgroup>
+  </select>
+  <a href="#sheet">Formulas</a>
+</nav>
+
+<div class="note">
+  <p><b>What’s on this quiz.</b> Quiz 7 is tomorrow, Monday Nov 23, in your section, closed notes. Each quiz has covered the lectures since the previous one, so this one should be <b>Lecture 22</b> (repeated roots, then inclusion–exclusion, Rosen 8.5–8.6) and <b>Lecture 23</b> (relations, Rosen 9.1). Lecture 23 stopped at powers of a relation, so closures (Rosen 9.4) are probably not on it yet.</p>
+  <p><b>How to use this page:</b> read a section, then try its <b>Check yourself</b> boxes before opening them.</p>
+  <ol class="plan">
+    <li>Sections 3, 5 and 7: inclusion–exclusion for three sets, and “none of” counts.</li>
+    <li>Sections 16–19: deciding reflexive / symmetric / antisymmetric / transitive. Very quizzable.</li>
+    <li>Then 8–12 (applications) and 20–22 (counting, composition, powers).</li>
+  </ol>
+</div>
+
+<!-- ======================= PART 1 ======================= -->
+<div class="part-h" id="part1">Part 1 · Recurrences, finished</div>
+<p>Lecture 22 started by finishing repeated roots. The full recurrence method is in the <a href="quiz6.html#lh">Quiz 6 notes</a>; here is the piece Lecture 22 added.</p>
+
+<section id="rep">
+  <h2><span class="n">1</span>Repeated roots</h2>
+  <div class="idea"><span class="t">Big idea</span><p>A degree-k recurrence needs k different solutions to fit k initial conditions. If the characteristic equation has fewer than k different roots, a repeated root supplies the missing ones by multiplying by powers of n.</p></div>
+  <div class="key">root r repeated m times &nbsp;⟹&nbsp; r<sup>n</sup>, n·r<sup>n</sup>, …, n<sup>m−1</sup>r<sup>n</sup> are all solutions<small>For a double root r<sub>0</sub> of a degree-2 recurrence: a<sub>n</sub> = α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>n·r<sub>0</sub><sup>n</sup>.</small></div>
+
+  <div class="ex"><span class="t">Lecture example · a<sub>n</sub> = 4a<sub>n−1</sub> − 4a<sub>n−2</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 12</span>
+    <ol class="steps">
+      <li>r² − 4r + 4 = (r − 2)² = 0: root 2, repeated twice.</li>
+      <li>General solution: <span class="m">a<sub>n</sub> = α<sub>1</sub>2<sup>n</sup> + α<sub>2</sub>n2<sup>n</sup></span>.</li>
+      <li>a<sub>0</sub> = 2 gives α<sub>1</sub> = 2. a<sub>1</sub> = 12 gives 12 = 2·2 + α<sub>2</sub>·2, so α<sub>2</sub> = 4.</li>
+      <li><span class="m">a<sub>n</sub> = <b>2·2<sup>n</sup> + 4n·2<sup>n</sup></b></span>. Check a<sub>2</sub>: 48 − 8 = 40 and 8 + 32 = 40. ✓</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Lecture example · a<sub>n</sub> = 2a<sub>n−1</sub> − a<sub>n−2</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 4</span>
+    <ol class="steps">
+      <li>r² − 2r + 1 = (r − 1)² = 0: root 1, repeated twice.</li>
+      <li><span class="m">a<sub>n</sub> = α<sub>1</sub>·1<sup>n</sup> + α<sub>2</sub>n·1<sup>n</sup> = α<sub>1</sub> + α<sub>2</sub>n</span>.</li>
+      <li>α<sub>1</sub> = 2, and 4 = 2 + α<sub>2</sub>, so α<sub>2</sub> = 2.</li>
+      <li><span class="m">a<sub>n</sub> = <b>2 + 2n</b></span>: 2, 4, 6, 8, … ✓</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>With a repeated root, α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>r<sub>0</sub><sup>n</sup> collapses to one term and can’t match two initial conditions. You need the <b>n</b>.</p></div>
+  <details class="check"><summary>Solve a<sub>n</sub> = 8a<sub>n−1</sub> − 16a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 8.<span class="tap">tap</span></summary>
+    <div class="a"><p>(r − 4)², root 4 twice. α<sub>1</sub> = 1; (1 + α<sub>2</sub>)·4 = 8, so α<sub>2</sub> = 1. <span class="m">a<sub>n</sub> = <b>(1 + n)4<sup>n</sup></b></span>. Check a<sub>2</sub>: 64 − 16 = 48 = 3·16. ✓</p></div></details>
+</section>
+
+<!-- ======================= PART 2 ======================= -->
+<div class="part-h" id="part2">Part 2 · Inclusion–exclusion</div>
+<p>Lecture 22 (Rosen 8.5–8.6). The goal: count a <b>union</b> of overlapping sets without counting anything twice.</p>
+
+<section id="two">
+  <h2><span class="n">2</span>Two sets</h2>
+  <div class="key">|A ∪ B| = |A| + |B| − |A ∩ B|</div>
+  <p><b>Why:</b> |A| + |B| counts every element of A ∩ B <b>twice</b>, once in each set. Subtracting |A ∩ B| once fixes it.</p>
+  <div class="ex"><span class="t">Example</span>
+    <p>Numbers 1–100 divisible by 2 or 5: 50 + 20 − 10 = <b>60</b>. (Divisible by both 2 and 5 means divisible by 10.)</p>
+  </div>
+</section>
+
+<section id="three">
+  <h2><span class="n">3</span>Three sets</h2>
+  <div class="key">|A ∪ B ∪ C| = |A| + |B| + |C|<br>&nbsp;&nbsp;− |A∩B| − |A∩C| − |B∩C|<br>&nbsp;&nbsp;+ |A∩B∩C|</div>
+  <h3>Why the signs alternate</h3>
+  <p>Track how many times an element is counted, depending on how many of the sets it’s in:</p>
+  <div class="tbl compact"><table>
+    <tr><th>In</th><th>+singles</th><th>−pairs</th><th>+triple</th><th>Total</th></tr>
+    <tr><td>1 set</td><td>1</td><td>0</td><td>0</td><td><b>1</b></td></tr>
+    <tr><td>2 sets</td><td>2</td><td>−1</td><td>0</td><td><b>1</b></td></tr>
+    <tr><td>all 3</td><td>3</td><td>−3</td><td>+1</td><td><b>1</b></td></tr>
+  </table></div>
+  <p>Every element of the union ends up counted exactly once. The pair terms over-correct for elements in all three sets (3 − 3 = 0), and the triple term adds them back.</p>
+  <div class="warn"><span class="t">Trap</span><p>Forgetting the last term (+|A∩B∩C|), or subtracting it. The signs go +, −, +.</p></div>
+</section>
+
+<section id="div">
+  <h2><span class="n">4</span>Divisibility counts</h2>
+  <div class="idea"><span class="t">Key fact</span><p>The number of integers from 1 to N divisible by d is <span class="m">⌊N/d⌋</span>. Divisible by both a and b means divisible by <span class="m">lcm(a, b)</span>, which is ab when a and b share no factors.</p></div>
+  <div class="ex"><span class="t">Lecture example · numbers 1–600 divisible by 2, 3 or 5</span>
+    <ol class="steps">
+      <li>Singles: |A<sub>2</sub>| = 300, |A<sub>3</sub>| = 200, |A<sub>5</sub>| = 120.</li>
+      <li>Pairs: divisible by 6 → 100; by 10 → 60; by 15 → 40.</li>
+      <li>Triple: divisible by 30 → 20.</li>
+      <li>300 + 200 + 120 − 100 − 60 − 40 + 20 = <b>440</b>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>When the numbers share factors, use the lcm, not the product: divisible by 4 and 6 means divisible by 12, not 24.</p></div>
+  <details class="check"><summary>How many of 1–600 are divisible by none of 2, 3, 5?<span class="tap">tap</span></summary>
+    <div class="a"><p>Complement of the union: 600 − 440 = <b>160</b>.</p></div></details>
+</section>
+
+<section id="none">
+  <h2><span class="n">5</span>Counting “none of” (the complement form)</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Most applications want objects with <b>none</b> of some bad properties. Count everything, then subtract the union of the bad sets.</p></div>
+  <div class="key">#(none of the properties) = N − |A<sub>1</sub> ∪ ⋯ ∪ A<sub>n</sub>|<small>N = total number of objects; A<sub>i</sub> = objects with bad property i.</small></div>
+  <h3>The recipe</h3>
+  <ol class="how">
+    <li>Define the universe and its size N.</li>
+    <li>Define each bad set A<sub>i</sub> (“has property i”).</li>
+    <li>Find the sizes of all intersections. Usually all intersections of r sets have the <b>same</b> size, so you multiply by C(n, r).</li>
+    <li>Answer = N − Σ|A<sub>i</sub>| + Σ|A<sub>i</sub>∩A<sub>j</sub>| − ⋯</li>
+  </ol>
+  <div class="ex"><span class="t">Example</span>
+    <p>Numbers 1–1000 divisible by neither 5 nor 7: 1000 − (200 + 142 − 28) = 1000 − 314 = <b>686</b>. (⌊1000/7⌋ = 142, ⌊1000/35⌋ = 28.)</p>
+  </div>
+</section>
+
+<section id="venn">
+  <h2><span class="n">6</span>Venn diagrams for 4 or more sets</h2>
+  <p>A Venn diagram for n sets needs a region for <b>every</b> combination of in/out, so <span class="m">2<sup>n</sup></span> regions, counting the outside. For 4 sets that’s 16.</p>
+  <p>Four overlapping circles <b>can’t</b> do it: they miss some combinations. For example, there’s no region for “in A and C only” or “in B and D only”. Correct 4-set diagrams use other shapes, like ellipses.</p>
+  <div class="ex"><span class="t">Fun fact from lecture</span>
+    <p>A <b>rotationally symmetric</b> Venn diagram with n sets can exist only if n is <b>prime</b>. Rotating by 1/n of a turn shuffles the regions lying in exactly r sets among themselves in groups of n, so n must divide C(n, r) for every 1 ≤ r &lt; n. If n has a prime factor p &lt; n, then n doesn’t divide C(n, p). Examples are known for n = 2, 3, 5, 7, 11, 13, 17, 19, 23.</p>
+  </div>
+</section>
+
+<section id="gen">
+  <h2><span class="n">7</span>The general formula &amp; its proof</h2>
+  <div class="key">|A<sub>1</sub> ∪ ⋯ ∪ A<sub>n</sub>| = Σ|A<sub>i</sub>| − Σ<sub>i&lt;j</sub>|A<sub>i</sub>∩A<sub>j</sub>| + Σ<sub>i&lt;j&lt;k</sub>|A<sub>i</sub>∩A<sub>j</sub>∩A<sub>k</sub>| − ⋯ + (−1)<sup>n+1</sup>|A<sub>1</sub>∩⋯∩A<sub>n</sub>|<small>Add singles, subtract pairs, add triples, … alternating. There are 2<sup>n</sup> − 1 terms in all.</small></div>
+  <h3>Proof (count each element once)</h3>
+  <ol class="steps">
+    <li>Suppose x is in exactly r of the sets (r ≥ 1). It counts once on the left side.</li>
+    <li>On the right, x appears in C(r, 1) single terms, C(r, 2) pair terms, C(r, 3) triple terms, and so on. Its total count is <span class="m">C(r,1) − C(r,2) + C(r,3) − ⋯ + (−1)<sup>r+1</sup>C(r,r)</span>.</li>
+    <li>By the binomial theorem, <span class="m">0 = (1 − 1)<sup>r</sup> = C(r,0) − C(r,1) + C(r,2) − ⋯ + (−1)<sup>r</sup>C(r,r)</span>.</li>
+    <li>Since C(r, 0) = 1, rearranging gives C(r,1) − C(r,2) + ⋯ = 1. So x is counted exactly once on the right too. ∎</li>
+  </ol>
+</section>
+
+<section id="bound">
+  <h2><span class="n">8</span>Stars and bars with upper bounds</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Stars and bars handles lower bounds easily but not upper bounds. So count without the upper bounds, then use inclusion–exclusion to subtract the solutions that <b>break</b> a bound.</p></div>
+  <div class="key">x<sub>1</sub> + ⋯ + x<sub>k</sub> = n, x<sub>i</sub> ≥ 0 &nbsp;⟹&nbsp; C(n + k − 1, k − 1) solutions<small>Breaking “x<sub>i</sub> ≤ c” means x<sub>i</sub> ≥ c + 1. Substitute x<sub>i</sub>′ = x<sub>i</sub> − (c + 1) ≥ 0, which lowers the total n by c + 1.</small></div>
+  <div class="ex"><span class="t">Example (Rosen) · x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> = 11 with x<sub>1</sub> ≤ 3, x<sub>2</sub> ≤ 4, x<sub>3</sub> ≤ 6</span>
+    <ol class="steps">
+      <li>No upper bounds: C(13, 2) = 78.</li>
+      <li>Bad sets: A<sub>1</sub>: x<sub>1</sub> ≥ 4 → total 7 → C(9, 2) = 36. A<sub>2</sub>: x<sub>2</sub> ≥ 5 → total 6 → C(8, 2) = 28. A<sub>3</sub>: x<sub>3</sub> ≥ 7 → total 4 → C(6, 2) = 15.</li>
+      <li>Pairs: A<sub>1</sub>∩A<sub>2</sub> → total 2 → C(4, 2) = 6. A<sub>1</sub>∩A<sub>3</sub> → total 0 → 1. A<sub>2</sub>∩A<sub>3</sub> → total −1 → 0. Triple → 0.</li>
+      <li>78 − (36 + 28 + 15) + (6 + 1 + 0) − 0 = <b>6</b>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>If subtracting makes the total negative, there are <b>0</b> solutions for that term. Don’t plug a negative number into C(·, ·).</p></div>
+</section>
+
+<section id="dice">
+  <h2><span class="n">9</span>Dice sums</h2>
+  <p>A sum of dice is a bounded stars-and-bars problem: each die is between 1 and 6.</p>
+  <div class="ex"><span class="t">Lecture example · probability 6 dice sum to 21</span>
+    <ol class="steps">
+      <li>There are 6<sup>6</sup> equally likely rolls. Count solutions of x<sub>1</sub> + ⋯ + x<sub>6</sub> = 21 with 1 ≤ x<sub>i</sub> ≤ 6.</li>
+      <li>Shift to start at 0: y<sub>i</sub> = x<sub>i</sub> − 1, so y<sub>1</sub> + ⋯ + y<sub>6</sub> = 15 with 0 ≤ y<sub>i</sub> ≤ 5.</li>
+      <li>No upper bound: C(20, 5).</li>
+      <li>Some y<sub>i</sub> ≥ 6: subtract 6 → total 9 → C(14, 5), for each of the 6 dice.</li>
+      <li>Two y’s ≥ 6: total 3 → C(8, 5), for each of the C(6, 2) pairs. Three or more is impossible (18 &gt; 15).</li>
+      <li>Count = C(20,5) − 6·C(14,5) + C(6,2)·C(8,5) = 15504 − 12012 + 840 = 4332. Probability <b>4332/6<sup>6</sup> ≈ 0.093</b>.</li>
+    </ol>
+  </div>
+  <details class="check"><summary>How many ways can 3 dice sum to 10?<span class="tap">tap</span></summary>
+    <div class="a"><p>y<sub>1</sub> + y<sub>2</sub> + y<sub>3</sub> = 7 with y<sub>i</sub> ≤ 5. C(9, 2) = 36; one y ≥ 6 → total 1 → C(3, 2) = 3, times 3 dice; two ≥ 6 impossible. 36 − 9 = <b>27</b>.</p></div></details>
+</section>
+
+<section id="der">
+  <h2><span class="n">10</span>Derangements</h2>
+  <div class="idea"><span class="t">Definition</span><p>A <b>derangement</b> is a permutation of 1, …, n where <b>no</b> number is in its own position (i is never in spot i).</p></div>
+  <div class="key">D<sub>n</sub> = n! (1 − 1/1! + 1/2! − 1/3! + ⋯ + (−1)<sup>n</sup>/n!)</div>
+  <h3>Where it comes from</h3>
+  <ol class="steps">
+    <li>Let A<sub>i</sub> = permutations with i in position i (the “bad” event). Derangements = n! − |A<sub>1</sub> ∪ ⋯ ∪ A<sub>n</sub>|.</li>
+    <li>Fixing r particular numbers leaves the other n − r free: |A<sub>i<sub>1</sub></sub> ∩ ⋯ ∩ A<sub>i<sub>r</sub></sub>| = (n − r)!.</li>
+    <li>There are C(n, r) ways to choose which r, and C(n, r)(n − r)! = n!/r!.</li>
+    <li>So D<sub>n</sub> = n! − n!/1! + n!/2! − ⋯, which factors as the formula.</li>
+  </ol>
+  <div class="ex"><span class="t">Small cases</span>
+    <p>D<sub>3</sub> = 6(1 − 1 + ½ − ⅙) = <b>2</b>: the arrangements 231 and 312. D<sub>4</sub> = 24 − 24 + 12 − 4 + 1 = <b>9</b>.</p>
+    <p>As n grows, D<sub>n</sub>/n! → 1/e ≈ <b>0.368</b> (the Taylor series for e<sup>−1</sup>). So about 37% of random permutations are derangements, for any large n.</p>
+  </div>
+</section>
+
+<section id="hat">
+  <h2><span class="n">11</span>The hat-check problem (expected value)</h2>
+  <p>An easier question: in a random permutation, what is the <b>expected</b> number of i in position i?</p>
+  <div class="ex"><span class="t">Solution with indicators</span>
+    <ol class="steps">
+      <li>X<sub>i</sub> = 1 if i is in position i. The count is X<sub>1</sub> + ⋯ + X<sub>n</sub>.</li>
+      <li>E(X<sub>i</sub>) = (n − 1)!/n! = 1/n: fix i, then permute the other n − 1.</li>
+      <li>By linearity, E = n · 1/n = <b>1</b>, for every n.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="onto">
+  <h2><span class="n">12</span>Onto functions</h2>
+  <div class="key">#onto functions from an m-set to an n-set = Σ<sub>r=0</sub><sup>n</sup> (−1)<sup>r</sup> C(n, r)(n − r)<sup>m</sup><br>= n<sup>m</sup> − C(n,1)(n−1)<sup>m</sup> + C(n,2)(n−2)<sup>m</sup> − ⋯</div>
+  <h3>Where it comes from</h3>
+  <ol class="steps">
+    <li>All functions: n<sup>m</sup> (each of the m inputs picks one of n outputs).</li>
+    <li>A<sub>i</sub> = functions that <b>miss</b> output i. Onto = n<sup>m</sup> − |A<sub>1</sub> ∪ ⋯ ∪ A<sub>n</sub>|.</li>
+    <li>Missing r particular outputs leaves n − r choices per input: (n − r)<sup>m</sup>, and there are C(n, r) ways to pick those r.</li>
+  </ol>
+  <div class="ex"><span class="t">Example (Rosen) · from a 5-element set onto a 3-element set</span>
+    <p>3<sup>5</sup> − 3·2<sup>5</sup> + 3·1<sup>5</sup> = 243 − 96 + 3 = <b>150</b>.</p>
+  </div>
+  <details class="check"><summary>How many onto functions from a 4-element set to a 2-element set?<span class="tap">tap</span></summary>
+    <div class="a"><p>2<sup>4</sup> − 2·1<sup>4</sup> = <b>14</b>: all 16 functions except the 2 constant ones.</p></div></details>
+</section>
+
+<!-- ======================= PART 3 ======================= -->
+<div class="part-h" id="part3">Part 3 · Relations</div>
+<p>Lecture 23 (Rosen 9.1). A relation records which pairs of things are “related”.</p>
+
+<section id="rel">
+  <h2><span class="n">13</span>What a relation is</h2>
+  <div class="key">a binary relation R from A to B is a subset R ⊆ A × B<small>A × B = all ordered pairs (a, b) with a ∈ A, b ∈ B. Write <b>aRb</b> when (a, b) ∈ R, and a R̸ b when it isn’t.</small></div>
+  <p>That’s the whole definition: a relation is just a <b>set of ordered pairs</b>. Any set of pairs counts, even one with no pattern.</p>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>A = {1, 2, 3}, B = {a, b, c, d}, R = {(1, a), (1, b), (2, c), (2, d)}. Then 1Ra is true, 3Ra is false.</li>
+      <li>A = Berkeley classes, B = classrooms, aRb if class a meets in room b: Math 55 R Wheeler 150.</li>
+      <li>A = B = web pages, aRb if page a links to page b.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Order matters: (a, b) and (b, a) are different pairs. aRb doesn’t mean bRa.</p></div>
+</section>
+
+<section id="ex">
+  <h2><span class="n">14</span>Standard examples</h2>
+  <ul>
+    <li><b>On numbers:</b> =, &lt;, ≤ on ℝ; divisibility a | b on positive integers (3 | 6, but 3 ∤ 2); congruence a ≡ b (mod m) on ℤ; “relatively prime” (aRb if gcd(a, b) = 1).</li>
+    <li><b>On sets:</b> “element of” from A to P(A) (1 ∈ {1, 2}); “subset” ⊆ on P(C).</li>
+    <li><b>Empty relation:</b> R = ∅, nothing is related.</li>
+    <li><b>Complete relation:</b> R = A × B, everything is related to everything.</li>
+    <li><b>Graph of a function f : A → B:</b> {(a, b) : f(a) = b}. For f(x) = x² on ℕ: {(0,0), (1,1), (2,4), (3,9), …}, so 2R4 is true and 4R2 is false.</li>
+  </ul>
+</section>
+
+<section id="on">
+  <h2><span class="n">15</span>Relations on one set</h2>
+  <p>A <b>relation on A</b> is a relation from A to itself, a subset of A × A.</p>
+  <p>You can draw one as a diagram: a dot for each element, an arrow a → b whenever aRb, and a <b>loop</b> at a when aRa.</p>
+  <figure style="margin:12px 0;text-align:center">
+    <svg viewBox="0 0 240 150" width="240" height="150" role="img" aria-label="Arrow diagram: loops at 1 and 2; arrows 1 to 2, 1 to 3, 2 to 3">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+        <path d="M40,96 C10,70 40,50 52,78" marker-end="url(#ah)"/>
+        <path d="M120,36 C100,6 140,6 124,30" marker-end="url(#ah)"/>
+        <line x1="60" y1="92" x2="108" y2="50" marker-end="url(#ah)"/>
+        <line x1="64" y1="104" x2="176" y2="104" marker-end="url(#ah)"/>
+        <line x1="128" y1="50" x2="178" y2="94" marker-end="url(#ah)"/>
+      </g>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="currentColor">
+        <circle cx="50" cy="104" r="13" fill="var(--surface)" stroke="currentColor"/><text x="50" y="109">1</text>
+        <circle cx="120" cy="40" r="13" fill="var(--surface)" stroke="currentColor"/><text x="120" y="45">2</text>
+        <circle cx="190" cy="104" r="13" fill="var(--surface)" stroke="currentColor"/><text x="190" y="109">3</text>
+      </g>
+    </svg>
+    <figcaption style="font-size:.85rem;color:var(--muted)">R = {(1,1), (1,2), (2,2), (1,3), (2,3)} on {1, 2, 3}</figcaption>
+  </figure>
+  <p>We’ll use this R as a running example in the next sections.</p>
+</section>
+
+<section id="refl">
+  <h2><span class="n">16</span>Reflexive</h2>
+  <div class="key">R is reflexive if aRa for <b>every</b> a ∈ A<small>In the diagram: a loop at every dot.</small></div>
+  <p><b>To show not reflexive:</b> find one a with a R̸ a.</p>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>Running example: <b>not reflexive</b>, since (3, 3) ∉ R.</li>
+      <li>⊆: reflexive (every set is a subset of itself). | on positive integers: reflexive (a | a). Congruence mod m: reflexive.</li>
+      <li>gcd(a, b) = 1: <b>not</b> reflexive (gcd(2, 2) = 2). gcd(a, b) ≠ 1: <b>not</b> reflexive either (gcd(1, 1) = 1).</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>The gcd examples show a relation and its “opposite” can <b>both</b> fail to be reflexive. Reflexive needs every element; one failure ruins it.</p></div>
+</section>
+
+<section id="sym">
+  <h2><span class="n">17</span>Symmetric &amp; antisymmetric</h2>
+  <div class="key">symmetric: aRb ⟹ bRa<br>antisymmetric: aRb and bRa ⟹ a = b</div>
+  <p><b>Symmetric:</b> every arrow has a return arrow. <b>Antisymmetric:</b> between two <b>different</b> elements there is never a two-way arrow (loops are fine).</p>
+  <div class="warn"><span class="t">Caution · not opposites</span><p>“Antisymmetric” does <b>not</b> mean “not symmetric”. A relation can be both (=), neither, or just one.</p></div>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>Running example: 1R2 but 2 R̸ 1, so <b>not symmetric</b>. No two-way arrows between different elements, so <b>antisymmetric</b>.</li>
+      <li>≤ on ℝ: not symmetric (1 ≤ 3, 3 ≰ 1); antisymmetric (a ≤ b and b ≤ a forces a = b).</li>
+      <li>⊆: not symmetric; antisymmetric (A ⊆ B and B ⊆ A means A = B).</li>
+      <li>| on positive integers: not symmetric (2 | 4, 4 ∤ 2); antisymmetric (a | b and b | a forces a = b for positive integers).</li>
+      <li>gcd = 1: symmetric, since gcd(a, b) = gcd(b, a); not antisymmetric (2R3 and 3R2 but 2 ≠ 3). Same for gcd ≠ 1.</li>
+      <li>Congruence mod m: symmetric; not antisymmetric (1 ≡ 4 and 4 ≡ 1 mod 3).</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Divisibility on <b>all integers</b> is not antisymmetric: 2 | −2 and −2 | 2. The positive-integer version is.</p></div>
+</section>
+
+<section id="trans">
+  <h2><span class="n">18</span>Transitive</h2>
+  <div class="key">R is transitive if aRb and bRc ⟹ aRc<small>In the diagram: whenever you can go a → b → c in two steps, there must also be a direct arrow a → c.</small></div>
+  <h3>How to check a finite relation</h3>
+  <ol class="how">
+    <li>For each pair (a, b) in R, look at every pair (b, c) in R that starts where it ends.</li>
+    <li>Check (a, c) is in R. One missing (a, c) is a counterexample.</li>
+  </ol>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>Running example: 1R2 and 2R3, and 1R3 ✓. The other chains involve loops, which always work. <b>Transitive.</b></li>
+      <li>≤, ⊆, | and congruence mod m are all transitive.</li>
+      <li>gcd = 1: <b>not</b> transitive: 2R3 and 3R4, but gcd(2, 4) = 2.</li>
+      <li>gcd ≠ 1: <b>not</b> transitive: 2S6 and 6S3, but gcd(2, 3) = 1.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Watch chains that come <b>back</b>: R = {(1, 2), (2, 1)} has 1R2 and 2R1, so transitivity needs 1R1. It isn’t transitive.</p></div>
+</section>
+
+<section id="table">
+  <h2><span class="n">19</span>Property table &amp; tricky cases</h2>
+  <div class="tbl compact"><table>
+    <tr><th>Relation</th><th>Refl</th><th>Sym</th><th>Anti</th><th>Trans</th></tr>
+    <tr><td>= </td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    <tr><td>≤ on ℝ</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td></tr>
+    <tr><td>&lt; on ℝ</td><td>✗</td><td>✗</td><td>✓</td><td>✓</td></tr>
+    <tr><td>⊆</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td></tr>
+    <tr><td>| on ℤ⁺</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td></tr>
+    <tr><td>≡ (mod m)</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td></tr>
+    <tr><td>gcd = 1</td><td>✗</td><td>✓</td><td>✗</td><td>✗</td></tr>
+    <tr><td>gcd ≠ 1</td><td>✗</td><td>✓</td><td>✗</td><td>✗</td></tr>
+    <tr><td>running ex.</td><td>✗</td><td>✗</td><td>✓</td><td>✓</td></tr>
+  </table></div>
+  <p>&lt; is antisymmetric <b>vacuously</b>: a &lt; b and b &lt; a never both happen, so the “if” part is never true.</p>
+  <div class="ex"><span class="t">Tricky cases from lecture</span>
+    <ul>
+      <li><b>Both symmetric and antisymmetric:</b> only relations with no arrows between different elements, i.e. subsets of {(a, a)}. Examples: = and ∅. If aRb with a ≠ b, symmetry gives bRa, and then antisymmetry would force a = b.</li>
+      <li><b>Neither symmetric nor transitive:</b> R = {(1, 2), (2, 3)} on {1, 2, 3}: 1R2 but 2 R̸ 1, and 1R2, 2R3 but 1 R̸ 3.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="count">
+  <h2><span class="n">20</span>Counting relations</h2>
+  <p>Let |A| = n. A relation on A is any subset of A × A, which has n² pairs. Decide in or out for each pair:</p>
+  <div class="tbl"><table>
+    <tr><th>Kind</th><th>How many</th><th>Why</th></tr>
+    <tr><td>all relations</td><td><span class="m">2<sup>n²</sup></span></td><td>each of the n² pairs is in or out</td></tr>
+    <tr><td>reflexive</td><td><span class="m">2<sup>n² − n</sup></span></td><td>the n pairs (a, a) are forced in; the other n² − n are free</td></tr>
+    <tr><td>symmetric</td><td><span class="m">2<sup>n(n+1)/2</sup></span></td><td>n loops are free, and each of the C(n, 2) pairs {a, b} is decided together: both in or both out</td></tr>
+    <tr><td>antisymmetric (Rosen)</td><td><span class="m">2<sup>n</sup>·3<sup>C(n,2)</sup></span></td><td>loops free; for each {a, b}: only (a,b), only (b,a), or neither</td></tr>
+  </table></div>
+  <p>n + C(n, 2) = n + n(n − 1)/2 = n(n + 1)/2, which explains the symmetric exponent.</p>
+  <details class="check"><summary>For n = 2, how many relations, reflexive, symmetric?<span class="tap">tap</span></summary>
+    <div class="a"><p>2<sup>4</sup> = <b>16</b>; 2<sup>2</sup> = <b>4</b>; 2<sup>3</sup> = <b>8</b>. (Antisymmetric: 4·3 = 12.)</p></div></details>
+</section>
+
+<section id="comp">
+  <h2><span class="n">21</span>Composition</h2>
+  <div class="key">S ∘ R = {(a, c) : there is b with aRb and bSc}<small>R goes from A to B, S from B to C, so S ∘ R goes from A to C. Do <b>R first</b>, then S, just like composing functions g ∘ f.</small></div>
+  <h3>How</h3>
+  <ol class="how">
+    <li>For each pair (a, b) in R, find every pair in S that starts with b.</li>
+    <li>Each (b, c) found gives (a, c) in S ∘ R.</li>
+  </ol>
+  <div class="ex"><span class="t">Example</span>
+    <p>R = {(1, a), (1, b), (2, c)} and S = {(a, x), (b, y), (c, x)}.</p>
+    <p>1 → a → x, 1 → b → y, 2 → c → x, so S ∘ R = <b>{(1, x), (1, y), (2, x)}</b>.</p>
+  </div>
+  <div class="ex"><span class="t">Lecture example · gcd = 1 composed with itself</span>
+    <p>For any a, b pick a prime p bigger than both. Then gcd(a, p) = 1 and gcd(p, b) = 1, so aRp and pRb. So R ∘ R relates <b>every</b> pair (a, b), even (2, 2).</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Order: in S ∘ R, the pair from <b>R</b> comes first in the chain. S ∘ R and R ∘ S are usually different.</p></div>
+</section>
+
+<section id="pow">
+  <h2><span class="n">22</span>Powers Rⁿ</h2>
+  <div class="key">R<sup>1</sup> = R, &nbsp;R<sup>n+1</sup> = R<sup>n</sup> ∘ R<small>a R<sup>n</sup> b exactly when there’s a <b>path of length n</b> from a to b: a = a<sub>0</sub> → a<sub>1</sub> → ⋯ → a<sub>n</sub> = b, each step an arrow of R.</small></div>
+  <div class="ex"><span class="t">Lecture example · R = {(1,2), (2,3), (3,1)} on {1, 2, 3}</span>
+    <ol class="steps">
+      <li>R is a cycle 1 → 2 → 3 → 1.</li>
+      <li>R² (two steps): 1 → 3, 2 → 1, 3 → 2. So R² = {(1,3), (2,1), (3,2)}.</li>
+      <li>R³ (three steps returns home): {(1,1), (2,2), (3,3)}.</li>
+      <li>R⁴ = R again, so the powers repeat every 3: R = R⁴ = R⁷ = …, R² = R⁵ = …, R³ = R⁶ = …</li>
+    </ol>
+  </div>
+  <div class="idea"><span class="t">Rosen 9.1 theorem</span><p>R is transitive if and only if R<sup>n</sup> ⊆ R for all n ≥ 1. Paths of any length must already be direct arrows.</p></div>
+</section>
+
+<section id="sheet">
+  <h2><span class="n">★</span>Formula sheet</h2>
+  <div class="tbl"><table class="sheet">
+    <tr><td>Repeated root r (m times)</td><td><span class="m">r<sup>n</sup>, nr<sup>n</sup>, …, n<sup>m−1</sup>r<sup>n</sup></span></td></tr>
+    <tr><td>Two sets</td><td><span class="m">|A∪B| = |A| + |B| − |A∩B|</span></td></tr>
+    <tr><td>Three sets</td><td><span class="m">singles − pairs + triple</span></td></tr>
+    <tr><td>General</td><td><span class="m">Σ singles − Σ pairs + Σ triples − ⋯</span> (2<sup>n</sup> − 1 terms)</td></tr>
+    <tr><td>None of</td><td><span class="m">N − |A<sub>1</sub> ∪ ⋯ ∪ A<sub>n</sub>|</span></td></tr>
+    <tr><td>Divisible by d in 1..N</td><td><span class="m">⌊N/d⌋</span>; “both a and b” → lcm</td></tr>
+    <tr><td>Stars and bars</td><td><span class="m">C(n + k − 1, k − 1)</span>; break x<sub>i</sub> ≤ c ⇒ subtract c + 1</td></tr>
+    <tr><td>Derangements</td><td><span class="m">D<sub>n</sub> = n! Σ (−1)<sup>k</sup>/k!</span>, D<sub>n</sub>/n! → 1/e</td></tr>
+    <tr><td>Fixed points, expected</td><td><span class="m">1</span></td></tr>
+    <tr><td>Onto m → n</td><td><span class="m">Σ (−1)<sup>r</sup> C(n,r)(n−r)<sup>m</sup></span></td></tr>
+    <tr><td>Relation</td><td><span class="m">R ⊆ A × B</span></td></tr>
+    <tr><td>Reflexive</td><td><span class="m">aRa for all a</span></td></tr>
+    <tr><td>Symmetric</td><td><span class="m">aRb ⇒ bRa</span></td></tr>
+    <tr><td>Antisymmetric</td><td><span class="m">aRb ∧ bRa ⇒ a = b</span></td></tr>
+    <tr><td>Transitive</td><td><span class="m">aRb ∧ bRc ⇒ aRc</span></td></tr>
+    <tr><td>Counts (|A| = n)</td><td><span class="m">2<sup>n²</sup>; refl. 2<sup>n²−n</sup>; sym. 2<sup>n(n+1)/2</sup></span></td></tr>
+    <tr><td>Composition</td><td><span class="m">S∘R: a →R b →S c</span></td></tr>
+    <tr><td>Powers</td><td><span class="m">a R<sup>n</sup> b ⇔ path of length n</span></td></tr>
+  </table></div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every number on this page was checked by computing it. Quiz coverage is inferred from the pattern of earlier quizzes. Homework 10’s problems are deliberately left out.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

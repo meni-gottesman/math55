@@ -109,7 +109,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.85rem}
 <div class="wrap">
 <header id="top">
   <h1>Expected value, variance &amp; recurrences</h1>
-  <p>Math 55 · Quiz 6 notes, from scratch · <a href="cards.html">Flashcards →</a> · <a href="quiz5.html">Quiz 5 notes</a></p>
+  <p>Math 55 · Quiz 6 notes, from scratch · <a href="cards.html">Flashcards →</a> · <a href="quiz7.html">Quiz 7 notes</a> · <a href="quiz5.html">Quiz 5 notes</a></p>
 </header>
 
 <nav class="bar" aria-label="Jump to section">
@@ -558,8 +558,8 @@ footer{margin-top:40px;color:var(--muted);font-size:.85rem}
       <li><span class="m">a<sub>n</sub> = <b>(1 + 2n)2<sup>n</sup></b></span>. Check a<sub>2</sub>: 24 − 4 = 20 and 5·4 = 20. ✓</li>
     </ol>
   </div>
-  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = 6a<sub>n−1</sub> − 9a<sub>n−2</sub>, a<sub>0</sub> = 1, a<sub>1</sub> = 6</span>
-    <p>(r − 3)² = 0. α<sub>1</sub> = 1 and (1 + α<sub>2</sub>)·3 = 6, so α<sub>2</sub> = 1. <span class="m">a<sub>n</sub> = <b>(1 + n)3<sup>n</sup></b></span>.</p>
+  <div class="ex"><span class="t">Example (Lecture 22) · a<sub>n</sub> = 2a<sub>n−1</sub> − a<sub>n−2</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 4</span>
+    <p>r² − 2r + 1 = (r − 1)² = 0, double root 1. a<sub>n</sub> = (α<sub>1</sub> + α<sub>2</sub>n)·1<sup>n</sup> = α<sub>1</sub> + α<sub>2</sub>n. α<sub>1</sub> = 2 and 2 + α<sub>2</sub> = 4, so α<sub>2</sub> = 2. <span class="m">a<sub>n</sub> = <b>2 + 2n</b></span>.</p>
   </div>
 
   <div class="warn"><span class="t">Trap</span><p>Writing <span class="m">α<sub>1</sub>r<sub>0</sub><sup>n</sup> + α<sub>2</sub>r<sub>0</sub><sup>n</sup></span> for a repeated root. The equations will be inconsistent. You need the extra <b>n</b>.</p></div>
@@ -572,12 +572,12 @@ footer{margin-top:40px;color:var(--muted);font-size:.85rem}
   <h2><span class="n">15</span>Degree 3 and up; general multiplicities</h2>
   <p>Same recipe, bigger polynomial. A degree-k recurrence has a degree-k characteristic equation and needs k initial conditions.</p>
   <div class="key">root r with multiplicity m contributes<br>(α<sub>0</sub> + α<sub>1</sub>n + ⋯ + α<sub>m−1</sub>n<sup>m−1</sup>) r<sup>n</sup><small>Distinct roots: m = 1, a plain αr<sup>n</sup>. Double root: (α<sub>0</sub> + α<sub>1</sub>n)r<sup>n</sup>. Triple root: up to n². Add up the contributions of all roots.</small></div>
-  <div class="ex"><span class="t">Example (Rosen) · a<sub>n</sub> = 6a<sub>n−1</sub> − 11a<sub>n−2</sub> + 6a<sub>n−3</sub>, a<sub>0</sub> = 2, a<sub>1</sub> = 5, a<sub>2</sub> = 15</span>
+  <div class="ex"><span class="t">Example · a<sub>n</sub> = 2a<sub>n−1</sub> + a<sub>n−2</sub> − 2a<sub>n−3</sub>, a<sub>0</sub> = 3, a<sub>1</sub> = 2, a<sub>2</sub> = 6</span>
     <ol class="steps">
-      <li><span class="m">r³ − 6r² + 11r − 6 = (r − 1)(r − 2)(r − 3)</span>. Tip: test small integers like r = 1 first.</li>
-      <li><span class="m">a<sub>n</sub> = α<sub>1</sub> + α<sub>2</sub>2<sup>n</sup> + α<sub>3</sub>3<sup>n</sup></span>.</li>
-      <li>Three equations from n = 0, 1, 2 give α<sub>1</sub> = 1, α<sub>2</sub> = −1, α<sub>3</sub> = 2.</li>
-      <li><span class="m">a<sub>n</sub> = <b>1 − 2<sup>n</sup> + 2·3<sup>n</sup></b></span>. Check a<sub>3</sub>: 90 − 55 + 12 = 47 and 1 − 8 + 54 = 47. ✓</li>
+      <li><span class="m">r³ − 2r² − r + 2 = r²(r − 2) − (r − 2) = (r − 2)(r − 1)(r + 1)</span>. Tip: try grouping, or test small integers like r = 1 first.</li>
+      <li><span class="m">a<sub>n</sub> = α<sub>1</sub> + α<sub>2</sub>(−1)<sup>n</sup> + α<sub>3</sub>2<sup>n</sup></span>.</li>
+      <li>n = 0, 1, 2: α<sub>1</sub> + α<sub>2</sub> + α<sub>3</sub> = 3; α<sub>1</sub> − α<sub>2</sub> + 2α<sub>3</sub> = 2; α<sub>1</sub> + α<sub>2</sub> + 4α<sub>3</sub> = 6. Subtracting the first from the third: 3α<sub>3</sub> = 3, so α<sub>3</sub> = 1; then α<sub>1</sub> = α<sub>2</sub> = 1.</li>
+      <li><span class="m">a<sub>n</sub> = <b>1 + (−1)<sup>n</sup> + 2<sup>n</sup></b></span>. Check a<sub>3</sub>: 12 + 2 − 6 = 8 and 1 − 1 + 8 = 8. ✓</li>
     </ol>
   </div>
   <details class="check"><summary>The characteristic roots are 2, 2, 2 and 5. What’s the general form?<span class="tap">tap</span></summary>

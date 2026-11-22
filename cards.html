@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Math 55 flashcards that teach from scratch: Quiz 6 (expected value, variance, Chebyshev, recurrence relations) and Quiz 5 (counting and probability).">
+<meta name="description" content="Math 55 flashcards that teach from scratch: Quiz 7 (inclusion–exclusion, relations), Quiz 6 (expected value, variance, Chebyshev, recurrence relations) and Quiz 5 (counting and probability).">
 <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3EP%3C/text%3E%3C/svg%3E">
@@ -72,7 +72,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system
   <div class="top">
     <h1>Quiz flashcards</h1>
     <select id="deck" aria-label="Which cards">
-      <optgroup label="Quiz 6 · this week">
+      <optgroup label="Quiz 7 · this week">
+        <option value="q7">Quiz 7 · all</option>
+        <option value="k">Repeated roots</option>
+        <option value="i">Inclusion–exclusion</option>
+        <option value="l">Relations</option>
+      </optgroup>
+      <optgroup label="Quiz 6">
         <option value="q6">Quiz 6 · all</option>
         <option value="e">Expected value &amp; variance</option>
         <option value="r">Recurrence relations</option>
@@ -380,16 +386,16 @@ const C=[
 "<span class='f'>aₙ = α₁r₀ⁿ + α₂·n·r₀ⁿ = (α₁ + α₂n)·r₀ⁿ</span><span class='lb'>Why the extra n</span><p>α₁r₀ⁿ + α₂r₀ⁿ is really just one term (α₁ + α₂)r₀ⁿ, which can’t fit two initial conditions. The second independent solution turns out to be <b>n·r₀ⁿ</b>.</p><span class='lb'>How to spot it</span><p>The quadratic is a perfect square, like r² − 4r + 4 = (r − 2)².</p><p class='trap'>Forgetting the n: the equations for α₁, α₂ come out inconsistent.</p>"],
 ["r","Repeated root","Solve aₙ = 4aₙ₋₁ − 4aₙ₋₂ with a₀ = 1, a₁ = 6.",
 "<ol><li>r² − 4r + 4 = (r − 2)² = 0: double root 2.</li><li>aₙ = (α₁ + α₂n)2ⁿ.</li><li>n = 0: α₁ = 1. n = 1: (1 + α₂)·2 = 6, so α₂ = 2.</li></ol><span class='f'>aₙ = (1 + 2n)·2ⁿ</span><p class='ex'>Check a₂: 4·6 − 4·1 = 20 and 5·4 = 20 ✓</p>"],
-["r","Repeated root","Rosen’s example: solve aₙ = 6aₙ₋₁ − 9aₙ₋₂ with a₀ = 1, a₁ = 6.",
-"<ol><li>r² − 6r + 9 = (r − 3)²: double root 3.</li><li>aₙ = (α₁ + α₂n)3ⁿ. α₁ = 1; (1 + α₂)·3 = 6, so α₂ = 1.</li></ol><span class='f'>aₙ = (1 + n)·3ⁿ</span><p class='ex'>Check a₂: 36 − 9 = 27 and 3·9 = 27 ✓</p>"],
+["r","Repeated root","Lecture 22’s example: solve aₙ = 2aₙ₋₁ − aₙ₋₂ with a₀ = 2, a₁ = 4.",
+"<ol><li>r² − 2r + 1 = (r − 1)²: double root 1.</li><li>aₙ = (α₁ + α₂n)·1ⁿ = α₁ + α₂n. α₁ = 2; 2 + α₂ = 4, so α₂ = 2.</li></ol><span class='f'>aₙ = 2 + 2n</span><p class='ex'>Check: 2, 4, 6, 8, … and 2·4 − 2 = 6 ✓. A root of 1 makes 1ⁿ = 1, so the answer is just a line.</p>"],
 ["r","Repeated root","Solve aₙ = −6aₙ₋₁ − 9aₙ₋₂ with a₀ = 1, a₁ = 0.",
 "<ol><li>r² + 6r + 9 = (r + 3)²: double root −3.</li><li>aₙ = (α₁ + α₂n)(−3)ⁿ. α₁ = 1; (1 + α₂)(−3) = 0, so α₂ = −1.</li></ol><span class='f'>aₙ = (1 − n)(−3)ⁿ</span><p class='ex'>Check a₂: −6·0 − 9·1 = −9 and (−1)·9 = −9 ✓</p>"],
 ["r","Higher degree","What is the general solution for higher degree, including repeated roots?",
 "<p>Same recipe, bigger polynomial. Degree k → degree-k characteristic equation → k initial conditions.</p><span class='f'>root r of multiplicity m contributes (α₀ + α₁n + ⋯ + αₘ₋₁nᵐ⁻¹)·rⁿ</span><p>Add up the contributions of all the roots. A simple root (m = 1) gives αrⁿ; a double root gives (α₀ + α₁n)rⁿ; a triple root goes up to n².</p><p class='ex'>The total number of α’s always equals the degree k.</p>"],
 ["r","Higher degree","The characteristic roots are 2, 2, 2 and 5. What is the general form of aₙ?",
 "<span class='f'>aₙ = (α₀ + α₁n + α₂n²)·2ⁿ + α₃·5ⁿ</span><p>2 has multiplicity 3 (up to n²), and 5 is simple. That’s four constants for a degree-4 recurrence.</p>"],
-["r","Higher degree","Rosen’s example: solve aₙ = 6aₙ₋₁ − 11aₙ₋₂ + 6aₙ₋₃ with a₀ = 2, a₁ = 5, a₂ = 15.",
-"<ol><li>r³ − 6r² + 11r − 6 = 0. Try small integers: r = 1 works, and factoring gives (r − 1)(r − 2)(r − 3).</li><li>aₙ = α₁ + α₂2ⁿ + α₃3ⁿ.</li><li>Equations from n = 0, 1, 2: α₁ + α₂ + α₃ = 2; α₁ + 2α₂ + 3α₃ = 5; α₁ + 4α₂ + 9α₃ = 15. These give α₁ = 1, α₂ = −1, α₃ = 2.</li></ol><span class='f'>aₙ = 1 − 2ⁿ + 2·3ⁿ</span><p class='ex'>Check a₃: 6·15 − 11·5 + 6·2 = 47 and 1 − 8 + 54 = 47 ✓</p>"],
+["r","Higher degree","Solve aₙ = 2aₙ₋₁ + aₙ₋₂ − 2aₙ₋₃ with a₀ = 3, a₁ = 2, a₂ = 6.",
+"<ol><li>r³ − 2r² − r + 2 = r²(r − 2) − (r − 2) = (r − 2)(r − 1)(r + 1). Roots 1, −1, 2.</li><li>aₙ = α₁ + α₂(−1)ⁿ + α₃2ⁿ.</li><li>n = 0, 1, 2: α₁ + α₂ + α₃ = 3; α₁ − α₂ + 2α₃ = 2; α₁ + α₂ + 4α₃ = 6. Subtract the first from the third: 3α₃ = 3, so α₃ = 1, then α₁ = α₂ = 1.</li></ol><span class='f'>aₙ = 1 + (−1)ⁿ + 2ⁿ</span><p class='ex'>Check a₃: 2·6 + 2 − 2·3 = 8 and 1 − 1 + 8 = 8 ✓</p>"],
 ["r","Nonhomogeneous","What is a linear nonhomogeneous recurrence, and what do all its solutions look like?",
 "<span class='f'>aₙ = c₁aₙ₋₁ + ⋯ + cₖaₙ₋ₖ + F(n)</span><p>F(n) is an extra term that isn’t a multiple of any aⱼ, like the +1 in Hanoi. Dropping it gives the <b>associated homogeneous</b> recurrence.</p><span class='f'>all solutions = aₙ⁽ᵖ⁾ + aₙ⁽ʰ⁾</span><p>aₙ⁽ᵖ⁾ is <b>one particular</b> solution of the full recurrence. aₙ⁽ʰ⁾ is the <b>general</b> solution of the homogeneous one, with its α’s still unknown.</p>"],
 ["r","Nonhomogeneous","What is the recipe for a nonhomogeneous recurrence, and what do you guess for the particular solution?",
@@ -410,7 +416,102 @@ const C=[
 ["b","Bayes review","What is the “table of products” way to do any Bayes problem quickly?",
 "<p>Make one row per cause:</p><span class='f'>cause | p(cause) | p(evidence | cause) | product</span><p>Add up the product column; that’s p(evidence). Then each p(cause | evidence) = its product / that total.</p><p class='ex'>Cancer test: cancer 0.01 × 0.9 = 0.009; no cancer 0.99 × 0.1 = 0.099. Total 0.108. p(cancer | positive) = 0.009/0.108 ≈ 8.3%.</p>"],
 ["b","Bayes review","What is the difference between p(E | F) and p(F | E)? Give the classic mistake.",
-"<p>p(E | F): the chance of the evidence <b>assuming</b> the cause. p(F | E): the chance of the cause <b>given</b> that you saw the evidence. They are usually very different.</p><p class='trap'>“The test catches 90% of cancers” is p(positive | cancer) = 0.9. It does not mean p(cancer | positive) = 0.9; that was only 8.3%, because the base rate p(cancer) = 1% was small.</p>"]
+"<p>p(E | F): the chance of the evidence <b>assuming</b> the cause. p(F | E): the chance of the cause <b>given</b> that you saw the evidence. They are usually very different.</p><p class='trap'>“The test catches 90% of cancers” is p(positive | cancer) = 0.9. It does not mean p(cancer | positive) = 0.9; that was only 8.3%, because the base rate p(cancer) = 1% was small.</p>"],
+// ================= QUIZ 7: REPEATED ROOTS (start of Lecture 22) =================
+["k","Repeated roots","Why do repeated characteristic roots need a special fix, and what is it?",
+"<span class='lb'>The problem</span><p>A degree-k recurrence needs k different solutions so the α’s can match k initial conditions. If a root r is repeated, rⁿ only counts once, leaving you short.</p><span class='lb'>The fix</span><span class='f'>root r repeated m times ⟹ rⁿ, n·rⁿ, …, nᵐ⁻¹rⁿ are all solutions</span><p>For a double root r₀ of a degree-2 recurrence: <b>aₙ = α₁r₀ⁿ + α₂·n·r₀ⁿ</b>.</p><p class='trap'>Writing α₁r₀ⁿ + α₂r₀ⁿ. That’s really one term, (α₁ + α₂)r₀ⁿ, and can’t fit two initial conditions.</p>"],
+["k","Repeated roots","Lecture 22: solve aₙ = 4aₙ₋₁ − 4aₙ₋₂ with a₀ = 2, a₁ = 12.",
+"<ol><li>r² − 4r + 4 = (r − 2)² = 0: root 2, repeated twice.</li><li>aₙ = α₁2ⁿ + α₂n2ⁿ.</li><li>a₀ = 2 gives α₁ = 2. a₁ = 12 gives 12 = 2·2 + α₂·2, so α₂ = 4.</li></ol><span class='f'>aₙ = 2·2ⁿ + 4n·2ⁿ</span><p class='ex'>Check a₂: 4·12 − 4·2 = 40 and 8 + 32 = 40 ✓</p>"],
+["k","Repeated roots","Lecture 22: solve aₙ = 2aₙ₋₁ − aₙ₋₂ with a₀ = 2, a₁ = 4.",
+"<ol><li>r² − 2r + 1 = (r − 1)² = 0: root 1, repeated twice.</li><li>aₙ = α₁·1ⁿ + α₂n·1ⁿ = α₁ + α₂n.</li><li>α₁ = 2; 4 = 2 + α₂, so α₂ = 2.</li></ol><span class='f'>aₙ = 2 + 2n</span><p class='ex'>2, 4, 6, 8, … ✓ (each term is twice the last minus the one before).</p>"],
+["k","Repeated roots","Solve aₙ = 8aₙ₋₁ − 16aₙ₋₂ with a₀ = 1, a₁ = 8.",
+"<ol><li>r² − 8r + 16 = (r − 4)²: root 4 twice.</li><li>aₙ = (α₁ + α₂n)4ⁿ. α₁ = 1; (1 + α₂)·4 = 8, so α₂ = 1.</li></ol><span class='f'>aₙ = (1 + n)·4ⁿ</span><p class='ex'>Check a₂: 64 − 16 = 48 and 3·16 = 48 ✓</p>"],
+// ================= QUIZ 7: INCLUSION–EXCLUSION (Lecture 22, Rosen 8.5–8.6) =================
+["i","Inclusion–exclusion","What is inclusion–exclusion for two sets, and why does it work?",
+"<span class='f'>|A ∪ B| = |A| + |B| − |A ∩ B|</span><span class='lb'>Why</span><p>|A| + |B| counts every element of A ∩ B <b>twice</b>, once in each set. Subtracting |A ∩ B| once makes every element count exactly once.</p><span class='lb'>Example</span><p class='ex'>Numbers 1–100 divisible by 2 or 5: 50 + 20 − 10 = <b>60</b>. (Both 2 and 5 means divisible by 10.)</p>"],
+["i","Inclusion–exclusion","State inclusion–exclusion for three sets.",
+"<span class='f'>|A ∪ B ∪ C| = |A| + |B| + |C| − |A∩B| − |A∩C| − |B∩C| + |A∩B∩C|</span><p>Add the singles, subtract the pairs, add back the triple. Signs: +, −, +.</p><p class='trap'>Forgetting the final +|A∩B∩C| term, or subtracting it.</p>"],
+["i","Inclusion–exclusion","Why does the three-set formula count every element exactly once?",
+"<p>Count how often an element is counted, by how many sets it’s in:</p><ul><li><b>In 1 set:</b> +1 (single), no pairs or triple → <b>1</b>.</li><li><b>In 2 sets:</b> +2 (singles), −1 (the one pair it’s in) → <b>1</b>.</li><li><b>In all 3:</b> +3 (singles), −3 (all three pairs), +1 (triple) → <b>1</b>.</li></ul><p>The pair terms over-subtract elements in all three sets (3 − 3 = 0), and the triple term adds them back.</p>"],
+["i","Divisibility counts","How many integers from 1 to N are divisible by d? Divisible by both a and b?",
+"<span class='f'>#{1 ≤ k ≤ N : d | k} = ⌊N/d⌋</span><p>Divisible by both a and b means divisible by <b>lcm(a, b)</b>, which is ab only when a and b share no common factor.</p><p class='ex'>Numbers ≤ 600 divisible by 7: ⌊600/7⌋ = 85.</p><p class='trap'>Divisible by 4 and 6 means divisible by lcm = 12, not 24.</p>"],
+["i","Divisibility counts","Lecture 22: how many numbers from 1 to 600 are divisible by 2, 3 or 5?",
+"<ol><li>Singles: ⌊600/2⌋ = 300, ⌊600/3⌋ = 200, ⌊600/5⌋ = 120.</li><li>Pairs: by 6 → 100; by 10 → 60; by 15 → 40.</li><li>Triple: by 30 → 20.</li><li>300 + 200 + 120 − 100 − 60 − 40 + 20 = <b>440</b>.</li></ol><p class='ex'>And “divisible by none of 2, 3, 5” = 600 − 440 = 160.</p>"],
+["i","Counting “none of”","How do you count objects that have NONE of several bad properties?",
+"<span class='f'>#(none) = N − |A₁ ∪ ⋯ ∪ Aₙ|</span><span class='lb'>Recipe</span><ol><li>Define the universe and its size N.</li><li>Let Aᵢ = objects with bad property i.</li><li>Find the sizes of the intersections. Often every intersection of r sets has the <b>same</b> size, so you multiply by C(n, r).</li><li>Answer = N − Σ|Aᵢ| + Σ|Aᵢ∩Aⱼ| − Σ|Aᵢ∩Aⱼ∩Aₖ| + ⋯</li></ol><p class='ex'>This is how derangements, onto functions and bounded stars and bars all work.</p>"],
+["i","Counting “none of”","How many numbers from 1 to 1000 are divisible by neither 5 nor 7?",
+"<ol><li>Divisible by 5: 200. By 7: ⌊1000/7⌋ = 142. By both (35): ⌊1000/35⌋ = 28.</li><li>Divisible by 5 or 7: 200 + 142 − 28 = 314.</li><li>Neither: 1000 − 314 = <b>686</b>.</li></ol>"],
+["i","General formula","State the general principle of inclusion–exclusion for n sets.",
+"<span class='f'>|A₁ ∪ ⋯ ∪ Aₙ| = Σ|Aᵢ| − Σᵢ<ⱼ|Aᵢ∩Aⱼ| + Σᵢ<ⱼ<ₖ|Aᵢ∩Aⱼ∩Aₖ| − ⋯ + (−1)ⁿ⁺¹|A₁∩⋯∩Aₙ|</span><p>Add singles, subtract pairs, add triples, subtract quadruples, … The sign for intersections of r sets is (−1)ʳ⁺¹.</p><p class='ex'>There are 2ⁿ − 1 terms in total, one for each nonempty collection of the sets.</p>"],
+["i","General formula","Prove the general inclusion–exclusion formula.",
+"<ol><li>Take an element x in exactly r of the sets (r ≥ 1). It counts <b>once</b> on the left.</li><li>On the right it appears in C(r, 1) singles, C(r, 2) pairs, C(r, 3) triples, … so its count is C(r,1) − C(r,2) + C(r,3) − ⋯ + (−1)ʳ⁺¹C(r,r).</li><li>Binomial theorem: 0 = (1 − 1)ʳ = C(r,0) − C(r,1) + C(r,2) − ⋯ + (−1)ʳC(r,r).</li><li>C(r, 0) = 1, so rearranging gives C(r,1) − C(r,2) + ⋯ = 1. Counted once on the right too. ∎</li></ol>"],
+["i","Venn diagrams","How many regions does a Venn diagram for n sets need? Do four circles work?",
+"<p>One region for every in/out combination: <b>2ⁿ</b> regions (counting the outside). For 4 sets that’s 16.</p><p>Four circles <b>don’t</b> work: some combinations get no region, e.g. “in A and C only” or “in B and D only”. Correct 4-set diagrams use other shapes, like ellipses.</p>"],
+["i","Venn diagrams","Lecture fun fact: for which n can a Venn diagram be rotationally symmetric? Why?",
+"<p>Only when <b>n is prime</b>.</p><span class='lb'>Why</span><ol><li>Rotating by 1/n of a turn moves each region lying in exactly r sets to a different such region, so those regions come in groups of n.</li><li>There are C(n, r) of them, so n must divide C(n, r) for every 1 ≤ r &lt; n.</li><li>If n has a prime factor p &lt; n, then n does <b>not</b> divide C(n, p) (e.g. C(4, 2) = 6), so n must be prime.</li></ol><p class='ex'>Symmetric diagrams are known for 2, 3, 5, 7, 11, 13, 17, 19 and 23; whether one exists for every prime is open.</p>"],
+["i","Bounded stars and bars","How do you count solutions to x₁ + ⋯ + xₖ = n with upper bounds like xᵢ ≤ c?",
+"<span class='f'>no upper bounds: C(n + k − 1, k − 1) solutions with all xᵢ ≥ 0</span><ol><li>Count with no upper bounds.</li><li>Bad set Aᵢ: xᵢ <b>breaks</b> its bound, i.e. xᵢ ≥ c + 1. Substitute xᵢ′ = xᵢ − (c + 1) ≥ 0, which lowers the total by c + 1; count with stars and bars again.</li><li>For intersections, subtract all the relevant amounts at once.</li><li>Answer = total − singles + pairs − ⋯</li></ol><p class='trap'>If the lowered total goes negative, that term is 0.</p>"],
+["i","Bounded stars and bars","Rosen: count solutions of x₁ + x₂ + x₃ = 11 (all ≥ 0) with x₁ ≤ 3, x₂ ≤ 4, x₃ ≤ 6.",
+"<ol><li>No bounds: C(13, 2) = 78.</li><li>x₁ ≥ 4 → total 7 → C(9, 2) = 36. x₂ ≥ 5 → total 6 → C(8, 2) = 28. x₃ ≥ 7 → total 4 → C(6, 2) = 15.</li><li>x₁ ≥ 4 and x₂ ≥ 5 → total 2 → C(4, 2) = 6. x₁ ≥ 4 and x₃ ≥ 7 → total 0 → 1. x₂, x₃ both → total −1 → 0. All three → 0.</li><li>78 − 79 + 7 − 0 = <b>6</b>.</li></ol>"],
+["i","Dice sums","Lecture 22: what is the probability that 6 fair dice sum to 21?",
+"<ol><li>6⁶ equally likely rolls. Count x₁ + ⋯ + x₆ = 21 with 1 ≤ xᵢ ≤ 6.</li><li>Shift: yᵢ = xᵢ − 1, so y₁ + ⋯ + y₆ = 15 with 0 ≤ yᵢ ≤ 5.</li><li>No bounds: C(20, 5).</li><li>One yᵢ ≥ 6 → total 9 → C(14, 5), for each of 6 dice.</li><li>Two ≥ 6 → total 3 → C(8, 5), for each of C(6, 2) pairs. Three is impossible (18 &gt; 15).</li></ol><span class='f'>C(20,5) − 6·C(14,5) + C(6,2)·C(8,5) = 15504 − 12012 + 840 = 4332</span><p>Probability <b>4332/6⁶ ≈ 0.093</b>.</p>"],
+["i","Dice sums","How many ways can 3 dice (in order) sum to 10?",
+"<ol><li>yᵢ = xᵢ − 1: y₁ + y₂ + y₃ = 7 with yᵢ ≤ 5.</li><li>No bounds: C(9, 2) = 36.</li><li>One yᵢ ≥ 6 → total 1 → C(3, 2) = 3, for each of 3 dice: 9. Two ≥ 6 is impossible.</li><li>36 − 9 = <b>27</b>.</li></ol>"],
+["i","Derangements","What is a derangement, and what is the formula for Dₙ?",
+"<p>A <b>derangement</b> is a permutation of 1, …, n where <b>no</b> number is in its own position: i is never in spot i.</p><span class='f'>Dₙ = n! (1 − 1/1! + 1/2! − 1/3! + ⋯ + (−1)ⁿ/n!)</span><span class='lb'>Small cases</span><p class='ex'>D₃ = <b>2</b>: 231 and 312. D₄ = 24 − 24 + 12 − 4 + 1 = <b>9</b>.</p>"],
+["i","Derangements","Derive the derangement formula with inclusion–exclusion.",
+"<ol><li>Aᵢ = permutations with i in position i. Derangements = n! − |A₁ ∪ ⋯ ∪ Aₙ|.</li><li>Fixing r chosen numbers leaves the other n − r free to permute: each r-fold intersection has (n − r)! permutations.</li><li>There are C(n, r) choices of which r, and C(n, r)(n − r)! = n!/r!.</li><li>So Dₙ = n! − n!/1! + n!/2! − ⋯ + (−1)ⁿn!/n!, which factors into the formula.</li></ol>"],
+["i","Derangements","What fraction of permutations are derangements when n is large?",
+"<span class='f'>Dₙ/n! = 1 − 1/1! + 1/2! − ⋯ + (−1)ⁿ/n! → e⁻¹ ≈ 0.368</span><p>That’s the Taylor series e⁻¹ = Σ (−1)ᵏ/k!. So about <b>37%</b> of random permutations have no fixed point, almost regardless of n.</p>"],
+["i","Hat-check problem","In a random permutation of 1, …, n, what is the expected number of i in position i?",
+"<ol><li>Xᵢ = 1 if i is in position i, else 0. The count is X₁ + ⋯ + Xₙ.</li><li>E(Xᵢ) = (n − 1)!/n! = <b>1/n</b>: fix i, then permute the other n − 1 numbers.</li><li>Linearity: E = n · 1/n = <b>1</b>, for every n.</li></ol><p class='ex'>Much easier than derangements: expected values need only linearity, not inclusion–exclusion.</p>"],
+["i","Onto functions","How many onto functions are there from an m-element set to an n-element set?",
+"<span class='f'>Σ from r = 0 to n of (−1)ʳ C(n, r)(n − r)ᵐ = nᵐ − C(n,1)(n−1)ᵐ + C(n,2)(n−2)ᵐ − ⋯</span><span class='lb'>Why</span><ol><li>All functions: nᵐ (each of the m inputs picks one of n outputs).</li><li>Aᵢ = functions that <b>miss</b> output i. Onto = nᵐ − |A₁ ∪ ⋯ ∪ Aₙ|.</li><li>Missing r chosen outputs leaves n − r choices per input: (n − r)ᵐ functions, and C(n, r) ways to choose the r.</li></ol>"],
+["i","Onto functions","Rosen: how many onto functions from a 5-element set to a 3-element set?",
+"<span class='f'>3⁵ − 3·2⁵ + 3·1⁵ = 243 − 96 + 3 = 150</span><p><b>150.</b> The last term C(3, 3)·0⁵ = 0.</p>"],
+["i","Onto functions","How many onto functions from a 4-element set to a 2-element set?",
+"<span class='f'>2⁴ − 2·1⁴ = 14</span><p>All 16 functions except the 2 constant ones.</p>"],
+// ================= QUIZ 7: RELATIONS (Lecture 23, Rosen 9.1) =================
+["l","Relations","What is a binary relation from A to B?",
+"<span class='f'>R ⊆ A × B</span><p>A relation is just a <b>set of ordered pairs</b> (a, b) with a ∈ A and b ∈ B. Write <b>aRb</b> when (a, b) ∈ R. Any set of pairs counts, with or without a pattern.</p><span class='lb'>Examples</span><ul><li>A = {1, 2, 3}, B = {a, b, c, d}, R = {(1,a), (1,b), (2,c), (2,d)}: 1Ra true, 3Ra false.</li><li>Classes and classrooms: Math 55 R Wheeler 150.</li><li>Web pages: aRb if page a links to page b.</li></ul><p class='trap'>Order matters: aRb doesn’t mean bRa.</p>"],
+["l","Relations","Give the standard examples of relations on numbers and on sets.",
+"<ul><li><b>Numbers:</b> =, &lt;, ≤ on ℝ; divisibility a | b; congruence a ≡ b (mod m); relatively prime (gcd(a, b) = 1).</li><li><b>Sets:</b> “element of” ∈ from A to P(A); subset ⊆ on P(C).</li><li><b>Empty relation</b> ∅: nothing is related. <b>Complete relation</b> A × B: everything is related.</li><li><b>Graph of a function f</b>: {(a, b) : f(a) = b}. For f(x) = x²: 2R4 is true, 4R2 is false.</li></ul>"],
+["l","Relations","What is a relation on a set A, and how do you draw one?",
+"<p>A relation on A is a relation from A to itself: a subset of A × A.</p><span class='lb'>Arrow diagram</span><p>Draw a dot for each element, an arrow a → b whenever aRb, and a <b>loop</b> at a whenever aRa.</p><p class='ex'>Running example: R = {(1,1), (1,2), (2,2), (1,3), (2,3)} on {1, 2, 3}: loops at 1 and 2, arrows 1→2, 1→3, 2→3.</p>"],
+["l","Reflexive","When is a relation reflexive? Is R = {(1,1), (1,2), (2,2), (1,3), (2,3)} on {1, 2, 3} reflexive?",
+"<span class='f'>reflexive: aRa for every a ∈ A</span><p>In the diagram, a loop at <b>every</b> dot. To show it fails, find one a with a R̸ a.</p><p><b>R is not reflexive</b>: (3, 3) ∉ R.</p>"],
+["l","Reflexive","Which are reflexive: ⊆, divisibility on positive integers, congruence mod m, gcd(a, b) = 1, gcd(a, b) ≠ 1?",
+"<ul><li>⊆: <b>yes</b>, every set is a subset of itself.</li><li>|: <b>yes</b>, a | a.</li><li>≡ (mod m): <b>yes</b>, a ≡ a.</li><li>gcd = 1: <b>no</b>, gcd(2, 2) = 2.</li><li>gcd ≠ 1: <b>no</b>, gcd(1, 1) = 1.</li></ul><p class='trap'>A relation and its opposite can both fail to be reflexive. One failing element is enough.</p>"],
+["l","Symmetric & antisymmetric","Define symmetric and antisymmetric. Are they opposites?",
+"<span class='f'>symmetric: aRb ⟹ bRa<br>antisymmetric: aRb and bRa ⟹ a = b</span><p><b>Symmetric:</b> every arrow has a return arrow. <b>Antisymmetric:</b> no two-way arrows between <b>different</b> elements (loops are fine).</p><p class='trap'>Not opposites. “Antisymmetric” is not “not symmetric”. A relation can be both (=), neither, or just one.</p>"],
+["l","Symmetric & antisymmetric","Is R = {(1,1), (1,2), (2,2), (1,3), (2,3)} symmetric? Antisymmetric?",
+"<p><b>Not symmetric:</b> 1R2 but 2 R̸ 1.</p><p><b>Antisymmetric:</b> there is no pair of different elements with arrows both ways.</p>"],
+["l","Symmetric & antisymmetric","Symmetric? Antisymmetric? ≤ on ℝ, ⊆, divisibility on ℤ⁺, gcd = 1, congruence mod 3.",
+"<ul><li>≤: not symmetric (1 ≤ 3, 3 ≰ 1); <b>antisymmetric</b>.</li><li>⊆: not symmetric; <b>antisymmetric</b> (A ⊆ B and B ⊆ A ⟹ A = B).</li><li>| on ℤ⁺: not symmetric (2 | 4, 4 ∤ 2); <b>antisymmetric</b>.</li><li>gcd = 1: <b>symmetric</b>; not antisymmetric (2R3, 3R2, 2 ≠ 3).</li><li>≡ mod 3: <b>symmetric</b>; not antisymmetric (1 ≡ 4 and 4 ≡ 1).</li></ul><p class='trap'>Divisibility on all of ℤ is <b>not</b> antisymmetric: 2 | −2 and −2 | 2.</p>"],
+["l","Transitive","When is a relation transitive, and how do you check a finite one?",
+"<span class='f'>transitive: aRb and bRc ⟹ aRc</span><p>In the diagram: any two-step path a → b → c needs a direct arrow a → c.</p><span class='lb'>How to check</span><ol><li>For each (a, b) in R, find every (b, c) in R starting where it ends.</li><li>Check (a, c) ∈ R. One missing pair disproves it.</li></ol><p class='ex'>Running example: 1R2 and 2R3, and 1R3 ✓; the other chains use loops. <b>Transitive.</b></p>"],
+["l","Transitive","Is R = {(1, 2), (2, 1)} on {1, 2} transitive?",
+"<p><b>No.</b> 1R2 and 2R1 would require 1R1, which is missing (and 2R2 too).</p><p class='trap'>Watch for chains that come back to where they started: they force loops.</p>"],
+["l","Transitive","Transitive? ≤, ⊆, divisibility, congruence mod m, gcd = 1, gcd ≠ 1.",
+"<ul><li>≤, ⊆, |, ≡ (mod m): all <b>transitive</b>.</li><li>gcd = 1: <b>not</b>: 2R3 and 3R4, but gcd(2, 4) = 2.</li><li>gcd ≠ 1: <b>not</b>: 2S6 and 6S3, but gcd(2, 3) = 1.</li></ul>"],
+["l","Properties","Fill in reflexive / symmetric / antisymmetric / transitive for =, <, ≤, ⊆, | (ℤ⁺), ≡ (mod m), gcd = 1.",
+"<ul><li><b>=</b>: R S A T (all four).</li><li><b>&lt;</b>: not R, not S, A, T.</li><li><b>≤, ⊆, |</b>: R, not S, A, T.</li><li><b>≡ mod m</b>: R, S, not A, T.</li><li><b>gcd = 1</b> (and gcd ≠ 1): not R, S, not A, not T.</li></ul><p class='ex'>&lt; is antisymmetric <b>vacuously</b>: a &lt; b and b &lt; a never both happen.</p>"],
+["l","Properties","Which relations are both symmetric and antisymmetric? Give one that is neither symmetric nor transitive.",
+"<p><b>Both:</b> exactly the relations with no arrows between different elements, i.e. only loops. Examples: = and ∅. If aRb with a ≠ b, symmetry gives bRa, and then antisymmetry would force a = b, a contradiction.</p><p><b>Neither symmetric nor transitive:</b> {(1, 2), (2, 3)} on {1, 2, 3}: 1R2 but 2 R̸ 1, and 1R2, 2R3 but 1 R̸ 3.</p>"],
+["l","Counting relations","If |A| = n, how many relations, reflexive relations and symmetric relations are there on A?",
+"<ul><li><b>All:</b> A × A has n² pairs, each in or out: <b>2^(n²)</b>.</li><li><b>Reflexive:</b> the n loops (a, a) are forced in, and the other n² − n pairs are free: <b>2^(n² − n)</b>.</li><li><b>Symmetric:</b> the n loops are free, and each of the C(n, 2) pairs {a, b} is decided together (both in or both out): <b>2^(n + C(n,2)) = 2^(n(n+1)/2)</b>.</li></ul><p class='ex'>n = 2: 16, 4, 8.</p>"],
+["l","Counting relations","Rosen: how many antisymmetric relations on an n-element set?",
+"<span class='f'>2ⁿ · 3^C(n,2)</span><p>The loops are free (2 choices each). For each pair {a, b} of different elements there are 3 allowed options: only (a, b), only (b, a), or neither. Both is forbidden.</p><p class='ex'>n = 2: 4 · 3 = 12.</p>"],
+["l","Composition","What is the composition S ∘ R, and how do you compute it?",
+"<span class='f'>S ∘ R = {(a, c) : there is b with aRb and bSc}</span><p>R goes from A to B, S from B to C; S ∘ R goes from A to C. Do <b>R first</b>, then S, just like g ∘ f for functions.</p><span class='lb'>How</span><ol><li>For each (a, b) in R, find every pair in S starting with b.</li><li>Each (b, c) found gives (a, c).</li></ol><p class='trap'>S ∘ R and R ∘ S are usually different.</p>"],
+["l","Composition","R = {(1,a), (1,b), (2,c)} and S = {(a,x), (b,y), (c,x)}. Find S ∘ R.",
+"<p>1 → a → x, 1 → b → y, 2 → c → x.</p><span class='f'>S ∘ R = {(1, x), (1, y), (2, x)}</span>"],
+["l","Composition","Lecture 23: R is “gcd(a, b) = 1” on positive integers. What is R ∘ R?",
+"<p><b>Every pair (a, b)</b>, even (2, 2).</p><p>For any a, b pick a prime p bigger than both. Then gcd(a, p) = 1 and gcd(p, b) = 1, so aRp and pRb, hence a (R ∘ R) b.</p>"],
+["l","Powers","What are the powers Rⁿ of a relation, and what does a Rⁿ b mean?",
+"<span class='f'>R¹ = R, &nbsp;Rⁿ⁺¹ = Rⁿ ∘ R</span><p>a Rⁿ b exactly when there’s a <b>path of length n</b> from a to b: a = a₀ → a₁ → ⋯ → aₙ = b, each step an arrow of R.</p><span class='lb'>Rosen 9.1</span><p>R is transitive ⟺ Rⁿ ⊆ R for every n ≥ 1: paths of any length must already be direct arrows.</p>"],
+["l","Powers","Lecture 23: R = {(1,2), (2,3), (3,1)} on {1, 2, 3}. Find R², R³, R⁴.",
+"<p>R is the cycle 1 → 2 → 3 → 1.</p><ol><li>R² (two steps): <b>{(1,3), (2,1), (3,2)}</b>.</li><li>R³ (three steps, back home): <b>{(1,1), (2,2), (3,3)}</b>.</li><li>R⁴ = <b>R</b> again.</li></ol><p class='ex'>So the powers repeat every 3: R = R⁴ = R⁷ = ⋯, R² = R⁵ = ⋯, R³ = R⁶ = ⋯</p>"],
 ];
 
 const KEY='m55-quiz5-cards-v2';
@@ -420,9 +521,10 @@ const card=document.getElementById('card'), deckSel=document.getElementById('dec
 // Quiz 6 deck was rebuilt (v2): clear old Quiz 6 progress once, since card positions changed.
 const Q6=C.findIndex(c=>'erb'.includes(c[0]));
 if(!st.q6v2){ Object.keys(st.known).forEach(k=>{ if(+k>=Q6) delete st.known[k]; }); st.deck='q6'; st.q6=1; st.q6v2=1; save(); }
+if(!st.q7){ st.deck='q7'; st.q7=1; save(); }
 deckSel.value=st.deck;
 let queue=[], cur=null, shown=false;
-const GROUPS={q6:['e','r','b']};
+const GROUPS={q6:['e','r','b'],q7:['k','i','l']};
 const ids=()=>C.map((c,i)=>i).filter(i=>st.deck==='all'||(GROUPS[st.deck]||[st.deck]).includes(C[i][0]));
 function build(){ queue=ids().filter(i=>!st.known[i]); cur=queue.shift(); shown=false; render(); }
 function render(){
