@@ -74,9 +74,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system
     <select id="deck" aria-label="Which cards">
       <optgroup label="Quiz 7 · this week">
         <option value="q7">Quiz 7 · all</option>
-        <option value="k">Repeated roots</option>
+        <option value="r">Recurrence relations</option>
         <option value="i">Inclusion–exclusion</option>
-        <option value="l">Relations</option>
+        <option value="l">Relations (not on Quiz 7)</option>
       </optgroup>
       <optgroup label="Quiz 6">
         <option value="q6">Quiz 6 · all</option>
@@ -524,7 +524,7 @@ if(!st.q6v2){ Object.keys(st.known).forEach(k=>{ if(+k>=Q6) delete st.known[k]; 
 if(!st.q7){ st.deck='q7'; st.q7=1; save(); }
 deckSel.value=st.deck;
 let queue=[], cur=null, shown=false;
-const GROUPS={q6:['e','r','b'],q7:['k','i','l']};
+const GROUPS={q6:['e','r','b'],q7:['r','k','i']};
 const ids=()=>C.map((c,i)=>i).filter(i=>st.deck==='all'||(GROUPS[st.deck]||[st.deck]).includes(C[i][0]));
 function build(){ queue=ids().filter(i=>!st.known[i]); cur=queue.shift(); shown=false; render(); }
 function render(){
