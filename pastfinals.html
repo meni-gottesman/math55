@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 55 Quiz 7 notes from scratch: repeated roots, inclusion–exclusion (Lecture 22, Rosen 8.5–8.6) and relations (Lecture 23, Rosen 9.1).">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%AA%3C/text%3E%3C/svg%3E">
+<title>Past Finals</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.tbl.compact table{font-size:.85rem}
+.tbl.compact th,.tbl.compact td{padding:8px 5px;text-align:center}
+.tbl.compact th:first-child,.tbl.compact td:first-child{text-align:left;padding-left:10px}
+.tbl.compact th{letter-spacing:0;text-transform:none;font-size:.75rem}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body><div class="wrap">
+<header id="top"><h1>Past finals: blind practice</h1><p>Real Berkeley exams from other semesters · <a href="finals.html">Finals plan</a> · <a href="cards.html">Flashcards</a></p></header>
+<div class="note"><p><b>Why these matter.</b> You have never seen these problems, and the topic isn’t labeled. That’s the only honest test of whether you can do the final, rather than feeling ready because the material looks familiar.</p>
+<p><b>Rules for every one:</b> real time limit, real allowed materials (Math 54: one handwritten sheet; Math 55: nothing), phone in another room. Before checking, mark each answer <b>sure / unsure</b>. A wrong answer you were <b>sure</b> of is the most important thing to fix: log it in red.</p>
+<p><b>Different syllabus:</b> older exams sometimes include topics your course didn’t cover (e.g. Math 54 heat/wave PDEs, variation of parameters, Laplace; Math 55 topics outside Rosen 1–10). Skip those problems and say so on the page; don’t count them.</p></div>
+<section id="m54"><h2><span class="n">54</span>Math 54: blind finals (scheduled)</h2><div class="tbl"><table><tr><th>When</th><th>Exam</th><th>Files</th></tr><tr><td>Wed Dec 9</td><td><b>Teleman final, Fall 2019</b></td><td><a href="https://tbp.studentorg.berkeley.edu/exams/6809/download/">exam</a> · <a href="https://tbp.studentorg.berkeley.edu/exams/6810/download/">solutions</a></td></tr><tr><td>Thu Dec 10</td><td><b>Paulin final, Spring 2018</b></td><td><a href="https://tbp.studentorg.berkeley.edu/exams/6726/download/">exam</a> · <a href="https://tbp.studentorg.berkeley.edu/exams/6728/download/">solutions</a></td></tr><tr><td>Fri Dec 11 (if no official practice final)</td><td><b>Nadler final, Fall 2017</b></td><td><a href="https://tbp.studentorg.berkeley.edu/exams/6049/download/">exam</a> · <a href="https://tbp.studentorg.berkeley.edu/exams/6050/download/">solutions</a></td></tr><tr><td>Sat Dec 12</td><td><b>Lin final, Fall 2017</b></td><td><a href="https://tbp.studentorg.berkeley.edu/exams/6318/download/">exam</a> · <a href="https://tbp.studentorg.berkeley.edu/exams/6319/download/">solutions</a></td></tr><tr><td>Sun Dec 13</td><td><b>Shende final, Spring 2016</b></td><td><a href="https://tbp.studentorg.berkeley.edu/exams/6710/download/">exam</a> · <a href="https://tbp.studentorg.berkeley.edu/exams/6711/download/">solutions</a></td></tr></table></div>
+<h3>Blind midterms (earlier checkpoints)</h3><div class="tbl"><table><tr><th>When</th><th>Exam</th><th>Files</th></tr><tr><td>Sun Nov 29</td><td><b>Nadler Midterm 1, Fall 2020 (with solutions)</b></td><td><a href="https://math.berkeley.edu/sites/default/files/f20_54_first_midterm_w_solutions-nadler.pdf">exam</a> · <i>no solutions</i></td></tr><tr><td>Thu Dec 3</td><td><b>Nadler Midterm 2, Fall 2020 (with solutions)</b></td><td><a href="https://math.berkeley.edu/sites/default/files/f20_54_second_midterm_w_solutions-nadler.pdf">exam</a> · <i>no solutions</i></td></tr></table></div>
+<p>More: <a href="https://math.berkeley.edu/courses/archives/exams/math-54-exams">Math department archive (34 Math 54 exams)</a> · <a href="https://tbp.studentorg.berkeley.edu/courses/math/54/">Tau Beta Pi archive (about 20 finals with solutions)</a> · <a href="https://math.berkeley.edu/~apaulin/54Final(Practice2)sol.pdf">Paulin practice final 2</a> · <a href="https://math.berkeley.edu/~apaulin/54Final(Practice3)sol.pdf">practice final 3</a></p></section>
+<section id="m55"><h2><span class="n">55</span>Math 55: blind finals (scheduled)</h2><div class="tbl"><table><tr><th>When</th><th>Exam</th><th>Files</th></tr><tr><td>Wed Dec 9</td><td><b>Ribet final, Spring 2019</b><br><small>The file is the exam with worked solutions: cover the solutions.</small></td><td><a href="https://math.berkeley.edu/~ribet/55/final_sols.pdf">exam</a> · <a href="https://math.berkeley.edu/~ribet/55/final_sols.pdf">solutions</a></td></tr><tr><td>Thu Dec 10</td><td><b>Haiman final, Fall 2012</b><br><small>Exam + solutions in one file: cover the solutions.</small></td><td><a href="https://math.berkeley.edu/~mhaiman/math55-fall12/final-exam-sol.pdf">exam</a> · <a href="https://math.berkeley.edu/~mhaiman/math55-fall12/final-exam-sol.pdf">solutions</a></td></tr><tr><td>Fri Dec 11 (if no official practice final)</td><td><b>Sturmfels final, Spring 2012</b></td><td><a href="https://math.berkeley.edu/~bernd/final.pdf">exam</a> · <a href="https://math.berkeley.edu/~bernd/solfinall.pdf">solutions</a></td></tr><tr><td>Sat Dec 12</td><td><b>Ribet final, Spring 2024</b><br><small>Newest one; check answers against your notes, or ask Claude to grade.</small></td><td><a href="https://math.berkeley.edu/sites/default/files/sp24_55_final-k.ribet.pdf">exam</a> · <i>no solutions</i></td></tr><tr><td>Sun Dec 13</td><td><b>Sturmfels final, Spring 2009</b></td><td><a href="https://math.berkeley.edu/~bernd/final55.pdf">exam</a> · <a href="https://math.berkeley.edu/~bernd/solfinal55.pdf">solutions</a></td></tr></table></div>
+<h3>Blind midterms (earlier checkpoints)</h3><div class="tbl"><table><tr><th>When</th><th>Exam</th><th>Files</th></tr><tr><td>Sun Nov 29</td><td><b>Poonen midterm, Fall 2001</b></td><td><a href="https://math.berkeley.edu/sites/default/files/bulk_1/F01_Midterm-B.Poonen.pdf">exam</a> · <a href="https://math.berkeley.edu/sites/default/files/bulk_1/F01_Midterm_Solutions-B.Poonen.pdf">solutions</a></td></tr><tr><td>Thu Dec 3</td><td><b>Ribet Midterm 2, Spring 2024</b></td><td><a href="https://math.berkeley.edu/sites/default/files/sp24_55_second_midterm-k.ribet.pdf">exam</a> · <i>no solutions</i></td></tr></table></div>
+<p>More: <a href="https://math.berkeley.edu/courses/archives/exams/math-55-exams">Math department archive (23 Math 55 exams)</a> · <a href="https://tbp.studentorg.berkeley.edu/courses/math/55/">Tau Beta Pi archive</a> · <a href="https://math.berkeley.edu/~mhaiman/math55-spring21/final-exam.pdf">Haiman final, Spring 2021</a> · <a href="https://math.berkeley.edu/~nikhil/courses/55.s16/final.pdf">Srivastava final, Spring 2016</a> · <a href="https://math.berkeley.edu/sites/default/files/bulk_1/F01_Final_Exam-B.Poonen.pdf">Poonen final, Fall 2001</a> + <a href="https://math.berkeley.edu/sites/default/files/bulk_1/F01_Final_Exam_Solutions-B.Poonen.pdf">solutions</a></p></section>
+<section id="b61"><h2><span class="n">61B</span>CS 61B</h2><p>Full finals (scheduled): Fall 2025 → Spring 2025 → Fall 2024 → Spring 2024 → Spring 2026, all on the <a href="https://fa26.datastructur.es/resources/exam-archive/">course exam archive</a> (with solutions + walkthrough videos). Unit-level hardest questions: <a href="cs61b-hard.html">cs61b-hard</a>. Also: <a href="https://docs.google.com/document/d/1PMoL1xJ9xa6ywQQ8HCc1oxLf2TUCiCaKaatlKYv6RZw/edit">Owen’s cheat sheet</a>, <a href="https://docs.google.com/presentation/d/1l9kslV4XB46fOOyD-hiXxi4sK-lmtFg9rMHRmS7_S5k/edit">data-structure decision flowchart</a>.</p></section>
+<footer>Every link was checked and returns the PDF. Solutions on instructor pages are the instructors’ own.</footer>
+</div></body></html>
