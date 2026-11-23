@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 54 practice final covering material after Midterm 2: inner product spaces, orthogonal diagonalization, SVD, second-order ODEs, linear systems and Fourier series, with full solutions.">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3EP%3C/text%3E%3C/svg%3E">
+<title>Math 54 Practice Final</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Practice final: after Midterm 2</h1>
+  <p>Math 54 · Lay 6.7, 7.1, 7.4 · Nagle 4.2–4.5, 9.1, 9.4–9.6, 10.3–10.4 · <a href="math54-de.html">DE notes</a> · <a href="cards.html">Flashcards →</a> · <a href="finals.html">Finals plan</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to problem">
+  <select id="jump" aria-label="Jump to problem">
+    <option value="top">Instructions</option>
+    <optgroup label="Linear algebra">
+      <option value="p1">1 · Inner product space (10)</option>
+      <option value="p2">2 · Orthogonal diagonalization (10)</option>
+      <option value="p3">3 · SVD &amp; least squares (10)</option>
+    </optgroup>
+    <optgroup label="Second-order ODEs">
+      <option value="p4">4 · Homogeneous equations (8)</option>
+      <option value="p5">5 · Undetermined coefficients (10)</option>
+    </optgroup>
+    <optgroup label="Systems">
+      <option value="p6">6 · Systems &amp; Wronskians (8)</option>
+      <option value="p7">7 · 3×3 real eigenvalues (10)</option>
+      <option value="p8">8 · Complex eigenvalues (10)</option>
+    </optgroup>
+    <optgroup label="Fourier series">
+      <option value="p9">9 · Fourier series (10)</option>
+      <option value="p10">10 · Cosine &amp; sine series (8)</option>
+    </optgroup>
+    <optgroup label="Concepts">
+      <option value="p11">11 · True/False (20)</option>
+      <option value="p12">12 · Short proofs (6)</option>
+      <option value="score">Scoring guide</option>
+    </optgroup>
+  </select>
+  <a href="#score">Score</a>
+</nav>
+
+<div class="note">
+  <p><b>Suggested time: 110 minutes. Total: 120 points.</b> That’s about the share of a 3-hour final that covers post–Midterm 2 material. No notes or calculator. Assume you’re given the undetermined-coefficients table (it’s reproduced in the notes).</p>
+  <p><b>How to use it:</b> do the whole thing on paper under time <b>before</b> opening any solution. Then grade yourself with the solutions and read the <b>What this tests</b> box for every problem, including the ones you got right.</p>
+  <ol class="plan">
+    <li>True/False questions need a reason (a one-line argument or a counterexample) to earn credit.</li>
+    <li>Show the work for computations; on the real exam, the final number alone gets little credit.</li>
+    <li>All problems are original. None come from the textbook or the current homework.</li>
+  </ol>
+</div>
+
+<!-- =================== 1 =================== -->
+<section id="p1">
+  <h2><span class="n">1</span>Inner product space · 10 pts</h2>
+  <p>Give <span class="m">C[0, 1]</span> the inner product <span class="m">⟨f, g⟩ = ∫₀¹ f(t)g(t) dt</span>.</p>
+  <ol type="a">
+    <li>(4) Find an orthogonal basis for <span class="m">W = span{1, t}</span>.</li>
+    <li>(4) Find the function in <var>W</var> closest to <span class="m">t²</span>, and the distance from <span class="m">t²</span> to <var>W</var>.</li>
+    <li>(2) Is <span class="m">⟨p, q⟩ = p(0)q(0) + p(1)q(1)</span> an inner product on <span class="m">P₂</span>? Justify.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> Gram–Schmidt: <span class="m">v₁ = 1</span>. <span class="m">⟨t, 1⟩ = 1/2</span>, <span class="m">⟨1, 1⟩ = 1</span>, so <span class="m">v₂ = t − (1/2)·1 = t − 1/2</span>. Basis <span class="m">{1, t − 1/2}</span>.</li>
+        <li><b>(b)</b> <span class="m">⟨t², 1⟩ = 1/3</span>. <span class="m">⟨t², t − ½⟩ = 1/4 − 1/6 = 1/12</span>. <span class="m">⟨t − ½, t − ½⟩ = ∫₀¹(t − ½)² dt = 1/12</span>.</li>
+        <li>Projection: <span class="m">(1/3)·1 + (1/12)/(1/12)·(t − ½) = <b>t − 1/6</b></span>.</li>
+        <li>Error: <span class="m">‖t² − t + 1/6‖² = ∫₀¹(t² − t + 1/6)² dt = 1/180</span>, so the distance is <span class="m">1/√180 = <b>√5/30</b> ≈ 0.075</span>.</li>
+        <li><b>(c)</b> No. <span class="m">p = t² − t</span> is not the zero polynomial but <span class="m">p(0) = p(1) = 0</span>, so <span class="m">⟨p, p⟩ = 0</span>: positivity fails.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Projection in a function space (Lay 6.7) uses exactly the ℝⁿ formula, but <b>only with an orthogonal basis</b>. Projecting onto 1 and <var>t</var> separately (they aren’t orthogonal on [0, 1]) gives the wrong answer <span class="m">1/3 + (3/4)t</span>. Also, the distance is the <b>square root</b> of the integral.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 2 =================== -->
+<section id="p2">
+  <h2><span class="n">2</span>Orthogonal diagonalization · 10 pts</h2>
+  <div class="key">A = [ 1 2 −1 ; 2 −2 2 ; −1 2 1 ]</div>
+  <ol type="a">
+    <li>(6) You’re told 2 is an eigenvalue of <var>A</var>. Find an orthogonal matrix <var>P</var> and diagonal <var>D</var> with <span class="m">A = PDPᵀ</span>.</li>
+    <li>(2) Write <var>A</var> as <span class="m">2I + c·uuᵀ</span> for a unit vector <var>u</var> and a number <var>c</var>.</li>
+    <li>(2) Find the eigenvalues of <span class="m">A² + A</span>, without computing <span class="m">A²</span>.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><span class="m">A − 2I = [−1 2 −1; 2 −4 2; −1 2 −1]</span> has rank 1, so λ = 2 has a <b>2-dimensional</b> eigenspace: <span class="m">x₁ = 2x₂ − x₃</span>, basis <span class="m">(2, 1, 0)</span>, <span class="m">(−1, 0, 1)</span>.</li>
+        <li>Trace: <span class="m">1 − 2 + 1 = 0 = 2 + 2 + λ₃</span>, so <span class="m">λ₃ = −4</span>. Eigenvector: orthogonal to the λ = 2 eigenspace (<var>A</var> is symmetric), i.e. the normal vector of <span class="m">x₁ − 2x₂ + x₃ = 0</span>: <span class="m">(1, −2, 1)</span>. Check: <span class="m">A(1, −2, 1) = (−4, 8, −4)</span> ✓.</li>
+        <li>Gram–Schmidt inside the λ = 2 eigenspace: <span class="m">(−1, 0, 1) − (−2/5)(2, 1, 0) = (−1/5, 2/5, 1)</span>, or scaled, <span class="m">(−1, 2, 5)</span>.</li>
+        <li><span class="m">P = [ (1, −2, 1)/√6 &nbsp; (2, 1, 0)/√5 &nbsp; (−1, 2, 5)/√30 ]</span>, <span class="m">D = diag(−4, 2, 2)</span>.</li>
+        <li><b>(b)</b> Spectral decomposition: <span class="m">A = −4uuᵀ + 2(I − uuᵀ) = 2I − 6uuᵀ</span> with <span class="m">u = (1, −2, 1)/√6</span>. (Check: <span class="m">6uuᵀ = [1 −2 1; −2 4 −2; 1 −2 1]</span> and <span class="m">2I</span> minus that is <var>A</var> ✓.)</li>
+        <li><b>(c)</b> If <span class="m">Av = λv</span> then <span class="m">(A² + A)v = (λ² + λ)v</span>: eigenvalues <span class="m">16 − 4 = <b>12</b></span> and <span class="m">4 + 2 = <b>6</b></span> (twice).</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>For a repeated eigenvalue, the two eigenvectors you get from row reduction usually <b>aren’t orthogonal</b>: <span class="m">(2, 1, 0)·(−1, 0, 1) = −2</span>. Normalizing without Gram–Schmidt gives a non-orthogonal <var>P</var>. The trace and the “orthogonal to the other eigenspace” shortcut save a cubic.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 3 =================== -->
+<section id="p3">
+  <h2><span class="n">3</span>SVD and least squares · 10 pts</h2>
+  <div class="key">A = [ 1 1 ; 1 1 ; 2 −2 ], &nbsp; b = (1, 3, 4)</div>
+  <ol type="a">
+    <li>(6) Find a singular value decomposition <span class="m">A = UΣVᵀ</span>.</li>
+    <li>(1) Read off an orthonormal basis for <span class="m">Nul Aᵀ</span> from your SVD.</li>
+    <li>(3) Use the SVD to find the least-squares solution of <span class="m">Ax = b</span> and the least-squares error.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><span class="m">AᵀA = [6 −2; −2 6]</span>, eigenvalues <span class="m">8, 4</span>: <span class="m">σ₁ = 2√2</span>, <span class="m">σ₂ = 2</span>.</li>
+        <li><span class="m">v₁ = (1, −1)/√2</span> (for 8), <span class="m">v₂ = (1, 1)/√2</span> (for 4).</li>
+        <li><span class="m">Av₁ = (0, 0, 4)/√2</span>, so <span class="m">u₁ = Av₁/σ₁ = (0, 0, 1)</span>. <span class="m">Av₂ = (2, 2, 0)/√2</span>, so <span class="m">u₂ = (1, 1, 0)/√2</span>.</li>
+        <li>Complete with a unit vector orthogonal to both: <span class="m">u₃ = (1, −1, 0)/√2</span>.</li>
+        <li><span class="m">U = [u₁ u₂ u₃]</span>, <span class="m">Σ = [2√2 0; 0 2; 0 0]</span>, <span class="m">V = [v₁ v₂]</span>.</li>
+        <li><b>(b)</b> <span class="m">Nul Aᵀ = (Col A)⊥ = span{u₃}</span>: basis <span class="m">{(1, −1, 0)/√2}</span>.</li>
+        <li><b>(c)</b> <span class="m">x̂ = VΣ⁺Uᵀb</span>. <span class="m">u₁·b = 4</span>, <span class="m">u₂·b = 4/√2 = 2√2</span>. So <span class="m">x̂ = (4/(2√2))v₁ + (2√2/2)v₂ = √2v₁ + √2v₂ = (1, −1) + (1, 1) = <b>(2, 0)</b></span>.</li>
+        <li>Error: <span class="m">b − Ax̂ = (1, 3, 4) − (2, 2, 4) = (−1, 1, 0)</span>, length <span class="m"><b>√2</b></span>. (It’s the <span class="m">u₃</span>-component of <var>b</var>, as it should be.) Check with normal equations: <span class="m">AᵀA x̂ = (12, −4) = Aᵀb</span> ✓.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Getting <span class="m">uᵢ</span> from <span class="m">Avᵢ/σᵢ</span> (not independently from <span class="m">AAᵀ</span>, which can flip signs). Ordering σ’s <b>decreasingly</b> and keeping <span class="m">vᵢ</span> matched. Σ must be 3×2, the same shape as <var>A</var>.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 4 =================== -->
+<section id="p4">
+  <h2><span class="n">4</span>Homogeneous second-order equations · 8 pts</h2>
+  <ol type="a">
+    <li>(4) Solve <span class="m">y″ + 2y′ + 10y = 0</span>, <span class="m">y(0) = 2</span>, <span class="m">y′(0) = −5</span>.</li>
+    <li>(2) For which <span class="m">b &gt; 0</span> do the solutions of <span class="m">y″ + by′ + 10y = 0</span> oscillate? What happens at the boundary value?</li>
+    <li>(2) Is there a second-order, constant-coefficient, homogeneous linear ODE with solution <span class="m">y = te<sup>−2t</sup> + 5</span>? If not, find one of the lowest possible order.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> <span class="m">r² + 2r + 10 = 0</span>, <span class="m">r = −1 ± 3i</span>. <span class="m">y = e<sup>−t</sup>(c₁cos 3t + c₂sin 3t)</span>.</li>
+        <li><span class="m">y(0) = c₁ = 2</span>; <span class="m">y′(0) = −c₁ + 3c₂ = −5</span>, so <span class="m">c₂ = −1</span>. <span class="m">y = <b>e<sup>−t</sup>(2cos 3t − sin 3t)</b></span>.</li>
+        <li><b>(b)</b> Oscillation needs complex roots: <span class="m">b² − 40 &lt; 0</span>, i.e. <span class="m"><b>0 &lt; b &lt; 2√10</b></span>. At <span class="m">b = 2√10</span>, the double root <span class="m">−√10</span> gives critical damping: <span class="m">(c₁ + c₂t)e<sup>−√10 t</sup></span>, no oscillation.</li>
+        <li><b>(c)</b> <span class="m">te<sup>−2t</sup></span> needs −2 as a <b>double</b> root and the constant 5 needs root 0: three roots in total, so no second-order equation works. Lowest order: <span class="m">r(r + 2)² = r³ + 4r² + 4r</span>, i.e. <span class="m"><b>y‴ + 4y″ + 4y′ = 0</b></span>.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>In (a), <span class="m">y′(0) = αc₁ + βc₂</span>: students drop the <span class="m">αc₁ = −c₁</span> from the product rule and get <span class="m">c₂ = −5/3</span>. In (c), forgetting that a constant solution means <span class="m">r = 0</span> is a root.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 5 =================== -->
+<section id="p5">
+  <h2><span class="n">5</span>Undetermined coefficients · 10 pts</h2>
+  <ol type="a">
+    <li>(7) Solve <span class="m">y″ − 2y′ + y = 6te<sup>t</sup> + 2cos t</span>, <span class="m">y(0) = 1</span>, <span class="m">y′(0) = 0</span>.</li>
+    <li>(3) Write down the form of a particular solution of <span class="m">y″ + 4y = t sin 2t + e<sup>2t</sup></span>. Do <b>not</b> solve for the coefficients.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> <span class="m">r² − 2r + 1 = (r − 1)²</span>: double root 1, <span class="m">yₕ = (c₁ + c₂t)eᵗ</span>.</li>
+        <li>Piece <span class="m">6teᵗ</span>: degree 1, α = 1 is a <b>double</b> root, so <span class="m">s = 2</span>: try <span class="m">t²(At + B)eᵗ</span>. Shortcut: the operator is <span class="m">(D − 1)²</span> and <span class="m">(D − 1)(ueᵗ) = u′eᵗ</span>, so <span class="m">L[ueᵗ] = u″eᵗ</span>. With <span class="m">u = At³ + Bt²</span>: <span class="m">(6At + 2B)eᵗ = 6teᵗ</span>, so <span class="m">A = 1</span>, <span class="m">B = 0</span>. <span class="m">yₚ₁ = t³eᵗ</span>.</li>
+        <li>Piece <span class="m">2cos t</span>: <span class="m">i</span> is not a root, try <span class="m">C cos t + D sin t</span>. <span class="m">L[cos t] = 2sin t</span>, <span class="m">L[sin t] = −2cos t</span>. So <span class="m">−2D cos t + 2C sin t = 2cos t</span>: <span class="m">D = −1</span>, <span class="m">C = 0</span>. <span class="m">yₚ₂ = −sin t</span>.</li>
+        <li><span class="m">y = (c₁ + c₂t)eᵗ + t³eᵗ − sin t</span>. <span class="m">y(0) = c₁ = 1</span>. <span class="m">y′(0) = c₁ + c₂ + 0 − 1 = 0</span>, so <span class="m">c₂ = 0</span>.</li>
+        <li><span class="m">y = <b>eᵗ + t³eᵗ − sin t</b></span>.</li>
+        <li><b>(b)</b> Roots <span class="m">±2i</span>. <span class="m">t sin 2t</span>: degree 1 with <span class="m">2i</span> a simple root, <span class="m">s = 1</span>: <span class="m">t[(At + B)cos 2t + (Ct + D)sin 2t]</span>. <span class="m">e<sup>2t</sup></span>: 2 is not a root: <span class="m">Ee<sup>2t</sup></span>.</li>
+        <li><span class="m">yₚ = <b>t[(At + B)cos 2t + (Ct + D)sin 2t] + Ee<sup>2t</sup></b></span>. (For the record: <span class="m">A = −1/8</span>, <span class="m">D = 1/16</span>, <span class="m">E = 1/8</span>, <span class="m">B = C = 0</span>.)</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>The <span class="m">tˢ</span> rule with a <b>double</b> root (<span class="m">s = 2</span>, not 1), and using full polynomials. Common errors: trying <span class="m">t(At + B)eᵗ</span> (gives no solution), writing <span class="m">At sin 2t</span> alone in (b), and applying the initial conditions before adding <span class="m">yₚ</span>.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 6 =================== -->
+<section id="p6">
+  <h2><span class="n">6</span>Systems and Wronskians · 8 pts</h2>
+  <ol type="a">
+    <li>(2) Rewrite <span class="m">y″ − 2y′ − 3y = 0</span> as a system <span class="m">x′ = Ax</span> with <span class="m">x = (y, y′)</span>, and find the eigenvalues of <var>A</var>.</li>
+    <li>(2) Show that <span class="m">x₁ = (e<sup>3t</sup>, 3e<sup>3t</sup>)</span> and <span class="m">x₂ = (e<sup>−t</sup>, −e<sup>−t</sup>)</span> form a fundamental solution set.</li>
+    <li>(2) Solve the system with <span class="m">x(0) = (0, 4)</span>. What scalar initial value problem have you solved?</li>
+    <li>(2) Can <span class="m">(t, 1)</span> and <span class="m">(t², 2t)</span> both be solutions of some <span class="m">x′ = A(t)x</span> with <span class="m">A(t)</span> continuous on all of ℝ? Explain.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> <span class="m">y″ = 3y + 2y′</span>: <span class="m">A = [0 1; 3 2]</span>. <span class="m">det(A − λI) = λ² − 2λ − 3 = (λ − 3)(λ + 1)</span>: <span class="m">λ = 3, −1</span> (same as the auxiliary roots).</li>
+        <li><b>(b)</b> <span class="m">A(1, 3) = (3, 9) = 3(1, 3)</span> and <span class="m">A(1, −1) = (−1, 1) = −(1, −1)</span>, so both are solutions. <span class="m">W = det[e<sup>3t</sup> e<sup>−t</sup>; 3e<sup>3t</sup> −e<sup>−t</sup>] = −e<sup>2t</sup> − 3e<sup>2t</sup> = −4e<sup>2t</sup> ≠ 0</span>.</li>
+        <li><b>(c)</b> <span class="m">c₁ + c₂ = 0</span>, <span class="m">3c₁ − c₂ = 4</span>: <span class="m">c₁ = 1</span>, <span class="m">c₂ = −1</span>. <span class="m">x = (e<sup>3t</sup> − e<sup>−t</sup>, 3e<sup>3t</sup> + e<sup>−t</sup>)</span>. The first entry solves <span class="m">y″ − 2y′ − 3y = 0</span>, <span class="m">y(0) = 0</span>, <span class="m">y′(0) = 4</span>: <span class="m">y = e<sup>3t</sup> − e<sup>−t</sup></span>.</li>
+        <li><b>(d)</b> No. Their Wronskian is <span class="m">det[t t²; 1 2t] = t²</span>: zero at <span class="m">t = 0</span> but not identically zero. For solutions of one system with continuous coefficients, <var>W</var> is either never 0 or always 0.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>The bottom row of the companion matrix has the signs of the coefficients <b>after</b> moving them to the right side. In (d), the “all or nothing” Wronskian property holds only for <b>solutions</b>, which is exactly what you’re using to rule them out.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 7 =================== -->
+<section id="p7">
+  <h2><span class="n">7</span>A 3×3 system with real eigenvalues · 10 pts</h2>
+  <div class="key">x′ = Ax, &nbsp; A = [ 2 0 0 ; 3 2 −3 ; 3 0 −1 ]</div>
+  <ol type="a">
+    <li>(4) Find the eigenvalues of <var>A</var> and a basis of each eigenspace.</li>
+    <li>(4) Solve the initial value problem <span class="m">x(0) = (1, 2, 0)</span>.</li>
+    <li>(2) For which initial vectors <span class="m">x(0)</span> does <span class="m">x(t) → 0</span> as <span class="m">t → ∞</span>?</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> Expand along the first row: <span class="m">det(A − λI) = (2 − λ)·[(2 − λ)(−1 − λ) − 0] = (2 − λ)²(−1 − λ)</span>. Eigenvalues <span class="m">2, 2, −1</span>.</li>
+        <li>λ = 2: <span class="m">A − 2I = [0 0 0; 3 0 −3; 3 0 −3]</span>, rank 1, so <span class="m">x₁ = x₃</span>, <span class="m">x₂</span> free. Basis <span class="m">(1, 0, 1), (0, 1, 0)</span>: dimension 2, enough eigenvectors.</li>
+        <li>λ = −1: <span class="m">A + I = [3 0 0; 3 3 −3; 3 0 0]</span>: <span class="m">x₁ = 0</span>, <span class="m">x₂ = x₃</span>. Basis <span class="m">(0, 1, 1)</span>.</li>
+        <li><b>(b)</b> <span class="m">x = c₁e<sup>2t</sup>(1, 0, 1) + c₂e<sup>2t</sup>(0, 1, 0) + c₃e<sup>−t</sup>(0, 1, 1)</span>. At 0: <span class="m">c₁ = 1</span>, <span class="m">c₂ + c₃ = 2</span>, <span class="m">c₁ + c₃ = 0</span>. So <span class="m">c₃ = −1</span>, <span class="m">c₂ = 3</span>.</li>
+        <li><span class="m">x = <b>(e<sup>2t</sup>, 3e<sup>2t</sup> − e<sup>−t</sup>, e<sup>2t</sup> − e<sup>−t</sup>)</b></span>.</li>
+        <li><b>(c)</b> The <span class="m">e<sup>2t</sup></span> terms blow up unless <span class="m">c₁ = c₂ = 0</span>. So exactly when <span class="m">x(0)</span> is a multiple of <span class="m">(0, 1, 1)</span> (including 0).</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Repeated eigenvalue <b>with</b> a full eigenspace: no <span class="m">te<sup>λt</sup></span> terms are needed. Students who assume “repeated ⟹ defective” waste time on generalized eigenvectors. Any basis of the λ = 2 eigenspace works; the final <span class="m">x(t)</span> is the same.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 8 =================== -->
+<section id="p8">
+  <h2><span class="n">8</span>Complex eigenvalues · 10 pts</h2>
+  <div class="key">x′ = Ax, &nbsp; A = [ −3 −2 ; 4 1 ]</div>
+  <ol type="a">
+    <li>(5) Find a general solution in terms of <b>real</b> functions.</li>
+    <li>(3) Solve with <span class="m">x(0) = (2, 1)</span>.</li>
+    <li>(2) Describe the trajectories: do they spiral in or out, and in which direction?</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> tr = −2, det = −3 + 8 = 5: <span class="m">λ² + 2λ + 5 = 0</span>, <span class="m">λ = −1 ± 2i</span>.</li>
+        <li>λ = −1 + 2i: first row of <span class="m">A − λI</span> is <span class="m">(−2 − 2i, −2)</span> → <span class="m">v = (−2, 2 + 2i)</span>, or dividing by −2, <span class="m">v = (1, −1 − i)</span>. So <span class="m">a = (1, −1)</span>, <span class="m">b = (0, −1)</span>.</li>
+        <li><span class="m">x₁ = e<sup>−t</sup>[cos 2t·a − sin 2t·b] = e<sup>−t</sup>(cos 2t, −cos 2t + sin 2t)</span>.</li>
+        <li><span class="m">x₂ = e<sup>−t</sup>[sin 2t·a + cos 2t·b] = e<sup>−t</sup>(sin 2t, −sin 2t − cos 2t)</span>.</li>
+        <li><span class="m">x = c₁x₁ + c₂x₂</span>.</li>
+        <li><b>(b)</b> <span class="m">c₁a + c₂b = (2, 1)</span>: <span class="m">c₁ = 2</span>, <span class="m">−2 − c₂ = 1</span>, so <span class="m">c₂ = −3</span>.</li>
+        <li><span class="m">x = 2x₁ − 3x₂ = <b>e<sup>−t</sup>(2cos 2t − 3sin 2t, cos 2t + 5sin 2t)</b></span>. Check: <span class="m">x(0) = (2, 1)</span> ✓.</li>
+        <li><b>(c)</b> α = −1 &lt; 0: spirals <b>in</b> to the origin (stable spiral). <span class="m">A(1, 0) = (−3, 4)</span> points upward at (1, 0): <b>counterclockwise</b>.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Splitting <span class="m">e<sup>λt</sup>v</span> into real and imaginary parts correctly (the minus sign in <span class="m">a cos − b sin</span>). Eigenvectors differ by complex scalars, so your <span class="m">x₁, x₂</span> may look different, but the IVP answer must match. For direction, check one velocity vector rather than guessing from the sign of β.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 9 =================== -->
+<section id="p9">
+  <h2><span class="n">9</span>Fourier series · 10 pts</h2>
+  <div class="key">f(x) = 1 for −2 &lt; x &lt; 0, &nbsp; f(x) = x for 0 &lt; x &lt; 2</div>
+  <ol type="a">
+    <li>(6) Compute the Fourier series of <var>f</var> on <span class="m">[−2, 2]</span>.</li>
+    <li>(2) To what value does the series converge at <span class="m">x = 0</span>, <span class="m">1</span>, <span class="m">2</span>, <span class="m">5</span>?</li>
+    <li>(2) Use (b) at <span class="m">x = 0</span> to evaluate <span class="m">1 + 1/9 + 1/25 + 1/49 + ⋯</span></li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><span class="m">L = 2</span>. <span class="m">a₀ = ½[∫<sub>−2</sub><sup>0</sup> 1 dx + ∫₀² x dx] = ½(2 + 2) = 2</span>: constant term 1.</li>
+        <li><span class="m">aₙ = ½[∫<sub>−2</sub><sup>0</sup> cos(nπx/2) dx + ∫₀² x cos(nπx/2) dx] = ½[0 + 4((−1)ⁿ − 1)/(nπ)²] = 2((−1)ⁿ − 1)/(n²π²)</span>: <span class="m">−4/(n²π²)</span> for odd <var>n</var>, 0 for even.</li>
+        <li><span class="m">∫<sub>−2</sub><sup>0</sup> sin(nπx/2) dx = −2(1 − (−1)ⁿ)/(nπ)</span> and <span class="m">∫₀² x sin(nπx/2) dx = 4(−1)ⁿ⁺¹/(nπ)</span>.</li>
+        <li><span class="m">bₙ = ½[−2(1 − (−1)ⁿ) − 4(−1)ⁿ]/(nπ) = −(1 + (−1)ⁿ)/(nπ)</span>: <span class="m">−2/(nπ)</span> for even <var>n</var>, 0 for odd.</li>
+        <li><span class="m">f ~ <b>1 − (4/π²)Σ<sub>n odd</sub> cos(nπx/2)/n² − (2/π)Σ<sub>n even</sub> sin(nπx/2)/n</b></span>.</li>
+        <li><b>(b)</b> <span class="m">x = 0</span>: jump from 1 to 0, so <b>1/2</b>. <span class="m">x = 1</span>: continuous, <b>1</b>. <span class="m">x = 2</span>: endpoint, <span class="m">½[f(2⁻) + f(−2⁺)] = ½(2 + 1) = <b>3/2</b></span>. <span class="m">x = 5</span>: shift by 4 to <span class="m">x = 1</span>: <b>1</b>.</li>
+        <li><b>(c)</b> At 0, all sines vanish and <span class="m">cos 0 = 1</span>: <span class="m">1/2 = 1 − (4/π²)Σ<sub>odd</sub> 1/n²</span>, so <span class="m">Σ<sub>odd</sub> 1/n² = <b>π²/8</b></span>.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Splitting integrals at the break point, the <span class="m">a₀/2</span> convention, and the convergence theorem at a jump <b>and</b> at the endpoints (where the periodic extension jumps from <span class="m">f(2⁻)</span> to <span class="m">f(−2⁺)</span>). Answering “<span class="m">f(0)</span>” or “<span class="m">f(2) = 2</span>” loses the points.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 10 =================== -->
+<section id="p10">
+  <h2><span class="n">10</span>Cosine and sine series · 8 pts</h2>
+  <div class="key">g(x) = 1 for 0 &lt; x &lt; 1, &nbsp; g(x) = 0 for 1 &lt; x &lt; 2</div>
+  <ol type="a">
+    <li>(3) Find the Fourier cosine series of <var>g</var> on <span class="m">[0, 2]</span>.</li>
+    <li>(3) Find the Fourier sine series of <var>g</var> on <span class="m">[0, 2]</span>, writing out <span class="m">b₁, …, b₄</span>.</li>
+    <li>(2) What does the <b>cosine</b> series converge to at <span class="m">x = 1</span> and <span class="m">x = −1/2</span>? What does the <b>sine</b> series converge to at <span class="m">x = −1/2</span> and <span class="m">x = 2</span>?</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> <span class="m">L = 2</span>, so <span class="m">2/L = 1</span>. <span class="m">a₀ = ∫₀¹ 1 dx = 1</span> (constant term 1/2). <span class="m">aₙ = ∫₀¹ cos(nπx/2) dx = 2sin(nπ/2)/(nπ)</span>.</li>
+        <li><span class="m">g ~ ½ + (2/π)[cos(πx/2) − ⅓cos(3πx/2) + ⅕cos(5πx/2) − ⋯]</span>.</li>
+        <li><b>(b)</b> <span class="m">bₙ = ∫₀¹ sin(nπx/2) dx = 2(1 − cos(nπ/2))/(nπ)</span>.</li>
+        <li><span class="m">b₁ = 2/π</span>, <span class="m">b₂ = 2·2/(2π) = 2/π</span>, <span class="m">b₃ = 2/(3π)</span>, <span class="m">b₄ = 0</span>.</li>
+        <li><b>(c)</b> Cosine (even extension): at <span class="m">x = 1</span> the jump from 1 to 0 gives <b>1/2</b>; at <span class="m">x = −1/2</span> the even extension equals <span class="m">g(1/2) = </span><b>1</b>.</li>
+        <li>Sine (odd extension): at <span class="m">x = −1/2</span>, <span class="m">−g(1/2) = </span><b>−1</b>; at <span class="m">x = 2</span>, every <span class="m">sin(nπ) = 0</span>: <b>0</b>.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Half-range formulas use <span class="m">2/L</span> and <span class="m">∫₀ᴸ</span>. Patterns of <span class="m">sin(nπ/2)</span> and <span class="m">cos(nπ/2)</span> (not <span class="m">(−1)ⁿ</span>!) because the break is at the midpoint. For negative <var>x</var>, decide which extension you’re in before answering.</p></div>
+    </div></details>
+</section>
+
+<!-- =================== 11 =================== -->
+<section id="p11">
+  <h2><span class="n">11</span>True or false, with a reason · 20 pts (2 each)</h2>
+  <details class="check"><summary>(a) If A is symmetric, eigenvectors for different eigenvalues are orthogonal.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">λ₁v₁·v₂ = Av₁·v₂ = v₁·Av₂ = λ₂v₁·v₂</span>, and <span class="m">λ₁ ≠ λ₂</span> forces <span class="m">v₁·v₂ = 0</span>.</p></div></details>
+  <details class="check"><summary>(b) The singular values of a square matrix are the absolute values of its eigenvalues.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">[0 1; 0 0]</span> has eigenvalues 0, 0 but singular values 1, 0. (It’s true for symmetric matrices.)</p></div></details>
+  <details class="check"><summary>(c) ⟨p, q⟩ = ∫₀¹ p′(t)q′(t) dt is an inner product on P₂.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">p = 1</span> is nonzero but <span class="m">p′ = 0</span>, so <span class="m">⟨1, 1⟩ = 0</span>.</p></div></details>
+  <details class="check"><summary>(d) If y₁ and y₂ solve y″ + y = eᵗ, so does y₁ + y₂.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">L[y₁ + y₂] = 2eᵗ</span>. (The difference solves the homogeneous equation.)</p></div></details>
+  <details class="check"><summary>(e) A particular solution of y″ + y = cos t can be found in the form A cos t + B sin t.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">±i</span> are roots, so that form is homogeneous: <span class="m">L[A cos t + B sin t] = 0</span>. Need <span class="m">t(A cos t + B sin t)</span>.</p></div></details>
+  <details class="check"><summary>(f) If x₁, x₂ solve x′ = Ax (A constant 2×2) and their Wronskian is 0 at t = 0, it is 0 for all t.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">W(t) = W(0)e<sup>(tr A)t</sup></span> (or: a vanishing combination at 0 is the zero solution by uniqueness).</p></div></details>
+  <details class="check"><summary>(g) If a real 2×2 A has eigenvalue 2 + 3i, every nonzero solution of x′ = Ax is unbounded as t → ∞.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> Every solution is <span class="m">e<sup>2t</sup></span> times a periodic vector that is never zero for a nonzero solution, so the length grows like <span class="m">e<sup>2t</sup></span>.</p></div></details>
+  <details class="check"><summary>(h) The Fourier series of an odd function on [−L, L] contains only sine terms.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">f(x)cos(nπx/L)</span> is odd, so every <span class="m">aₙ = 0</span>.</p></div></details>
+  <details class="check"><summary>(i) If a real 3×3 matrix A has eigenvalues 1, 1, 2, then x′ = Ax has three linearly independent solutions of the form e<sup>λt</sup>v.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">[1 1 0; 0 1 0; 0 0 2]</span>: the λ = 1 eigenspace is 1-dimensional, so only two independent eigen-solutions exist.</p></div></details>
+  <details class="check"><summary>(j) Every orthogonally diagonalizable matrix is symmetric.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">A = PDPᵀ ⟹ Aᵀ = (Pᵀ)ᵀDᵀPᵀ = PDPᵀ = A</span>.</p></div></details>
+  <div class="warn"><span class="t">What this tests / common mistake</span><p>A True needs a reason, not a restatement; a False needs a <b>specific</b> counterexample. The favorites here: (b) and (i) (repeated ≠ defective, but it can be), (d) (nonhomogeneous solutions aren’t a subspace).</p></div>
+</section>
+
+<!-- =================== 12 =================== -->
+<section id="p12">
+  <h2><span class="n">12</span>Short proofs · 6 pts</h2>
+  <ol type="a">
+    <li>(4) Let <var>A</var> be a real symmetric matrix and <span class="m">x(t)</span> a solution of <span class="m">x′ = Ax</span>. Show <span class="m">(d/dt)‖x‖² = 2xᵀAx</span>. Deduce that if every eigenvalue of <var>A</var> is negative, then <span class="m">‖x(t)‖</span> is strictly decreasing for any nonzero solution.</li>
+    <li>(2) Show that for positive integers <span class="m">m ≠ n</span>, <span class="m">∫<sub>−L</sub><sup>L</sup> sin(mπx/L) sin(nπx/L) dx = 0</span>.</li>
+  </ol>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <ol class="steps">
+        <li><b>(a)</b> <span class="m">‖x‖² = xᵀx</span>, so by the product rule <span class="m">(xᵀx)′ = x′ᵀx + xᵀx′ = (Ax)ᵀx + xᵀAx = xᵀAᵀx + xᵀAx = 2xᵀAx</span>, using <span class="m">Aᵀ = A</span>.</li>
+        <li>Spectral theorem: write <span class="m">x = Σ cᵢuᵢ</span> in an orthonormal eigenbasis. Then <span class="m">xᵀAx = Σ λᵢcᵢ² ≤ λ<sub>max</sub>‖x‖² &lt; 0</span> when <span class="m">x ≠ 0</span>.</li>
+        <li>A nonzero solution is never 0 (uniqueness: the zero solution is the only one through 0), so <span class="m">(‖x‖²)′ &lt; 0</span> for all <var>t</var>: <span class="m">‖x‖</span> strictly decreases.</li>
+        <li><b>(b)</b> <span class="m">sin A sin B = ½[cos(A − B) − cos(A + B)]</span>. With <span class="m">k = m − n ≠ 0</span> and <span class="m">m + n ≠ 0</span>, <span class="m">∫<sub>−L</sub><sup>L</sup> cos(kπx/L) dx = (L/(kπ))[sin(kπ) − sin(−kπ)] = 0</span>, and likewise for <span class="m">m + n</span>. So the integral is 0.</li>
+      </ol>
+      <div class="warn"><span class="t">What this tests / common mistake</span><p>Linking the spectral theorem (Lay 7.1) to ODE behavior. Writing <span class="m">(xᵀx)′ = 2xᵀx′</span> is fine here, but say why the two terms are equal (they’re scalars and transposes of each other). In (b), you must say why <span class="m">m − n ≠ 0</span> matters: that’s where <span class="m">m ≠ n</span> is used.</p></div>
+    </div></details>
+</section>
+
+<section id="score">
+  <h2><span class="n">★</span>Scoring guide</h2>
+  <div class="tbl"><table class="sheet">
+    <tr><td>Problem</td><td>Points · topic</td></tr>
+    <tr><td>1</td><td>10 · Lay 6.7 inner products, projection in C[0, 1]</td></tr>
+    <tr><td>2</td><td>10 · Lay 7.1 orthogonal diagonalization, spectral decomposition</td></tr>
+    <tr><td>3</td><td>10 · Lay 7.4 SVD, least squares (6.5)</td></tr>
+    <tr><td>4</td><td>8 · Nagle 4.2–4.3 homogeneous equations</td></tr>
+    <tr><td>5</td><td>10 · Nagle 4.4–4.5 undetermined coefficients, superposition</td></tr>
+    <tr><td>6</td><td>8 · Nagle 9.1, 9.4 systems, Wronskian</td></tr>
+    <tr><td>7</td><td>10 · Nagle 9.5 real eigenvalues</td></tr>
+    <tr><td>8</td><td>10 · Nagle 9.6 complex eigenvalues</td></tr>
+    <tr><td>9</td><td>10 · Nagle 10.3 Fourier series, convergence</td></tr>
+    <tr><td>10</td><td>8 · Nagle 10.4 cosine/sine series</td></tr>
+    <tr><td>11</td><td>20 · True/False across all topics</td></tr>
+    <tr><td>12</td><td>6 · proofs</td></tr>
+  </table></div>
+  <p><b>Roughly:</b> 100+ means you’re ready; 80–100, review the topics where you lost points using the <a href="math54-de.html">notes</a>; under 80, rework the notes’ check-yourself problems before retaking this.</p>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every answer here was verified by computer: ODE and system solutions were substituted back symbolically, and Fourier coefficients and convergence values were checked numerically (verify/de_check.py). All problems are original.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

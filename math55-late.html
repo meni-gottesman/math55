@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 55 notes from scratch: closures, equivalence relations, partial orders (Rosen 9.4–9.6) and graphs through connectivity (Rosen 10.1–10.4).">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%89%BC%3C/text%3E%3C/svg%3E">
+<title>Math 55: Relations &amp; Graphs Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+figure.fig{margin:12px 0;text-align:center}
+figure.fig svg{max-width:100%;height:auto}
+figure.fig figcaption{font-size:.85rem;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:flex-end}
+.row figure.fig{margin:6px 0}
+table.mat{width:auto;margin:8px auto;border-collapse:separate;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:6px;font-family:var(--math);font-size:1rem}
+table.mat td{border:0;padding:1px 9px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Relations &amp; graphs</h1>
+  <p>Math 55 · Rosen 9.4–9.6 and 10.1–10.4, from scratch · <a href="cards.html">Flashcards →</a> · <a href="finals.html">Finals plan</a> · <a href="quiz7.html">Relations basics</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to section">
+  <select id="jump" aria-label="Jump to section">
+    <option value="top">Start here</option>
+    <optgroup label="Part 1 · Closures (9.4)">
+      <option value="clo">1 · What a closure is</option>
+      <option value="rsc">2 · Reflexive &amp; symmetric closures</option>
+      <option value="path">3 · Paths &amp; the connectivity relation</option>
+      <option value="tc">4 · Transitive closure</option>
+      <option value="war">5 · Computing it: matrices &amp; Warshall</option>
+    </optgroup>
+    <optgroup label="Part 2 · Equivalence relations (9.5)">
+      <option value="eqd">6 · Definition</option>
+      <option value="eqx">7 · Classic examples</option>
+      <option value="cls">8 · Equivalence classes</option>
+      <option value="part">9 · Classes partition the set</option>
+      <option value="peq">10 · Partitions → equivalence relations</option>
+      <option value="ceq">11 · Counting equivalence relations</option>
+    </optgroup>
+    <optgroup label="Part 3 · Partial orders (9.6)">
+      <option value="po">12 · Posets</option>
+      <option value="tot">13 · Comparability &amp; total orders</option>
+      <option value="lex">14 · Lexicographic order</option>
+      <option value="hasse">15 · Hasse diagrams</option>
+      <option value="mm">16 · Maximal vs greatest</option>
+      <option value="bnd">17 · Bounds, lub, glb</option>
+      <option value="lat">18 · Lattices</option>
+      <option value="topo">19 · Topological sorting</option>
+    </optgroup>
+    <optgroup label="Part 4 · Graphs (10.1–10.2)">
+      <option value="gt">20 · Graph vocabulary</option>
+      <option value="deg">21 · Degree &amp; handshaking</option>
+      <option value="dir">22 · Directed degrees</option>
+      <option value="spec">23 · Special graphs</option>
+      <option value="bip">24 · Bipartite graphs</option>
+      <option value="sub">25 · Subgraphs, unions, complements</option>
+    </optgroup>
+    <optgroup label="Part 5 · Representation &amp; isomorphism (10.3)">
+      <option value="rep">26 · Adjacency lists &amp; matrices</option>
+      <option value="iso">27 · Isomorphism</option>
+      <option value="inv">28 · Invariants: proving “not isomorphic”</option>
+    </optgroup>
+    <optgroup label="Part 6 · Connectivity (10.4)">
+      <option value="conn">29 · Paths, circuits, components</option>
+      <option value="cut">30 · Cut vertices &amp; cut edges</option>
+      <option value="dcon">31 · Strong &amp; weak connectivity</option>
+      <option value="cnt">32 · Counting paths with Aʳ</option>
+    </optgroup>
+    <optgroup label="Review">
+      <option value="sheet">Formula sheet</option>
+    </optgroup>
+  </select>
+  <a href="#sheet">Formulas</a>
+</nav>
+
+<div class="note">
+  <p><b>What this page covers.</b> Everything after the relations basics: closures, equivalence relations, partial orders, then graphs through connectivity. It assumes the definitions in <a href="quiz7.html#rel">Relations basics</a> (reflexive, symmetric, antisymmetric, transitive, composition, powers Rⁿ). Skim those first if they’re rusty.</p>
+  <p><b>How to use it:</b> read a section, then try its <b>Check yourself</b> boxes before opening them. The proofs are short and they are exactly the reasoning the final asks for.</p>
+  <ol class="plan">
+    <li>Parts 2 and 3 (equivalence relations, posets): the most exam-tested relation material.</li>
+    <li>Part 4: handshaking, special graphs, bipartite. Quick points on any final.</li>
+    <li>Parts 5–6 and Part 1: isomorphism arguments, connectivity, closures.</li>
+  </ol>
+</div>
+
+<!-- ======================= PART 1 ======================= -->
+<div class="part-h" id="part1">Part 1 · Closures (Rosen 9.4)</div>
+<p>A relation is missing a property. What’s the least you can add to give it that property?</p>
+
+<section id="clo">
+  <h2><span class="n">1</span>What a closure is</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Take a relation R and a property P (reflexive, symmetric, transitive). The <b>closure of R with respect to P</b> is the <b>smallest</b> relation that contains R and has P. “Smallest” means: it is contained in <b>every</b> relation that contains R and has P.</p></div>
+  <div class="key">closure of R = R plus exactly the pairs that are <b>forced</b><small>Every pair you add must be one that any relation with property P containing R would have to include anyway.</small></div>
+  <p>That is how you prove something is the closure: show (1) it contains R, (2) it has the property, (3) every pair you added was forced.</p>
+  <div class="warn"><span class="t">Trap</span><p>Not every property has closures. If R already contains (1, 1), no relation containing R is <b>irreflexive</b>, so there is no “irreflexive closure”. Same for antisymmetric: if (1, 2) and (2, 1) are both in R, adding pairs never removes the problem. Closures exist for properties you can fix by <b>adding</b>.</p></div>
+</section>
+
+<section id="rsc">
+  <h2><span class="n">2</span>Reflexive &amp; symmetric closures</h2>
+  <div class="key">reflexive closure: R ∪ Δ, &nbsp;Δ = {(a, a) : a ∈ A}<br>symmetric closure: R ∪ R<sup>−1</sup>, &nbsp;R<sup>−1</sup> = {(b, a) : (a, b) ∈ R}<small>Δ is the “diagonal” (equality relation). R<sup>−1</sup> is the inverse relation: every arrow reversed.</small></div>
+  <h3>Why these are the smallest</h3>
+  <ul>
+    <li>A reflexive relation must contain every (a, a). So any reflexive relation containing R contains R ∪ Δ, and R ∪ Δ is reflexive.</li>
+    <li>A symmetric relation containing (a, b) must contain (b, a). So it contains R ∪ R<sup>−1</sup>, and that union is symmetric: reversing a pair of R gives a pair of R<sup>−1</sup> and vice versa.</li>
+  </ul>
+  <figure class="fig">
+    <svg viewBox="0 0 260 150" width="260" height="150" role="img" aria-label="Arrow diagram of R: 1 to 2, 2 to 3, 3 to 4, 4 to 2">
+      <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+        <line x1="51.6" y1="69.2" x2="117.5" y2="36.3" marker-end="url(#a1)"/>
+        <line x1="141.6" y1="35.8" x2="208.4" y2="69.2" marker-end="url(#a1)"/>
+        <line x1="208.4" y1="80.8" x2="141.6" y2="114.2" marker-end="url(#a1)"/>
+        <line x1="130" y1="107" x2="130" y2="44" marker-end="url(#a1)"/>
+      </g>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="currentColor">
+        <circle cx="40" cy="75" r="13" fill="var(--surface)" stroke="currentColor"/><text x="40" y="80">1</text>
+        <circle cx="130" cy="30" r="13" fill="var(--surface)" stroke="currentColor"/><text x="130" y="35">2</text>
+        <circle cx="220" cy="75" r="13" fill="var(--surface)" stroke="currentColor"/><text x="220" y="80">3</text>
+        <circle cx="130" cy="120" r="13" fill="var(--surface)" stroke="currentColor"/><text x="130" y="125">4</text>
+      </g>
+    </svg>
+    <figcaption>Running example: R = {(1,2), (2,3), (3,4), (4,2)} on A = {1, 2, 3, 4}</figcaption>
+  </figure>
+  <div class="ex"><span class="t">Example · the running R</span>
+    <ul>
+      <li><b>Reflexive closure:</b> add the 4 loops (1,1), (2,2), (3,3), (4,4). Total 8 pairs.</li>
+      <li><b>Symmetric closure:</b> add the 4 reversed arrows (2,1), (3,2), (4,3), (2,4). Total 8 pairs.</li>
+    </ul>
+  </div>
+  <details class="check"><summary>On A = {a, b, c}, R = {(a, b), (b, b), (c, a)}. Find the reflexive and symmetric closures.<span class="tap">tap</span></summary>
+    <div class="a"><p>Reflexive: add (a, a) and (c, c) (b already has its loop): {(a,a), (a,b), (b,b), (c,a), (c,c)}.</p><p>Symmetric: add (b, a) and (a, c): {(a,b), (b,a), (b,b), (c,a), (a,c)}. The loop (b, b) is its own reverse.</p></div></details>
+</section>
+
+<section id="path">
+  <h2><span class="n">3</span>Paths &amp; the connectivity relation R*</h2>
+  <p>Transitivity is harder: adding a pair can create new two-step chains, which force more pairs. The clean way to think about it is with paths.</p>
+  <div class="key">a <b>path</b> of length n from a to b: a = x<sub>0</sub> → x<sub>1</sub> → ⋯ → x<sub>n</sub> = b, each step a pair of R<small>From the relations basics: a R<sup>n</sup> b exactly when there’s a path of length n from a to b. A path that starts and ends at the same element is a <b>circuit</b> (cycle).</small></div>
+  <div class="key">R* = R ∪ R<sup>2</sup> ∪ R<sup>3</sup> ∪ ⋯<small>The <b>connectivity relation</b>: a R* b when there is a path of <b>some</b> positive length from a to b.</small></div>
+  <div class="ex"><span class="t">Example · running R</span>
+    <p>From 1 you can reach 2 (1 step), 3 (1→2→3), 4 (1→2→3→4). From 2 you reach 3, 4, and back to 2 (2→3→4→2). Same for 3 and 4. Nothing reaches 1.</p>
+    <p>So R* = {(1,2), (1,3), (1,4), (2,2), (2,3), (2,4), (3,2), (3,3), (3,4), (4,2), (4,3), (4,4)}: <b>12 pairs</b>.</p>
+  </div>
+  <div class="idea"><span class="t">Lemma · you never need long paths</span><p>If |A| = n and there is a path from a to b, there is one of length <b>at most n</b> (at most n − 1 if a ≠ b).</p>
+    <p><b>Why:</b> a path of length m visits m + 1 positions x<sub>0</sub>, …, x<sub>m</sub>. If m &gt; n, some element repeats (pigeonhole), say x<sub>i</sub> = x<sub>j</sub> with i &lt; j. Cut out the loop x<sub>i</sub> → ⋯ → x<sub>j</sub>; it’s still a path from a to b, and shorter. Repeat until no repeats are forced.</p></div>
+  <div class="key">|A| = n &nbsp;⟹&nbsp; R* = R ∪ R<sup>2</sup> ∪ ⋯ ∪ R<sup>n</sup></div>
+</section>
+
+<section id="tc">
+  <h2><span class="n">4</span>Transitive closure = R*</h2>
+  <div class="idea"><span class="t">Theorem</span><p>The transitive closure of R is the connectivity relation R*.</p></div>
+  <h3>Proof (three checks)</h3>
+  <ol class="steps">
+    <li><b>Contains R:</b> R = R<sup>1</sup> ⊆ R*.</li>
+    <li><b>Transitive:</b> if a R* b and b R* c, glue a path a → ⋯ → b to a path b → ⋯ → c. That’s a path a → ⋯ → c, so a R* c.</li>
+    <li><b>Smallest:</b> let S be transitive with R ⊆ S. Take any path a = x<sub>0</sub> → x<sub>1</sub> → ⋯ → x<sub>n</sub> = b in R. Each step is in S. Transitivity of S gives x<sub>0</sub> S x<sub>2</sub>, then x<sub>0</sub> S x<sub>3</sub>, …, then a S b (induction on n). So R* ⊆ S. ∎</li>
+  </ol>
+  <h3>Recipe for a small relation</h3>
+  <ol class="how">
+    <li>For each element a, list everything reachable from a by following arrows (one or more steps).</li>
+    <li>Put (a, b) in the closure for each reachable b. Include (a, a) only if a lies on a circuit.</li>
+  </ol>
+  <div class="warn"><span class="t">Trap · one round is not enough</span><p>R ∪ R² is not the closure in general. For R = {(1,2), (2,3), (3,4)}, R ∪ R² = R ∪ {(1,3), (2,4)} still misses (1, 4), which needs 3 steps. Keep going until nothing new appears.</p></div>
+  <div class="warn"><span class="t">Trap · loops in the closure</span><p>(a, a) is in R* only when a path leaves a and comes back. In the running example, 2, 3, 4 get loops (they’re on the circuit 2→3→4→2), but 1 does not. The transitive closure is <b>not</b> automatically reflexive.</p></div>
+  <div class="warn"><span class="t">Trap · order of closures</span><p>Taking a symmetric closure can destroy transitivity. R = {(1,2), (3,2)} is transitive (no two-step chains). Its symmetric closure has 1→2→3 but not (1, 3). To get the smallest <b>equivalence relation</b> containing R, close in the order reflexive, symmetric, <b>then</b> transitive.</p></div>
+  <details class="check"><summary>Find the transitive closure of R = {(1,2), (2,1), (3,3)} on {1, 2, 3}.<span class="tap">tap</span></summary>
+    <div class="a"><p>1→2→1 forces (1, 1); 2→1→2 forces (2, 2). Closure: <b>{(1,1), (1,2), (2,1), (2,2), (3,3)}</b>.</p></div></details>
+  <details class="check"><summary>How many pairs are in the transitive closure of {(1,2), (2,3), (3,1), (3,4)} on {1, 2, 3, 4}?<span class="tap">tap</span></summary>
+    <div class="a"><p>1, 2, 3 lie on the circuit 1→2→3→1, so each reaches 1, 2, 3, and also 4 (via 3). That’s 3 × 4 = 12 pairs. 4 reaches nothing. <b>12</b>.</p></div></details>
+</section>
+
+<section id="war">
+  <h2><span class="n">5</span>Computing it: matrices &amp; Warshall</h2>
+  <p>Write R as a 0–1 matrix M<sub>R</sub>: entry (i, j) is 1 when i R j. Then:</p>
+  <div class="key">M<sub>R²</sub> = M<sub>R</sub> ⊙ M<sub>R</sub> &nbsp;(Boolean product)<br>M<sub>R*</sub> = M<sub>R</sub> ∨ M<sub>R</sub><sup>[2]</sup> ∨ ⋯ ∨ M<sub>R</sub><sup>[n]</sup><small>Boolean product: like matrix multiplication, but with “or” for + and “and” for ×. Entry (i, j) of M ⊙ M is 1 when some k has i R k and k R j, a 2-step path. ∨ is entrywise “or”.</small></div>
+  <h3>Warshall’s idea</h3>
+  <p>Instead of all powers, build up the allowed <b>middle stops</b> one element at a time. Let W<sub>k</sub>[i][j] = 1 when there’s a path from i to j whose interior stops all lie in {1, …, k}.</p>
+  <div class="key">W<sub>0</sub> = M<sub>R</sub>; &nbsp;W<sub>k</sub>[i][j] = W<sub>k−1</sub>[i][j] ∨ (W<sub>k−1</sub>[i][k] ∧ W<sub>k−1</sub>[k][j])<small>At step k: if i can reach k and k can reach j (using stops 1…k−1), then i can now reach j. W<sub>n</sub> = M<sub>R*</sub>.</small></div>
+  <p><b>By hand:</b> at step k, look at column k (who reaches k) and row k (where k goes). Add every pair (who, where).</p>
+  <div class="ex"><span class="t">Example · R = {(1,3), (2,1), (3,4)} on {1, 2, 3, 4}</span>
+    <ol class="steps">
+      <li><b>k = 1:</b> into 1: {2}. Out of 1: {3}. Add (2, 3).</li>
+      <li><b>k = 2:</b> nothing goes into 2. No change.</li>
+      <li><b>k = 3:</b> into 3: {1, 2}. Out of 3: {4}. Add (1, 4), (2, 4).</li>
+      <li><b>k = 4:</b> nothing leaves 4. No change.</li>
+      <li>Closure: <b>{(1,3), (1,4), (2,1), (2,3), (2,4), (3,4)}</b>. Check by paths: 2→1→3→4 reaches everything after 2. ✓</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>At step k, use the matrix <b>as updated so far</b> (W<sub>k−1</sub>), including pairs added at earlier steps. The pair (2, 3) found at k = 1 is what lets k = 3 add (2, 4).</p></div>
+  <p>Cost: computing all n Boolean powers takes about n⁴ bit operations; Warshall takes about 2n³. For the exam, the path view is usually fastest on small examples.</p>
+</section>
+
+<!-- ======================= PART 2 ======================= -->
+<div class="part-h" id="part2">Part 2 · Equivalence relations (Rosen 9.5)</div>
+<p>Relations that behave like “is the same as, in some respect”.</p>
+
+<section id="eqd">
+  <h2><span class="n">6</span>Definition</h2>
+  <div class="key">equivalence relation = reflexive + symmetric + transitive<small>Write a ∼ b when a R b. Elements related by an equivalence relation are called <b>equivalent</b>.</small></div>
+  <div class="idea"><span class="t">Big idea</span><p>An equivalence relation says “a and b are the same in one particular respect” (same remainder, same length, same birthday). The three properties are exactly what “same” must obey: everything is the same as itself; sameness goes both ways; and things the same as a common thing are the same as each other.</p></div>
+  <div class="idea"><span class="t">The master example</span><p>For any function f : A → B, the relation <b>a ∼ b ⟺ f(a) = f(b)</b> is an equivalence relation, because = is. Almost every example is this one in disguise: pick f = “remainder mod m”, “length”, “floor”, … (In fact every equivalence relation is of this form: take f(a) = the class of a.)</p></div>
+  <h3>How to prove a relation is an equivalence relation</h3>
+  <ol class="how">
+    <li>Reflexive: show a ∼ a for an arbitrary a.</li>
+    <li>Symmetric: assume a ∼ b; derive b ∼ a.</li>
+    <li>Transitive: assume a ∼ b and b ∼ c; derive a ∼ c.</li>
+  </ol>
+  <p>Or, faster: rewrite the relation as f(a) = f(b) for some function f, and quote the master example.</p>
+  <h3>How to show it is not</h3>
+  <p>Give one concrete counterexample to one property.</p>
+</section>
+
+<section id="eqx">
+  <h2><span class="n">7</span>Classic examples</h2>
+  <div class="ex"><span class="t">Congruence mod m on ℤ (m ≥ 2)</span>
+    <p>a ≡ b (mod m) means m | (a − b).</p>
+    <ol class="steps">
+      <li>Reflexive: a − a = 0 = 0·m.</li>
+      <li>Symmetric: if a − b = km, then b − a = (−k)m.</li>
+      <li>Transitive: if a − b = km and b − c = lm, then a − c = (k + l)m.</li>
+    </ol>
+    <p>(Or: a ≡ b ⟺ a mod m = b mod m, the master example with f = remainder.)</p>
+  </div>
+  <div class="ex"><span class="t">Strings of the same length</span>
+    <p>On the set of all bit strings, s ∼ t when they have the same length. This is f(s) = f(t) with f = length, so it’s an equivalence relation. 0110 ∼ 1111, but 01 ≁ 010.</p>
+  </div>
+  <div class="ex"><span class="t">Same fractional part</span>
+    <p>On ℝ, x ∼ y when x − y ∈ ℤ. Equivalently x − ⌊x⌋ = y − ⌊y⌋: same fractional part. So 2.3 ∼ −0.7 ∼ 5.3.</p>
+  </div>
+  <div class="ex"><span class="t">Non-examples (find the failing property)</span>
+    <ul>
+      <li>x ∼ y when |x − y| ≤ 1 on ℝ: reflexive and symmetric but <b>not transitive</b> (0 ∼ 1, 1 ∼ 2, 0 ≁ 2).</li>
+      <li>a | b on ℤ⁺: <b>not symmetric</b> (2 | 4, 4 ∤ 2).</li>
+      <li>“shares a letter” on English words: not transitive (“cat” ∼ “to” ∼ “so”, but “cat” and “so” share nothing).</li>
+      <li>The empty relation on a nonempty set: symmetric and transitive (vacuously), but <b>not reflexive</b>.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap · the “proof” that symmetric + transitive ⇒ reflexive</span><p>“a ∼ b and b ∼ a give a ∼ a by transitivity.” This only works if a is related to <b>something</b>. An element with no partners breaks it, which is why the empty relation is a counterexample.</p></div>
+  <details class="check"><summary>On ℤ, define a ∼ b when a² ≡ b² (mod 5). Equivalence relation? What are the classes?<span class="tap">tap</span></summary>
+    <div class="a"><p>Yes: it’s f(a) = f(b) with f(a) = a² mod 5. Squares mod 5: 0² = 0, 1² = 4² = 1, 2² = 3² = 4. So <b>three classes</b>: {a : a ≡ 0}, {a : a ≡ ±1}, {a : a ≡ ±2} (mod 5).</p></div></details>
+</section>
+
+<section id="cls">
+  <h2><span class="n">8</span>Equivalence classes</h2>
+  <div class="key">[a] = {x ∈ A : x ∼ a}<small>The <b>equivalence class</b> of a: everything equivalent to a. Any element b of [a] is a <b>representative</b> of the class.</small></div>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>Mod 4 on ℤ: [0] = {…, −4, 0, 4, 8, …}, [1] = {…, −3, 1, 5, …}, [2], [3]. Exactly 4 classes, called <b>congruence classes</b> mod 4. [7] = [3] = [−1].</li>
+      <li>Same length on bit strings: [0110] = all 16 strings of length 4. One class per length 0, 1, 2, …</li>
+      <li>x − y ∈ ℤ on ℝ: [0.25] = {…, −0.75, 0.25, 1.25, …}. Each class has exactly one representative in [0, 1).</li>
+    </ul>
+  </div>
+  <div class="idea"><span class="t">Theorem · three equivalent statements</span><p>For an equivalence relation R and any a, b: &nbsp;(i) a R b &nbsp;⟺&nbsp; (ii) [a] = [b] &nbsp;⟺&nbsp; (iii) [a] ∩ [b] ≠ ∅.</p></div>
+  <h3>Proof</h3>
+  <ol class="steps">
+    <li><b>(i) ⇒ (ii):</b> suppose a R b. If x ∈ [a], then x R a; with a R b, transitivity gives x R b, so x ∈ [b]. So [a] ⊆ [b]. By symmetry b R a, and the same argument gives [b] ⊆ [a].</li>
+    <li><b>(ii) ⇒ (iii):</b> a ∈ [a] by reflexivity, so [a] = [b] contains a and is nonempty.</li>
+    <li><b>(iii) ⇒ (i):</b> pick c in both. Then c R a and c R b. Symmetry: a R c. Transitivity with c R b: a R b. ∎</li>
+  </ol>
+  <p>So two classes are either <b>identical</b> or <b>disjoint</b>. Nothing in between.</p>
+</section>
+
+<section id="part">
+  <h2><span class="n">9</span>The classes partition the set</h2>
+  <div class="key">a <b>partition</b> of A: nonempty subsets A<sub>i</sub>, pairwise disjoint, whose union is A<small>The A<sub>i</sub> are the <b>blocks</b> (or parts). Every element of A lies in exactly one block.</small></div>
+  <figure class="fig">
+    <svg viewBox="0 0 300 120" width="300" height="120" role="img" aria-label="The set 0 to 8 split into three blocks by remainder mod 3">
+      <rect x="4" y="4" width="292" height="112" rx="18" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M100,4 C85,40 115,80 100,116 M200,4 C215,40 185,80 200,116" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" style="color:var(--accent)"/>
+      <g font-family="var(--math)" font-size="17" text-anchor="middle" fill="currentColor">
+        <text x="40" y="40">0</text><text x="70" y="70">3</text><text x="38" y="98">6</text>
+        <text x="135" y="40">1</text><text x="165" y="68">4</text><text x="140" y="98">7</text>
+        <text x="235" y="40">2</text><text x="265" y="70">5</text><text x="240" y="98">8</text>
+      </g>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="11" font-weight="700" fill="currentColor" style="color:var(--accent)" text-anchor="middle">
+        <text x="72" y="22">[0]</text><text x="172" y="22">[1]</text><text x="268" y="22">[2]</text>
+      </g>
+    </svg>
+    <figcaption>{0, …, 8} under congruence mod 3: three blocks</figcaption>
+  </figure>
+  <div class="idea"><span class="t">Theorem</span><p>The distinct equivalence classes of an equivalence relation on A form a partition of A.</p></div>
+  <h3>Proof</h3>
+  <ol class="steps">
+    <li><b>Nonempty, and they cover A:</b> each a lies in its own class [a] (reflexivity). So no class is empty and the union of all classes is A.</li>
+    <li><b>Disjoint:</b> if two classes [a], [b] share an element, the theorem in section 8 says [a] = [b]. So <b>distinct</b> classes are disjoint. ∎</li>
+  </ol>
+  <div class="warn"><span class="t">Trap</span><p>The classes [a] for different a are not all different: [0] = [3] = [6] above. A partition lists each block <b>once</b>. When asked “list the classes”, don’t repeat.</p></div>
+</section>
+
+<section id="peq">
+  <h2><span class="n">10</span>Partitions give equivalence relations</h2>
+  <div class="idea"><span class="t">Theorem (converse)</span><p>Given a partition {A<sub>i</sub>} of A, define a ∼ b when a and b lie in the <b>same block</b>. This is an equivalence relation, and its classes are exactly the blocks.</p></div>
+  <h3>Proof</h3>
+  <ol class="steps">
+    <li>Reflexive: a is in some block (the blocks cover A), and it’s in the same block as itself.</li>
+    <li>Symmetric: “same block” doesn’t care about order.</li>
+    <li>Transitive: if a, b share block A<sub>i</sub> and b, c share block A<sub>j</sub>, then b ∈ A<sub>i</sub> ∩ A<sub>j</sub>. Blocks are disjoint, so A<sub>i</sub> = A<sub>j</sub>, and a, c share it. ∎</li>
+  </ol>
+  <div class="key">equivalence relations on A &nbsp;⟷&nbsp; partitions of A<small>A one-to-one correspondence: relation → its set of classes; partition → “same block”. Doing one then the other returns where you started.</small></div>
+  <div class="ex"><span class="t">Example · reading a partition as pairs</span>
+    <p>Partition {1, 2, 3}, {4, 5}, {6} of {1, …, 6}. The relation contains every ordered pair inside each block: 3² + 2² + 1² = 9 + 4 + 1 = <b>14 pairs</b>.</p>
+  </div>
+  <div class="key">#pairs in an equivalence relation = Σ (block size)²</div>
+  <details class="check"><summary>An equivalence relation on a 7-element set has classes of sizes 4, 2, 1. How many ordered pairs does it contain?<span class="tap">tap</span></summary>
+    <div class="a"><p>16 + 4 + 1 = <b>21</b>.</p></div></details>
+</section>
+
+<section id="ceq">
+  <h2><span class="n">11</span>Counting equivalence relations</h2>
+  <p>By section 10, counting equivalence relations on an n-set is the same as counting <b>partitions</b> of an n-set. These counts are the <b>Bell numbers</b> B<sub>n</sub>.</p>
+  <div class="tbl compact"><table>
+    <tr><th>n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+    <tr><td>B<sub>n</sub></td><td>1</td><td>2</td><td>5</td><td>15</td><td>52</td><td>203</td></tr>
+  </table></div>
+  <div class="ex"><span class="t">Example · B<sub>4</sub> = 15 by block sizes</span>
+    <ol class="steps">
+      <li>One block {1234}: <b>1</b>.</li>
+      <li>Sizes 3 + 1: choose the singleton: <b>4</b>.</li>
+      <li>Sizes 2 + 2: pair 1 with one of the other 3; the rest is forced: <b>3</b>.</li>
+      <li>Sizes 2 + 1 + 1: choose the pair: C(4, 2) = <b>6</b>.</li>
+      <li>All singletons: <b>1</b>. Total 1 + 4 + 3 + 6 + 1 = <b>15</b>.</li>
+    </ol>
+  </div>
+  <h3>Two useful counts</h3>
+  <ul>
+    <li><b>Exactly 2 classes:</b> 2<sup>n−1</sup> − 1. Element 1’s block is set; each of the other n − 1 elements either joins it or not (2<sup>n−1</sup>), minus the one case where everyone joins (only 1 class).</li>
+    <li><b>Equal blocks:</b> to split 6 elements into three pairs, line them up (6!), divide by orderings inside each pair (2!³) and by the order of the pairs (3!): 720/(8·6) = <b>15</b>.</li>
+  </ul>
+  <div class="warn"><span class="t">Trap · blocks are unlabeled</span><p>When blocks have the same size, divide by the number of ways to order them. {1,2},{3,4} and {3,4},{1,2} are the same partition.</p></div>
+  <details class="check"><summary>How many equivalence relations on {1, 2, 3, 4, 5} have exactly 2 classes?<span class="tap">tap</span></summary>
+    <div class="a"><p>2<sup>4</sup> − 1 = <b>15</b>. (Check by block sizes: 4 + 1 gives 5; 3 + 2 gives C(5, 2) = 10. Total 15.)</p></div></details>
+  <details class="check"><summary>How many equivalence relations on {1, 2, 3, 4} have 1 ∼ 2?<span class="tap">tap</span></summary>
+    <div class="a"><p>Glue 1 and 2 into a single object. Partitions of the 3 objects {12, 3, 4}: B<sub>3</sub> = <b>5</b>.</p></div></details>
+</section>
+
+<!-- ======================= PART 3 ======================= -->
+<div class="part-h" id="part3">Part 3 · Partial orders (Rosen 9.6)</div>
+<p>Relations that behave like “comes before” or “is at most”.</p>
+
+<section id="po">
+  <h2><span class="n">12</span>Posets</h2>
+  <div class="key">partial order = reflexive + <b>antisymmetric</b> + transitive<small>A set S with a partial order R is a <b>partially ordered set</b>, or <b>poset</b>, written (S, R). We often write a ≼ b for a R b, and a ≺ b for “a ≼ b and a ≠ b”.</small></div>
+  <div class="idea"><span class="t">Big idea</span><p>An equivalence relation glues things together; a partial order ranks them. Antisymmetry says two <b>different</b> elements can’t each be below the other: no ties between distinct things.</p></div>
+  <div class="ex"><span class="t">Standard posets</span>
+    <ul>
+      <li>(ℤ, ≤): reflexive (a ≤ a), antisymmetric (a ≤ b ≤ a ⇒ a = b), transitive.</li>
+      <li>(ℤ⁺, |): a | a; if a | b and b | a with both positive then a = b; a | b, b | c ⇒ a | c.</li>
+      <li>(P(S), ⊆): A ⊆ A; A ⊆ B ⊆ A ⇒ A = B; ⊆ is transitive.</li>
+    </ul>
+  </div>
+  <div class="ex"><span class="t">Non-examples</span>
+    <ul>
+      <li>(ℤ, &lt;): not reflexive. (It’s a <b>strict</b> order.)</li>
+      <li>(ℤ, |) on all integers: not antisymmetric (3 | −3 and −3 | 3).</li>
+      <li>“is at least as tall as” on people: not antisymmetric (two different people of the same height).</li>
+    </ul>
+  </div>
+  <details class="check"><summary>On ℤ⁺ × ℤ⁺, define (a, b) ≼ (c, d) when a ≤ c and b ≤ d. Partial order?<span class="tap">tap</span></summary>
+    <div class="a"><p>Yes. Reflexive: a ≤ a, b ≤ b. Antisymmetric: a ≤ c ≤ a and b ≤ d ≤ b force (a, b) = (c, d). Transitive: coordinatewise. (It’s called the product order. Note (1, 2) and (2, 1) are incomparable.)</p></div></details>
+</section>
+
+<section id="tot">
+  <h2><span class="n">13</span>Comparability &amp; total orders</h2>
+  <div class="key">a, b <b>comparable</b>: a ≼ b or b ≼ a<small>“Partial” means some pairs may be <b>incomparable</b>: in (ℤ⁺, |), neither 2 | 3 nor 3 | 2.</small></div>
+  <div class="key">total (linear) order: every two elements are comparable<small>A totally ordered set is also called a <b>chain</b>.</small></div>
+  <ul>
+    <li>(ℤ, ≤) is total. (ℤ⁺, |) is not. ({1, 2, 4, 8, 16}, |) is total: each divides the next.</li>
+    <li>(P(S), ⊆) is total only if |S| ≤ 1: {a} and {b} are incomparable.</li>
+    <li><b>Well-ordered:</b> a total order where every nonempty subset has a least element. (ℕ, ≤) is; (ℤ, ≤) isn’t (ℤ has no least element). This is what makes induction work.</li>
+  </ul>
+</section>
+
+<section id="lex">
+  <h2><span class="n">14</span>Lexicographic order</h2>
+  <div class="key">(a<sub>1</sub>, a<sub>2</sub>) ≺ (b<sub>1</sub>, b<sub>2</sub>) ⟺ a<sub>1</sub> ≺ b<sub>1</sub>, or (a<sub>1</sub> = b<sub>1</sub> and a<sub>2</sub> ≺ b<sub>2</sub>)<small>Dictionary order: compare first coordinates; only on a tie, compare second coordinates. Then ≼ means ≺ or =. Extends to n-tuples: the first coordinate where they differ decides.</small></div>
+  <div class="ex"><span class="t">Examples in ℤ × ℤ with ≤</span>
+    <ul>
+      <li>(2, 5) ≺ (3, 1): first coordinates decide, 2 &lt; 3. The 5 vs 1 is never looked at.</li>
+      <li>(4, −1) ≺ (4, 0): tie in the first coordinate, then −1 &lt; 0.</li>
+    </ul>
+  </div>
+  <div class="ex"><span class="t">Strings</span>
+    <p>Compare letter by letter; the first difference decides. If one string runs out first (it’s a prefix of the other), the shorter one comes first. So <b>ab ≺ abc ≺ b</b>, and “disc” ≺ “discreet” ≺ “discrete”.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Lexicographic is not “compare coordinatewise” (that’s the product order). Under lex, every two pairs are comparable when the coordinate orders are total; under the product order (2, 5) and (3, 1) are incomparable.</p></div>
+</section>
+
+<section id="hasse">
+  <h2><span class="n">15</span>Hasse diagrams</h2>
+  <div class="idea"><span class="t">Big idea</span><p>The arrow diagram of a partial order is cluttered: loops everywhere, plus every arrow implied by transitivity. A Hasse diagram keeps only the essential arrows and lets “up the page” mean “bigger”.</p></div>
+  <h3>Recipe</h3>
+  <ol class="how">
+    <li>Drop all loops (reflexivity is understood).</li>
+    <li>Drop every arrow implied by transitivity: keep a → b only if <b>b covers a</b>: a ≺ b with nothing strictly between them.</li>
+    <li>Place each element above the ones it covers, and drop the arrowheads.</li>
+  </ol>
+  <p>To read it back: a ≼ b exactly when you can climb from a to b along edges, always going <b>up</b>.</p>
+  <div class="row">
+    <figure class="fig">
+      <svg viewBox="0 0 180 210" width="170" height="198" role="img" aria-label="Hasse diagram of the divisors of 12">
+        <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+          <line x1="100" y1="180" x2="60" y2="130"/><line x1="100" y1="180" x2="140" y2="130"/>
+          <line x1="60" y1="130" x2="30" y2="80"/><line x1="60" y1="130" x2="110" y2="80"/>
+          <line x1="140" y1="130" x2="110" y2="80"/>
+          <line x1="30" y1="80" x2="70" y2="30"/><line x1="110" y1="80" x2="70" y2="30"/>
+        </g>
+        <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+          <circle cx="100" cy="180" r="13" fill="var(--surface)" stroke="currentColor"/><text x="100" y="185">1</text>
+          <circle cx="60" cy="130" r="13" fill="var(--surface)" stroke="currentColor"/><text x="60" y="135">2</text>
+          <circle cx="140" cy="130" r="13" fill="var(--surface)" stroke="currentColor"/><text x="140" y="135">3</text>
+          <circle cx="30" cy="80" r="13" fill="var(--surface)" stroke="currentColor"/><text x="30" y="85">4</text>
+          <circle cx="110" cy="80" r="13" fill="var(--surface)" stroke="currentColor"/><text x="110" y="85">6</text>
+          <circle cx="70" cy="30" r="14" fill="var(--surface)" stroke="currentColor"/><text x="70" y="35">12</text>
+        </g>
+      </svg>
+      <figcaption>Divisors of 12 under |</figcaption>
+    </figure>
+    <figure class="fig">
+      <svg viewBox="0 0 220 230" width="190" height="199" role="img" aria-label="Hasse diagram of subsets of a b c: a cube">
+        <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+          <line x1="110" y1="205" x2="40" y2="150"/><line x1="110" y1="205" x2="110" y2="150"/><line x1="110" y1="205" x2="180" y2="150"/>
+          <line x1="40" y1="150" x2="40" y2="90"/><line x1="40" y1="150" x2="110" y2="90"/>
+          <line x1="110" y1="150" x2="40" y2="90"/><line x1="110" y1="150" x2="180" y2="90"/>
+          <line x1="180" y1="150" x2="110" y2="90"/><line x1="180" y1="150" x2="180" y2="90"/>
+          <line x1="40" y1="90" x2="110" y2="30"/><line x1="110" y1="90" x2="110" y2="30"/><line x1="180" y1="90" x2="110" y2="30"/>
+        </g>
+        <g font-family="var(--math)" font-size="14" text-anchor="middle" fill="currentColor">
+          <rect x="94" y="195" width="32" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="110" y="210">∅</text>
+          <rect x="22" y="140" width="36" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="40" y="155">{a}</text>
+          <rect x="92" y="140" width="36" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="110" y="155">{b}</text>
+          <rect x="162" y="140" width="36" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="180" y="155">{c}</text>
+          <rect x="15" y="80" width="50" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="40" y="95">{a,b}</text>
+          <rect x="85" y="80" width="50" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="110" y="95">{a,c}</text>
+          <rect x="155" y="80" width="50" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="180" y="95">{b,c}</text>
+          <rect x="80" y="20" width="60" height="20" rx="6" fill="var(--surface)" stroke="currentColor"/><text x="110" y="35">{a,b,c}</text>
+        </g>
+      </svg>
+      <figcaption>P({a, b, c}) under ⊆</figcaption>
+    </figure>
+  </div>
+  <div class="ex"><span class="t">Example · reading the divisors-of-12 diagram</span>
+    <ul>
+      <li>2 | 12: climb 2 → 4 → 12 (or 2 → 6 → 12). ✓</li>
+      <li>4 and 6: no upward route between them, so incomparable (4 ∤ 6, 6 ∤ 4).</li>
+      <li>There’s no edge 1–4 because 2 sits between them (1 | 2 | 4). There’s no edge 2–12 because 4 and 6 sit between.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Drawing an edge for every relation (like 1–12) is the most common error. Only <b>covers</b>: ask “is there anything strictly between?”</p></div>
+  <details class="check"><summary>Which pairs form the edges of the Hasse diagram of ({1, 2, 3, 6, 9, 18}, |)?<span class="tap">tap</span></summary>
+    <div class="a"><p>1–2, 1–3, 2–6, 3–6, 3–9, 6–18, 9–18. (Seven edges. 2 and 9 are incomparable; 2 is below 18 only through 6.)</p></div></details>
+</section>
+
+<section id="mm">
+  <h2><span class="n">16</span>Maximal, minimal, greatest, least</h2>
+  <div class="tbl"><table>
+    <tr><th>Word</th><th>Meaning</th><th>In the diagram</th></tr>
+    <tr><td><b>maximal</b> a</td><td>nothing is strictly above a</td><td>no edge goes up from a</td></tr>
+    <tr><td><b>minimal</b> a</td><td>nothing is strictly below a</td><td>no edge goes down from a</td></tr>
+    <tr><td><b>greatest</b> a</td><td>b ≼ a for <b>every</b> b</td><td>everything climbs to a</td></tr>
+    <tr><td><b>least</b> a</td><td>a ≼ b for <b>every</b> b</td><td>a climbs to everything</td></tr>
+  </table></div>
+  <div class="idea"><span class="t">The difference</span><p>“Maximal” says nothing <b>beats</b> a. “Greatest” says a <b>beats everything</b>. With incomparable elements around, those are very different: a maximal element can simply be incomparable to the rest.</p></div>
+  <div class="row">
+    <figure class="fig">
+      <svg viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Hasse diagram of 2 3 4 6 9 12 18 under divisibility">
+        <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+          <line x1="50" y1="170" x2="20" y2="105"/><line x1="50" y1="170" x2="100" y2="105"/>
+          <line x1="150" y1="170" x2="100" y2="105"/><line x1="150" y1="170" x2="180" y2="105"/>
+          <line x1="20" y1="105" x2="60" y2="40"/><line x1="100" y1="105" x2="60" y2="40"/>
+          <line x1="100" y1="105" x2="140" y2="40"/><line x1="180" y1="105" x2="140" y2="40"/>
+        </g>
+        <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+          <circle cx="50" cy="170" r="13" fill="var(--surface)" stroke="currentColor"/><text x="50" y="175">2</text>
+          <circle cx="150" cy="170" r="13" fill="var(--surface)" stroke="currentColor"/><text x="150" y="175">3</text>
+          <circle cx="20" cy="105" r="13" fill="var(--surface)" stroke="currentColor"/><text x="20" y="110">4</text>
+          <circle cx="100" cy="105" r="13" fill="var(--surface)" stroke="currentColor"/><text x="100" y="110">6</text>
+          <circle cx="180" cy="105" r="13" fill="var(--surface)" stroke="currentColor"/><text x="180" y="110">9</text>
+          <circle cx="60" cy="40" r="14" fill="var(--surface)" stroke="currentColor"/><text x="60" y="45">12</text>
+          <circle cx="140" cy="40" r="14" fill="var(--surface)" stroke="currentColor"/><text x="140" y="45">18</text>
+        </g>
+      </svg>
+      <figcaption>S = {2, 3, 4, 6, 9, 12, 18} under |</figcaption>
+    </figure>
+  </div>
+  <div class="ex"><span class="t">Example · S above</span>
+    <ul>
+      <li><b>Minimal:</b> 2 and 3 (nothing in S divides them except themselves).</li>
+      <li><b>Maximal:</b> 12 and 18.</li>
+      <li><b>No greatest:</b> 12 and 18 are incomparable, so neither is above everything. <b>No least</b> for the same reason with 2 and 3.</li>
+    </ul>
+    <p>Divisors of 12, by contrast: 1 is least (and the only minimal); 12 is greatest (and the only maximal).</p>
+  </div>
+  <div class="idea"><span class="t">Facts (with reasons)</span>
+    <ul>
+      <li><b>Greatest is unique if it exists:</b> if a and a′ are both greatest, a ≼ a′ and a′ ≼ a, so a = a′ by antisymmetry.</li>
+      <li><b>Greatest ⇒ the only maximal:</b> anything else is below it, so not maximal.</li>
+      <li><b>Every finite nonempty poset has a minimal element:</b> start anywhere, step down while you can; you can’t step down forever in a finite set without repeating, and a repeat would contradict antisymmetry.</li>
+      <li>Infinite posets can have none: (ℤ, ≤) has no maximal or minimal element. (ℤ⁺, |) has least element 1 but no maximal element.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>“Only one maximal element” does <b>not</b> guarantee a greatest element in infinite posets. In finite posets it does (every element climbs to some maximal one).</p></div>
+</section>
+
+<section id="bnd">
+  <h2><span class="n">17</span>Bounds, lub, glb</h2>
+  <div class="key">u is an <b>upper bound</b> of a subset A if a ≼ u for all a ∈ A<br>l is a <b>lower bound</b> of A if l ≼ a for all a ∈ A<small>Bounds come from the whole poset S and need not be in A.</small></div>
+  <div class="key">lub(A) = least upper bound: an upper bound below every other upper bound<br>glb(A) = greatest lower bound<small>Also called supremum and infimum. Each is unique if it exists.</small></div>
+  <h3>Recipe</h3>
+  <ol class="how">
+    <li>List all upper bounds (everything that every element of A climbs to).</li>
+    <li>If that list has a least element, that’s the lub. If the list is empty, or has no least element, there’s no lub.</li>
+  </ol>
+  <div class="ex"><span class="t">Example · S = {2, 3, 4, 6, 9, 12, 18} under |</span>
+    <ol class="steps">
+      <li>A = {2, 3}: upper bounds 6, 12, 18; least of these is 6. <b>lub = 6</b>. Lower bounds: none (nothing in S divides both 2 and 3; 1 ∉ S). <b>No glb.</b></li>
+      <li>A = {12, 18}: upper bounds none, <b>no lub</b>. Lower bounds 2, 3, 6; greatest is 6. <b>glb = 6</b>.</li>
+      <li>A = {4, 9}: no upper bound (36 ∉ S), no lower bound.</li>
+      <li>A = {4, 6}: upper bound 12 only, lub = 12; lower bound 2, glb = 2.</li>
+    </ol>
+  </div>
+  <div class="idea"><span class="t">In (ℤ⁺, |)</span><p>lub{a, b} = lcm(a, b) and glb{a, b} = gcd(a, b). In (P(S), ⊆), lub{A, B} = A ∪ B and glb{A, B} = A ∩ B.</p></div>
+  <div class="warn"><span class="t">Trap</span><p>Having upper bounds isn’t enough: the upper bounds must have a <b>least</b> one. If the upper bounds were, say, two incomparable elements, there’d be no lub.</p></div>
+  <details class="check"><summary>In the same S, find the lub and glb of {6, 9}, and of {2, 9}.<span class="tap">tap</span></summary>
+    <div class="a"><p>{6, 9}: upper bounds {18}, lub 18; lower bounds {3}, glb 3. {2, 9}: upper bounds {18}, lub 18; no lower bounds, so no glb.</p></div></details>
+</section>
+
+<section id="lat">
+  <h2><span class="n">18</span>Lattices (briefly)</h2>
+  <div class="key">lattice: a poset in which <b>every pair</b> of elements has both a lub and a glb</div>
+  <ul>
+    <li>(ℤ⁺, |): lattice (lcm and gcd). Divisors of any n under |: lattice (lcm and gcd of divisors of n are divisors of n).</li>
+    <li>(P(S), ⊆): lattice (∪ and ∩).</li>
+    <li>Every total order: lattice (lub = the larger, glb = the smaller).</li>
+    <li>S = {2, 3, 4, 6, 9, 12, 18} under |: <b>not</b> a lattice, since {12, 18} has no lub.</li>
+    <li>({1, 2, 3, 4, 5}, |): not a lattice, since {2, 3} has no upper bound.</li>
+  </ul>
+  <div class="warn"><span class="t">Trap</span><p>To show “not a lattice”, exhibit <b>one pair</b> missing a lub or a glb, and say why (list its upper bounds).</p></div>
+</section>
+
+<section id="topo">
+  <h2><span class="n">19</span>Topological sorting</h2>
+  <div class="idea"><span class="t">Big idea</span><p>You have tasks with prerequisites (a partial order). You must do them one at a time. A <b>topological sort</b> lists all elements in a total order that <b>respects</b> the partial order: if a ≺ b, then a comes before b. (Also called a compatible total order, or linear extension.)</p></div>
+  <h3>Algorithm</h3>
+  <ol class="how">
+    <li>Pick any <b>minimal</b> element (one with nothing still below it). One exists: section 16.</li>
+    <li>Write it down and delete it. What’s left is still a poset.</li>
+    <li>Repeat until empty.</li>
+  </ol>
+  <p><b>Why it respects the order:</b> when b is picked it’s minimal among what’s left, so anything below b was already picked.</p>
+  <div class="ex"><span class="t">Example · six tasks</span>
+    <p>Prerequisites: A and B before C; B before D; C and D before E; E before F.</p>
+    <ol class="steps">
+      <li>Minimal at the start: A, B. Pick B.</li>
+      <li>Now minimal: A, D. Pick A. Then C, D are minimal; pick C, then D.</li>
+      <li>Then E, then F. Order: <b>B, A, C, D, E, F</b>.</li>
+      <li>Different choices give other valid orders; this poset has exactly 5 (ABCDEF, ABDCEF, BACDEF, BADCEF, BDACEF).</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example · divisors of 12</span>
+    <p>1 must be first and 12 last. In between, 2 before 4 and 6, and 3 before 6. One valid order: 1, 3, 2, 6, 4, 12. There are 5 in total.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>A topological sort must include <b>every</b> element, and for incomparable elements either order is fine. Don’t try to “compare” 4 and 6; just respect the edges.</p></div>
+  <details class="check"><summary>Give a topological sort of S = {2, 3, 4, 6, 9, 12, 18} under |.<span class="tap">tap</span></summary>
+    <div class="a"><p>One answer: 2, 3, 4, 6, 9, 12, 18 (increasing numbers always works for |, since a | b with a ≠ b means a &lt; b). Many others are valid, e.g. 3, 9, 2, 6, 18, 4, 12.</p></div></details>
+</section>
+
+<!-- ======================= PART 4 ======================= -->
+<div class="part-h" id="part4">Part 4 · Graphs (Rosen 10.1–10.2)</div>
+<p>A graph is a relation drawn as dots and lines, and it’s the most visual topic on the final.</p>
+
+<section id="gt">
+  <h2><span class="n">20</span>Graph vocabulary</h2>
+  <div class="key">graph G = (V, E): a nonempty set V of <b>vertices</b> and a set E of <b>edges</b>, each edge joining one or two vertices (its <b>endpoints</b>)</div>
+  <div class="tbl compact"><table>
+    <tr><th>Type</th><th>Edges</th><th>Multi-edges</th><th>Loops</th></tr>
+    <tr><td>simple graph</td><td>undir.</td><td>no</td><td>no</td></tr>
+    <tr><td>multigraph</td><td>undir.</td><td>yes</td><td>no</td></tr>
+    <tr><td>pseudograph</td><td>undir.</td><td>yes</td><td>yes</td></tr>
+    <tr><td>simple digraph</td><td>directed</td><td>no</td><td>yes</td></tr>
+    <tr><td>directed multigraph</td><td>directed</td><td>yes</td><td>yes</td></tr>
+  </table></div>
+  <p>In a <b>simple graph</b>, an edge is just an unordered pair {u, v} with u ≠ v. That’s a symmetric, irreflexive relation on V. A <b>directed graph</b> (digraph) has edges (u, v) with a direction: exactly a relation on V.</p>
+  <ul>
+    <li>u and v are <b>adjacent</b> (neighbors) if an edge joins them; that edge is <b>incident</b> with u and v.</li>
+    <li>The <b>neighborhood</b> N(v) is the set of neighbors of v.</li>
+    <li>In a digraph, edge (u, v) has <b>initial vertex</b> u and <b>terminal vertex</b> v.</li>
+  </ul>
+  <div class="warn"><span class="t">Trap</span><p>On the final, “graph” usually means simple graph unless loops or multiple edges are mentioned. Read the problem for which kind it means.</p></div>
+  <details class="check"><summary>How many different simple graphs have vertex set {1, 2, 3, 4} (labeled)?<span class="tap">tap</span></summary>
+    <div class="a"><p>Each of the C(4, 2) = 6 possible edges is in or out: 2<sup>6</sup> = <b>64</b>. In general 2<sup>C(n,2)</sup>. (Up to isomorphism there are only 11; see section 27.)</p></div></details>
+</section>
+
+<section id="deg">
+  <h2><span class="n">21</span>Degree &amp; the handshaking theorem</h2>
+  <div class="key">deg(v) = number of edges incident with v, a loop counting <b>twice</b><small>deg 0: <b>isolated</b> vertex. deg 1: <b>pendant</b> vertex.</small></div>
+  <div class="key">Handshaking theorem: &nbsp;Σ<sub>v ∈ V</sub> deg(v) = 2|E|</div>
+  <h3>Proof</h3>
+  <p>Count “edge-ends”. Every edge has two ends, so there are 2|E| ends in total. Each end sits at a vertex, and deg(v) is exactly the number of ends at v (a loop puts both of its ends at the same vertex, which is why it counts twice). Summing deg(v) over all vertices counts every end once. ∎</p>
+  <div class="idea"><span class="t">Corollary · odd-degree vertices come in pairs</span><p>Every graph has an <b>even</b> number of vertices of odd degree.</p>
+    <p><b>Proof:</b> split the sum: Σ deg = (sum over even-degree vertices) + (sum over odd-degree vertices). The total is 2|E|, even, and the first part is even, so the second part is even. A sum of odd numbers is even only if there’s an even number of them. ∎</p></div>
+  <div class="ex"><span class="t">Examples</span>
+    <ul>
+      <li>Degrees 3, 3, 2, 2, 2: sum 12, so |E| = 6.</li>
+      <li>A graph where 9 vertices all have degree 4: |E| = 36/2 = 18.</li>
+      <li>Can 11 people each shake hands with exactly 3 others? Degree sum 33 is odd. <b>Impossible.</b></li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap · even sum isn’t enough</span><p>Is there a simple graph with degrees 5, 5, 4, 3, 2, 1? The sum (20) is even, but <b>no</b>: with 6 vertices, degree 5 means adjacent to all others. Two such vertices make every vertex’s degree at least 2, but one vertex has degree 1. Always also check simple-graph limits (degree ≤ n − 1).</p></div>
+  <details class="check"><summary>A simple graph has 10 vertices: 4 have degree 4, the rest have degree d, and there are 17 edges. Find d.<span class="tap">tap</span></summary>
+    <div class="a"><p>2·17 = 34 = 4·4 + 6d, so 6d = 18, <b>d = 3</b>.</p></div></details>
+  <details class="check"><summary>Is there a simple graph with degrees 3, 3, 3, 1?<span class="tap">tap</span></summary>
+    <div class="a"><p>Sum 10 is even, but no. On 4 vertices, degree 3 means adjacent to all three others. Three such vertices would each be adjacent to the fourth, giving it degree 3, not 1.</p></div></details>
+</section>
+
+<section id="dir">
+  <h2><span class="n">22</span>Directed degrees</h2>
+  <div class="key">deg<sup>−</sup>(v) = in-degree (edges ending at v), &nbsp;deg<sup>+</sup>(v) = out-degree (edges starting at v)<br>Σ deg<sup>−</sup>(v) = Σ deg<sup>+</sup>(v) = |E|<small>Each directed edge has exactly one start and one end. A loop adds 1 to both the in- and out-degree of its vertex.</small></div>
+  <div class="ex"><span class="t">Example · edges (1,2), (1,3), (2,3), (3,1), (3,4), (4,4)</span>
+    <p>Out-degrees: 1:2, 2:1, 3:2, 4:1. In-degrees: 1:1, 2:1, 3:2, 4:2. Both sum to 6 = |E|. ✓</p>
+  </div>
+  <p>The <b>underlying undirected graph</b> forgets the directions.</p>
+</section>
+
+<section id="spec">
+  <h2><span class="n">23</span>Special graphs</h2>
+  <div class="row">
+    <figure class="fig"><svg viewBox="0 0 110 110" width="96" height="96" role="img" aria-label="K4">
+      <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><line x1="20" y1="20" x2="90" y2="20"/><line x1="90" y1="20" x2="90" y2="90"/><line x1="90" y1="90" x2="20" y2="90"/><line x1="20" y1="90" x2="20" y2="20"/><line x1="20" y1="20" x2="90" y2="90"/><line x1="90" y1="20" x2="20" y2="90"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="20" cy="20" r="6"/><circle cx="90" cy="20" r="6"/><circle cx="90" cy="90" r="6"/><circle cx="20" cy="90" r="6"/></g></svg><figcaption>K₄</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 110 110" width="96" height="96" role="img" aria-label="C5">
+      <polygon points="55,17 91.1,43.3 77.3,85.7 32.7,85.7 18.9,43.3" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"/>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="55" cy="17" r="6"/><circle cx="91.1" cy="43.3" r="6"/><circle cx="77.3" cy="85.7" r="6"/><circle cx="32.7" cy="85.7" r="6"/><circle cx="18.9" cy="43.3" r="6"/></g></svg><figcaption>C₅</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 110 110" width="96" height="96" role="img" aria-label="W5">
+      <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)" fill="none"><polygon points="55,17 91.1,43.3 77.3,85.7 32.7,85.7 18.9,43.3"/><line x1="55" y1="55" x2="55" y2="17"/><line x1="55" y1="55" x2="91.1" y2="43.3"/><line x1="55" y1="55" x2="77.3" y2="85.7"/><line x1="55" y1="55" x2="32.7" y2="85.7"/><line x1="55" y1="55" x2="18.9" y2="43.3"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="55" cy="17" r="6"/><circle cx="91.1" cy="43.3" r="6"/><circle cx="77.3" cy="85.7" r="6"/><circle cx="32.7" cy="85.7" r="6"/><circle cx="18.9" cy="43.3" r="6"/><circle cx="55" cy="55" r="6"/></g></svg><figcaption>W₅</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 115 110" width="100" height="96" role="img" aria-label="Q3 cube">
+      <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)" fill="none"><rect x="15" y="35" width="60" height="60"/><rect x="42" y="12" width="60" height="60"/><line x1="15" y1="35" x2="42" y2="12"/><line x1="75" y1="35" x2="102" y2="12"/><line x1="75" y1="95" x2="102" y2="72"/><line x1="15" y1="95" x2="42" y2="72"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="15" cy="35" r="6"/><circle cx="75" cy="35" r="6"/><circle cx="75" cy="95" r="6"/><circle cx="15" cy="95" r="6"/><circle cx="42" cy="12" r="6"/><circle cx="102" cy="12" r="6"/><circle cx="102" cy="72" r="6"/><circle cx="42" cy="72" r="6"/></g></svg><figcaption>Q₃</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 120 110" width="104" height="96" role="img" aria-label="K2,3">
+      <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"><line x1="38" y1="20" x2="20" y2="90"/><line x1="38" y1="20" x2="60" y2="90"/><line x1="38" y1="20" x2="100" y2="90"/><line x1="82" y1="20" x2="20" y2="90"/><line x1="82" y1="20" x2="60" y2="90"/><line x1="82" y1="20" x2="100" y2="90"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="38" cy="20" r="6"/><circle cx="82" cy="20" r="6"/><circle cx="20" cy="90" r="6"/><circle cx="60" cy="90" r="6"/><circle cx="100" cy="90" r="6"/></g></svg><figcaption>K₂,₃</figcaption></figure>
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Graph</th><th>What it is</th><th>|V|</th><th>|E|</th></tr>
+    <tr><td>K<sub>n</sub> complete</td><td>every pair adjacent</td><td>n</td><td>C(n, 2) = n(n−1)/2</td></tr>
+    <tr><td>C<sub>n</sub> cycle (n ≥ 3)</td><td>v<sub>1</sub>–v<sub>2</sub>–⋯–v<sub>n</sub>–v<sub>1</sub></td><td>n</td><td>n</td></tr>
+    <tr><td>W<sub>n</sub> wheel (n ≥ 3)</td><td>C<sub>n</sub> plus a hub joined to all n</td><td>n + 1</td><td>2n</td></tr>
+    <tr><td>Q<sub>n</sub> n-cube</td><td>bit strings of length n; adjacent if they differ in one bit</td><td>2<sup>n</sup></td><td>n·2<sup>n−1</sup></td></tr>
+    <tr><td>K<sub>m,n</sub> complete bipartite</td><td>m + n vertices in two sides; every cross pair adjacent, nothing within a side</td><td>m + n</td><td>mn</td></tr>
+  </table></div>
+  <h3>Where the edge counts come from (use handshaking)</h3>
+  <ul>
+    <li>K<sub>n</sub>: n vertices of degree n − 1, so |E| = n(n − 1)/2.</li>
+    <li>W<sub>n</sub>: n rim edges + n spokes = 2n.</li>
+    <li>Q<sub>n</sub>: each of the 2<sup>n</sup> strings has n neighbors (flip one bit), so |E| = n·2<sup>n</sup>/2 = n·2<sup>n−1</sup>. Q<sub>3</sub>: 12; Q<sub>4</sub>: 32.</li>
+    <li>K<sub>m,n</sub>: m vertices of degree n and n of degree m: (mn + nm)/2 = mn.</li>
+  </ul>
+  <div class="warn"><span class="t">Trap</span><p>W<sub>n</sub> has <b>n + 1</b> vertices, not n. And Q<sub>n</sub> has 2<sup>n</sup> vertices, not n.</p></div>
+  <details class="check"><summary>How many edges do K<sub>7</sub>, W<sub>6</sub>, Q<sub>5</sub>, K<sub>4,6</sub> have?<span class="tap">tap</span></summary>
+    <div class="a"><p>K<sub>7</sub>: 21. W<sub>6</sub>: 12. Q<sub>5</sub>: 5·16 = 80. K<sub>4,6</sub>: 24.</p></div></details>
+</section>
+
+<section id="bip">
+  <h2><span class="n">24</span>Bipartite graphs</h2>
+  <div class="key">G is <b>bipartite</b> if V = V<sub>1</sub> ∪ V<sub>2</sub> (disjoint) with every edge joining V<sub>1</sub> to V<sub>2</sub><small>No edge inside V<sub>1</sub>, none inside V<sub>2</sub>. Equivalently: you can color the vertices with 2 colors so every edge joins different colors (a proper 2-coloring).</small></div>
+  <div class="idea"><span class="t">Theorem · the odd-cycle test</span><p>A graph is bipartite <b>if and only if</b> it has no cycle of odd length.</p></div>
+  <h3>Why</h3>
+  <ol class="steps">
+    <li><b>Bipartite ⇒ no odd cycle:</b> walking around a cycle, the colors alternate with every step. To return to the starting color you need an even number of steps.</li>
+    <li><b>No odd cycle ⇒ bipartite</b> (for each connected piece): pick a vertex v. Color a vertex red if its distance from v is even, blue if odd. Suppose some edge xy joined two same-colored vertices. Then shortest route v→x, edge xy, and shortest route y→v back form a closed walk of odd length (even + 1 + even, or odd + 1 + odd). An odd closed walk always contains an odd cycle, a contradiction.</li>
+  </ol>
+  <h3>Recipe: 2-color greedily</h3>
+  <ol class="how">
+    <li>Color any vertex red. Color all its neighbors blue, all their uncolored neighbors red, and so on.</li>
+    <li>If you ever need to give a vertex the color it already conflicts with, you’ve found an odd cycle: <b>not bipartite</b>. If everything gets colored, the colors are the two sides.</li>
+  </ol>
+  <figure class="fig">
+    <svg viewBox="0 0 200 160" width="200" height="160" role="img" aria-label="Hexagon with a long diagonal, properly 2-colored">
+      <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)" fill="none"><polygon points="155,80 127.5,127.6 72.5,127.6 45,80 72.5,32.4 127.5,32.4"/><line x1="155" y1="80" x2="45" y2="80"/></g>
+      <g stroke="currentColor" stroke-width="1.5">
+        <circle cx="155" cy="80" r="9" fill="currentColor" style="color:var(--accent)"/><circle cx="72.5" cy="127.6" r="9" fill="currentColor" style="color:var(--accent)"/><circle cx="72.5" cy="32.4" r="9" fill="currentColor" style="color:var(--accent)"/>
+        <circle cx="127.5" cy="127.6" r="9" fill="var(--surface)"/><circle cx="45" cy="80" r="9" fill="var(--surface)"/><circle cx="127.5" cy="32.4" r="9" fill="var(--surface)"/>
+      </g>
+    </svg>
+    <figcaption>C₆ plus a long diagonal: still bipartite (diagonal joins opposite colors)</figcaption>
+  </figure>
+  <div class="ex"><span class="t">Which special graphs are bipartite?</span>
+    <ul>
+      <li>C<sub>n</sub>: bipartite exactly when n is <b>even</b>.</li>
+      <li>K<sub>n</sub>: only for n ≤ 2 (K<sub>3</sub> is a triangle).</li>
+      <li>W<sub>n</sub>: never (hub + two adjacent rim vertices form a triangle).</li>
+      <li>Q<sub>n</sub>: always. Sides: strings with an even number of 1s vs. odd. Flipping one bit changes the parity.</li>
+      <li>K<sub>m,n</sub>: always, by definition.</li>
+    </ul>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Adding a diagonal to C<sub>6</sub> between <b>opposite</b> vertices keeps it bipartite (it closes two 4-cycles). A diagonal between vertices two apart creates a triangle and breaks it. Check parity, not looks.</p></div>
+  <h3>Matchings (brief)</h3>
+  <p>A <b>matching</b> is a set of edges with no shared endpoints. In a bipartite graph with sides V<sub>1</sub>, V<sub>2</sub>, a <b>complete matching from V<sub>1</sub></b> matches every vertex of V<sub>1</sub>. <b>Hall’s theorem:</b> one exists if and only if |N(A)| ≥ |A| for every subset A ⊆ V<sub>1</sub>. The “only if” is easy: the matched partners of A are |A| different neighbors of A.</p>
+  <details class="check"><summary>Is the 6-cycle with one extra edge between two vertices at distance 2 bipartite?<span class="tap">tap</span></summary>
+    <div class="a"><p>No: that edge and the two cycle edges between its endpoints form a triangle, an odd cycle.</p></div></details>
+  <details class="check"><summary>What is the largest number of edges in a bipartite simple graph on 10 vertices?<span class="tap">tap</span></summary>
+    <div class="a"><p>With sides of size m and 10 − m, at most m(10 − m) edges, maximized at m = 5: <b>25</b> (K<sub>5,5</sub>).</p></div></details>
+</section>
+
+<section id="sub">
+  <h2><span class="n">25</span>Subgraphs, unions, complements</h2>
+  <ul>
+    <li><b>Subgraph</b> H = (W, F) of G = (V, E): W ⊆ V and F ⊆ E (each edge of F with both endpoints in W). <b>Proper</b> if H ≠ G.</li>
+    <li><b>Induced subgraph</b> on W: keep the vertices W and <b>every</b> edge of G between them.</li>
+    <li><b>Removing an edge</b> e: G − e keeps all vertices. <b>Removing a vertex</b> v: G − v also deletes every edge at v.</li>
+    <li><b>Union</b> G<sub>1</sub> ∪ G<sub>2</sub>: vertex set V<sub>1</sub> ∪ V<sub>2</sub>, edge set E<sub>1</sub> ∪ E<sub>2</sub>.</li>
+    <li><b>Complement</b> Ḡ of a simple graph: same vertices, and uv is an edge exactly when it is <b>not</b> an edge of G. So |E(G)| + |E(Ḡ)| = C(n, 2).</li>
+  </ul>
+  <div class="ex"><span class="t">Example</span>
+    <p>W<sub>5</sub> − hub = C<sub>5</sub>. K<sub>4</sub> − (one edge) has 5 edges. The complement of C<sub>6</sub> has 15 − 6 = 9 edges.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>“Subgraph” doesn’t require keeping all edges between the chosen vertices; “induced subgraph” does. C<sub>4</sub> is a subgraph of K<sub>4</sub>, but not an induced one.</p></div>
+</section>
+
+<!-- ======================= PART 5 ======================= -->
+<div class="part-h" id="part5">Part 5 · Representation &amp; isomorphism (Rosen 10.3)</div>
+<p>How to write a graph down, and when two drawings are “the same graph”.</p>
+
+<section id="rep">
+  <h2><span class="n">26</span>Adjacency lists &amp; matrices</h2>
+  <figure class="fig">
+    <svg viewBox="0 0 200 160" width="200" height="160" role="img" aria-label="Square 1 2 3 4 with diagonal 1-3">
+      <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)"><line x1="40" y1="30" x2="160" y2="30"/><line x1="160" y1="30" x2="160" y2="130"/><line x1="160" y1="130" x2="40" y2="130"/><line x1="40" y1="130" x2="40" y2="30"/><line x1="40" y1="30" x2="160" y2="130"/></g>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+        <circle cx="40" cy="30" r="13" fill="var(--surface)" stroke="currentColor"/><text x="40" y="35">1</text>
+        <circle cx="160" cy="30" r="13" fill="var(--surface)" stroke="currentColor"/><text x="160" y="35">2</text>
+        <circle cx="160" cy="130" r="13" fill="var(--surface)" stroke="currentColor"/><text x="160" y="135">3</text>
+        <circle cx="40" cy="130" r="13" fill="var(--surface)" stroke="currentColor"/><text x="40" y="135">4</text>
+      </g>
+    </svg>
+    <figcaption>G: the 4-cycle 1–2–3–4–1 plus the diagonal 1–3</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Vertex</th><th>Adjacency list</th></tr>
+    <tr><td>1</td><td>2, 3, 4</td></tr><tr><td>2</td><td>1, 3</td></tr><tr><td>3</td><td>1, 2, 4</td></tr><tr><td>4</td><td>1, 3</td></tr>
+  </table></div>
+  <p><b>Adjacency matrix</b> A (vertices in a fixed order): a<sub>ij</sub> = 1 if v<sub>i</sub>v<sub>j</sub> is an edge, else 0.</p>
+  <table class="mat"><tr><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td></tr></table>
+  <ul>
+    <li>Undirected ⇒ A is <b>symmetric</b>. Simple ⇒ zero diagonal. Row sum = degree.</li>
+    <li>Multigraphs: a<sub>ij</sub> = number of edges between v<sub>i</sub> and v<sub>j</sub>; a loop puts 1 on the diagonal.</li>
+    <li>Digraphs: a<sub>ij</sub> = 1 if there’s an edge v<sub>i</sub> → v<sub>j</sub>. Not symmetric in general. Row sum = out-degree, column sum = in-degree.</li>
+    <li>The matrix depends on the vertex order; reordering vertices permutes rows and columns together.</li>
+  </ul>
+  <p><b>Incidence matrix</b> M: rows = vertices, columns = edges; m<sub>ij</sub> = 1 if edge e<sub>j</sub> is incident with v<sub>i</sub>. Each column has two 1s (one for a loop). For G above with e<sub>1</sub> = 12, e<sub>2</sub> = 23, e<sub>3</sub> = 34, e<sub>4</sub> = 41, e<sub>5</sub> = 13:</p>
+  <table class="mat"><tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr></table>
+  <div class="warn"><span class="t">Trap</span><p>Adjacency matrix: n × n. Incidence matrix: n × |E|. Don’t mix them up, and in an adjacency matrix a loop counts 1 (on the diagonal) even though it adds 2 to the degree.</p></div>
+</section>
+
+<section id="iso">
+  <h2><span class="n">27</span>Isomorphism</h2>
+  <div class="key">G<sub>1</sub> ≅ G<sub>2</sub> if there is a bijection f : V<sub>1</sub> → V<sub>2</sub> with <br>u, v adjacent in G<sub>1</sub> ⟺ f(u), f(v) adjacent in G<sub>2</sub><small>f is an <b>isomorphism</b>: a renaming of the vertices that turns one edge set exactly into the other. Same graph, different labels or drawing.</small></div>
+  <div class="idea"><span class="t">Big idea</span><p>Drawings lie. Two pictures that look nothing alike can be the same graph, and two that look similar can differ. Decide using the definition and invariants, not the picture.</p></div>
+  <div class="row">
+    <figure class="fig"><svg viewBox="0 0 110 110" width="100" height="100" role="img" aria-label="Pentagon">
+      <polygon points="55,17 91.1,43.3 77.3,85.7 32.7,85.7 18.9,43.3" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"/>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="55" cy="17" r="6"/><circle cx="91.1" cy="43.3" r="6"/><circle cx="77.3" cy="85.7" r="6"/><circle cx="32.7" cy="85.7" r="6"/><circle cx="18.9" cy="43.3" r="6"/></g></svg><figcaption>pentagon</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 110 110" width="100" height="100" role="img" aria-label="Pentagram">
+      <polygon points="55,17 77.3,85.7 18.9,43.3 91.1,43.3 32.7,85.7" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--accent)"/>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="55" cy="17" r="6"/><circle cx="91.1" cy="43.3" r="6"/><circle cx="77.3" cy="85.7" r="6"/><circle cx="32.7" cy="85.7" r="6"/><circle cx="18.9" cy="43.3" r="6"/></g></svg><figcaption>pentagram</figcaption></figure>
+  </div>
+  <p>The pentagram is just a 5-cycle traced in a different order (every other point), so it’s isomorphic to the pentagon: both are C<sub>5</sub>.</p>
+  <h3>Recipe: proving two graphs ARE isomorphic</h3>
+  <ol class="how">
+    <li>Check the easy invariants match (vertex count, edge count, degree sequence). If not, stop: not isomorphic.</li>
+    <li>Match up vertices with special features first: unique degrees, the neighbors of those, vertices on triangles…</li>
+    <li>Write the bijection f explicitly.</li>
+    <li><b>Verify every edge</b>: each edge uv of G<sub>1</sub> maps to an edge f(u)f(v) of G<sub>2</sub>. Same number of edges ⇒ that’s enough.</li>
+  </ol>
+  <div class="ex"><span class="t">Example</span>
+    <p>G<sub>1</sub>: vertices a, b, c, d, e; edges ab, bc, cd, da, ae (a square with a pendant at a).<br>G<sub>2</sub>: vertices 1–5; edges 13, 35, 52, 21, 42.</p>
+    <ol class="steps">
+      <li>Degrees in G<sub>1</sub>: a 3, b 2, c 2, d 2, e 1. In G<sub>2</sub>: 2 has degree 3 (neighbors 5, 1, 4), 1, 3, 5 have degree 2, 4 has degree 1. Same sequence.</li>
+      <li>Forced: a ↦ 2 (only degree 3) and e ↦ 4 (only degree 1). a’s other neighbors b, d must go to 2’s other neighbors 1, 5; c (opposite a on the square) goes to 3.</li>
+      <li>Try f: a↦2, b↦1, c↦3, d↦5, e↦4.</li>
+      <li>Check: ab→21 ✓, bc→13 ✓, cd→35 ✓, da→52 ✓, ae→24 ✓. All 5 edges land on edges, so <b>G<sub>1</sub> ≅ G<sub>2</sub></b>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Matching degree sequences does <b>not</b> prove isomorphism. You must give the bijection and check edges (or find an invariant that differs, next section).</p></div>
+  <details class="check"><summary>How many non-isomorphic simple graphs have 3 vertices? 4 vertices?<span class="tap">tap</span></summary>
+    <div class="a"><p>3 vertices: <b>4</b> (0, 1, 2, or 3 edges: with 3 vertices each edge count gives one shape). 4 vertices: <b>11</b>. Compare with 2<sup>3</sup> = 8 and 2<sup>6</sup> = 64 labeled graphs.</p></div></details>
+</section>
+
+<section id="inv">
+  <h2><span class="n">28</span>Invariants: proving “not isomorphic”</h2>
+  <div class="key">invariant: a property every isomorphism preserves<small>If G<sub>1</sub> and G<sub>2</sub> differ in <b>any</b> invariant, they’re not isomorphic. Finding one is all you need.</small></div>
+  <div class="tbl"><table>
+    <tr><th>Invariant</th><th>Why preserved</th></tr>
+    <tr><td>number of vertices, edges</td><td>f is a bijection on vertices and on edges</td></tr>
+    <tr><td>degree sequence</td><td>f sends the neighbors of v onto the neighbors of f(v)</td></tr>
+    <tr><td>number of cycles of length k (triangles, 4-cycles…)</td><td>a cycle maps to a cycle of the same length</td></tr>
+    <tr><td>connected? number of components</td><td>paths map to paths</td></tr>
+    <tr><td>bipartite?</td><td>a 2-coloring transfers through f</td></tr>
+    <tr><td>degrees of neighbors (e.g. “the degree-3 vertices are adjacent”)</td><td>adjacency and degree both preserved</td></tr>
+  </table></div>
+  <div class="row">
+    <figure class="fig"><svg viewBox="0 0 140 110" width="130" height="102" role="img" aria-label="K3,3">
+      <g stroke="currentColor" stroke-width="1.4" style="color:var(--accent)">
+        <line x1="20" y1="20" x2="20" y2="90"/><line x1="20" y1="20" x2="70" y2="90"/><line x1="20" y1="20" x2="120" y2="90"/>
+        <line x1="70" y1="20" x2="20" y2="90"/><line x1="70" y1="20" x2="70" y2="90"/><line x1="70" y1="20" x2="120" y2="90"/>
+        <line x1="120" y1="20" x2="20" y2="90"/><line x1="120" y1="20" x2="70" y2="90"/><line x1="120" y1="20" x2="120" y2="90"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="20" cy="20" r="6"/><circle cx="70" cy="20" r="6"/><circle cx="120" cy="20" r="6"/><circle cx="20" cy="90" r="6"/><circle cx="70" cy="90" r="6"/><circle cx="120" cy="90" r="6"/></g></svg><figcaption>K₃,₃</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 140 120" width="130" height="111" role="img" aria-label="Triangular prism">
+      <g stroke="currentColor" stroke-width="1.4" style="color:var(--accent)" fill="none">
+        <polygon points="70,10 130,110 10,110"/><polygon points="70,50 92,88 48,88"/>
+        <line x1="70" y1="10" x2="70" y2="50"/><line x1="130" y1="110" x2="92" y2="88"/><line x1="10" y1="110" x2="48" y2="88"/></g>
+      <g fill="var(--surface)" stroke="currentColor"><circle cx="70" cy="10" r="6"/><circle cx="130" cy="110" r="6"/><circle cx="10" cy="110" r="6"/><circle cx="70" cy="50" r="6"/><circle cx="92" cy="88" r="6"/><circle cx="48" cy="88" r="6"/></g></svg><figcaption>prism</figcaption></figure>
+  </div>
+  <div class="ex"><span class="t">Example · K<sub>3,3</sub> vs. the triangular prism</span>
+    <ol class="steps">
+      <li>Both: 6 vertices, 9 edges, every degree 3. The easy invariants all agree.</li>
+      <li>The prism has a <b>triangle</b>. K<sub>3,3</sub> is bipartite, so it has no odd cycles, in particular no triangle.</li>
+      <li>So they are <b>not isomorphic</b>.</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example · C<sub>6</sub> vs. two disjoint triangles</span>
+    <p>Both have 6 vertices, 6 edges, all degrees 2. But C<sub>6</sub> is connected and the other has 2 components (also: triangles vs. none). Not isomorphic.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>“I tried a few bijections and none worked” is <b>not</b> a proof of non-isomorphism (there are n! bijections). Name an invariant that differs.</p></div>
+</section>
+
+<!-- ======================= PART 6 ======================= -->
+<div class="part-h" id="part6">Part 6 · Connectivity (Rosen 10.4)</div>
+<p>Getting from one vertex to another.</p>
+
+<section id="conn">
+  <h2><span class="n">29</span>Paths, circuits, components</h2>
+  <div class="key">path of length n from u to v: a sequence of n edges e<sub>1</sub>, …, e<sub>n</sub> leading u = x<sub>0</sub> – x<sub>1</sub> – ⋯ – x<sub>n</sub> = v<small><b>Circuit</b>: a path of length ≥ 1 that ends where it starts. <b>Simple</b>: no edge repeated. (Rosen’s “path” may repeat vertices and edges; some books call that a walk.)</small></div>
+  <ul>
+    <li>An undirected graph is <b>connected</b> if every two vertices have a path between them.</li>
+    <li><b>Theorem:</b> in a connected graph, any two distinct vertices have a <b>simple</b> path between them. (Take a shortest path; if it repeated a vertex, you could cut out the loop and get a shorter one.)</li>
+    <li>A <b>connected component</b> is a maximal connected subgraph: a piece you can’t enlarge and stay connected. Every graph is the disjoint union of its components.</li>
+  </ul>
+  <div class="idea"><span class="t">Components are equivalence classes</span><p>“u = v or there is a path from u to v” is an equivalence relation on V (reflexive by fiat; reverse a path for symmetry; glue paths for transitivity). Its classes are the vertex sets of the components. This is Part 2 applied to graphs.</p></div>
+  <div class="warn"><span class="t">Trap</span><p>A single vertex with no edges is a component by itself. Count isolated vertices when asked for the number of components.</p></div>
+</section>
+
+<section id="cut">
+  <h2><span class="n">30</span>Cut vertices &amp; cut edges</h2>
+  <div class="key"><b>cut vertex</b>: removing it (and its edges) increases the number of components<br><b>cut edge</b> (bridge): removing it increases the number of components</div>
+  <figure class="fig">
+    <svg viewBox="0 0 240 140" width="240" height="140" role="img" aria-label="Two triangles joined by a bridge between vertices 3 and 4">
+      <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)"><line x1="25" y1="30" x2="25" y2="110"/><line x1="25" y1="30" x2="85" y2="70"/><line x1="25" y1="110" x2="85" y2="70"/><line x1="155" y1="70" x2="215" y2="30"/><line x1="155" y1="70" x2="215" y2="110"/><line x1="215" y1="30" x2="215" y2="110"/></g>
+      <line x1="85" y1="70" x2="155" y2="70" stroke="currentColor" stroke-width="3" style="color:var(--warn)"/>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+        <circle cx="25" cy="30" r="13" fill="var(--surface)" stroke="currentColor"/><text x="25" y="35">1</text>
+        <circle cx="25" cy="110" r="13" fill="var(--surface)" stroke="currentColor"/><text x="25" y="115">2</text>
+        <circle cx="85" cy="70" r="13" fill="var(--warn-bg)" stroke="currentColor" style="color:var(--warn)"/><text x="85" y="75" style="fill:var(--ink)">3</text>
+        <circle cx="155" cy="70" r="13" fill="var(--warn-bg)" stroke="currentColor" style="color:var(--warn)"/><text x="155" y="75" style="fill:var(--ink)">4</text>
+        <circle cx="215" cy="30" r="13" fill="var(--surface)" stroke="currentColor"/><text x="215" y="35">5</text>
+        <circle cx="215" cy="110" r="13" fill="var(--surface)" stroke="currentColor"/><text x="215" y="115">6</text>
+      </g>
+    </svg>
+    <figcaption>Cut vertices 3 and 4; the only cut edge is 3–4</figcaption>
+  </figure>
+  <div class="ex"><span class="t">Example · reading the picture</span>
+    <ul>
+      <li>Remove 3: {1, 2} is cut off from {4, 5, 6}. Cut vertex. Same for 4.</li>
+      <li>Remove 1: the rest stays connected (2–3 still there). Not a cut vertex.</li>
+      <li>Remove edge 3–4: two triangles, disconnected. Cut edge. Removing a triangle edge, say 1–2, leaves 1–3–2, still connected.</li>
+    </ul>
+  </div>
+  <div class="idea"><span class="t">Key fact</span><p>An edge is a cut edge exactly when it lies on <b>no circuit</b> (no simple cycle). If it’s on a cycle, the rest of the cycle is a detour around it.</p></div>
+  <p><b>Connectivity numbers:</b> κ(G), the vertex connectivity, is the fewest vertices whose removal disconnects G (or leaves one vertex); λ(G), the edge connectivity, is the fewest edges whose removal disconnects G. κ(K<sub>n</sub>) = λ(K<sub>n</sub>) = n − 1. In general κ(G) ≤ λ(G) ≤ min degree.</p>
+  <div class="warn"><span class="t">Trap</span><p>The endpoint of a cut edge is not always a cut vertex: in a path a–b, removing a leaves just b, still connected. A pendant vertex is never a cut vertex.</p></div>
+  <details class="check"><summary>Find all cut vertices and cut edges of the star K<sub>1,4</sub> (one center joined to 4 leaves).<span class="tap">tap</span></summary>
+    <div class="a"><p>Cut vertex: the center only. Cut edges: all 4 edges (no edge lies on a cycle).</p></div></details>
+</section>
+
+<section id="dcon">
+  <h2><span class="n">31</span>Strong &amp; weak connectivity</h2>
+  <div class="key"><b>strongly connected</b>: a directed path u → v and v → u for every u, v<br><b>weakly connected</b>: the underlying undirected graph is connected</div>
+  <p>Strongly ⇒ weakly, but not conversely. The <b>strongly connected components</b> are the maximal strongly connected subgraphs; they partition the vertices (mutual reachability is an equivalence relation).</p>
+  <figure class="fig">
+    <svg viewBox="0 0 230 150" width="230" height="150" role="img" aria-label="Digraph: 1 to 2, 2 to 3, 3 to 1, 3 to 4">
+      <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+        <line x1="53" y1="35" x2="116" y2="35" marker-end="url(#a2)"/>
+        <line x1="123.6" y1="46.3" x2="92" y2="102.7" marker-end="url(#a2)"/>
+        <line x1="78.6" y1="103.7" x2="47" y2="47.3" marker-end="url(#a2)"/>
+        <line x1="98" y1="115" x2="186" y2="115" marker-end="url(#a2)"/>
+      </g>
+      <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+        <circle cx="40" cy="35" r="13" fill="var(--surface)" stroke="currentColor"/><text x="40" y="40">1</text>
+        <circle cx="130" cy="35" r="13" fill="var(--surface)" stroke="currentColor"/><text x="130" y="40">2</text>
+        <circle cx="85" cy="115" r="13" fill="var(--surface)" stroke="currentColor"/><text x="85" y="120">3</text>
+        <circle cx="200" cy="115" r="13" fill="var(--surface)" stroke="currentColor"/><text x="200" y="120">4</text>
+      </g>
+    </svg>
+    <figcaption>Weakly but not strongly connected</figcaption>
+  </figure>
+  <div class="ex"><span class="t">Example</span>
+    <p>1, 2, 3 reach each other around the cycle. 4 is reachable from 3 but nothing leaves 4, so 4 can’t get back. Strong components: <b>{1, 2, 3}</b> and <b>{4}</b>. The graph is weakly connected (ignoring directions everything is joined).</p>
+  </div>
+  <details class="check"><summary>Digraph on {1, …, 5} with edges 1→2, 2→3, 3→4, 4→2, 5→4, 5→1. Strong components? Weakly connected?<span class="tap">tap</span></summary>
+    <div class="a"><p>2→3→4→2 is a cycle: {2, 3, 4}. Nothing returns to 1 or to 5. Components: <b>{1}, {2, 3, 4}, {5}</b>. Weakly connected: yes.</p></div></details>
+</section>
+
+<section id="cnt">
+  <h2><span class="n">32</span>Counting paths with Aʳ</h2>
+  <div class="key">(A<sup>r</sup>)<sub>ij</sub> = number of paths of length r from v<sub>i</sub> to v<sub>j</sub><small>A = adjacency matrix (ordinary multiplication, not Boolean). Works for directed graphs and multigraphs too. “Paths” here may repeat vertices and edges.</small></div>
+  <h3>Proof (induction on r)</h3>
+  <ol class="steps">
+    <li>r = 1: (A)<sub>ij</sub> is the number of edges from v<sub>i</sub> to v<sub>j</sub>, i.e. paths of length 1.</li>
+    <li>Step: a path of length r + 1 from v<sub>i</sub> to v<sub>j</sub> is a path of length r from v<sub>i</sub> to some v<sub>k</sub>, followed by an edge v<sub>k</sub>v<sub>j</sub>. Group by k: the count is Σ<sub>k</sub> (A<sup>r</sup>)<sub>ik</sub>·a<sub>kj</sub>, which is exactly (A<sup>r</sup>·A)<sub>ij</sub> = (A<sup>r+1</sup>)<sub>ij</sub>. ∎</li>
+  </ol>
+  <div class="ex"><span class="t">Example · G from section 26 (square 1234 + diagonal 13)</span>
+    <p>A² and A³:</p>
+    <div class="row">
+      <table class="mat"><tr><td>3</td><td>1</td><td>2</td><td>1</td></tr><tr><td>1</td><td>2</td><td>1</td><td>2</td></tr><tr><td>2</td><td>1</td><td>3</td><td>1</td></tr><tr><td>1</td><td>2</td><td>1</td><td>2</td></tr></table>
+      <table class="mat"><tr><td>4</td><td>5</td><td>5</td><td>5</td></tr><tr><td>5</td><td>2</td><td>5</td><td>2</td></tr><tr><td>5</td><td>5</td><td>4</td><td>5</td></tr><tr><td>5</td><td>2</td><td>5</td><td>2</td></tr></table>
+    </div>
+    <ol class="steps">
+      <li>(A²)<sub>24</sub> = 2: the length-2 paths 2–1–4 and 2–3–4. ✓</li>
+      <li>Diagonal of A² = degrees (3, 2, 3, 2): a closed length-2 path goes out along an edge and straight back.</li>
+      <li>(A³)<sub>13</sub> = row 1 of A² · column 3 of A = 3·1 + 1·1 + 2·0 + 1·1 = 5. By hand: 1–2–1–3, 1–4–1–3, 1–3–1–3, 1–3–2–3, 1–3–4–3. ✓</li>
+      <li>trace(A³) = 4 + 2 + 4 + 2 = 12. Each triangle gives 6 closed length-3 paths (3 starting points × 2 directions), so there are 12/6 = <b>2 triangles</b> (123 and 134). ✓</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>A<sup>r</sup> counts paths that may repeat vertices (1–3–1–3 counts). If a problem asks for <b>simple</b> paths, A<sup>r</sup> overcounts; list them by hand instead.</p></div>
+  <details class="check"><summary>In K<sub>4</sub>, how many paths of length 2 join two different vertices? Of length 3? How many closed paths of length 3 start at a given vertex?<span class="tap">tap</span></summary>
+    <div class="a"><p>Length 2 between u ≠ v: through either of the other 2 vertices: <b>2</b>. Length 3: (A³)<sub>uv</sub> = <b>7</b>. Closed length 3 at u: <b>6</b> (u is on 3 triangles, each traversed 2 ways). (A² has 3 on the diagonal and 2 off it; A³ has 6 and 7.)</p></div></details>
+</section>
+
+<section id="sheet">
+  <h2><span class="n">★</span>Formula sheet</h2>
+  <div class="tbl"><table class="sheet">
+    <tr><td>Reflexive closure</td><td><span class="m">R ∪ Δ</span></td></tr>
+    <tr><td>Symmetric closure</td><td><span class="m">R ∪ R<sup>−1</sup></span></td></tr>
+    <tr><td>Transitive closure</td><td><span class="m">R* = R ∪ R² ∪ ⋯ ∪ Rⁿ</span> (|A| = n)</td></tr>
+    <tr><td>Warshall step k</td><td><span class="m">W[i][j] ∨= W[i][k] ∧ W[k][j]</span></td></tr>
+    <tr><td>Equivalence relation</td><td>reflexive, symmetric, transitive</td></tr>
+    <tr><td>Classes</td><td><span class="m">aRb ⇔ [a] = [b] ⇔ [a] ∩ [b] ≠ ∅</span></td></tr>
+    <tr><td>Eq. relations ↔</td><td>partitions; # = Bell: 1, 2, 5, 15, 52, 203</td></tr>
+    <tr><td>Pairs in eq. relation</td><td><span class="m">Σ (class size)²</span></td></tr>
+    <tr><td>Exactly 2 classes</td><td><span class="m">2<sup>n−1</sup> − 1</span></td></tr>
+    <tr><td>Partial order</td><td>reflexive, antisymmetric, transitive</td></tr>
+    <tr><td>Total order</td><td>every pair comparable</td></tr>
+    <tr><td>Lex order</td><td>first coordinate decides; ties → next</td></tr>
+    <tr><td>Hasse diagram</td><td>covers only, up = bigger</td></tr>
+    <tr><td>Maximal vs greatest</td><td>nothing above vs above everything</td></tr>
+    <tr><td>lub/glb in (ℤ⁺, |)</td><td>lcm / gcd</td></tr>
+    <tr><td>Lattice</td><td>every pair has lub and glb</td></tr>
+    <tr><td>Topological sort</td><td>repeatedly remove a minimal element</td></tr>
+    <tr><td>Handshaking</td><td><span class="m">Σ deg(v) = 2|E|</span>; # odd-degree vertices even</td></tr>
+    <tr><td>Digraph</td><td><span class="m">Σ deg<sup>−</sup> = Σ deg<sup>+</sup> = |E|</span></td></tr>
+    <tr><td>Edge counts</td><td><span class="m">K<sub>n</sub>: C(n,2); C<sub>n</sub>: n; W<sub>n</sub>: 2n; Q<sub>n</sub>: n2<sup>n−1</sup>; K<sub>m,n</sub>: mn</span></td></tr>
+    <tr><td>Bipartite</td><td>2-colorable ⇔ no odd cycle</td></tr>
+    <tr><td>Hall</td><td>complete matching from V<sub>1</sub> ⇔ |N(A)| ≥ |A| ∀A ⊆ V<sub>1</sub></td></tr>
+    <tr><td>Labeled simple graphs</td><td><span class="m">2<sup>C(n,2)</sup></span></td></tr>
+    <tr><td>Isomorphic</td><td>bijection preserving adjacency; disprove with an invariant</td></tr>
+    <tr><td>Cut edge</td><td>on no cycle</td></tr>
+    <tr><td>Paths of length r</td><td><span class="m">(A<sup>r</sup>)<sub>ij</sub></span>; triangles = trace(A³)/6</td></tr>
+  </table></div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every number on this page was checked by computer (verify/m55_check.py). Examples are original; Rosen’s exercises are deliberately not used, so homework stays fresh.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

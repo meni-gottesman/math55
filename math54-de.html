@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Math 54 differential equations notes from scratch: superposition, linear systems x′ = Ax (real and complex eigenvalues), and Fourier series (Nagle 4.5, 9.1, 9.4–9.6, 10.3–10.4).">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3Ey%3C/text%3E%3C/svg%3E">
+<title>Math 54 Differential Equations Notes</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Differential equations, from scratch</h1>
+  <p>Math 54 · Nagle 4.5, 9.1, 9.4–9.6, 10.3–10.4 · <a href="cards.html">Flashcards →</a> · <a href="finals.html">Finals plan</a> · <a href="math54-practice.html">Practice final</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to section">
+  <select id="jump" aria-label="Jump to section">
+    <option value="top">Start here</option>
+    <optgroup label="Chapter 4 recap &amp; 4.5">
+      <option value="recap">0 · Five ideas from Ch. 4</option>
+      <option value="d2-struct">1 · Superposition (4.5)</option>
+    </optgroup>
+    <optgroup label="D3 · Linear systems (9.1, 9.4)">
+      <option value="d3-sys">2 · Systems in normal form</option>
+      <option value="d3-mat">3 · Matrix calculus</option>
+      <option value="d3-fund">4 · Fundamental sets &amp; Wronskian</option>
+    </optgroup>
+    <optgroup label="D4 · Real eigenvalues (9.5)">
+      <option value="d4-real">5 · The eigenvector method</option>
+      <option value="d4-rep">6 · Repeated eigenvalues &amp; pictures</option>
+    </optgroup>
+    <optgroup label="D5 · Complex eigenvalues (9.6)">
+      <option value="d5-cx">7 · Real solutions from complex ones</option>
+      <option value="d5-geo">8 · Spirals, centers, 3×3</option>
+    </optgroup>
+    <optgroup label="D6 · Fourier series (10.3–10.4)">
+      <option value="d6-orth">9 · Periodic functions &amp; orthogonality</option>
+      <option value="d6-coef">10 · Fourier coefficients</option>
+      <option value="d6-conv">11 · Convergence</option>
+      <option value="d6-eo">12 · Even/odd, cosine &amp; sine series</option>
+    </optgroup>
+    <optgroup label="Review">
+      <option value="sheet">Formula sheet</option>
+    </optgroup>
+  </select>
+  <a href="#sheet">Formulas</a>
+</nav>
+
+<div class="note">
+  <p><b>Why this page exists.</b> The final (Mon Dec 14) is cumulative, and about half of it covers material from after Midterm 2. No midterm has tested any of this, so it’s worth learning carefully, from the ground up.</p>
+  <p><b>How to use it:</b> read a section, then try its <b>True/False</b> and <b>Check yourself</b> boxes before opening them. When you’re done, take the <a href="math54-practice.html">practice final</a> under time.</p>
+  <ol class="plan">
+    <li>Skim the Chapter 4 recap (section 0); it’s the foundation for systems.</li>
+    <li>Sections 2–8 (systems) reuse eigenvalues from linear algebra: one recipe with two flavors (real, complex).</li>
+    <li>Sections 9–12 (Fourier) stands alone and is pure computation: integrals plus a convergence rule.</li>
+  </ol>
+</div>
+
+<!-- ======================= RECAP ======================= -->
+<div class="part-h" id="part1">Recap · Chapter 4 (already in your notes)</div>
+<p>Nagle 4.2–4.4 live in your existing Math 54 notes. These five ideas are what the rest of this page builds on.</p>
+<section id="recap">
+  <h2><span class="n">0</span>The five ideas to carry forward</h2>
+  <div class="idea"><span class="t">Recap</span>
+    <p>1. <span class="m">ay″ + by′ + cy = 0</span>: guess <span class="m">e<sup>rt</sup></span> → <span class="m">ar² + br + c = 0</span>. Roots give <span class="m">e<sup>rt</sup></span>, <span class="m">te<sup>rt</sup></span> (repeated), or <span class="m">e<sup>αt</sup>cos βt, e<sup>αt</sup>sin βt</span> (complex).</p>
+    <p>2. The solution space is a <b>2-dimensional vector space</b>; the Wronskian of two solutions is never 0 or always 0. Section 4 is the same idea for systems.</p>
+    <p>3. Complex solution of a <b>real</b> equation → its real and imaginary parts are real solutions. Section 7 reuses this exact trick.</p>
+    <p>4. Forced equations: <span class="m">y = yₕ + yₚ</span>, just like <span class="m">Ax = b</span> = particular + null space.</p>
+    <p>5. Undetermined coefficients: trial of the same type as <span class="m">g</span>, times <span class="m">tˢ</span> where <var>s</var> = multiplicity of α (or α + iβ) as a root.</p>
+  </div>
+</section>
+
+<!-- ======================= D2 ======================= -->
+<div class="part-h" id="part2">Nagle 4.5 · Superposition</div>
+<p>The one piece of Chapter 4 not in your notes yet: what to do when the forcing is a sum.</p>
+
+<section id="d2-struct">
+  <h2><span class="n">1</span>y = yₕ + yₚ and superposition</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Find <b>one</b> solution <span class="m">yₚ</span> of the forced equation, any one at all. Then every solution is <span class="m">yₚ</span> plus a solution of the unforced (homogeneous) equation. It’s exactly like <span class="m">Ax = b</span>: particular solution plus the null space.</p></div>
+  <div class="key">y = yₕ + yₚ = c₁y₁ + c₂y₂ + yₚ<small><span class="m">yₕ</span>: general solution of <span class="m">L[y] = 0</span> (recap idea 1). <span class="m">yₚ</span>: any single solution of <span class="m">L[y] = g</span>.</small></div>
+  <p><b>Why:</b> if <var>y</var> is any solution, then <span class="m">L[y − yₚ] = g − g = 0</span>, so <span class="m">y − yₚ</span> is homogeneous, i.e. equals <span class="m">c₁y₁ + c₂y₂</span>.</p>
+
+  <h3>Superposition principle</h3>
+  <div class="key">L[y₁] = g₁, L[y₂] = g₂ ⟹ L[k₁y₁ + k₂y₂] = k₁g₁ + k₂g₂<small>So if the forcing is a sum, find a particular solution for each piece separately and add them.</small></div>
+  <div class="warn"><span class="t">Trap</span><p>The sum of two solutions of <span class="m">L[y] = g</span> solves <span class="m">L[y] = 2g</span>, <b>not</b> <span class="m">L[y] = g</span>. The solutions of a nonhomogeneous equation do <b>not</b> form a subspace. But the <b>difference</b> of two of them solves the homogeneous equation.</p></div>
+</section>
+
+<!-- ======================= D3 ======================= -->
+<div class="part-h" id="part3">D3 · Linear systems</div>
+<p>Nagle 9.1, 9.4 (plus matrix calculus from 9.3). Several unknown functions changing together, written with matrices.</p>
+
+<section id="d3-sys">
+  <h2><span class="n">2</span>Systems in normal form; converting higher-order equations</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Stack the unknowns into a vector <span class="m">x(t)</span>. A linear system becomes one equation <span class="m">x′ = Ax + f</span>, which looks just like a first-order scalar ODE. Any higher-order linear ODE can be rewritten this way, so systems include all of Chapter 4.</p></div>
+  <div class="key">x′(t) = A(t)x(t) + f(t)<small><b>Normal form:</b> <span class="m">x = (x₁, …, xₙ)</span> unknown, <span class="m">A(t)</span> an <var>n</var>×<var>n</var> coefficient matrix, <span class="m">f(t)</span> the forcing. <b>Homogeneous</b> if <span class="m">f = 0</span>.</small></div>
+
+  <h3>Converting an n-th order equation</h3>
+  <ol class="how">
+    <li>Solve for the highest derivative.</li>
+    <li>Name <span class="m">x₁ = y</span>, <span class="m">x₂ = y′</span>, …, <span class="m">xₙ = y<sup>(n−1)</sup></span>.</li>
+    <li>Then <span class="m">x₁′ = x₂</span>, <span class="m">x₂′ = x₃</span>, …, and <span class="m">xₙ′</span> = (the highest derivative from step 1).</li>
+  </ol>
+  <div class="ex"><span class="t">Example · y‴ − 2y″ + y′ − 5y = sin t</span>
+    <ol class="steps">
+      <li><span class="m">y‴ = 5y − y′ + 2y″ + sin t</span>.</li>
+      <li><span class="m">x₁ = y</span>, <span class="m">x₂ = y′</span>, <span class="m">x₃ = y″</span>.</li>
+      <li><span class="m">x₁′ = x₂</span>, <span class="m">x₂′ = x₃</span>, <span class="m">x₃′ = 5x₁ − x₂ + 2x₃ + sin t</span>.</li>
+    </ol>
+    <div class="key">x′ = [0 1 0; 0 0 1; 5 −1 2] x + (0, 0, sin t)<small>A <b>companion matrix</b>: ones above the diagonal, the coefficients (moved to the right side) on the bottom row.</small></div>
+  </div>
+  <div class="ex"><span class="t">Example · the link to Chapter 4</span>
+    <p><span class="m">y″ − y′ − 6y = 0</span> becomes <span class="m">x′ = [0 1; 6 1]x</span>. Its eigenvalues solve <span class="m">det[−λ 1; 6 1−λ] = λ² − λ − 6 = 0</span>: <b>the same polynomial</b> as the auxiliary equation, roots 3 and −2. Eigenvalues of the companion matrix = roots of the auxiliary equation, always.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Signs on the bottom row: move everything except the highest derivative to the <b>right</b> side first. <span class="m">y″ + 3y′ + 2y = 0</span> gives bottom row <span class="m">(−2, −3)</span>, not <span class="m">(2, 3)</span>.</p></div>
+</section>
+
+<section id="d3-mat">
+  <h2><span class="n">3</span>Matrix calculus basics</h2>
+  <div class="idea"><span class="t">Big idea</span><p>A matrix of functions is differentiated and integrated <b>entry by entry</b>. The usual rules hold, except you must keep products in order.</p></div>
+  <div class="key">(d/dt)[aᵢⱼ(t)] = [aᵢⱼ′(t)], &nbsp; ∫ [aᵢⱼ(t)] dt = [∫ aᵢⱼ(t) dt]<small>And <span class="m">(AB)′ = A′B + AB′</span> (order matters!), <span class="m">(CA)′ = CA′</span> for a constant matrix <var>C</var>.</small></div>
+  <div class="ex"><span class="t">Example</span>
+    <p><span class="m">M(t) = [t² e<sup>2t</sup>; sin t 1]</span>. Then <span class="m">M′(t) = [2t 2e<sup>2t</sup>; cos t 0]</span> and <span class="m">∫₀¹ M dt = [1/3 (e² − 1)/2; 1 − cos 1 1]</span>.</p>
+  </div>
+  <p>Checking a proposed solution is just matrix calculus: compute <span class="m">x′</span> entrywise, compute <span class="m">Ax</span>, compare.</p>
+  <div class="ex"><span class="t">Example · check x = e<sup>3t</sup>(1, 1) solves x′ = [1 2; 2 1]x</span>
+    <ol class="steps">
+      <li><span class="m">x′ = 3e<sup>3t</sup>(1, 1)</span>.</li>
+      <li><span class="m">Ax = e<sup>3t</sup>(1 + 2, 2 + 1) = 3e<sup>3t</sup>(1, 1)</span>. Equal ✓.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p><span class="m">(A²)′ = A′A + AA′</span>, which is <b>not</b> <span class="m">2AA′</span> unless <var>A</var> and <span class="m">A′</span> commute.</p></div>
+</section>
+
+<section id="d3-fund">
+  <h2><span class="n">4</span>Fundamental solution sets, fundamental matrix, Wronskian</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Exactly as for second-order equations (recap idea 2): the solutions of <span class="m">x′ = A(t)x</span> (<var>n</var>×<var>n</var>) form an <b><var>n</var>-dimensional</b> vector space. Find <var>n</var> independent solutions and you have all of them.</p></div>
+
+  <h3>The theorems</h3>
+  <ul>
+    <li><b>Existence–uniqueness:</b> if <span class="m">A(t)</span>, <span class="m">f(t)</span> are continuous on an interval <var>I</var> containing <span class="m">t₀</span>, then <span class="m">x′ = Ax + f</span>, <span class="m">x(t₀) = x₀</span> has exactly one solution, valid on all of <var>I</var>.</li>
+    <li><b>Dimension n:</b> same argument as before. The map <span class="m">x ↦ x(t₀)</span> is a linear bijection from solutions to ℝⁿ.</li>
+    <li><b>Fundamental solution set:</b> <var>n</var> linearly independent solutions <span class="m">x₁, …, xₙ</span>. <b>Fundamental matrix:</b> <span class="m">X(t) = [x₁ ⋯ xₙ]</span> (solutions as columns). It satisfies <span class="m">X′ = AX</span>.</li>
+    <li><b>General solution:</b> <span class="m">x = X(t)c = c₁x₁ + ⋯ + cₙxₙ</span>; for the forced system, <span class="m">x = X(t)c + xₚ</span>.</li>
+  </ul>
+  <div class="key">W(t) = det X(t) = det [x₁(t) ⋯ xₙ(t)]<small>For <b>solutions</b> of <span class="m">x′ = Ax</span>: either <span class="m">W(t) ≠ 0</span> for every <var>t</var> in <var>I</var> (fundamental set) or <span class="m">W ≡ 0</span> (dependent). In fact <span class="m">W(t) = W(t₀)·exp(∫ tr A)</span>, and an exponential is never 0.</small></div>
+  <p><b>Why one point suffices:</b> if <span class="m">W(t₀) = 0</span>, some combination <span class="m">c₁x₁(t₀) + ⋯ + cₙxₙ(t₀) = 0</span> with <var>c</var> ≠ 0. Then <span class="m">c₁x₁ + ⋯ + cₙxₙ</span> is a solution with initial value 0, and so is the zero function. By uniqueness they’re equal for <b>all</b> <var>t</var>, so the solutions are dependent everywhere.</p>
+
+  <div class="ex"><span class="t">Example · x′ = [1 2; 2 1]x</span>
+    <ol class="steps">
+      <li>Check (as in section 3) that <span class="m">x₁ = e<sup>3t</sup>(1, 1)</span> and <span class="m">x₂ = e<sup>−t</sup>(1, −1)</span> are solutions.</li>
+      <li><span class="m">X(t) = [e<sup>3t</sup> e<sup>−t</sup>; e<sup>3t</sup> −e<sup>−t</sup>]</span>, <span class="m">W = −e<sup>2t</sup> − e<sup>2t</sup> = −2e<sup>2t</sup> ≠ 0</span>. Fundamental. (Matches <span class="m">W(0)e<sup>(tr A)t</sup> = −2e<sup>2t</sup></span>, tr <var>A</var> = 2.)</li>
+      <li>IVP <span class="m">x(0) = (3, 1)</span>: solve <span class="m">X(0)c = (3, 1)</span>, i.e. <span class="m">c₁ + c₂ = 3</span>, <span class="m">c₁ − c₂ = 1</span>. So <span class="m">c = (2, 1)</span>.</li>
+      <li><span class="m">x = <b>2e<sup>3t</sup>(1, 1) + e<sup>−t</sup>(1, −1)</b></span>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>The “all or nothing” rule needs the vectors to be <b>solutions of the same system</b> with continuous <var>A</var>. The functions <span class="m">(t, 1)</span> and <span class="m">(t², 2t)</span> have <span class="m">W = t²</span>, zero only at 0. So they can’t both solve any <span class="m">x′ = A(t)x</span> with <var>A</var> continuous on an interval containing 0.</p></div>
+
+  <h3>True or false?</h3>
+  <details class="check"><summary>Every 3rd-order linear ODE can be written as a 3×3 first-order system.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> Set <span class="m">x₁ = y</span>, <span class="m">x₂ = y′</span>, <span class="m">x₃ = y″</span> (after dividing by the leading coefficient).</p></div></details>
+  <details class="check"><summary>If x₁, x₂ solve x′ = Ax (2×2) and W(5) ≠ 0, then every solution is c₁x₁ + c₂x₂.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">W ≠ 0</span> at one point means it’s a fundamental set, and the solution space has dimension 2.</p></div></details>
+  <details class="check"><summary>(e<sup>t</sup>, 2e<sup>t</sup>) and (3e<sup>t</sup>, 6e<sup>t</sup>) could form a fundamental set.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> The second is 3 times the first; <span class="m">W = 6e<sup>2t</sup> − 6e<sup>2t</sup> = 0</span>.</p></div></details>
+
+  <h3>Check yourself</h3>
+  <details class="check"><summary>Write y″ + 3y′ + 2y = e<sup>−t</sup> as a system.<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">x₁ = y</span>, <span class="m">x₂ = y′</span>: <span class="m">x′ = [0 1; −2 −3]x + (0, e<sup>−t</sup>)</span>.</p></div></details>
+  <details class="check"><summary>Show (e<sup>t</sup>, e<sup>t</sup>) and (e<sup>2t</sup>, 2e<sup>2t</sup>) form a fundamental set for x′ = [0 1; −2 3]x.<span class="tap">tap</span></summary>
+    <div class="a"><p>Check each: <span class="m">A(1, 1) = (1, 1)</span> so <span class="m">Ax₁ = x₁ = x₁′</span> ✓; <span class="m">A(1, 2) = (2, 4)</span> so <span class="m">Ax₂ = 2x₂ = x₂′</span> ✓. <span class="m">W = 2e<sup>3t</sup> − e<sup>3t</sup> = e<sup>3t</sup> ≠ 0</span>.</p></div></details>
+</section>
+
+<!-- ======================= D4 ======================= -->
+<div class="part-h" id="part4">D4 · Constant-coefficient systems, real eigenvalues</div>
+<p>Nagle 9.5. For <span class="m">x′ = Ax</span> with a constant matrix <var>A</var>, eigenvalues do all the work.</p>
+
+<section id="d4-real">
+  <h2><span class="n">5</span>The eigenvector method</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Guess <span class="m">x = e<sup>λt</sup>v</span>: a fixed direction <var>v</var> that just stretches exponentially. Plugging in turns the ODE into <span class="m">Av = λv</span>, the eigenvalue problem. So each eigenpair gives a solution, and <var>n</var> independent eigenvectors give the general solution.</p></div>
+  <div class="key">x = e<sup>λt</sup>v solves x′ = Ax ⟺ Av = λv<small><b>Why:</b> <span class="m">x′ = λe<sup>λt</sup>v</span> and <span class="m">Ax = e<sup>λt</sup>Av</span>. These are equal for all <var>t</var> exactly when <span class="m">Av = λv</span>.</small></div>
+  <div class="key">x = c₁e<sup>λ₁t</sup>v₁ + ⋯ + cₙe<sup>λₙt</sup>vₙ<small>Valid whenever <span class="m">v₁, …, vₙ</span> are <b>linearly independent</b> eigenvectors. At <span class="m">t = 0</span> the Wronskian is <span class="m">det[v₁ ⋯ vₙ] ≠ 0</span>. Distinct eigenvalues always give independent eigenvectors.</small></div>
+
+  <h3>Recipe</h3>
+  <ol class="how">
+    <li>Solve <span class="m">det(A − λI) = 0</span>. For 2×2: <span class="m">λ² − (tr A)λ + det A = 0</span>.</li>
+    <li>For each λ, row-reduce <span class="m">A − λI</span> and find a basis of its null space.</li>
+    <li>Write <span class="m">x = Σ cᵢe<sup>λᵢt</sup>vᵢ</span>.</li>
+    <li>For an IVP, solve <span class="m">[v₁ ⋯ vₙ]c = x(0)</span>.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · x′ = [4 −2; 1 1]x, x(0) = (1, 0)</span>
+    <ol class="steps">
+      <li>tr = 5, det = 4 + 2 = 6: <span class="m">λ² − 5λ + 6 = (λ − 2)(λ − 3)</span>, so λ = 2, 3.</li>
+      <li>λ = 2: <span class="m">A − 2I = [2 −2; 1 −1]</span> → <span class="m">v₁ = (1, 1)</span>.</li>
+      <li>λ = 3: <span class="m">A − 3I = [1 −2; 1 −2]</span> → <span class="m">v₂ = (2, 1)</span>.</li>
+      <li><span class="m">x = c₁e<sup>2t</sup>(1, 1) + c₂e<sup>3t</sup>(2, 1)</span>. At 0: <span class="m">c₁ + 2c₂ = 1</span>, <span class="m">c₁ + c₂ = 0</span>, so <span class="m">c₂ = 1</span>, <span class="m">c₁ = −1</span>.</li>
+      <li><span class="m">x = <b>−e<sup>2t</sup>(1, 1) + e<sup>3t</sup>(2, 1)</b> = (2e<sup>3t</sup> − e<sup>2t</sup>, e<sup>3t</sup> − e<sup>2t</sup>)</span>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Keep each eigenvector glued to <b>its own</b> eigenvalue. Swapping them gives something that looks right but fails <span class="m">x′ = Ax</span>. Quick check: <span class="m">Av</span> should equal λ<var>v</var>.</p></div>
+</section>
+
+<section id="d4-rep">
+  <h2><span class="n">6</span>Repeated eigenvalues &amp; phase pictures</h2>
+  <div class="idea"><span class="t">Big idea</span><p>A repeated eigenvalue is harmless <b>if its eigenspace is as big as its multiplicity</b>: you still get <var>n</var> independent eigenvectors, and the same formula works. Real symmetric matrices always have this property (orthogonal diagonalization, Lay 7.1).</p></div>
+
+  <div class="ex"><span class="t">Example · x′ = [2 1 1; 1 2 1; 1 1 2]x, x(0) = (2, 1, 3)</span>
+    <ol class="steps">
+      <li><span class="m">A = I + J</span> with <var>J</var> the all-ones matrix. <var>J</var> has eigenvalues 3, 0, 0, so <var>A</var> has <b>4, 1, 1</b>.</li>
+      <li>λ = 4: <span class="m">v₁ = (1, 1, 1)</span>.</li>
+      <li>λ = 1: <span class="m">A − I = J</span>, null space <span class="m">x₁ + x₂ + x₃ = 0</span>, dimension 2: <span class="m">v₂ = (1, −1, 0)</span>, <span class="m">v₃ = (1, 0, −1)</span>. Enough eigenvectors ✓.</li>
+      <li><span class="m">x = c₁e<sup>4t</sup>(1, 1, 1) + c₂eᵗ(1, −1, 0) + c₃eᵗ(1, 0, −1)</span>.</li>
+      <li>At 0: <span class="m">c₁ + c₂ + c₃ = 2</span>, <span class="m">c₁ − c₂ = 1</span>, <span class="m">c₁ − c₃ = 3</span>. Adding all three gives <span class="m">3c₁ = 6</span>: <span class="m">c₁ = 2</span>, <span class="m">c₂ = 1</span>, <span class="m">c₃ = −1</span>.</li>
+      <li><span class="m">x = <b>2e<sup>4t</sup>(1, 1, 1) + eᵗ(1, −1, 0) − eᵗ(1, 0, −1)</b></span>.</li>
+    </ol>
+  </div>
+
+  <h3>When there aren’t enough eigenvectors</h3>
+  <p>If λ has multiplicity 2 but only a 1-dimensional eigenspace (<b>defective</b>), you’re one solution short. The fix uses a generalized eigenvector <var>u</var> with <span class="m">(A − λI)u = v</span>, giving <span class="m">x = e<sup>λt</sup>(tv + u)</span>. Example: <span class="m">A = [3 1; 0 3]</span> gives <span class="m">e<sup>3t</sup>(1, 0)</span> and <span class="m">e<sup>3t</sup>(t, 1)</span>. That’s Nagle 9.8, beyond our sections; on the exam, the main thing is <b>recognizing</b> when the plain method fails.</p>
+
+  <h3>Phase pictures (2×2, real eigenvalues)</h3>
+  <div class="tbl"><table>
+    <tr><th>Eigenvalues</th><th>Picture</th><th>As t → ∞</th></tr>
+    <tr><td>both negative</td><td>stable node</td><td>all solutions → 0</td></tr>
+    <tr><td>both positive</td><td>unstable node</td><td>all nonzero solutions blow up</td></tr>
+    <tr><td>opposite signs</td><td>saddle</td><td>→ 0 only along the negative eigenvector’s line</td></tr>
+  </table></div>
+  <p>Long-term, the term with the <b>largest</b> eigenvalue dominates. In section 5’s example, <span class="m">x(t) ≈ e<sup>3t</sup>(2, 1)</span> for large <var>t</var>, so solutions run off parallel to <span class="m">(2, 1)</span>.</p>
+  <div class="warn"><span class="t">Trap</span><p>A repeated eigenvalue <b>doesn’t</b> automatically mean <span class="m">te<sup>λt</sup></span> terms, unlike scalar equations with a repeated root. Check the eigenspace dimension (= <var>n</var> − rank(<var>A</var> − λ<var>I</var>)) first.</p></div>
+
+  <h3>True or false?</h3>
+  <details class="check"><summary>If A is a real symmetric n×n matrix, x′ = Ax always has n independent solutions of the form e<sup>λt</sup>v.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> Spectral theorem: <var>A</var> has an orthonormal eigenbasis, so there are <var>n</var> independent eigenvectors even when eigenvalues repeat.</p></div></details>
+  <details class="check"><summary>If A has eigenvalues 1, 1, 2, then x′ = Ax always has three independent eigen-solutions.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> <span class="m">[1 1 0; 0 1 0; 0 0 2]</span> has a 1-dimensional eigenspace for λ = 1 (defective).</p></div></details>
+  <details class="check"><summary>For x′ = Ax with eigenvalues −3 and 2, every solution tends to 0.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> A saddle: any solution with a nonzero <span class="m">e<sup>2t</sup></span> component blows up.</p></div></details>
+
+  <h3>Check yourself</h3>
+  <details class="check"><summary>Solve x′ = [1 3; 3 1]x, x(0) = (4, 0).<span class="tap">tap</span></summary>
+    <div class="a"><p>tr 2, det −8: <span class="m">λ² − 2λ − 8 = (λ − 4)(λ + 2)</span>. <span class="m">v = (1, 1)</span> for 4 and <span class="m">(1, −1)</span> for −2. <span class="m">c₁ + c₂ = 4</span>, <span class="m">c₁ − c₂ = 0</span>. <span class="m">x = <b>2e<sup>4t</sup>(1, 1) + 2e<sup>−2t</sup>(1, −1)</b></span>.</p></div></details>
+  <details class="check"><summary>General solution of x′ = [0 1; −6 −5]x. Which scalar ODE is this?<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">λ² + 5λ + 6</span>: λ = −2 with <span class="m">v = (1, −2)</span>, λ = −3 with <span class="m">v = (1, −3)</span>. <span class="m">x = c₁e<sup>−2t</sup>(1, −2) + c₂e<sup>−3t</sup>(1, −3)</span>. It’s <span class="m">y″ + 5y′ + 6y = 0</span> with <span class="m">x = (y, y′)</span>: notice the second entries are the derivatives of the first.</p></div></details>
+  <details class="check"><summary>x′ = 5I·x (2×2). What are all the solutions?<span class="tap">tap</span></summary>
+    <div class="a"><p>λ = 5 twice, and <b>every</b> nonzero vector is an eigenvector. <span class="m">x = e<sup>5t</sup>x(0)</span>: straight rays out of the origin.</p></div></details>
+</section>
+
+<!-- ======================= D5 ======================= -->
+<div class="part-h" id="part5">D5 · Complex eigenvalues</div>
+<p>Nagle 9.6. Real matrices can have complex eigenvalues; they produce rotation.</p>
+
+<section id="d5-cx">
+  <h2><span class="n">7</span>Two real solutions from one complex one</h2>
+  <div class="idea"><span class="t">Big idea</span><p>For <span class="m">λ = α + iβ</span> with eigenvector <span class="m">v = a + ib</span>, <span class="m">e<sup>λt</sup>v</span> is a complex solution. Because <var>A</var> is real, its <b>real part and imaginary part are each real solutions</b>, and they’re independent. One complex eigenpair gives two real solutions; skip the conjugate.</p></div>
+  <div class="key">x₁ = e<sup>αt</sup>(a cos βt − b sin βt)<br>x₂ = e<sup>αt</sup>(a sin βt + b cos βt)<small>From expanding <span class="m">e<sup>αt</sup>(cos βt + i sin βt)(a + ib)</span> and collecting real and imaginary parts. You can memorize this or just expand every time; expanding is safer.</small></div>
+  <p><b>Why real and imaginary parts work:</b> if <span class="m">z = u + iw</span> solves <span class="m">z′ = Az</span> with <var>A</var> real, then <span class="m">u′ + iw′ = Au + iAw</span>. Real and imaginary parts must match separately: <span class="m">u′ = Au</span>, <span class="m">w′ = Aw</span>.</p>
+
+  <h3>Recipe</h3>
+  <ol class="how">
+    <li>Find <span class="m">λ = α ± iβ</span> from <span class="m">λ² − (tr A)λ + det A = 0</span>.</li>
+    <li>Take <span class="m">λ = α + iβ</span>. Find <var>v</var> from <b>one</b> row of <span class="m">A − λI</span> (the rows are automatically multiples of each other): for a row <span class="m">(p, q)</span>, use <span class="m">v = (q, −p)</span>, or <span class="m">(−q, p)</span>.</li>
+    <li>Split <span class="m">v = a + ib</span> into real vectors.</li>
+    <li>Expand <span class="m">e<sup>αt</sup>(cos βt + i sin βt)(a + ib)</span>; take its real and imaginary parts.</li>
+    <li><span class="m">x = c₁x₁ + c₂x₂</span>. For an IVP: <span class="m">x₁(0) = a</span>, <span class="m">x₂(0) = b</span>, so solve <span class="m">c₁a + c₂b = x(0)</span>.</li>
+  </ol>
+
+  <div class="ex"><span class="t">Example · x′ = [1 −5; 1 −3]x, x(0) = (3, 1)</span>
+    <ol class="steps">
+      <li>tr = −2, det = −3 + 5 = 2: <span class="m">λ² + 2λ + 2 = 0</span>, <span class="m">λ = −1 ± i</span>.</li>
+      <li>λ = −1 + i: the second row of <span class="m">A − λI</span> is <span class="m">(1, −2 − i)</span>, so <span class="m">v = (2 + i, 1)</span>. Check with the first row: <span class="m">(2 − i)(2 + i) − 5 = 5 − 5 = 0</span> ✓.</li>
+      <li><span class="m">a = (2, 1)</span>, <span class="m">b = (1, 0)</span>.</li>
+      <li><span class="m">x₁ = e<sup>−t</sup>[cos t(2, 1) − sin t(1, 0)] = e<sup>−t</sup>(2cos t − sin t, cos t)</span>; <span class="m">x₂ = e<sup>−t</sup>[sin t(2, 1) + cos t(1, 0)] = e<sup>−t</sup>(2sin t + cos t, sin t)</span>.</li>
+      <li>IVP: <span class="m">c₁(2, 1) + c₂(1, 0) = (3, 1)</span>, so <span class="m">c₁ = 1</span>, <span class="m">c₂ = 1</span>.</li>
+      <li><span class="m">x = <b>e<sup>−t</sup>(3cos t + sin t, cos t + sin t)</b></span>.</li>
+    </ol>
+  </div>
+  <div class="ex"><span class="t">Example · x′ = [0 4; −1 0]x (a center)</span>
+    <ol class="steps">
+      <li>tr = 0, det = 4: <span class="m">λ = ±2i</span>, so α = 0.</li>
+      <li>λ = 2i: first row of <span class="m">A − λI</span> is <span class="m">(−2i, 4)</span> → <span class="m">v = (4, 2i)</span>, or divide by 2: <span class="m">v = (2, i)</span>. So <span class="m">a = (2, 0)</span>, <span class="m">b = (0, 1)</span>.</li>
+      <li><span class="m">x₁ = (2cos 2t, −sin 2t)</span>, <span class="m">x₂ = (2sin 2t, cos 2t)</span>.</li>
+      <li>Every solution stays on an ellipse <span class="m">x₁²/4 + x₂² = </span>const: periodic, period π.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Don’t use both λ and its conjugate to make four solutions: a 2×2 system has only two. And don’t drop the <b>minus</b> sign in <span class="m">a cos βt − b sin βt</span>; it comes from <span class="m">i·i = −1</span>.</p></div>
+</section>
+
+<section id="d5-geo">
+  <h2><span class="n">8</span>Spirals, centers and 3×3 systems</h2>
+  <div class="idea"><span class="t">Big idea</span><p>The real part α controls size (<span class="m">e<sup>αt</sup></span>); the imaginary part β controls rotation speed. So: α &lt; 0 spirals in, α &gt; 0 spirals out, α = 0 orbits forever.</p></div>
+  <div class="tbl"><table>
+    <tr><th>α = Re λ</th><th>Picture</th><th>As t → ∞</th></tr>
+    <tr><td>&lt; 0</td><td>stable spiral</td><td>→ 0 while rotating</td></tr>
+    <tr><td>= 0</td><td>center (closed ellipses)</td><td>periodic, bounded</td></tr>
+    <tr><td>&gt; 0</td><td>unstable spiral</td><td>|x| → ∞</td></tr>
+  </table></div>
+  <p><b>Direction of rotation:</b> evaluate <span class="m">A(1, 0)</span>, the velocity at the point (1, 0). If its second entry is positive, the motion there is upward: <b>counterclockwise</b>. In the first example <span class="m">A(1, 0) = (1, 1)</span>: counterclockwise. In the center example <span class="m">A(1, 0) = (0, −1)</span>: clockwise.</p>
+
+  <div class="ex"><span class="t">Example · 3×3 with one real and one complex pair</span>
+    <p><span class="m">A = [−1 0 0; 0 0 −3; 0 3 0]</span>. The first coordinate is decoupled: λ = −1, solution <span class="m">e<sup>−t</sup>(1, 0, 0)</span>. The lower block has λ = ±3i and gives <span class="m">(0, cos 3t, sin 3t)</span> and <span class="m">(0, −sin 3t, cos 3t)</span>.</p>
+    <p>General: <span class="m">x = c₁e<sup>−t</sup>(1, 0, 0) + c₂(0, cos 3t, sin 3t) + c₃(0, −sin 3t, cos 3t)</span>. Solutions decay toward a circle in the <span class="m">x₂x₃</span>-plane.</p>
+  </div>
+
+  <h3>True or false?</h3>
+  <details class="check"><summary>If a real 2×2 A has eigenvalue 2 + 3i, every nonzero solution of x′ = Ax is unbounded as t → ∞.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> Both eigenvalues have real part 2, so every nonzero solution is <span class="m">e<sup>2t</sup></span> times a nonzero periodic vector: unstable spiral.</p></div></details>
+  <details class="check"><summary>If v is an eigenvector for λ = α + iβ, then v̄ is an eigenvector for λ̄.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> Conjugate <span class="m">Av = λv</span>; <var>A</var> is real, so <span class="m">Av̄ = λ̄v̄</span>. That’s why the conjugate gives nothing new.</p></div></details>
+  <details class="check"><summary>A real 3×3 matrix can have eigenvalues i, −i, 2i.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> Complex eigenvalues of real matrices come in conjugate pairs, so 2i would need −2i: four eigenvalues. A real 3×3 matrix always has at least one real eigenvalue.</p></div></details>
+
+  <h3>Check yourself</h3>
+  <details class="check"><summary>Find two real solutions of x′ = [3 −2; 4 −1]x. Spiral in or out?<span class="tap">tap</span></summary>
+    <div class="a"><p>tr 2, det 5: <span class="m">λ = 1 ± 2i</span>. For 1 + 2i, the first row <span class="m">(2 − 2i, −2)</span> gives <span class="m">v = (1, 1 − i)</span>, so <span class="m">a = (1, 1)</span>, <span class="m">b = (0, −1)</span>.</p><p><span class="m">x₁ = eᵗ(cos 2t, cos 2t + sin 2t)</span>, <span class="m">x₂ = eᵗ(sin 2t, sin 2t − cos 2t)</span>. α = 1 &gt; 0: spirals <b>out</b>.</p></div></details>
+  <details class="check"><summary>Eigenvalues of the system form of y″ + 2y′ + 5y = 0?<span class="tap">tap</span></summary>
+    <div class="a"><p>Companion matrix <span class="m">[0 1; −5 −2]</span>, eigenvalues = auxiliary roots <span class="m">−1 ± 2i</span>.</p></div></details>
+</section>
+
+<!-- ======================= D6 ======================= -->
+<div class="part-h" id="part6">D6 · Fourier series</div>
+<p>Nagle 10.3–10.4 (lectures Nov 30–Dec 4). Write a function on an interval as an infinite combination of sines and cosines. It’s really orthogonal projection (Lay 6.7) in a function space.</p>
+
+<section id="d6-orth">
+  <h2><span class="n">9</span>Periodic functions and orthogonality</h2>
+  <div class="idea"><span class="t">Big idea</span><p>On <span class="m">[−L, L]</span>, the functions <span class="m">1, cos(nπx/L), sin(nπx/L)</span> are <b>mutually orthogonal</b> under <span class="m">⟨f, g⟩ = ∫<sub>−L</sub><sup>L</sup> f g dx</span>. So, just like with an orthogonal basis of ℝⁿ, each coefficient is a projection: <span class="m">⟨f, φ⟩/⟨φ, φ⟩</span>.</p></div>
+  <p>A function is <b>periodic with period T</b> if <span class="m">f(x + T) = f(x)</span> for all <var>x</var>. Both <span class="m">cos(nπx/L)</span> and <span class="m">sin(nπx/L)</span> have period <span class="m">2L/n</span>, so all of them repeat every <span class="m">2L</span>.</p>
+  <div class="key">∫<sub>−L</sub><sup>L</sup> cos(mπx/L) cos(nπx/L) dx = 0 (m ≠ n), L (m = n ≥ 1)<br>∫<sub>−L</sub><sup>L</sup> sin(mπx/L) sin(nπx/L) dx = 0 (m ≠ n), L (m = n)<br>∫<sub>−L</sub><sup>L</sup> sin(mπx/L) cos(nπx/L) dx = 0 always<small>And <span class="m">∫<sub>−L</sub><sup>L</sup> 1·1 dx = 2L</span>. <b>Why:</b> product-to-sum turns each product into cosines of <span class="m">(m ± n)πx/L</span>, which integrate to 0 over whole periods unless <span class="m">m = n</span>. The sin·cos integrand is odd, so it integrates to 0 on a symmetric interval.</small></div>
+  <p>Facts you’ll use constantly: <span class="m">sin(nπ) = 0</span>, <span class="m">cos(nπ) = (−1)ⁿ</span>, and <span class="m">sin(nπ/2) = 1, 0, −1, 0, …</span>, <span class="m">cos(nπ/2) = 0, −1, 0, 1, …</span> for <span class="m">n = 1, 2, 3, 4, …</span></p>
+</section>
+
+<section id="d6-coef">
+  <h2><span class="n">10</span>Fourier series and the coefficient formulas</h2>
+  <div class="key">f(x) ~ a₀/2 + Σ<sub>n≥1</sub> [aₙ cos(nπx/L) + bₙ sin(nπx/L)]<small>The “~” means “has Fourier series”; whether it actually equals <var>f</var> at each point is section 11.</small></div>
+  <div class="key">aₙ = (1/L) ∫<sub>−L</sub><sup>L</sup> f(x) cos(nπx/L) dx &nbsp; (n ≥ 0)<br>bₙ = (1/L) ∫<sub>−L</sub><sup>L</sup> f(x) sin(nπx/L) dx &nbsp; (n ≥ 1)<small>The <span class="m">a₀/2</span> convention lets one formula cover <span class="m">a₀</span>: then <span class="m">a₀/2</span> is the <b>average value</b> of <var>f</var> on <span class="m">[−L, L]</span>.</small></div>
+  <p><b>Where the formulas come from:</b> multiply the series by <span class="m">cos(mπx/L)</span> and integrate over <span class="m">[−L, L]</span>. By orthogonality every term dies except <span class="m">aₘ·L</span>. So <span class="m">∫ f cos(mπx/L) = aₘL</span>. Same for sines.</p>
+
+  <h3>Recipe</h3>
+  <ol class="how">
+    <li>Identify <var>L</var> (half the period) and the pieces of <var>f</var>.</li>
+    <li>Check for symmetry (section 12): an odd <var>f</var> has all <span class="m">aₙ = 0</span>; an even <var>f</var> has all <span class="m">bₙ = 0</span>.</li>
+    <li>Compute <span class="m">a₀</span> <b>separately</b> (the general <span class="m">aₙ</span> formula often divides by <var>n</var>).</li>
+    <li>Integrate piece by piece. For <span class="m">x·cos</span> or <span class="m">x·sin</span>, use integration by parts or the formulas below.</li>
+    <li>Simplify with <span class="m">cos nπ = (−1)ⁿ</span> and write out the series.</li>
+  </ol>
+  <div class="key">∫₀ᴸ x cos(nπx/L) dx = L²((−1)ⁿ − 1)/(nπ)²<br>∫₀ᴸ x sin(nπx/L) dx = L²(−1)ⁿ⁺¹/(nπ)<br>∫₀ᴸ sin(nπx/L) dx = L(1 − (−1)ⁿ)/(nπ)<small>Handy integration-by-parts results (n ≥ 1). And <span class="m">∫₀ᴸ cos(nπx/L) dx = 0</span>.</small></div>
+
+  <div class="ex"><span class="t">Example · a step: f = 0 on (−2, 0), f = 3 on (0, 2)</span>
+    <ol class="steps">
+      <li><span class="m">L = 2</span>. <span class="m">a₀ = ½∫₀² 3 dx = 3</span>, so the constant term is <span class="m">a₀/2 = 3/2</span>, the average. ✓</li>
+      <li><span class="m">aₙ = ½∫₀² 3cos(nπx/2) dx = 0</span>.</li>
+      <li><span class="m">bₙ = ½∫₀² 3sin(nπx/2) dx = (3/2)·2(1 − (−1)ⁿ)/(nπ) = 3(1 − (−1)ⁿ)/(nπ)</span>: that’s <span class="m">6/(nπ)</span> for odd <var>n</var>, 0 for even <var>n</var>.</li>
+      <li><span class="m">f ~ <b>3/2 + (6/π)[sin(πx/2) + ⅓sin(3πx/2) + ⅕sin(5πx/2) + ⋯]</b></span>.</li>
+    </ol>
+    <p>Sanity check: <span class="m">f − 3/2</span> is odd, which is why only sines appear.</p>
+  </div>
+  <div class="ex"><span class="t">Example · f(x) = x + x² on [−1, 1]</span>
+    <ol class="steps">
+      <li><span class="m">L = 1</span>. Split: <span class="m">x²</span> is even (only cosines), <var>x</var> is odd (only sines).</li>
+      <li><span class="m">a₀ = ∫<sub>−1</sub><sup>1</sup> x² dx = 2/3</span>, constant term <span class="m">1/3</span>.</li>
+      <li><span class="m">aₙ = ∫<sub>−1</sub><sup>1</sup> x²cos(nπx) dx = 4(−1)ⁿ/(n²π²)</span> (parts twice).</li>
+      <li><span class="m">bₙ = ∫<sub>−1</sub><sup>1</sup> x sin(nπx) dx = 2∫₀¹ x sin(nπx) dx = 2(−1)ⁿ⁺¹/(nπ)</span>.</li>
+      <li><span class="m">f ~ 1/3 + Σ [4(−1)ⁿ/(n²π²) cos nπx + 2(−1)ⁿ⁺¹/(nπ) sin nπx]</span>.</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>Forgetting the <span class="m">½</span> on <span class="m">a₀</span> is the most common lost point. Also: compute <span class="m">a₀</span> on its own, since plugging <span class="m">n = 0</span> into a simplified <span class="m">aₙ</span> often means dividing by 0.</p></div>
+</section>
+
+<section id="d6-conv">
+  <h2><span class="n">11</span>Convergence: what the series actually adds up to</h2>
+  <div class="idea"><span class="t">Big idea</span><p>The series sees the <b>2L-periodic extension</b> of <var>f</var>. Where that extension is continuous, the series equals it. At a jump, it lands exactly at the <b>midpoint</b> of the jump.</p></div>
+  <div class="key">Series at x = ½[f(x⁺) + f(x⁻)]<small><b>Theorem:</b> if <var>f</var> and <span class="m">f′</span> are piecewise continuous on <span class="m">[−L, L]</span>, the Fourier series converges at every <var>x</var> to the average of the left and right limits of the periodic extension. At the endpoints <span class="m">x = ±L</span>: <span class="m">½[f(−L⁺) + f(L⁻)]</span>.</small></div>
+  <h3>Recipe for “what does the series converge to at x = c?”</h3>
+  <ol class="how">
+    <li>If <var>c</var> is outside <span class="m">(−L, L]</span>, shift it by multiples of <span class="m">2L</span> into that window.</li>
+    <li>If <var>f</var> is continuous there (and <var>c</var> isn’t an endpoint), the answer is <span class="m">f(c)</span>.</li>
+    <li>If it’s a jump, or <span class="m">c = ±L</span>, average the left and right limits. At <span class="m">±L</span>, use <span class="m">f(L⁻)</span> and <span class="m">f(−L⁺)</span>.</li>
+  </ol>
+  <div class="ex"><span class="t">Example · the step from section 10</span>
+    <p>At <span class="m">x = 0</span>: <span class="m">½(0 + 3) = 3/2</span> (every sine is 0 there, consistent). At <span class="m">x = 1</span>: <b>3</b>. At <span class="m">x = 2</span>: <span class="m">½[f(2⁻) + f(−2⁺)] = ½(3 + 0) = 3/2</span>. At <span class="m">x = 7</span>: <span class="m">7 − 8 = −1</span>, so <b>0</b>.</p>
+  </div>
+  <div class="ex"><span class="t">Example · x + x² on [−1, 1]</span>
+    <p>At <span class="m">x = ½</span>: continuous, so <span class="m">½ + ¼ = 3/4</span>. At <span class="m">x = 1</span>: <span class="m">f(1⁻) = 2</span> but <span class="m">f(−1⁺) = 0</span>, so the series gives <b>1</b>, not <span class="m">f(1) = 2</span>.</p>
+  </div>
+  <div class="warn"><span class="t">Trap</span><p>The value <span class="m">f(c)</span> itself is irrelevant at a jump: changing <var>f</var> at a single point doesn’t change any integral, so it can’t change the series.</p></div>
+</section>
+
+<section id="d6-eo">
+  <h2><span class="n">12</span>Even/odd functions; Fourier cosine and sine series</h2>
+  <div class="idea"><span class="t">Big idea</span><p>Symmetry kills half the coefficients. And a function given only on <span class="m">[0, L]</span> can be extended to <span class="m">[−L, L]</span> as even (cosines only) or odd (sines only): two different series for the same function on <span class="m">(0, L)</span>.</p></div>
+  <ul>
+    <li><b>Even:</b> <span class="m">f(−x) = f(x)</span> (graph symmetric about the <var>y</var>-axis): <span class="m">x²</span>, <span class="m">cos</span>, <span class="m">|x|</span>. <b>Odd:</b> <span class="m">f(−x) = −f(x)</span>: <var>x</var>, <span class="m">x³</span>, sin.</li>
+    <li>even·even = even, odd·odd = even, even·odd = odd.</li>
+    <li><span class="m">∫<sub>−L</sub><sup>L</sup> odd = 0</span>; <span class="m">∫<sub>−L</sub><sup>L</sup> even = 2∫₀ᴸ</span>.</li>
+  </ul>
+  <div class="key">f even: bₙ = 0, aₙ = (2/L)∫₀ᴸ f(x) cos(nπx/L) dx<br>f odd: aₙ = 0, bₙ = (2/L)∫₀ᴸ f(x) sin(nπx/L) dx<small><b>Why:</b> for even <var>f</var>, <span class="m">f·sin</span> is odd (integral 0) and <span class="m">f·cos</span> is even (double the half-interval).</small></div>
+
+  <h3>Half-range expansions</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Cosine series</th><th>Sine series</th></tr>
+    <tr><td>Extension of f on [0, L]</td><td>even</td><td>odd</td></tr>
+    <tr><td>Coefficients</td><td><span class="m">aₙ = (2/L)∫₀ᴸ f cos(nπx/L)</span></td><td><span class="m">bₙ = (2/L)∫₀ᴸ f sin(nπx/L)</span></td></tr>
+    <tr><td>At x = 0 and x = L</td><td><span class="m">f(0⁺)</span>, <span class="m">f(L⁻)</span> (no jump created)</td><td><b>always 0</b></td></tr>
+  </table></div>
+
+  <div class="ex"><span class="t">Example · f(x) = 2 − x on [0, 2], both series</span>
+    <ol class="steps">
+      <li>Cosine: <span class="m">a₀ = (2/2)∫₀²(2 − x) dx = 2</span>, constant term 1.</li>
+      <li><span class="m">aₙ = ∫₀²(2 − x)cos(nπx/2) dx = 0 − ∫₀² x cos(nπx/2) dx = −4((−1)ⁿ − 1)/(nπ)² = 4(1 − (−1)ⁿ)/(n²π²)</span>.</li>
+      <li>Cosine series: <span class="m"><b>1 + (8/π²)Σ<sub>n odd</sub> cos(nπx/2)/n²</b></span>.</li>
+      <li>Sine: <span class="m">bₙ = ∫₀²(2 − x)sin(nπx/2) dx = 2·2(1 − (−1)ⁿ)/(nπ) − 4(−1)ⁿ⁺¹/(nπ) = 4/(nπ)</span> (check <var>n</var> odd and even separately: both give <span class="m">4/(nπ)</span>).</li>
+      <li>Sine series: <span class="m"><b>Σ (4/(nπ)) sin(nπx/2)</b></span>.</li>
+      <li>At <span class="m">x = 0</span>: the cosine series gives <span class="m">f(0) = 2</span> (the even extension is a continuous “tent”); the sine series gives <b>0</b> (the odd extension jumps from −2 to 2).</li>
+    </ol>
+  </div>
+  <div class="warn"><span class="t">Traps</span><p>• Half-range coefficients use <span class="m">2/L</span> and <span class="m">∫₀ᴸ</span>; full series use <span class="m">1/L</span> and <span class="m">∫<sub>−L</sub><sup>L</sup></span>. Don’t mix them.</p><p>• For half-range series, the period of the extension is still <span class="m">2L</span>, not <var>L</var>.</p></div>
+
+  <h3>True or false?</h3>
+  <details class="check"><summary>The Fourier series of an odd function on [−L, L] has only sine terms.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> <span class="m">f·cos</span> is odd, so every <span class="m">aₙ</span> (including <span class="m">a₀</span>) is 0.</p></div></details>
+  <details class="check"><summary>The Fourier sine series of f(x) = 1 on [0, π] converges to 1 at x = 0.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False.</b> Every sine is 0 at <span class="m">x = 0</span>; the odd extension jumps from −1 to 1, average 0.</p></div></details>
+  <details class="check"><summary>sin(3x) + 2cos(5x) is its own Fourier series on [−π, π].<span class="tap">tap</span></summary>
+    <div class="a"><p><b>True.</b> By orthogonality, <span class="m">b₃ = 1</span>, <span class="m">a₅ = 2</span>, all other coefficients 0.</p></div></details>
+  <details class="check"><summary>If f is continuous on [−L, L], its Fourier series converges to f(L) at x = L.<span class="tap">tap</span></summary>
+    <div class="a"><p><b>False</b> in general. It converges to <span class="m">½[f(−L) + f(L)]</span>; that equals <span class="m">f(L)</span> only if <span class="m">f(−L) = f(L)</span>.</p></div></details>
+
+  <h3>Check yourself</h3>
+  <details class="check"><summary>Fourier sine series of f(x) = x on [0, 1].<span class="tap">tap</span></summary>
+    <div class="a"><p><span class="m">bₙ = 2∫₀¹ x sin(nπx) dx = 2(−1)ⁿ⁺¹/(nπ)</span>. Series: <span class="m">Σ 2(−1)ⁿ⁺¹ sin(nπx)/(nπ)</span>.</p></div></details>
+  <details class="check"><summary>Fourier series of f(x) = x² on [−3, 3].<span class="tap">tap</span></summary>
+    <div class="a"><p>Even, so <span class="m">bₙ = 0</span>. <span class="m">a₀ = (2/3)∫₀³ x² dx = 6</span> (constant term 3). <span class="m">aₙ = (2/3)∫₀³ x²cos(nπx/3) dx = 36(−1)ⁿ/(n²π²)</span>.</p><p><span class="m">x² ~ 3 + Σ 36(−1)ⁿ/(n²π²) cos(nπx/3)</span>.</p></div></details>
+  <details class="check"><summary>f = −1 on (−π, 0), 1 on (0, π). Find the series, and its value at x = π.<span class="tap">tap</span></summary>
+    <div class="a"><p>Odd: <span class="m">bₙ = (2/π)∫₀^π sin nx dx = 2(1 − (−1)ⁿ)/(nπ)</span>, so <span class="m">f ~ (4/π)Σ<sub>n odd</sub> sin(nx)/n</span>. At <span class="m">x = π</span>: <span class="m">½[f(π⁻) + f(−π⁺)] = ½(1 − 1) = 0</span>.</p></div></details>
+</section>
+
+<section id="sheet">
+  <h2><span class="n">★</span>Formula sheet</h2>
+  <div class="tbl"><table class="sheet">
+    <tr><td>Auxiliary equation</td><td><span class="m">ay″ + by′ + cy = 0 → ar² + br + c = 0</span></td></tr>
+    <tr><td>Distinct real roots</td><td><span class="m">c₁e<sup>r₁t</sup> + c₂e<sup>r₂t</sup></span></td></tr>
+    <tr><td>Repeated root</td><td><span class="m">(c₁ + c₂t)e<sup>rt</sup></span></td></tr>
+    <tr><td>Complex α ± iβ</td><td><span class="m">e<sup>αt</sup>(c₁cos βt + c₂sin βt)</span></td></tr>
+    <tr><td>Wronskian (2nd order)</td><td><span class="m">W = y₁y₂′ − y₁′y₂</span>; for solutions: never 0 or always 0</td></tr>
+    <tr><td>Key identity</td><td><span class="m">L[e<sup>rt</sup>] = p(r)e<sup>rt</sup></span>, <span class="m">L[te<sup>rt</sup>] = (p′(r) + tp(r))e<sup>rt</sup></span></td></tr>
+    <tr><td>Spring</td><td><span class="m">my″ + by′ + ky = 0</span>: <span class="m">b² − 4mk</span> &lt; 0 under, = 0 critical, &gt; 0 over</td></tr>
+    <tr><td>Nonhomogeneous</td><td><span class="m">y = yₕ + yₚ</span>; superposition for sums</td></tr>
+    <tr><td>tˢ rule</td><td><var>s</var> = multiplicity of α (or α + iβ) as a root (0, 1, 2)</td></tr>
+    <tr><td>Normal form</td><td><span class="m">x′ = A(t)x + f(t)</span>; <span class="m">x₁ = y, x₂ = y′, …</span></td></tr>
+    <tr><td>Fundamental matrix</td><td><span class="m">X = [x₁ ⋯ xₙ]</span>, <span class="m">x = Xc</span>, <span class="m">c = X(0)⁻¹x(0)</span></td></tr>
+    <tr><td>Wronskian (systems)</td><td><span class="m">W = det X(t) = W(t₀)e<sup>∫tr A</sup></span></td></tr>
+    <tr><td>Real eigenvalues</td><td><span class="m">x = Σ cᵢe<sup>λᵢt</sup>vᵢ</span> (needs <var>n</var> independent eigenvectors)</td></tr>
+    <tr><td>Complex λ = α + iβ, v = a + ib</td><td><span class="m">e<sup>αt</sup>(a cos βt − b sin βt)</span>, <span class="m">e<sup>αt</sup>(a sin βt + b cos βt)</span></td></tr>
+    <tr><td>2×2 eigenvalues</td><td><span class="m">λ² − (tr A)λ + det A = 0</span></td></tr>
+    <tr><td>Stability</td><td>all Re λ &lt; 0 → all solutions → 0</td></tr>
+    <tr><td>Fourier series</td><td><span class="m">a₀/2 + Σ[aₙcos(nπx/L) + bₙsin(nπx/L)]</span></td></tr>
+    <tr><td>Coefficients</td><td><span class="m">aₙ = (1/L)∫<sub>−L</sub><sup>L</sup> f cos(nπx/L)</span>, <span class="m">bₙ = (1/L)∫<sub>−L</sub><sup>L</sup> f sin(nπx/L)</span></td></tr>
+    <tr><td>Convergence</td><td><span class="m">½[f(x⁺) + f(x⁻)]</span> of the 2L-periodic extension</td></tr>
+    <tr><td>Cosine series (even ext.)</td><td><span class="m">aₙ = (2/L)∫₀ᴸ f cos(nπx/L)</span></td></tr>
+    <tr><td>Sine series (odd ext.)</td><td><span class="m">bₙ = (2/L)∫₀ᴸ f sin(nπx/L)</span>; equals 0 at 0 and L</td></tr>
+    <tr><td>Useful values</td><td><span class="m">cos nπ = (−1)ⁿ</span>, <span class="m">sin nπ = 0</span></td></tr>
+  </table></div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every solution, eigenvalue and Fourier coefficient on this page was checked by computer (verify/de_check.py substitutes each answer back into its equation). All examples are original; the current homework (HW13) problems are deliberately left out.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

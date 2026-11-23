@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="An original, cumulative 3-hour Math 55 practice final (logic through graphs) with full tap-to-reveal solutions and common-mistake notes.">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='Georgia,serif'%3E%E2%88%8E%3C/text%3E%3C/svg%3E">
+<title>Math 55 Practice Final</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+figure.fig{margin:12px 0;text-align:center}
+figure.fig svg{max-width:100%;height:auto}
+figure.fig figcaption{font-size:.85rem;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:flex-end}
+.row figure.fig{margin:6px 0}
+table.mat{width:auto;margin:8px auto;border-collapse:separate;border-left:2px solid currentColor;border-right:2px solid currentColor;border-radius:6px;font-family:var(--math);font-size:1rem}
+table.mat td{border:0;padding:1px 9px;text-align:center}
+.prob{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:6px 14px;margin:10px 0}
+.prob ol{padding-left:1.8em}
+h2 .pts{flex:none;margin-left:auto;font-size:.78rem;font-weight:700;color:var(--muted);background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:2px 9px;white-space:nowrap}
+details.check .a ol[type="i"]{padding-left:1.8em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>Math 55 Practice Final</h1>
+  <p>Cumulative · 3 hours · 140 points · closed notes · <a href="math55-late.html">Relations &amp; graphs notes</a> · <a href="cards.html">Flashcards →</a> · <a href="finals.html">Finals plan</a></p>
+</header>
+
+<nav class="bar" aria-label="Jump to problem">
+  <select id="jump" aria-label="Jump to problem">
+    <option value="top">Instructions</option>
+    <optgroup label="Before the midterm">
+      <option value="p1">1 · Logic &amp; quantifiers (8)</option>
+      <option value="p2">2 · Functions &amp; cardinality (10)</option>
+      <option value="p3">3 · Induction (10)</option>
+      <option value="p4">4 · Modular arithmetic &amp; CRT (12)</option>
+      <option value="p5">5 · Proof by contradiction (10)</option>
+      <option value="p6">6 · Counting (12)</option>
+    </optgroup>
+    <optgroup label="After the midterm">
+      <option value="p7">7 · Conditional probability &amp; Bayes (12)</option>
+      <option value="p8">8 · Expectation, variance, Chebyshev (14)</option>
+      <option value="p9">9 · Recurrences (12)</option>
+      <option value="p10">10 · Inclusion–exclusion (10)</option>
+      <option value="p11">11 · Relations &amp; posets (14)</option>
+      <option value="p12">12 · Graphs (16)</option>
+    </optgroup>
+    <optgroup label="After you finish">
+      <option value="map">Scoring &amp; topic map</option>
+    </optgroup>
+  </select>
+  <a href="#map">Score</a>
+</nav>
+
+<div class="note">
+  <p><b>Take it like the real thing.</b> Set a 3-hour timer, no notes, no calculator. Write full solutions on paper: a final answer without reasoning earns little on a Math 55 final.</p>
+  <p><b>Then grade yourself.</b> Each problem has a full solution behind <b>Solution</b>, ending with what the problem tests and the mistake that costs the most points. Every number was checked by computer (verify/m55_check.py).</p>
+  <p>All problems are original. About half the points are on material after the Oct 29 midterm (probability onward), matching the usual weighting toward later topics.</p>
+</div>
+
+<!-- ============ P1 ============ -->
+<section id="p1">
+  <h2><span class="n">1</span>Logic &amp; quantifiers<span class="pts">8 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [4] Let P(x, y) be a predicate. Write the negation of</p>
+    <div class="key">∀x ∃y ( P(x, y) ∧ ∀z ( P(x, z) → z = y ) )</div>
+    <p>with no ¬ to the left of any quantifier. Say in plain words what the original statement and its negation mean.</p>
+    <p><b>(b)</b> [4] The domain is ℤ. True or false? Justify each briefly.</p>
+    <ol type="i">
+      <li>∀x ∃y (x = 2y ∨ x = 2y + 1)</li>
+      <li>∃y ∀x (xy = x)</li>
+      <li>∀x ∃y (xy = 1)</li>
+      <li>∃x ∀y (x ≤ y)</li>
+    </ol>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> Push the ¬ inward one step at a time:</p>
+      <ol class="steps">
+        <li>¬∀x ∃y (…) ≡ ∃x ∀y ¬( P(x, y) ∧ ∀z (P(x, z) → z = y) )</li>
+        <li>De Morgan: ≡ ∃x ∀y ( ¬P(x, y) ∨ ¬∀z (P(x, z) → z = y) )</li>
+        <li>¬∀z ≡ ∃z ¬, and ¬(p → q) ≡ p ∧ ¬q:</li>
+      </ol>
+      <div class="key">∃x ∀y ( ¬P(x, y) ∨ ∃z ( P(x, z) ∧ z ≠ y ) )</div>
+      <p><b>Meaning.</b> Original: every x has <b>exactly one</b> y with P(x, y). Negation: some x has <b>no</b> such y, or <b>at least two</b> (for every candidate y, either P(x, y) fails or some other z also works).</p>
+      <p><b>(b)</b></p>
+      <ol type="i">
+        <li><b>True.</b> Take y = ⌊x/2⌋: even x gives x = 2y, odd x gives x = 2y + 1.</li>
+        <li><b>True.</b> y = 1 works for every x.</li>
+        <li><b>False.</b> x = 2: 2y = 1 has no integer solution. (x = 0 also fails.)</li>
+        <li><b>False.</b> For any x, y = x − 1 is an integer with y &lt; x. ℤ has no least element.</li>
+      </ol>
+      <div class="idea"><span class="t">What it tests</span><p>Mechanical negation rules (¬∀ = ∃¬, De Morgan, ¬(p → q) ≡ p ∧ ¬q), and reading the order of quantifiers.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Negating p → q as p → ¬q or ¬p → ¬q. The negation of an implication is an <b>and</b>: p ∧ ¬q. Also: in (ii), ∃y ∀x means one y that works for all x, which is stronger than ∀x ∃y.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P2 ============ -->
+<section id="p2">
+  <h2><span class="n">2</span>Functions &amp; cardinality<span class="pts">10 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [4] Define f : ℤ × ℤ → ℤ by f(a, b) = 4a + 6b. Is f one-to-one? Onto? Prove your answers, and describe the range.</p>
+    <p><b>(b)</b> [3] Let E be the set of infinite sequences (s<sub>1</sub>, s<sub>2</sub>, …) of 0s and 1s containing only <b>finitely many</b> 1s. Prove E is countable.</p>
+    <p><b>(c)</b> [3] Prove that the set B of <b>all</b> infinite 0–1 sequences is uncountable.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> <b>Not one-to-one:</b> f(3, −2) = 12 − 12 = 0 = f(0, 0), but (3, −2) ≠ (0, 0). <b>Not onto:</b> 4a + 6b = 2(2a + 3b) is always even, so 1 is not in the range.</p>
+      <p><b>Range = all even integers.</b> Given 2k, take a = −k, b = k: 4(−k) + 6k = 2k.</p>
+      <p><b>(b)</b> For n ≥ 0 let E<sub>n</sub> be the sequences in E whose 1s all lie among the first n positions. A sequence in E<sub>n</sub> is determined by its first n entries, so |E<sub>n</sub>| = 2<sup>n</sup>, finite. Every s ∈ E has a last 1 (finitely many 1s), so s ∈ E<sub>n</sub> for some n: E = E<sub>0</sub> ∪ E<sub>1</sub> ∪ E<sub>2</sub> ∪ ⋯.</p>
+      <p>List E<sub>0</sub>, then the new elements of E<sub>1</sub>, then the new elements of E<sub>2</sub>, and so on. Each block is finite, so every element of E appears at some finite position. That list is a bijection with ℤ⁺ (E is infinite), so E is countable.</p>
+      <p><b>(c)</b> Cantor’s diagonal argument. Suppose B were countable, listed as s<sup>(1)</sup>, s<sup>(2)</sup>, s<sup>(3)</sup>, … Define t by flipping the diagonal:</p>
+      <div class="key">t<sub>n</sub> = 1 − s<sup>(n)</sup><sub>n</sub></div>
+      <p>t is an infinite 0–1 sequence, so t ∈ B. But t differs from s<sup>(n)</sup> in position n, for every n, so t is not on the list. Contradiction: no list contains all of B. ∎</p>
+      <div class="idea"><span class="t">What it tests</span><p>Proving one-to-one/onto with explicit witnesses; countable unions of finite sets; the diagonal argument.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (c), building t but never saying <b>why</b> t is missing from the list (it differs from the n-th sequence in the n-th place). In (b), arguing “E ⊆ B and B is uncountable, so E is uncountable”: subsets of uncountable sets can be countable.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P3 ============ -->
+<section id="p3">
+  <h2><span class="n">3</span>Induction<span class="pts">10 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [6] Prove that 7 divides 3<sup>2n+1</sup> + 2<sup>n+2</sup> for every integer n ≥ 0.</p>
+    <p><b>(b)</b> [4] A sequence has a<sub>0</sub> = 1, a<sub>1</sub> = 2 and a<sub>n</sub> = a<sub>n−1</sub> + 2a<sub>n−2</sub> for n ≥ 2. Prove by strong induction that a<sub>n</sub> = 2<sup>n</sup> for all n ≥ 0.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> Let P(n): 7 | 3<sup>2n+1</sup> + 2<sup>n+2</sup>.</p>
+      <ol class="steps">
+        <li><b>Base n = 0:</b> 3 + 4 = 7. ✓</li>
+        <li><b>Inductive hypothesis:</b> assume 3<sup>2k+1</sup> + 2<sup>k+2</sup> = 7m for some integer m.</li>
+        <li><b>Step:</b> 3<sup>2k+3</sup> + 2<sup>k+3</sup> = 9·3<sup>2k+1</sup> + 2·2<sup>k+2</sup> = 9(3<sup>2k+1</sup> + 2<sup>k+2</sup>) − 7·2<sup>k+2</sup> = 9·7m − 7·2<sup>k+2</sup> = 7(9m − 2<sup>k+2</sup>).</li>
+        <li>So P(k + 1) holds, and by induction P(n) holds for all n ≥ 0. ∎</li>
+      </ol>
+      <p>(Check n = 1: 27 + 8 = 35 = 5·7.)</p>
+      <p><b>(b)</b></p>
+      <ol class="steps">
+        <li><b>Bases:</b> a<sub>0</sub> = 1 = 2<sup>0</sup> and a<sub>1</sub> = 2 = 2<sup>1</sup>.</li>
+        <li><b>Hypothesis:</b> fix n ≥ 2 and assume a<sub>j</sub> = 2<sup>j</sup> for all 0 ≤ j &lt; n.</li>
+        <li><b>Step:</b> a<sub>n</sub> = a<sub>n−1</sub> + 2a<sub>n−2</sub> = 2<sup>n−1</sup> + 2·2<sup>n−2</sup> = 2<sup>n−1</sup> + 2<sup>n−1</sup> = 2<sup>n</sup>. ∎</li>
+      </ol>
+      <div class="idea"><span class="t">What it tests</span><p>Writing a complete induction (base, hypothesis, step, conclusion) and the trick of making the hypothesis appear in the step. Strong induction when the recurrence reaches back two steps.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (b), checking only one base case. The step for n = 2 uses a<sub>1</sub> <b>and</b> a<sub>0</sub>, so both must be verified. In (a), “assuming P(k + 1)” and working backwards is not a proof.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P4 ============ -->
+<section id="p4">
+  <h2><span class="n">4</span>Modular arithmetic &amp; CRT<span class="pts">12 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [4] Use the Euclidean algorithm to find the inverse of 17 modulo 60.</p>
+    <p><b>(b)</b> [2] Solve 17x ≡ 9 (mod 60).</p>
+    <p><b>(c)</b> [4] Find all integers x with x ≡ 2 (mod 5), x ≡ 3 (mod 7), x ≡ 4 (mod 9).</p>
+    <p><b>(d)</b> [2] Compute 7<sup>222</sup> mod 11.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> Euclid:</p>
+      <div class="key">60 = 3·17 + 9<br>17 = 1·9 + 8<br>9 = 1·8 + 1</div>
+      <p>Back-substitute: 1 = 9 − 8 = 9 − (17 − 9) = 2·9 − 17 = 2(60 − 3·17) − 17 = 2·60 − 7·17.</p>
+      <p>So −7·17 ≡ 1 (mod 60): the inverse is −7 ≡ <b>53</b>. Check: 17·53 = 901 = 15·60 + 1. ✓</p>
+      <p><b>(b)</b> Multiply both sides by 53: x ≡ 9·53 = 477 ≡ 477 − 420 = <b>57 (mod 60)</b>. Check: 17·57 = 969 = 16·60 + 9. ✓</p>
+      <p><b>(c)</b> Moduli 5, 7, 9 are pairwise coprime, so by CRT there’s exactly one solution mod 315. Substitute step by step:</p>
+      <ol class="steps">
+        <li>x ≡ 4 (mod 9): x = 4 + 9k.</li>
+        <li>Mod 7: 4 + 9k ≡ 4 + 2k ≡ 3, so 2k ≡ −1 ≡ 6, k ≡ 3 (mod 7). k = 3 + 7j, x = 31 + 63j.</li>
+        <li>Mod 5: 31 + 63j ≡ 1 + 3j ≡ 2, so 3j ≡ 1, j ≡ 2 (mod 5) (since 3·2 = 6 ≡ 1). x = 31 + 126 = 157.</li>
+        <li><b>x ≡ 157 (mod 315)</b>, i.e. x = 157 + 315t. Check: 157 = 155 + 2 = 154 + 3 = 153 + 4. ✓</li>
+      </ol>
+      <p><b>(d)</b> 11 is prime and 11 ∤ 7, so Fermat gives 7<sup>10</sup> ≡ 1 (mod 11). 222 = 22·10 + 2, so 7<sup>222</sup> ≡ 7<sup>2</sup> = 49 ≡ <b>5 (mod 11)</b>.</p>
+      <div class="idea"><span class="t">What it tests</span><p>Extended Euclid by back-substitution, using an inverse to solve a linear congruence, CRT by substitution, Fermat’s little theorem.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (d), reducing the exponent mod 11 instead of mod <b>10</b> (= p − 1). In (c), giving only 157 without “mod 315”: the question says <b>all</b> integers.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P5 ============ -->
+<section id="p5">
+  <h2><span class="n">5</span>Proof by contradiction &amp; number theory<span class="pts">10 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [4] Prove that log<sub>2</sub> 3 is irrational.</p>
+    <p><b>(b)</b> [6] Prove that if p is a prime with p &gt; 3, then 24 | p² − 1.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> Suppose log<sub>2</sub> 3 = a/b with integers a, b. Since 3 &gt; 1, log<sub>2</sub> 3 &gt; 0, so we may take a, b ≥ 1. Then 2<sup>a/b</sup> = 3, and raising to the b-th power, <b>2<sup>a</sup> = 3<sup>b</sup></b>. The left side is even (a ≥ 1); the right side is odd. Contradiction. ∎</p>
+      <p><b>(b)</b> Write p² − 1 = (p − 1)(p + 1). Since 24 = 8·3 with gcd(8, 3) = 1, it’s enough to show 8 | p² − 1 and 3 | p² − 1.</p>
+      <ol class="steps">
+        <li><b>Divisible by 8:</b> p is odd (it’s a prime &gt; 2), so p = 2k + 1 and p² − 1 = 4k² + 4k = 4k(k + 1). One of k, k + 1 is even, so 8 | 4k(k + 1).</li>
+        <li><b>Divisible by 3:</b> p &gt; 3 is prime, so 3 ∤ p, so p ≡ 1 or 2 (mod 3). Then p² ≡ 1 or 4 ≡ 1 (mod 3), so 3 | p² − 1.</li>
+        <li>8 and 3 are coprime and both divide p² − 1, so their product 24 does. ∎</li>
+      </ol>
+      <p>(Examples: 5² − 1 = 24, 7² − 1 = 48, 11² − 1 = 120.)</p>
+      <div class="idea"><span class="t">What it tests</span><p>Setting up a contradiction cleanly; splitting divisibility by a composite into coprime parts; case analysis mod small numbers.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Combining 4 | p² − 1 and 6 | p² − 1 to claim 24 | p² − 1. That step needs <b>coprime</b> factors (4 and 6 share 2: 12 is divisible by both, not by 24). In (a), forgetting to say why a ≥ 1, which is what makes 2<sup>a</sup> even.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P6 ============ -->
+<section id="p6">
+  <h2><span class="n">6</span>Counting<span class="pts">12 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [4] How many solutions in nonnegative integers does x<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> + x<sub>4</sub> = 20 have with x<sub>1</sub> ≥ 3 and x<sub>2</sub> ≤ 5?</p>
+    <p><b>(b)</b> [4] How many distinct arrangements of the letters of PARALLEL are there? In how many are no two L’s adjacent?</p>
+    <p><b>(c)</b> [4] Give a <b>combinatorial</b> proof that Σ<sub>k=0</sub><sup>n</sup> C(n, k)·2<sup>k</sup> = 3<sup>n</sup>.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b></p>
+      <ol class="steps">
+        <li>Lower bound: let y<sub>1</sub> = x<sub>1</sub> − 3 ≥ 0. Now y<sub>1</sub> + x<sub>2</sub> + x<sub>3</sub> + x<sub>4</sub> = 17.</li>
+        <li>Ignoring the upper bound: C(17 + 3, 3) = C(20, 3) = 1140.</li>
+        <li>Subtract the bad ones, x<sub>2</sub> ≥ 6: set y<sub>2</sub> = x<sub>2</sub> − 6, total 11: C(14, 3) = 364.</li>
+        <li>Answer: 1140 − 364 = <b>776</b>.</li>
+      </ol>
+      <p><b>(b)</b> PARALLEL has 8 letters: L three times, A twice, P, R, E once. Arrangements: 8!/(3!·2!) = 40320/12 = <b>3360</b>.</p>
+      <p>No two L’s adjacent (gap method): arrange the 5 non-L letters P, A, R, A, E: 5!/2! = 60 ways. They create 6 gaps (ends included); choose 3 different gaps for the L’s: C(6, 3) = 20. Total 60·20 = <b>1200</b>.</p>
+      <p><b>(c)</b> Count strings of length n over the alphabet {0, 1, 2} in two ways.</p>
+      <ul>
+        <li><b>RHS:</b> each of the n positions has 3 choices: 3<sup>n</sup>.</li>
+        <li><b>LHS:</b> sort by k = the number of <b>nonzero</b> positions. Choose which k positions are nonzero, C(n, k) ways; fill each with 1 or 2, 2<sup>k</sup> ways; the rest are 0. Different k give different strings, so the total is Σ C(n, k)2<sup>k</sup>.</li>
+      </ul>
+      <p>Both sides count the same set, so they’re equal. ∎</p>
+      <div class="idea"><span class="t">What it tests</span><p>Stars and bars with a lower bound (substitute) and an upper bound (complement), permutations with repeated letters, the gap method, double counting.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (c), using the binomial theorem ((1 + 2)<sup>n</sup>): correct, but it is an algebraic proof and earns little when a combinatorial one is asked. In (b), subtracting “arrangements containing LL” from 3360 without handling LLL, which gets double-counted.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P7 ============ -->
+<section id="p7">
+  <h2><span class="n">7</span>Conditional probability &amp; Bayes<span class="pts">12 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [5] 2% of a population carries a certain gene. A screening test is positive for 95% of carriers and for 10% of non-carriers. A random person tests positive. What is the probability they carry the gene?</p>
+    <p><b>(b)</b> [4] Two fair dice are rolled. Find P(at least one 6 | the sum is 8) and P(the sum is 8 | at least one 6).</p>
+    <p><b>(c)</b> [3] Let A = “the first die is even”, B = “the sum is 7”, C = “the sum is 8”. Is A independent of B? Of C?</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> G = carrier, + = positive. Bayes:</p>
+      <div class="key">P(G | +) = P(+ | G)P(G) / [P(+ | G)P(G) + P(+ | Ḡ)P(Ḡ)]</div>
+      <p>= (0.95)(0.02) / [(0.95)(0.02) + (0.10)(0.98)] = 0.019 / (0.019 + 0.098) = 0.019/0.117 = <b>19/117 ≈ 0.162</b>.</p>
+      <p>Only about 16%: carriers are so rare that the false positives among the 98% swamp the true positives.</p>
+      <p><b>(b)</b> Sum 8: (2,6), (3,5), (4,4), (5,3), (6,2), 5 equally likely outcomes, 2 with a 6. P = <b>2/5</b>.</p>
+      <p>At least one 6: 36 − 25 = 11 outcomes; of these, sum 8: (2,6), (6,2). P = <b>2/11</b>.</p>
+      <p><b>(c)</b> P(A) = 1/2, P(B) = 6/36 = 1/6. A ∩ B = {(2,5), (4,3), (6,1)}: 3/36 = 1/12 = (1/2)(1/6). <b>Independent.</b></p>
+      <p>P(C) = 5/36. A ∩ C = {(2,6), (4,4), (6,2)}: 3/36 = 1/12, but P(A)P(C) = 5/72. <b>Not independent.</b></p>
+      <div class="idea"><span class="t">What it tests</span><p>Bayes’ theorem with the law of total probability; conditioning as shrinking the sample space; the definition of independence.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Answering 0.95 in (a), which is P(+ | G), not P(G | +). In (b), the two conditionals are different numbers: the condition is the new sample space. In (c), deciding independence by intuition instead of checking P(A ∩ B) = P(A)P(B).</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P8 ============ -->
+<section id="p8">
+  <h2><span class="n">8</span>Expectation, variance, Chebyshev<span class="pts">14 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [5] A fair die is rolled 90 times. Let X be the number of rolls showing 1 or 2. Find E(X) and V(X), and use Chebyshev’s inequality to bound P(|X − 30| ≥ 10).</p>
+    <p><b>(b)</b> [5] A fair coin is flipped 12 times. Find the expected number of times the pattern HTH appears in three consecutive flips (overlaps count: HTHTH contains it twice).</p>
+    <p><b>(c)</b> [4] Let I<sub>j</sub> be the indicator that HTH starts at flip j. Are I<sub>1</sub> and I<sub>2</sub> independent? Are I<sub>1</sub> and I<sub>3</sub>? Does your answer affect part (b)?</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> X is binomial with n = 90, p = 2/6 = 1/3 (the rolls are independent).</p>
+      <ol class="steps">
+        <li>E(X) = np = <b>30</b>.</li>
+        <li>V(X) = np(1 − p) = 90 · (1/3) · (2/3) = <b>20</b>.</li>
+        <li>Chebyshev: P(|X − E(X)| ≥ r) ≤ V(X)/r². With r = 10: P(|X − 30| ≥ 10) ≤ 20/100 = <b>1/5</b>.</li>
+      </ol>
+      <p>(The true value is about 0.033. Chebyshev is crude but always valid.)</p>
+      <p><b>(b)</b> HTH can start at flips 1, 2, …, 10 (it needs 3 flips): 10 positions. Let I<sub>j</sub> indicate that flips j, j+1, j+2 read HTH; E(I<sub>j</sub>) = (1/2)³ = 1/8. By linearity of expectation:</p>
+      <div class="key">E(count) = Σ<sub>j=1</sub><sup>10</sup> E(I<sub>j</sub>) = 10 · 1/8 = 5/4</div>
+      <p><b>(c)</b> I<sub>1</sub> = I<sub>2</sub> = 1 would need flip 2 to be T (for I<sub>1</sub>) and H (for I<sub>2</sub>). Impossible, so P(I<sub>1</sub> = I<sub>2</sub> = 1) = 0 ≠ (1/8)² = 1/64. <b>Not independent.</b></p>
+      <p>I<sub>1</sub> = I<sub>3</sub> = 1 means flips 1–5 read HTHTH: probability 1/32 ≠ 1/64. <b>Not independent</b> either (they share flip 3).</p>
+      <p><b>No effect on (b):</b> linearity of expectation holds for <b>any</b> random variables, independent or not. (Independence would matter for the variance.)</p>
+      <div class="idea"><span class="t">What it tests</span><p>Recognizing a binomial, Chebyshev’s inequality, indicator variables with linearity, and knowing linearity needs no independence.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Using 12 positions instead of 10 in (b). Believing E(X + Y) = E(X) + E(Y) requires independence; it’s V(X + Y) = V(X) + V(Y) that does.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P9 ============ -->
+<section id="p9">
+  <h2><span class="n">9</span>Recurrences<span class="pts">12 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [6] Solve a<sub>n</sub> = a<sub>n−1</sub> + 6a<sub>n−2</sub> with a<sub>0</sub> = 3, a<sub>1</sub> = 4.</p>
+    <p><b>(b)</b> [6] Let s<sub>n</sub> be the number of strings of length n over {0, 1, 2} in which no 0 is immediately followed by a 1 (no “01”). Find a recurrence for s<sub>n</sub> with initial conditions, and compute s<sub>5</sub>.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b></p>
+      <ol class="steps">
+        <li>Characteristic equation: r² − r − 6 = 0, (r − 3)(r + 2) = 0, roots 3 and −2.</li>
+        <li>General solution: a<sub>n</sub> = α·3<sup>n</sup> + β·(−2)<sup>n</sup>.</li>
+        <li>a<sub>0</sub>: α + β = 3. a<sub>1</sub>: 3α − 2β = 4. Adding 2×(first): 5α = 10, α = 2, β = 1.</li>
+        <li><b>a<sub>n</sub> = 2·3<sup>n</sup> + (−2)<sup>n</sup></b>. Check a<sub>2</sub>: recurrence 4 + 18 = 22; formula 18 + 4 = 22. ✓</li>
+      </ol>
+      <p><b>(b)</b> Split valid strings of length n ≥ 2 by their last character.</p>
+      <ol class="steps">
+        <li>Ends in 0 or 2: any valid string of length n − 1, then that character (appending 0 or 2 can’t create “01”): 2s<sub>n−1</sub>.</li>
+        <li>Ends in 1: a valid string of length n − 1 that does <b>not</b> end in 0, then 1. Valid strings of length n − 1 ending in 0 are just valid strings of length n − 2 followed by 0: there are s<sub>n−2</sub> of them. So this case gives s<sub>n−1</sub> − s<sub>n−2</sub>.</li>
+        <li>Total: <b>s<sub>n</sub> = 3s<sub>n−1</sub> − s<sub>n−2</sub></b> for n ≥ 2, with <b>s<sub>0</sub> = 1</b> (empty string), <b>s<sub>1</sub> = 3</b>.</li>
+        <li>Check s<sub>2</sub> = 9 − 1 = 8: all 9 strings except 01. ✓</li>
+        <li>s<sub>3</sub> = 24 − 3 = 21, s<sub>4</sub> = 63 − 8 = 55, <b>s<sub>5</sub> = 165 − 21 = 144</b>.</li>
+      </ol>
+      <p>(Fun: these are every other Fibonacci number.)</p>
+      <div class="idea"><span class="t">What it tests</span><p>Solving a linear homogeneous recurrence with distinct roots, and building a recurrence by conditioning on the last character.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (b), claiming the strings ending in 1 number 2s<sub>n−2</sub> or s<sub>n−1</sub>. Always test the recurrence on a case you can count by hand (s<sub>2</sub> = 8). If you start from s<sub>1</sub>, s<sub>2</sub> instead of s<sub>0</sub>, that’s fine too.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P10 ============ -->
+<section id="p10">
+  <h2><span class="n">10</span>Inclusion–exclusion<span class="pts">10 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [5] How many integers from 1 to 1000 are divisible by <b>none</b> of 6, 10, 15?</p>
+    <p><b>(b)</b> [5] How many permutations of 1, 2, 3, 4, 5, 6 have 1 not in position 1, 2 not in position 2, and 3 not in position 3? (4, 5, 6 may go anywhere.)</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> A<sub>d</sub> = multiples of d in 1..1000, |A<sub>d</sub>| = ⌊1000/d⌋.</p>
+      <ol class="steps">
+        <li>Singles: |A<sub>6</sub>| = 166, |A<sub>10</sub>| = 100, |A<sub>15</sub>| = 66. Sum 332.</li>
+        <li>Pairs use the <b>lcm</b>: lcm(6, 10) = lcm(6, 15) = lcm(10, 15) = 30, each ⌊1000/30⌋ = 33. Sum 99.</li>
+        <li>Triple: lcm(6, 10, 15) = 30: 33.</li>
+        <li>|A<sub>6</sub> ∪ A<sub>10</sub> ∪ A<sub>15</sub>| = 332 − 99 + 33 = 266. None: 1000 − 266 = <b>734</b>.</li>
+      </ol>
+      <p><b>(b)</b> Let B<sub>i</sub> = permutations with i in position i, for i = 1, 2, 3. Fixing r particular values leaves (6 − r)! permutations.</p>
+      <div class="key">6! − C(3,1)·5! + C(3,2)·4! − C(3,3)·3! = 720 − 360 + 72 − 6 = 426</div>
+      <div class="idea"><span class="t">What it tests</span><p>The complement form of inclusion–exclusion, lcm for “divisible by both”, and adapting the derangement argument when only some positions are restricted.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Using products (60, 90, 150, 900) instead of lcms in (a); that gives 700, not 734. In (b), quoting the derangement number D<sub>6</sub> = 265, which restricts all six positions.</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P11 ============ -->
+<section id="p11">
+  <h2><span class="n">11</span>Relations &amp; posets<span class="pts">14 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [5] On ℤ, define a R b when 3 | a² − b². Prove R is an equivalence relation and describe its equivalence classes.</p>
+    <p><b>(b)</b> [6] Let S = {2, 4, 5, 10, 12, 20, 25}, ordered by divisibility. Draw the Hasse diagram. Find all minimal and maximal elements and any least or greatest element. Find lub{2, 5} and glb{12, 20}. Is (S, |) a lattice? Give a topological sort of S.</p>
+    <p><b>(c)</b> [3] How many relations on {1, 2, 3, 4} are both reflexive and symmetric? How many equivalence relations on {1, 2, 3, 4} contain the pair (1, 2)?</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> 3 | a² − b² ⟺ a² ≡ b² (mod 3) ⟺ f(a) = f(b), where f(a) = a² mod 3. A relation of the form f(a) = f(b) is reflexive, symmetric and transitive because = is. (Directly: a² − a² = 0; b² − a² = −(a² − b²); a² − c² = (a² − b²) + (b² − c²).)</p>
+      <p>Classes: squares mod 3 are 0² ≡ 0, 1² ≡ 1, 2² ≡ 1. So f takes two values and there are <b>two classes</b>: the multiples of 3, {…, −3, 0, 3, 6, …}, and the non-multiples of 3.</p>
+      <p><b>(b)</b> Covering pairs: 2–4, 2–10, 5–10, 5–25, 4–12, 4–20, 10–20.</p>
+      <figure class="fig">
+        <svg viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Hasse diagram of 2 4 5 10 12 20 25 under divisibility">
+          <g stroke="currentColor" stroke-width="1.6" style="color:var(--accent)">
+            <line x1="55" y1="170" x2="25" y2="105"/><line x1="55" y1="170" x2="100" y2="105"/>
+            <line x1="145" y1="170" x2="100" y2="105"/><line x1="145" y1="170" x2="175" y2="105"/>
+            <line x1="25" y1="105" x2="25" y2="40"/><line x1="25" y1="105" x2="100" y2="40"/><line x1="100" y1="105" x2="100" y2="40"/>
+          </g>
+          <g font-family="-apple-system,system-ui,sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="currentColor">
+            <circle cx="55" cy="170" r="13" fill="var(--surface)" stroke="currentColor"/><text x="55" y="175">2</text>
+            <circle cx="145" cy="170" r="13" fill="var(--surface)" stroke="currentColor"/><text x="145" y="175">5</text>
+            <circle cx="25" cy="105" r="13" fill="var(--surface)" stroke="currentColor"/><text x="25" y="110">4</text>
+            <circle cx="100" cy="105" r="14" fill="var(--surface)" stroke="currentColor"/><text x="100" y="110">10</text>
+            <circle cx="175" cy="105" r="14" fill="var(--surface)" stroke="currentColor"/><text x="175" y="110">25</text>
+            <circle cx="25" cy="40" r="14" fill="var(--surface)" stroke="currentColor"/><text x="25" y="45">12</text>
+            <circle cx="100" cy="40" r="14" fill="var(--surface)" stroke="currentColor"/><text x="100" y="45">20</text>
+          </g>
+        </svg>
+      </figure>
+      <ul>
+        <li><b>Minimal:</b> 2, 5. <b>Maximal:</b> 12, 20, 25. <b>No least</b> (2, 5 incomparable), <b>no greatest</b>.</li>
+        <li><b>lub{2, 5}:</b> upper bounds 10, 20; the least is <b>10</b>.</li>
+        <li><b>glb{12, 20}:</b> lower bounds 2, 4; the greatest is <b>4</b>.</li>
+        <li><b>Not a lattice:</b> {4, 25} has no upper bound (no element of S is divisible by both; their lcm 100 ∉ S). (Also {12, 20} has no upper bound.)</li>
+        <li><b>Topological sort</b> (repeatedly remove a minimal element): 2, 5, 4, 10, 12, 20, 25. Any order respecting the edges is fine.</li>
+      </ul>
+      <p><b>(c)</b> Reflexive forces the 4 loops. Symmetric: each of the C(4, 2) = 6 unordered pairs {a, b} is in (both directions) or out. <b>2<sup>6</sup> = 64</b>.</p>
+      <p>Equivalence relations containing (1, 2) ↔ partitions of {1, 2, 3, 4} with 1, 2 in the same block ↔ partitions of the 3 objects {12, 3, 4}: B<sub>3</sub> = <b>5</b>.</p>
+      <div class="idea"><span class="t">What it tests</span><p>Proving an equivalence relation and finding classes; reading a poset (covers, maximal vs greatest, bounds); counting relations with constraints.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>Saying 12 is the “greatest” because it is the largest number: 5 ∤ 12. Maximal ≠ greatest. In the Hasse diagram, drawing 2–20 or 5–20 (10 or 4 sits between). In (a), listing three classes [0], [1], [2]: [1] = [2] here because 1 ≡ 4 (mod 3).</p></div>
+    </div></details>
+</section>
+
+<!-- ============ P12 ============ -->
+<section id="p12">
+  <h2><span class="n">12</span>Graphs<span class="pts">16 pts</span></h2>
+  <div class="prob">
+    <p><b>(a)</b> [3] A simple graph has 12 vertices: 6 have degree 5 and the other 6 all have the same degree d. It has 24 edges. Find d. Could a simple graph have 7 vertices, each of degree 3?</p>
+    <p><b>(b)</b> [5] G<sub>1</sub> is the cube Q<sub>3</sub>. G<sub>2</sub> has vertices 0, 1, …, 7, with the 8-cycle 0–1–2–3–4–5–6–7–0 plus the four edges 0–4, 1–5, 2–6, 3–7. Are G<sub>1</sub> and G<sub>2</sub> isomorphic? Prove your answer.</p>
+    <div class="row">
+      <figure class="fig"><svg viewBox="0 0 115 110" width="110" height="105" role="img" aria-label="Q3 cube">
+        <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)" fill="none"><rect x="15" y="35" width="60" height="60"/><rect x="42" y="12" width="60" height="60"/><line x1="15" y1="35" x2="42" y2="12"/><line x1="75" y1="35" x2="102" y2="12"/><line x1="75" y1="95" x2="102" y2="72"/><line x1="15" y1="95" x2="42" y2="72"/></g>
+        <g fill="var(--surface)" stroke="currentColor"><circle cx="15" cy="35" r="6"/><circle cx="75" cy="35" r="6"/><circle cx="75" cy="95" r="6"/><circle cx="15" cy="95" r="6"/><circle cx="42" cy="12" r="6"/><circle cx="102" cy="12" r="6"/><circle cx="102" cy="72" r="6"/><circle cx="42" cy="72" r="6"/></g></svg><figcaption>G₁ = Q₃</figcaption></figure>
+      <figure class="fig"><svg viewBox="0 0 150 150" width="130" height="130" role="img" aria-label="Octagon with four long diagonals">
+        <g stroke="currentColor" stroke-width="1.5" style="color:var(--accent)" fill="none">
+          <polygon points="75,15 117.4,32.6 135,75 117.4,117.4 75,135 32.6,117.4 15,75 32.6,32.6"/>
+          <line x1="75" y1="15" x2="75" y2="135"/><line x1="117.4" y1="32.6" x2="32.6" y2="117.4"/><line x1="135" y1="75" x2="15" y2="75"/><line x1="117.4" y1="117.4" x2="32.6" y2="32.6"/></g>
+        <g fill="var(--surface)" stroke="currentColor"><circle cx="75" cy="15" r="6"/><circle cx="117.4" cy="32.6" r="6"/><circle cx="135" cy="75" r="6"/><circle cx="117.4" cy="117.4" r="6"/><circle cx="75" cy="135" r="6"/><circle cx="32.6" cy="117.4" r="6"/><circle cx="15" cy="75" r="6"/><circle cx="32.6" cy="32.6" r="6"/></g>
+        <g font-family="-apple-system,system-ui,sans-serif" font-size="10" font-weight="700" fill="currentColor" text-anchor="middle"><text x="75" y="8">0</text><text x="127" y="27">1</text><text x="146" y="79">2</text><text x="127" y="131">3</text><text x="75" y="149">4</text><text x="23" y="131">5</text><text x="5" y="79">6</text><text x="23" y="27">7</text></g></svg><figcaption>G₂ (diagonals cross at the center; no vertex there)</figcaption></figure>
+    </div>
+    <p><b>(c)</b> [4] Prove that every simple graph with at least 2 vertices has two vertices of the same degree.</p>
+    <p><b>(d)</b> [4] H has vertices 1, …, 5 and edges 12, 13, 23, 24, 34, 35, 45. Using the adjacency matrix A (or otherwise), find the number of paths of length 2 from 1 to 4, the number of paths of length 3 from 1 to 5, and the number of triangles in H.</p>
+  </div>
+  <details class="check"><summary>Solution<span class="tap">tap</span></summary>
+    <div class="a">
+      <p><b>(a)</b> Handshaking: Σ deg = 2|E| = 48 = 6·5 + 6d, so 6d = 18, <b>d = 3</b>. Seven vertices of degree 3 would give degree sum 21, odd, which is impossible: <b>no</b>.</p>
+      <p><b>(b)</b> <b>Not isomorphic.</b> Both have 8 vertices, 12 edges and every degree 3, so the easy invariants agree. But:</p>
+      <ul>
+        <li>Q<sub>3</sub> is <b>bipartite</b>: split the bit strings by the parity of their number of 1s; every edge flips one bit, so it joins opposite parities. Hence Q<sub>3</sub> has no odd cycle.</li>
+        <li>G<sub>2</sub> has the <b>5-cycle</b> 0–1–2–3–4–0 (four cycle edges plus the edge 4–0).</li>
+      </ul>
+      <p>Isomorphisms carry cycles to cycles of the same length, so they can’t be isomorphic. ∎</p>
+      <p><b>(c)</b> Let n ≥ 2 be the number of vertices. In a simple graph each degree is in {0, 1, …, n − 1}: n possible values. But 0 and n − 1 can’t both occur: a vertex of degree n − 1 is adjacent to every other vertex, so no vertex has degree 0. So the n degrees take at most n − 1 different values, and by the pigeonhole principle two vertices share a degree. ∎</p>
+      <p><b>(d)</b> Order the vertices 1–5.</p>
+      <div class="row">
+        <table class="mat"><tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr><tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr></table>
+        <table class="mat"><tr><td>2</td><td>1</td><td>1</td><td>2</td><td>1</td></tr><tr><td>1</td><td>3</td><td>2</td><td>1</td><td>2</td></tr><tr><td>1</td><td>2</td><td>4</td><td>2</td><td>1</td></tr><tr><td>2</td><td>1</td><td>2</td><td>3</td><td>1</td></tr><tr><td>1</td><td>2</td><td>1</td><td>1</td><td>2</td></tr></table>
+      </div>
+      <p style="text-align:center;font-size:.85rem;color:var(--muted)">A (left) and A² (right)</p>
+      <ul>
+        <li>(A²)<sub>14</sub> = <b>2</b>: 1–2–4 and 1–3–4.</li>
+        <li>(A³)<sub>15</sub> = row 1 of A² · column 5 of A = 2·0 + 1·0 + 1·1 + 2·1 + 1·0 = <b>3</b>: 1–2–3–5, 1–2–4–5, 1–3–4–5.</li>
+        <li>The diagonal of A³ is 2, 4, 6, 4, 2, so trace(A³) = 18, and triangles = 18/6 = <b>3</b> (123, 234, 345).</li>
+      </ul>
+      <div class="idea"><span class="t">What it tests</span><p>Handshaking and its parity consequence; disproving isomorphism with an invariant (bipartite / odd cycle); a pigeonhole proof; counting paths with powers of the adjacency matrix.</p></div>
+      <div class="warn"><span class="t">Common mistake</span><p>In (b), stopping at “same degree sequence, so isomorphic”. In (c), forgetting to rule out degrees 0 and n − 1 together; without that, there are n pigeons and n holes and no conclusion.</p></div>
+    </div></details>
+</section>
+
+<section id="map">
+  <h2><span class="n">★</span>Scoring &amp; topic map</h2>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Topic</th><th>Rosen</th><th>Pts</th></tr>
+    <tr><td>1</td><td>Quantifiers, negation</td><td>1.4–1.5</td><td>8</td></tr>
+    <tr><td>2</td><td>Functions, countability, diagonal argument</td><td>2.3, 2.5</td><td>10</td></tr>
+    <tr><td>3</td><td>Induction, strong induction</td><td>5.1–5.2</td><td>10</td></tr>
+    <tr><td>4</td><td>Euclid, inverses, CRT, Fermat</td><td>4.3–4.4</td><td>12</td></tr>
+    <tr><td>5</td><td>Contradiction, divisibility</td><td>1.7, 4.1</td><td>10</td></tr>
+    <tr><td>6</td><td>Stars and bars, repeated letters, combinatorial proof</td><td>6.3–6.5</td><td>12</td></tr>
+    <tr><td>7</td><td>Bayes, conditional probability, independence</td><td>7.2–7.3</td><td>12</td></tr>
+    <tr><td>8</td><td>Linearity, variance, Chebyshev</td><td>7.4</td><td>14</td></tr>
+    <tr><td>9</td><td>Recurrences</td><td>8.1–8.2</td><td>12</td></tr>
+    <tr><td>10</td><td>Inclusion–exclusion</td><td>8.5–8.6</td><td>10</td></tr>
+    <tr><td>11</td><td>Equivalence relations, posets</td><td>9.1, 9.5–9.6</td><td>14</td></tr>
+    <tr><td>12</td><td>Graphs, isomorphism, paths</td><td>10.1–10.4</td><td>16</td></tr>
+  </table></div>
+  <p>Before the midterm: 62 points. After: 78 points. Out of 140: roughly 120+ is strong, 90–120 means a couple of topics need another pass, under 90 means go back to the notes for each problem you missed.</p>
+  <p>For any problem you missed, redo it from a blank page tomorrow without looking. Then study the matching notes: <a href="math55-late.html">relations &amp; graphs</a>, <a href="quiz7.html">inclusion–exclusion &amp; relations basics</a>.</p>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Original problems; every number was verified by brute-force computation (verify/m55_check.py). Not affiliated with the course staff; real exam content and weighting may differ.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+</script>
+</body>
+</html>

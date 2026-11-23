@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="CS 61B: the hardest real exam questions for each unit (Spring 2017 to Spring 2026, from the official exam archive), excluding the five finals saved for timed mocks.">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#11151b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4cc9'/%3E%3Ctext x='32' y='43' font-size='26' font-weight='700' text-anchor='middle' fill='white' font-family='system-ui,sans-serif'%3E61B%3C/text%3E%3C/svg%3E">
+<title>CS 61B Hardest Exam Questions by Topic</title>
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#5a6473; --rule:#dde2e9;
+  --accent:#1f4cc9; --accent-bg:#edf2ff;
+  --ex:#15773a; --ex-bg:#ecf8f0;
+  --warn:#b4520a; --warn-bg:#fff4e6;
+  --key:#35587e; --key-bg:#eef3f9;
+  --math:"STIX Two Text","Cambria Math","Times New Roman",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+    --accent:#8fb0ff; --accent-bg:#1c2640;
+    --ex:#7fd39b; --ex-bg:#16261c;
+    --warn:#f2b26b; --warn-bg:#2a2016;
+    --key:#a9c3e3; --key-bg:#1a2230;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151b; --surface:#181d25; --ink:#e6eaf0; --muted:#9aa4b3; --rule:#2a313c;
+  --accent:#8fb0ff; --accent-bg:#1c2640;
+  --ex:#7fd39b; --ex-bg:#16261c;
+  --warn:#f2b26b; --warn-bg:#2a2016;
+  --key:#a9c3e3; --key-bg:#1a2230;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 16px calc(env(safe-area-inset-bottom,0px) + 56px)}
+header h1{font-size:1.65rem;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* sticky jump bar: one native picker */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);margin:16px -16px 0;padding:10px 16px;border-bottom:1px solid var(--rule);display:flex;gap:8px;align-items:center}
+.bar select{flex:1;min-width:0;font:600 .95rem -apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 10px}
+.bar a{flex:none;font-size:.85rem;font-weight:600;text-decoration:none;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:9px 12px;color:var(--ink)}
+
+.note{background:var(--accent-bg);border-radius:12px;padding:12px 14px;font-size:.93rem;margin-top:14px}
+.note p{margin:4px 0}
+.plan{counter-reset:p;list-style:none;padding:0;margin:8px 0 0}
+.plan li{counter-increment:p;position:relative;padding-left:30px;margin:6px 0}
+.plan li::before{content:counter(p);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+
+.part-h{margin:44px 0 0;padding-top:6px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;border-top:2px solid var(--accent)}
+.part-h + p{color:var(--muted);font-size:.93rem;margin:6px 0 0}
+section{margin-top:34px}
+h2{font-size:1.25rem;line-height:1.3;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+h2 .n{flex:none;color:var(--accent);font-variant-numeric:tabular-nums}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:20px 0 4px}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-left:1.3em}
+li{margin:5px 0}
+.m,var{font-family:var(--math);font-style:normal;font-size:1.06em}
+var{font-style:italic;white-space:nowrap}
+.wrap{overflow-wrap:break-word}
+sup,sub{line-height:0}
+.key{background:var(--key-bg);border-radius:12px;padding:12px 14px;margin:10px 0;font-family:var(--math);font-size:1.12rem;line-height:1.55;overflow-x:auto}
+.key small{display:block;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.45}
+.idea,.ex,.warn{border-radius:12px;padding:12px 14px;margin:12px 0;border-left:4px solid}
+.idea{background:var(--accent-bg);border-color:var(--accent)}
+.ex{background:var(--ex-bg);border-color:var(--ex)}
+.warn{background:var(--warn-bg);border-color:var(--warn)}
+.t{display:block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.idea .t{color:var(--accent)} .ex .t{color:var(--ex)} .warn .t{color:var(--warn)}
+.ex .t{text-transform:none;letter-spacing:0;font-size:.9rem}
+.idea p,.ex p,.warn p{margin:5px 0}
+.steps{margin:6px 0;padding-left:1.4em}
+.steps li{margin:6px 0}
+.steps li::marker{font-weight:700;color:var(--ex)}
+.how{counter-reset:h;list-style:none;padding:0;margin:8px 0}
+.how li{counter-increment:h;position:relative;padding-left:32px;margin:8px 0}
+.how li::before{content:counter(h);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center}
+
+details.check{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:0 14px}
+details.check summary{cursor:pointer;list-style:none;padding:12px 0 12px 32px;font-weight:600;display:block;position:relative}
+details.check summary::-webkit-details-marker{display:none}
+details.check summary::before{content:"?";position:absolute;left:0;top:14px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);font-size:.8rem;display:grid;place-items:center;box-sizing:border-box}
+details.check[open] summary::before{content:"✓";background:var(--accent);color:var(--bg)}
+details.check summary span.tap{float:right;margin-left:10px;font-size:.75rem;font-weight:600;color:var(--muted);padding-top:3px}
+details.check[open] summary span.tap{display:none}
+details.check .a{border-top:1px dashed var(--rule);padding:8px 0 12px}
+
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+td .m{white-space:normal}
+.tbl.compact table{font-size:.85rem}
+.tbl.compact th,.tbl.compact td{padding:8px 5px;text-align:center}
+.tbl.compact th:first-child,.tbl.compact td:first-child{text-align:left;padding-left:10px}
+.tbl.compact th{letter-spacing:0;text-transform:none;font-size:.75rem}
+.sheet td:first-child{font-weight:600;width:38%}
+footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+.top{display:inline-block;margin-top:10px;font-size:.85rem;color:var(--muted);text-decoration:none}
+
+/* hard-question list */
+.how li b{color:var(--ink)}
+.q{border:1px solid var(--rule);background:var(--surface);border-radius:12px;margin:12px 0;padding:12px 14px 12px 14px;position:relative}
+.q.done{opacity:.55}
+.q .head{display:flex;gap:10px;align-items:flex-start}
+.q .rk{flex:none;width:24px;height:24px;border-radius:6px;background:var(--key-bg);color:var(--key);font-size:.8rem;font-weight:700;display:grid;place-items:center;margin-top:2px}
+.q .ttl{flex:1;min-width:0}
+.q .src{display:block;font-size:.8rem;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.q .nm{display:block;font-weight:650;line-height:1.35}
+.q .chk{flex:none;margin:4px 0 0;width:20px;height:20px;accent-color:var(--accent)}
+.q .sk{margin:8px 0 6px;font-size:.93rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+.tag{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:3px 9px;background:var(--key-bg);color:var(--key)}
+.tag.vh{background:var(--warn-bg);color:var(--warn)}
+.tag.h{background:var(--accent-bg);color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.links a{font-size:.85rem;font-weight:600;text-decoration:none;border:1px solid var(--rule);border-radius:10px;padding:6px 11px;background:var(--bg)}
+.count{color:var(--muted);font-size:.85rem;font-weight:500;margin-left:auto}
+.mock{counter-reset:m;list-style:none;padding:0;margin:8px 0}
+.mock li{counter-increment:m;border:1px solid var(--rule);background:var(--surface);border-radius:12px;padding:10px 14px 10px 46px;margin:10px 0;position:relative}
+.mock li::before{content:counter(m);position:absolute;left:14px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:.78rem;font-weight:700;display:grid;place-items:center}
+.mock .links{margin-top:4px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header id="top">
+  <h1>CS 61B hardest exam questions by topic</h1>
+  <p>Real questions from the <a href="https://fa26.datastructur.es/resources/exam-archive/">official exam archive</a>, 2017–2026 · final Thu Dec 17 · the five mock finals are excluded</p>
+</header>
+
+<nav class="bar" aria-label="Jump to section">
+  <select id="jump" aria-label="Jump to section">
+    <option value="top">Start here</option>
+    <option value="mocks">Mock finals (do not peek)</option>
+    <optgroup label="Units">
+      <option value="b1">1 · Java basics, references, static, IntLists, recursion</option>
+      <option value="b2">2 · SLList, DLList, sentinels, AList resizing</option>
+      <option value="b3">3 · Inheritance, static vs. dynamic type, casting (“what would Java do”)</option>
+      <option value="b4">4 · Iterators, Iterable, equals, Comparable, Comparator</option>
+      <option value="b5">5 · Asymptotics</option>
+      <option value="b6">6 · Disjoint sets</option>
+      <option value="b7">7 · BSTs, B-trees, LLRBs</option>
+      <option value="b8">8 · Heaps, priority queues, tree traversals</option>
+      <option value="b9">9 · Graph traversals, topological sort, DAGs</option>
+      <option value="b10">10 · Shortest paths (Dijkstra, A*) and MSTs</option>
+      <option value="b11">11 · Hashing</option>
+      <option value="b12">12 · Tries</option>
+      <option value="b13">13 · Basic sorts</option>
+      <option value="b14">14 · Quicksort, quickselect, sorting bounds, radix</option>
+      <option value="b15">15 · Compression, reductions and software engineering</option>
+    </optgroup>
+  </select>
+  <a href="#mocks">Mocks</a>
+</nav>
+
+<div class="note">
+  <p><b>How to do these</b></p>
+  <ol class="how">
+    <li><b>Timed.</b> Set a timer for the listed minutes and stop when it rings. Running over is a sign to review that topic.</li>
+    <li><b>Closed notes</b>, except the exam reference card (linked from the <a href="https://fa26.datastructur.es/resources/exam-archive/">archive</a>; from 2025 on, every exam uses the same card).</li>
+    <li><b>Write code on paper first</b>, with every line and brace, before opening anything. For traces, write down each intermediate state.</li>
+    <li><b>Then check</b> against the solution page and, if there is one, the walkthrough video. Redo any question you missed 2–3 days later.</li>
+  </ol>
+  <p>Each unit is ordered <b>hardest first</b> and mixes code, trace, runtime, design and concept questions. Links open the exact PDF page. Some questions span the next page or two, so scroll. Tick the box on a card when you finish it; ticks are saved only in this browser.</p>
+</div>
+
+<section id="mocks">
+  <h2><span class="n">★</span>Mock finals: save these</h2>
+  <p>Take these as full timed finals (closed notes, reference card only) in this order. <b>None of the questions below come from these five exams</b>, so they stay unseen.</p>
+  <ol class="mock">
+    <li><b>Fall 2025 Final</b><div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-final/exam.pdf" target="_blank" rel="noopener">Exam</a><a href="https://beacon.datastructur.es/exam-archive/fa25-final/solutions.pdf" target="_blank" rel="noopener">Solutions</a></div></li>
+    <li><b>Spring 2025 Final</b><div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-final/exam.pdf" target="_blank" rel="noopener">Exam</a><a href="https://beacon.datastructur.es/exam-archive/sp25-final/solutions.pdf" target="_blank" rel="noopener">Solutions</a></div></li>
+    <li><b>Fall 2024 Final</b><div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-final/exam.pdf" target="_blank" rel="noopener">Exam</a><a href="https://beacon.datastructur.es/exam-archive/fa24-final/solutions.pdf" target="_blank" rel="noopener">Solutions</a></div></li>
+    <li><b>Spring 2024 Final</b><div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-final/exam.pdf" target="_blank" rel="noopener">Exam</a><a href="https://beacon.datastructur.es/exam-archive/sp24-final/solutions.pdf" target="_blank" rel="noopener">Solutions</a></div></li>
+    <li><b>Spring 2026 Final</b><div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-final/exam.pdf" target="_blank" rel="noopener">Exam</a><a href="https://beacon.datastructur.es/exam-archive/sp26-final/solutions.pdf" target="_blank" rel="noopener">Solutions</a></div></li>
+  </ol>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<section id="b1">
+  <h2><span class="n">1</span>Java basics, references, static, IntLists, recursion</h2>
+  <p class="count">9 questions · about 89 minutes total · hardest first</p>
+  <div class="q" data-id="fa25-mt1-Q7.2">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2025 Midterm 1 · Q7.2</span><span class="nm">Ejection (ejectD)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">Destructively remove every y from an IntList without new; staff flag it as one of the hardest on that exam.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/solutions.pdf#page=12" target="_blank" rel="noopener">Solution p.12</a><a href="https://www.youtube.com/watch?v=2QYESZLCcYc&amp;list=PLnp31xXvnfRo9aDzuC_uhilih_h3yFf6n&amp;index=9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q2(a)">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Fall 2023 Final · Q2(a)</span><span class="nm">Next Episode</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Destructively rewire a singly linked list into reverse Faro-shuffle order, on a final.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt1-Q7">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2021 Midterm 1 · Q7</span><span class="nm">Tilt</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">The 2048 tilt (merge equal neighbors once) done in place on an IntList.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt1/exam.pdf#page=20" target="_blank" rel="noopener">Exam p.20</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt1/solutions.pdf#page=17" target="_blank" rel="noopener">Solution p.17</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrw4_M8SCLnr04yvqqJG0Ql" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-mt1-Q5(a–b)">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Fall 2023 Midterm 1 · Q5(a–b)</span><span class="nm">I Signed an NDA</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Build and index a D-dimensional W×…×W array with nested arrays and recursion.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-mt1/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/fa23-mt1/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRo6vm6ttPycMiKz-GyAz4Q8" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt1-Q4(b)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2024 Midterm 1 · Q4(b)</span><span class="nm">Crossword</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">2D char-array scanning with a transpose helper and a StringBuilder.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRooW8FcOFWBN9b85G0SAbwg" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt1-Q6.2–6.3">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2025 Midterm 1 · Q6.2–6.3</span><span class="nm">Prime Factorization</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursive and iterative list building from a helper function.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/watch?v=2QYESZLCcYc&amp;list=PLnp31xXvnfRo9aDzuC_uhilih_h3yFf6n&amp;index=9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-mt1-Q1">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2018 Midterm 1 · Q1</span><span class="nm">Static Dada</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Trace static fields, array aliasing and reassignment line by line.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRqAfvA4R9Oh09PstFymwCif" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-mt1-Q2">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2017 Midterm 1 · Q2</span><span class="nm">The Return of Pass By Value</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~7 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Pass-by-value with primitives, boxed Integers, static fields and list nodes.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-mt1/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/sp17-mt1/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr58vXF7T9I2HZ1LrVlxCtG" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt1-Q2(f–g)">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Fall 2024 Midterm 1 · Q2(f–g)</span><span class="nm">Potpourri (generic swap)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~2 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Why swapping array slots sticks but swapping parameters does not.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRooW8FcOFWBN9b85G0SAbwg" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b2">
+  <h2><span class="n">2</span>SLList, DLList, sentinels, AList resizing</h2>
+  <p class="count">10 questions · about 110 minutes total · hardest first</p>
+  <div class="q" data-id="sp24-mt1-Q6">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2024 Midterm 1 · Q6</span><span class="nm">Lost in Pointers</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Find and repair the one corrupted next/prev pointer in a circular sentinel DLList.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/solutions.pdf#page=16" target="_blank" rel="noopener">Solution p.16</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoF48vXCeY1h0qMhoBFW_Ue" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-mt2-Q8">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Fall 2022 Midterm 2 · Q8</span><span class="nm">Data Structures Design</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Design</span></div>
+    <p class="sk">Add removeEvery(x) to a LinkedListDeque in O(k + log N): choose the helper structures.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/exam.pdf#page=11" target="_blank" rel="noopener">Exam p.11</a><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrt5CU5IAKUcpWpBS4nRpWU" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-mt1-Q6">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2022 Midterm 1 · Q6</span><span class="nm">Ooh baby a triple!!</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Pointer surgery on a triply linked list with one sentinel.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-mt1/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/fa22-mt1/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRqIlfun5U1Cwyy5AHaf7Hve" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp25-mt1-Q3(a)">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2025 Midterm 1 · Q3(a)</span><span class="nm">Compressed Doubly-Linked List</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Run-length-compressed DLList (value, freq nodes): split and merge nodes correctly.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-mt1/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp25-mt1/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRoWtFaX4r_wzmJ3KX0wctGU&amp;si=ATkY9JE5pa_OgqJq" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt1-Q7(d–e)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2020 Midterm 1 · Q7(d–e)</span><span class="nm">Using RemoveOne</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Write list operations using only interface methods (abstraction barrier).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt1/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt1/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrNoNH3oqlZ5sKvqLLATVzt" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt1-Q6(d)">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2024 Midterm 1 · Q6(d)</span><span class="nm">Linked Links (floordiv)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Integer division on numbers represented as linked lists of nodes.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRooW8FcOFWBN9b85G0SAbwg" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt1-Q5">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2025 Midterm 1 · Q5</span><span class="nm">Resize</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Code</span></div>
+    <p class="sk">Resize a circular ArrayDeque: unroll from nextFirst and reset the pointers.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/watch?v=2QYESZLCcYc&amp;list=PLnp31xXvnfRo9aDzuC_uhilih_h3yFf6n&amp;index=9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-mt1-Q5">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2018 Midterm 1 · Q5</span><span class="nm">A Needle in ArrayStack</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">Array-backed stack: implement methods and resizing.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRqAfvA4R9Oh09PstFymwCif" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt1-Q7(d–e)">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Fall 2024 Midterm 1 · Q7(d–e)</span><span class="nm">Infinite Linked Links</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~5 min</span><span class="tag">Concept</span></div>
+    <p class="sk">What add does when a list is cyclic: returns, loops or crashes, and is it symmetric?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRooW8FcOFWBN9b85G0SAbwg" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt1-Q3">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Fall 2025 Midterm 1 · Q3</span><span class="nm">LinkedListDeque61B Addition</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Code</span></div>
+    <p class="sk">Insert at an index in a circular sentinel deque with no if statements.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://www.youtube.com/watch?v=2QYESZLCcYc&amp;list=PLnp31xXvnfRo9aDzuC_uhilih_h3yFf6n&amp;index=9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b3">
+  <h2><span class="n">3</span>Inheritance, static vs. dynamic type, casting (“what would Java do”)</h2>
+  <p class="count">10 questions · about 92 minutes total · hardest first</p>
+  <div class="q" data-id="fa23-final-Q2(b)">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2023 Final · Q2(b)</span><span class="nm">Next Episode (WWJD part)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">CE / RE / output table with casts and overloads, on a final.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt1-Q1(a)">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2024 Midterm 1 · Q1(a)</span><span class="nm">WWJD</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">CE / RE / output for a class hierarchy; staff-rated hard.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoF48vXCeY1h0qMhoBFW_Ue" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt1-Q4">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2020 Midterm 1 · Q4</span><span class="nm">DMSDogs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Dynamic method selection with overloaded bark methods and casts.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt1/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt1/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrNoNH3oqlZ5sKvqLLATVzt" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q1">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2023 Final · Q1</span><span class="nm">I Got A ...</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Overloading vs. overriding when this is passed as an argument and cast.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-mt2-Q7(d–e)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2022 Midterm 2 · Q7(d–e)</span><span class="nm">Asymptotics and Dynamic Method Selection</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Bad downcast (ClassCastException), then which slice runs and how fast.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrt5CU5IAKUcpWpBS4nRpWU" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-mt1-Q3">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2018 Midterm 1 · Q3</span><span class="nm">KeyGate</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Subclass method with a narrower parameter type is an overload, not an override.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/sp18-mt1/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRqAfvA4R9Oh09PstFymwCif" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-mt1-Q4">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2017 Midterm 1 · Q4</span><span class="nm">Flirbocon</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Which method signatures must exist for each call to compile, and which one runs.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-mt1/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/sp17-mt1/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr58vXF7T9I2HZ1LrVlxCtG" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt1-Q3">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2021 Midterm 1 · Q3</span><span class="nm">WWJDMS</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Default interface methods combined with dynamic method selection.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt1/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt1/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrw4_M8SCLnr04yvqqJG0Ql" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt1-Q5">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2024 Midterm 1 · Q5</span><span class="nm">HOF</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Generic interface Func&lt;A,B&gt;: write compose with anonymous or inner classes.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoF48vXCeY1h0qMhoBFW_Ue" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt1-Q1(a)">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Fall 2024 Midterm 1 · Q1(a)</span><span class="nm">Football?</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Another CE / RE / output table, good for a quick timed rep.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt1/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRooW8FcOFWBN9b85G0SAbwg" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b4">
+  <h2><span class="n">4</span>Iterators, Iterable, equals, Comparable, Comparator</h2>
+  <p class="count">9 questions · about 104 minutes total · hardest first</p>
+  <div class="q" data-id="sp25-mt1-Q4">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2025 Midterm 1 · Q4</span><span class="nm">LargeFriend</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">A Comparator that is also Iterable and yields every item it has judged larger.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-mt1/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp25-mt1/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRoWtFaX4r_wzmJ3KX0wctGU&amp;si=ATkY9JE5pa_OgqJq" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-mt2-Q2">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Midterm 2 · Q2</span><span class="nm">BSTIterator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">In-order BST iterator with an explicit stack (lazy, not precomputed).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrkobEjBTMhxLYBQ7i9qPp-" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt1-Q8">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2025 Midterm 1 · Q8</span><span class="nm">LEQIterator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Iterator over IntList items no larger than the head: get hasNext and next right.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt1/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://www.youtube.com/watch?v=2QYESZLCcYc&amp;list=PLnp31xXvnfRo9aDzuC_uhilih_h3yFf6n&amp;index=9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt2-Q6">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q6</span><span class="nm">Disjoint Sets Iterator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Iterator over every item in one WQU set, in increasing order.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q4(a, c)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2020 Final · Q4(a, c)</span><span class="nm">Prime Factor Iterator / Comparator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Write an Iterator class, then a Comparator that drives a priority queue.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt1-Q2">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2024 Midterm 1 · Q2</span><span class="nm">Comparable Computers</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">compareTo for dotted version strings such as 123.4.5.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt1/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoF48vXCeY1h0qMhoBFW_Ue" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-mt2-Q2">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2022 Midterm 2 · Q2</span><span class="nm">EvenIterable</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">Wrap any Iterable so it yields only the items at even positions.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/fa22-mt2/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrt5CU5IAKUcpWpBS4nRpWU" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp19-mt1-Q9">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2019 Midterm 1 · Q9</span><span class="nm">Cool Iterators</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Trace a tricky IntList iterator, then write your own.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-mt1/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp19-mt1/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/watch?v=ZdQfBR_Rahc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-final-Q9">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Fall 2022 Final · Q9</span><span class="nm">IterableComparator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Code</span></div>
+    <p class="sk">Comparator&lt;Iterable&gt; generics and for-each loops (multiple-choice blanks).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-final/exam.pdf#page=23" target="_blank" rel="noopener">Exam p.23</a><a href="https://beacon.datastructur.es/exam-archive/fa22-final/solutions.pdf#page=32" target="_blank" rel="noopener">Solution p.32</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b5">
+  <h2><span class="n">5</span>Asymptotics</h2>
+  <p class="count">10 questions · about 101 minutes total · hardest first</p>
+  <div class="q" data-id="sp21-mt2-Q7">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q7</span><span class="nm">Asymptotic Analysis</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Several nested-loop and recursive functions, best and worst case.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q4(c–d)">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Final · Q4(c–d)</span><span class="nm">Asymptotics (enigma)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~12 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">The hardest enigma functions on a final: unusual loop updates and recursion.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q3(d)">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2023 Final · Q3(d)</span><span class="nm">Asymptotics</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~8 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Recursion on √N plus a halving loop: tree height first, then total work.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-mt2-Q8">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2023 Midterm 2 · Q8</span><span class="nm">Combinatorial Explosion</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~12 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Runtime when the values grow (factorial via repeated addition).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrkobEjBTMhxLYBQ7i9qPp-" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q6.1">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q6.1</span><span class="nm">Asymptotics Analysis (mulch)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Two recursive calls on half-size copies: set up the recurrence.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=23" target="_blank" rel="noopener">Solution p.23</a></div>
+  </div>
+  <div class="q" data-id="sp25-mt2-Q4 (Set I)">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2025 Midterm 2 · Q4 (Set I)</span><span class="nm">Asymptotics (always / sometimes)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Concept</span></div>
+    <p class="sk">O/Θ/Ω statements graded −3 for a wrong answer; decide when to decline.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a></div>
+  </div>
+  <div class="q" data-id="fa23-mt2-Q6(f)">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2023 Midterm 2 · Q6(f)</span><span class="nm">Asymptotics</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~5 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Power-of-two recursion: best vs. worst case.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrq7bTJZI5Tm49oA4NiRZq9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q11">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2021 Final · Q11</span><span class="nm">Asymptotics</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Final-exam runtime set: arrays, recursion and data-structure calls.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=21" target="_blank" rel="noopener">Exam p.21</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=21" target="_blank" rel="noopener">Solution p.21</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt2-Q4">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Fall 2020 Midterm 2 · Q4</span><span class="nm">Asymptotics</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Loops with multiplicative and squared increments.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoXKhg_8VKas9uxhsry6Ow0" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt2-Q2(c–d)">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Spring 2024 Midterm 2 · Q2(c–d)</span><span class="nm">Awesometotics</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Runtimes of code built on weighted quick union and heaps.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoTj2UcitqENqFhH5ZG483F" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b6">
+  <h2><span class="n">6</span>Disjoint sets</h2>
+  <p class="count">9 questions · about 93 minutes total · hardest first</p>
+  <div class="q" data-id="sp25-mt2-Q3(e)">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2025 Midterm 2 · Q3(e)</span><span class="nm">Anirudh’s Weighted Question</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Decide whether a parent array is a valid WQU in O(N log N); staff warn it is much harder.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q7">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q7</span><span class="nm">Borbders</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Model countries and borders as a disjoint-sets problem and code it.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=27" target="_blank" rel="noopener">Solution p.27</a></div>
+  </div>
+  <div class="q" data-id="fa23-mt2-Q3">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2023 Midterm 2 · Q3</span><span class="nm">A Hole-y Cheese</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Percolation-style modeling: which unions, and the virtual top and bottom.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrq7bTJZI5Tm49oA4NiRZq9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q7">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2019 Final · Q7</span><span class="nm">DisjointSets (arbitrary items)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">WQU over arbitrary integers added at any time (maps instead of arrays).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt2-Q5">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2020 Midterm 2 · Q5</span><span class="nm">Compress</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Code</span></div>
+    <p class="sk">Write compress(): flatten every tree to height 1 in a skeleton.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoXKhg_8VKas9uxhsry6Ow0" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q2.9–2.10">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q2.9–2.10</span><span class="nm">Aditya’s Potpourri (WQU)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~5 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Recover a missing parent entry from the WQU size and height rules.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q4(b)">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2023 Final · Q4(b)</span><span class="nm">Evil Sets</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">WQU with path compression: array state after union, and the minimum number of operations.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt2-Q2">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Fall 2024 Midterm 2 · Q2</span><span class="nm">Disjoint Runtimes</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Θ runtimes of loops over QuickUnion, WQU and WQUPC variants.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr9Xex3xkiyGpHiaKBQLVbC" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-mt2-Q3">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2017 Midterm 2 · Q3</span><span class="nm">Weighted Quick Union</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Which connect sequences produce each tree, or is it impossible?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp17-mt2/solutions.pdf#page=6" target="_blank" rel="noopener">Solution p.6</a><a href="https://www.youtube.com/playlist?list=PLv24fkNrbcYh4GP5vkLsw0lpb6w6PpDfN" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b7">
+  <h2><span class="n">7</span>BSTs, B-trees, LLRBs</h2>
+  <p class="count">10 questions · about 110 minutes total · hardest first</p>
+  <div class="q" data-id="fa24-mt2-Q4(b)">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2024 Midterm 2 · Q4(b)</span><span class="nm">Fix LLRB (convert)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Convert a 2-3 tree into its LLRB recursively.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/solutions.pdf#page=28" target="_blank" rel="noopener">Solution p.28</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr9Xex3xkiyGpHiaKBQLVbC" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt2-Q4(b)">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2024 Midterm 2 · Q4(b)</span><span class="nm">Lost in LLRBs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Restore every node color of an LLRB in optimal time.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/solutions.pdf#page=17" target="_blank" rel="noopener">Solution p.17</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoTj2UcitqENqFhH5ZG483F" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt2-Q8(b–c)">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q8(b–c)</span><span class="nm">Recursive Trees (split)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursive tree transformation: split every node into XL and XR.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=12" target="_blank" rel="noopener">Solution p.12</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-mt2-Q5">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2023 Midterm 2 · Q5</span><span class="nm">Tree Shirts</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">BST search for the smallest available size ≥ the request (ceiling).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrkobEjBTMhxLYBQ7i9qPp-" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt2-Q3(a)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2024 Midterm 2 · Q3(a)</span><span class="nm">It’s All a Blur</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursive BST ↔ DLList conversion with shared node objects.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoTj2UcitqENqFhH5ZG483F" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q5(a)">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2023 Final · Q5(a)</span><span class="nm">Bushy Trees</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Infer an unknown key and the red links of a partial LLRB, then count rotations.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q8">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2021 Final · Q8</span><span class="nm">Left Leaning Red Black Trees</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Trace</span></div>
+    <p class="sk">LLRB insertion sequences, rotations and color flips.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q8">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Fall 2020 Final · Q8</span><span class="nm">BST Rotations</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">Trace rotateLeft, find a 3-rotation sequence to a new root, then write rotateUp.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=12" target="_blank" rel="noopener">Solution p.12</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt2-Q5(b)">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q5(b)</span><span class="nm">BTrees and Friends</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Minimum and maximum heights between a 2-3 tree and its LLRB.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q1.7">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q1.7</span><span class="nm">Treevia (LLRB)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~3 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Which links can be red so that a given BST is a valid LLRB?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b8">
+  <h2><span class="n">8</span>Heaps, priority queues, tree traversals</h2>
+  <p class="count">10 questions · about 122 minutes total · hardest first</p>
+  <div class="q" data-id="sp19-mt2-Q11">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2019 Midterm 2 · Q11</span><span class="nm">Yggdrasil</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Code</span></div>
+    <p class="sk">Remove the k smallest from a min-heap and build a balanced BST; staff call it very challenging.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-mt2/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp19-mt2/solutions.pdf#page=12" target="_blank" rel="noopener">Solution p.12</a><a href="https://www.youtube.com/watch?v=UlLnJEJhJwY" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q7(b)">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Fall 2023 Final · Q7(b)</span><span class="nm">Priority Queue (MiddleHeap)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Design</span></div>
+    <p class="sk">A median priority queue built from two heaps: code the invariants.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=15" target="_blank" rel="noopener">Solution p.15</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q3.5">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q3.5</span><span class="nm">Can I Speak to Your Supervisor?</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~13 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursive validation of an n-ary tree property (isKarenTree).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q12(d–e)">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2019 Final · Q12(d–e)</span><span class="nm">Tree Representation 4</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Write a tree to an array or file representation and read it back.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=15" target="_blank" rel="noopener">Exam p.15</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=15" target="_blank" rel="noopener">Solution p.15</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q12">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2018 Final · Q12</span><span class="nm">IntSibTree</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursion on the first-child / next-sibling tree representation.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=15" target="_blank" rel="noopener">Solution p.15</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-mt2-Q5">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2023 Midterm 2 · Q5</span><span class="nm">BST To MinHeap</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Is converting a BST into a min-heap O(N log N) or O(N)? Which traversal?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrq7bTJZI5Tm49oA4NiRZq9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-mt2-Q4">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2023 Midterm 2 · Q4</span><span class="nm">Heaps of Fun</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Where can each rank sit in a min-heap? Heap shape and order reasoning.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa23-mt2/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrq7bTJZI5Tm49oA4NiRZq9" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q2">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2021 Final · Q2</span><span class="nm">Heaps</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Heap runtimes, heaps of strings, and when a tree can be both a heap and a BST.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt2-Q3">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Fall 2020 Midterm 2 · Q3</span><span class="nm">Heap Iterator</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">An iterator over a MinPQ using only its public interface.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoXKhg_8VKas9uxhsry6Ow0" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q1.10">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q1.10</span><span class="nm">Point Farming (heap ranges)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~4 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Feasible ranges for unknown keys in a min-heap and a max-heap.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b9">
+  <h2><span class="n">9</span>Graph traversals, topological sort, DAGs</h2>
+  <p class="count">10 questions · about 95 minutes total · hardest first</p>
+  <div class="q" data-id="sp19-final-Q11">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2019 Final · Q11</span><span class="nm">Ψcle</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Shortest simple cycle using at most one vertex from a set: reduce it to known algorithms.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q10">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2021 Final · Q10</span><span class="nm">Graphs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Trace a traversal built on a TreeSet and a MinPQ, then give its tight O bound.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=19" target="_blank" rel="noopener">Exam p.19</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=19" target="_blank" rel="noopener">Solution p.19</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa24-mt2-Q5">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2024 Midterm 2 · Q5</span><span class="nm">Yokeyrin’s Cave</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Code</span></div>
+    <p class="sk">BFS for the fewest moves on an adjacency map, coded from scratch.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/solutions.pdf#page=31" target="_blank" rel="noopener">Solution p.31</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr9Xex3xkiyGpHiaKBQLVbC" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q5.3">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q5.3</span><span class="nm">pspspSPTs (longest path in a DAG)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~5 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Does negating weights and running Dijkstra find longest paths in a DAG?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=19" target="_blank" rel="noopener">Solution p.19</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q3.2">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q3.2</span><span class="nm">Can I Speak to Your Supervisor? (count)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Code</span></div>
+    <p class="sk">Recursive traversal of an n-ary tree that counts a relation.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q6">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2018 Final · Q6</span><span class="nm">More Graphs!</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Always / sometimes / never statements about DFS, BFS, cycles and Dijkstra variants.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt2-Q1">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q1</span><span class="nm">Graph Traversals</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">BFS and DFS orders: which start vertices give a given order.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-mt2-Q6">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2017 Midterm 2 · Q6</span><span class="nm">Bipartite Graphs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Design</span></div>
+    <p class="sk">Spot the bipartite graphs, then code a two-coloring check with the Graph API.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-mt2/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp17-mt2/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/playlist?list=PLv24fkNrbcYh4GP5vkLsw0lpb6w6PpDfN" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q5.7">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q5.7</span><span class="nm">pspspSPTs (topological sort)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~3 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Every vertex that can appear at each index of some topological order.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=21" target="_blank" rel="noopener">Solution p.21</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q3.5">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q3.5</span><span class="nm">Graphery (topological sort)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~2 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Which reversed edge makes a topological order exist?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b10">
+  <h2><span class="n">10</span>Shortest paths (Dijkstra, A*) and MSTs</h2>
+  <p class="count">10 questions · about 112 minutes total · hardest first</p>
+  <div class="q" data-id="fa20-final-Q10">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2020 Final · Q10</span><span class="nm">Optimal Peak</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Shortest-path reduction with balance, efficiency and different-route constraints; staff call it particularly challenging.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=16" target="_blank" rel="noopener">Exam p.16</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=18" target="_blank" rel="noopener">Solution p.18</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q8">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Final · Q8</span><span class="nm">The Javaugean Stables</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Algorithm design on a directed weighted graph (MST and SPT ideas); staff-rated hard.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=16" target="_blank" rel="noopener">Exam p.16</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=23" target="_blank" rel="noopener">Solution p.23</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp26-mt2-Q5.4–5.5">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2026 Midterm 2 · Q5.4–5.5</span><span class="nm">pspspSPTs (and MSTs)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~10 min</span><span class="tag">Design</span></div>
+    <p class="sk">Which single edge set to 0 minimizes the A→B path? Judge the proposed algorithms.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/sp26-mt2/solutions.pdf#page=20" target="_blank" rel="noopener">Solution p.20</a></div>
+  </div>
+  <div class="q" data-id="sp25-mt2-Q6">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2025 Midterm 2 · Q6</span><span class="nm">Math Graphs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Concept</span></div>
+    <p class="sk">When do Dijkstra-style ideas work on graphs whose edges are arithmetic operations?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp25-mt2/solutions.pdf#page=19" target="_blank" rel="noopener">Solution p.19</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt2-Q6(d)">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2024 Midterm 2 · Q6(d)</span><span class="nm">Where’s Prim?</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~5 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Largest weight a new edge can have and still lower the MST weight (cut property).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/exam.pdf#page=11" target="_blank" rel="noopener">Exam p.11</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/solutions.pdf#page=25" target="_blank" rel="noopener">Solution p.25</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoTj2UcitqENqFhH5ZG483F" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q9">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2023 Final · Q9</span><span class="nm">World Wide Web</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Prim’s order with ties, and MST uniqueness.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=16" target="_blank" rel="noopener">Exam p.16</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=18" target="_blank" rel="noopener">Solution p.18</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q2(b)">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2023 Final · Q2(b)</span><span class="nm">Edgy Questions</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Dijkstra partway through a run: which distances and edges are already final?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q9">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Fall 2020 Final · Q9</span><span class="nm">Shortest Paths</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Trace</span></div>
+    <p class="sk">BFS, Dijkstra and A* traces, then an edge change that breaks Dijkstra.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q9">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2018 Final · Q9</span><span class="nm">Dijkstra’s Runtime</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Dijkstra’s runtime with a trinary heap, an unordered array or a sorted list as the PQ.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=11" target="_blank" rel="noopener">Exam p.11</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q7">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Spring 2021 Final · Q7</span><span class="nm">MSTs</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Which edges could Kruskal add last? Cut-property reasoning with random ties.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b11">
+  <h2><span class="n">11</span>Hashing</h2>
+  <p class="count">10 questions · about 103 minutes total · hardest first</p>
+  <div class="q" data-id="fa24-mt2-Q3(c–e)">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2024 Midterm 2 · Q3(c–e)</span><span class="nm">Unstable Matching (StrangeHashSet)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Concept</span></div>
+    <p class="sk">A hash set that resizes on bucket overflow: resize counts and bucket structure.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/fa24-mt2/solutions.pdf#page=16" target="_blank" rel="noopener">Solution p.16</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRr9Xex3xkiyGpHiaKBQLVbC" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-mt2-Q6">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Midterm 2 · Q6</span><span class="nm">Hash-ish</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Classify string hash functions as incorrect, ineffective or good, and say why.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp23-mt2/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrkobEjBTMhxLYBQ7i9qPp-" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q5">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q5</span><span class="nm">Hash Table (MutableString)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Mutating keys after insertion: what contains and size return.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=19" target="_blank" rel="noopener">Solution p.19</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q3">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2023 Final · Q3</span><span class="nm">Value Town</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">HashMap bugs from equals and hashCode disagreeing (WWJD style).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q10">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2019 Final · Q10</span><span class="nm">A New Way</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Design</span></div>
+    <p class="sk">Linear probing instead of separate chaining: trace the table and reason about its behavior.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-mt2-Q4">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2021 Midterm 2 · Q4</span><span class="nm">Hashing</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Buckets stored as LLRBs: worst-case bounds, plus a mutable-key trace.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/exam.pdf#page=5" target="_blank" rel="noopener">Exam p.5</a><a href="https://beacon.datastructur.es/exam-archive/sp21-mt2/solutions.pdf#page=5" target="_blank" rel="noopener">Solution p.5</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRq8_jPPPG18wgQcox4WbUa2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q7">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2020 Final · Q7</span><span class="nm">Hashing Bears</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">A HashMap of length 4 with a custom equals and hashCode: predict each result.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=11" target="_blank" rel="noopener">Exam p.11</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp24-mt2-Q5">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Spring 2024 Midterm 2 · Q5</span><span class="nm">I Love Hashbrowns</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Default vs. trivial hashCode crossed with default vs. custom equals: what breaks?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp24-mt2/solutions.pdf#page=21" target="_blank" rel="noopener">Solution p.21</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoTj2UcitqENqFhH5ZG483F" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q5">
+    <div class="head"><span class="rk">9</span><div class="ttl"><span class="src">Spring 2018 Final · Q5</span><span class="nm">Hash Codes</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Is a hashCode that depends on Random or other state valid?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=7" target="_blank" rel="noopener">Solution p.7</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q6">
+    <div class="head"><span class="rk">10</span><div class="ttl"><span class="src">Fall 2023 Final · Q6</span><span class="nm">Snack Scores</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Changing a field after insertion, and what moves when the table resizes.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=14" target="_blank" rel="noopener">Solution p.14</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b12">
+  <h2><span class="n">12</span>Tries</h2>
+  <p class="count">6 questions · about 77 minutes total · hardest first</p>
+  <div class="idea"><span class="t">Note</span><p>Tries show up rarely on 61B exams, so this list reaches back to Spring 2016–2017 for enough real questions.</p></div>
+  <div class="q" data-id="sp21-final-Q9">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2021 Final · Q9</span><span class="nm">Palindromic Tries</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Design a trie to count centered sub-palindromes quickly, then code it.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=16" target="_blank" rel="noopener">Exam p.16</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=16" target="_blank" rel="noopener">Solution p.16</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q5">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Final · Q5</span><span class="nm">Wordle</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Code</span></div>
+    <p class="sk">Trie-backed Wordle dictionary with O(W) insert and pattern queries.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=13" target="_blank" rel="noopener">Solution p.13</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp16-final-Q12">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2016 Final · Q12</span><span class="nm">Calling Collect: Tries and Recursive Tree Programming</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Draw an R-way trie of integers, then write recursive collect methods (Spring 2016, older era).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp16-final/exam.pdf#page=15" target="_blank" rel="noopener">Exam p.15</a><a href="https://beacon.datastructur.es/exam-archive/sp16-final/solutions.pdf#page=15" target="_blank" rel="noopener">Solution p.15</a></div>
+  </div>
+  <div class="q" data-id="sp17-final-Q12">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2017 Final · Q12</span><span class="nm">Danger and Optimization</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Design</span></div>
+    <p class="sk">Choose sorts, sets (including trie and TST) and searches that resist adversarial input.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-final/exam.pdf#page=13" target="_blank" rel="noopener">Exam p.13</a><a href="https://beacon.datastructur.es/exam-archive/sp17-final/solutions.pdf#page=16" target="_blank" rel="noopener">Solution p.16</a></div>
+  </div>
+  <div class="q" data-id="fa20-mt2-Q2">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Fall 2020 Midterm 2 · Q2</span><span class="nm">Trie Operations</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">keysWithPrefix and longestPrefixOf on a drawn trie.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/fa20-mt2/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRoXKhg_8VKas9uxhsry6Ow0" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-final-Q5(c–d)">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2017 Final · Q5(c–d)</span><span class="nm">Potpourri (generic TrieSet)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~6 min</span><span class="tag">Design</span></div>
+    <p class="sk">What interface keys must implement for a generic TrieSet.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-final/exam.pdf#page=6" target="_blank" rel="noopener">Exam p.6</a><a href="https://beacon.datastructur.es/exam-archive/sp17-final/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b13">
+  <h2><span class="n">13</span>Basic sorts</h2>
+  <p class="count">7 questions · about 71 minutes total · hardest first</p>
+  <div class="q" data-id="fa23-final-Q10">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2023 Final · Q10</span><span class="nm">Sorting Out the Situation</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Analyze an unfamiliar sort (in place? stable? swaps vs. insertion and selection), then pick a sort for each scenario.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=17" target="_blank" rel="noopener">Exam p.17</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=19" target="_blank" rel="noopener">Solution p.19</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q1">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2019 Final · Q1</span><span class="nm">Sorting Cornucopia</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~15 min</span><span class="tag">Trace</span></div>
+    <p class="sk">In-place heapsort steps, merge and insertion behavior, stability.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q5">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Fall 2020 Final · Q5</span><span class="nm">Sorting Variations</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">Best and worst cases of hybrid recursive sorts (merge / quick / selection).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=8" target="_blank" rel="noopener">Exam p.8</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=8" target="_blank" rel="noopener">Solution p.8</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q2">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2018 Final · Q2</span><span class="nm">Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Identify the sort and its next states from snapshots partway through.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-final-Q2">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2017 Final · Q2</span><span class="nm">Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Trace</span></div>
+    <p class="sk">Inversions, heapify plus remove-max, and sort identification.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-final/exam.pdf#page=3" target="_blank" rel="noopener">Exam p.3</a><a href="https://beacon.datastructur.es/exam-archive/sp17-final/solutions.pdf#page=3" target="_blank" rel="noopener">Solution p.3</a></div>
+  </div>
+  <div class="q" data-id="fa20-final-Q2">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2020 Final · Q2</span><span class="nm">Basic Sorts</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">The first swap made by each sort on the same array.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa20-final/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/fa20-final/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrmHRhYGldDkTUulb54XQPJ" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa22-final-Q1.2">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Fall 2022 Final · Q1.2</span><span class="nm">Insertion Sort and Randomized Quicksort</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~4 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Critique stated advantages of insertion sort; catch the subtly false ones.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa22-final/exam.pdf#page=1" target="_blank" rel="noopener">Exam p.1</a><a href="https://beacon.datastructur.es/exam-archive/fa22-final/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b14">
+  <h2><span class="n">14</span>Quicksort, quickselect, sorting bounds, radix</h2>
+  <p class="count">8 questions · about 94 minutes total · hardest first</p>
+  <div class="idea"><span class="t">Note</span><p>Sorting lower-bound (log N!) reasoning is in Spring 2023 Final Q7 and Spring 2019 Final Q9 (listed under b15).</p></div>
+  <div class="q" data-id="fa23-final-Q11">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Fall 2023 Final · Q11</span><span class="nm">Belt Of Heapolyta</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Design</span></div>
+    <p class="sk">Sorting when one element’s comparisons lie: which algorithms still work, and design one.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=18" target="_blank" rel="noopener">Exam p.18</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=21" target="_blank" rel="noopener">Solution p.21</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q6">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2023 Final · Q6</span><span class="nm">Sorta Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~15 min</span><span class="tag">Code</span></div>
+    <p class="sk">Replace an O(N log N) sort with linear-time heap or counting tricks.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=16" target="_blank" rel="noopener">Solution p.16</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q12">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2021 Final · Q12</span><span class="nm">Sorting Lists</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Sort lists of integers in digit order: Comparator first, then a radix-style approach.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=23" target="_blank" rel="noopener">Exam p.23</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=23" target="_blank" rel="noopener">Solution p.23</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q8">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2018 Final · Q8</span><span class="nm">Weird Sorts</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Runtime</span></div>
+    <p class="sk">PartitionHybridSort: runtimes and correctness when partition is combined with other sorts.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=10" target="_blank" rel="noopener">Exam p.10</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp23-final-Q7">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2023 Final · Q7</span><span class="nm">Actually Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Hoare partition trace, then the comparison lower bound (sort 2023 items in 2024 comparisons?).</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-final/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp23-final/solutions.pdf#page=20" target="_blank" rel="noopener">Solution p.20</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpWcSvVJQNIDt6SH92_yGq2" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp21-final-Q5.2">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Spring 2021 Final · Q5.2</span><span class="nm">Quicksort and Heap Convergence</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~8 min</span><span class="tag">Trace</span></div>
+    <p class="sk">After how many partitions, or heap deletions, does a given array appear?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp21-final/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp21-final/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRpBHtKGIEciBaTmUuI34Ey4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q2">
+    <div class="head"><span class="rk">7</span><div class="ttl"><span class="src">Spring 2019 Final · Q2</span><span class="nm">Radix Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Trace</span></div>
+    <p class="sk">LSD counting-sort passes digit by digit, and why the per-digit sort must be stable.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=4" target="_blank" rel="noopener">Exam p.4</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=4" target="_blank" rel="noopener">Solution p.4</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa23-final-Q1(e–f)">
+    <div class="head"><span class="rk">8</span><div class="ttl"><span class="src">Fall 2023 Final · Q1(e–f)</span><span class="nm">Final Curry (radix)</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~2 min</span><span class="tag">Concept</span></div>
+    <p class="sk">Do MSD or LSD radix sort still work with heapsort as the per-digit sort?</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa23-final/exam.pdf#page=2" target="_blank" rel="noopener">Exam p.2</a><a href="https://beacon.datastructur.es/exam-archive/fa23-final/solutions.pdf#page=2" target="_blank" rel="noopener">Solution p.2</a><a href="https://youtube.com/playlist?list=PLnp31xXvnfRrX8CIl9zJ-kxHHzf06Elw4" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+<section id="b15">
+  <h2><span class="n">15</span>Compression, reductions and software engineering</h2>
+  <p class="count">6 questions · about 76 minutes total · hardest first</p>
+  <div class="idea"><span class="t">Note</span><p><b>No compression or Huffman question appears in any exam in this archive</b> (Spring 2015 through Spring 2026; every PDF was searched). The end-of-semester material around compression (reductions and complexity) shows up on exams as <b>reduction</b> and design problems, so this list is those plus the few software-engineering and testing questions. For Huffman, practice with the lecture slides and discussion worksheet.</p></div>
+  <div class="q" data-id="sp17-final-Q13">
+    <div class="head"><span class="rk">1</span><div class="ttl"><span class="src">Spring 2017 Final · Q13</span><span class="nm">Reductions</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~20 min</span><span class="tag">Design</span></div>
+    <p class="sk">Solve new problems by reducing them to MST, shortest paths or sorting; staff say many parts are very challenging.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-final/exam.pdf#page=14" target="_blank" rel="noopener">Exam p.14</a><a href="https://beacon.datastructur.es/exam-archive/sp17-final/solutions.pdf#page=18" target="_blank" rel="noopener">Solution p.18</a></div>
+  </div>
+  <div class="q" data-id="sp19-final-Q9">
+    <div class="head"><span class="rk">2</span><div class="ttl"><span class="src">Spring 2019 Final · Q9</span><span class="nm">Reductions and Sorting</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag vh">very hard</span><span class="tag">~12 min</span><span class="tag">Design</span></div>
+    <p class="sk">Graph Path Sort: reduce sorting to DAG shortest paths, and what that implies about sorting bounds.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp19-final/exam.pdf#page=11" target="_blank" rel="noopener">Exam p.11</a><a href="https://beacon.datastructur.es/exam-archive/sp19-final/solutions.pdf#page=12" target="_blank" rel="noopener">Solution p.12</a><a href="https://www.youtube.com/watch?v=kavv3_Rk0Jc" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp18-final-Q7">
+    <div class="head"><span class="rk">3</span><div class="ttl"><span class="src">Spring 2018 Final · Q7</span><span class="nm">Can you do that?</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Design</span></div>
+    <p class="sk">Yes plus a proof, or no plus a counterexample, for claimed speedups.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp18-final/exam.pdf#page=9" target="_blank" rel="noopener">Exam p.9</a><a href="https://beacon.datastructur.es/exam-archive/sp18-final/solutions.pdf#page=9" target="_blank" rel="noopener">Solution p.9</a><a href="https://www.youtube.com/watch?v=XJuPjSbexWM" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="sp17-final-Q6">
+    <div class="head"><span class="rk">4</span><div class="ttl"><span class="src">Spring 2017 Final · Q6</span><span class="nm">Stocks</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Design</span></div>
+    <p class="sk">Code review: find the bugs, then the runtime and space of a PQ-based tracker.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp17-final/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/sp17-final/solutions.pdf#page=10" target="_blank" rel="noopener">Solution p.10</a></div>
+  </div>
+  <div class="q" data-id="sp23-mt1-Q6">
+    <div class="head"><span class="rk">5</span><div class="ttl"><span class="src">Spring 2023 Midterm 1 · Q6</span><span class="nm">Testception</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~10 min</span><span class="tag">Code</span></div>
+    <p class="sk">Write tests that catch the buggy implementations of numWords.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/sp23-mt1/exam.pdf#page=12" target="_blank" rel="noopener">Exam p.12</a><a href="https://beacon.datastructur.es/exam-archive/sp23-mt1/solutions.pdf#page=11" target="_blank" rel="noopener">Solution p.11</a><a href="https://www.youtube.com/playlist?list=PLnp31xXvnfRrKdxnh1E0IMy8bw8aDN10D" target="_blank" rel="noopener">Walkthrough video</a></div>
+  </div>
+  <div class="q" data-id="fa25-mt2-Q4">
+    <div class="head"><span class="rk">6</span><div class="ttl"><span class="src">Fall 2025 Midterm 2 · Q4</span><span class="nm">Project 4E</span></div><input class="chk" type="checkbox" aria-label="Mark done"></div>
+    <div class="tags"><span class="tag h">hard</span><span class="tag">~12 min</span><span class="tag">Design</span></div>
+    <p class="sk">Parse a project-style synsets file into the right map so lookups return all definitions of a word.</p>
+    <div class="links"><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/exam.pdf#page=7" target="_blank" rel="noopener">Exam p.7</a><a href="https://beacon.datastructur.es/exam-archive/fa25-mt2/solutions.pdf#page=17" target="_blank" rel="noopener">Solution p.17</a></div>
+  </div>
+  <a class="top" href="#top">↑ Back to top</a>
+</section>
+
+<footer>Every listed question was checked against the exam PDF text (or page images, for the Fall 2022 final) for its topic, title and page. Every link returned HTTP 200 when checked. Difficulty tags use the staff ratings from the archive’s “Exam Questions By Topic” table where one exists, plus warnings printed on the exams themselves. Minutes are estimates based on each question’s share of the exam’s points.</footer>
+</div>
+<script>
+const j=document.getElementById('jump');
+j.addEventListener('change',()=>{const el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});
+const ids=[...j.querySelectorAll('option')].map(o=>o.value).filter(v=>v!=='top');
+const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){j.value=e.target.id;}}},{rootMargin:'-80px 0px -70% 0px'});
+ids.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+let done={};
+try{done=JSON.parse(localStorage.getItem('cs61b-hard-done')||'{}');}catch(e){done={};}
+document.querySelectorAll('.q').forEach(q=>{
+  const c=q.querySelector('.chk'), id=q.dataset.id;
+  if(done[id]){c.checked=true;q.classList.add('done');}
+  c.addEventListener('change',()=>{
+    q.classList.toggle('done',c.checked);
+    if(c.checked)done[id]=1;else delete done[id];
+    try{localStorage.setItem('cs61b-hard-done',JSON.stringify(done));}catch(e){}
+  });
+});
+</script>
+</body>
+</html>
